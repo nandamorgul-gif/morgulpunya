@@ -1828,22 +1828,60 @@ textarea.form-control {
   z-index: 998;
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  padding: 0.5rem 0.85rem 0.5rem 0.65rem;
-  background: rgba(12, 18, 30, 0.85);
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
+  gap: 0.65rem;
+  padding: 0.45rem 0.75rem 0.45rem 0.55rem;
+  background: rgba(12, 18, 30, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--border-color);
   border-radius: 40px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6), 0 0 15px rgba(0, 240, 255, 0.15);
-  transition: all 0.35s ease;
-  max-width: 320px;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  max-width: 330px;
+  overflow: hidden;
 }
 
 .floating-music-player:hover {
   border-color: var(--primary);
   box-shadow: 0 12px 30px rgba(0, 240, 255, 0.25);
-  transform: translateY(-3px);
+}
+
+/* Minimized Collapsed State */
+.floating-music-player.minimized {
+  padding: 0.3rem;
+  border-radius: 50px;
+  max-width: 46px;
+  background: rgba(12, 18, 30, 0.95);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5), 0 0 12px rgba(0, 240, 255, 0.35);
+  cursor: pointer;
+}
+
+.floating-music-player.minimized .music-info,
+.floating-music-player.minimized .music-play-btn,
+.floating-music-player.minimized .music-toggle-btn {
+  display: none !important;
+}
+
+.music-toggle-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 0.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  margin-left: -0.2rem;
+}
+
+.music-toggle-btn:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .music-disc {

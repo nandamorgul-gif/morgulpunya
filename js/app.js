@@ -606,6 +606,27 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
+    // Minimize / Expand Floating Music Player Toggle
+    const musicPlayer = document.getElementById('musicPlayer');
+    const musicToggleBtn = document.getElementById('musicToggleBtn');
+    const musicDisc = document.getElementById('musicDisc');
+
+    if (musicPlayer && musicToggleBtn) {
+      musicToggleBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        musicPlayer.classList.toggle('minimized');
+      });
+
+      if (musicDisc) {
+        musicDisc.addEventListener('click', (e) => {
+          if (musicPlayer.classList.contains('minimized')) {
+            e.stopPropagation();
+            musicPlayer.classList.remove('minimized');
+          }
+        });
+      }
+    }
+
     // YouTube Autoplay & Instant Unmute Controller
     const postYTCmd = (func, args) => {
       const iframe = document.getElementById('ytPlayer');
