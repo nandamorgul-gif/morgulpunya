@@ -583,31 +583,60 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    // Floating Cyber Music Player Controller
+    // Floating Cyber Music Player Controller (With Autoplay & Interaction Fallback)
     const bgAudio = document.getElementById('bgAudio');
     const musicPlayBtn = document.getElementById('musicPlayBtn');
     const musicDisc = document.getElementById('musicDisc');
     const musicStatus = document.getElementById('musicStatus');
 
+    function updateAudioUI(isPlaying) {
+      if (!musicDisc || !musicPlayBtn || !musicStatus) return;
+      if (isPlaying) {
+        musicDisc.classList.add('playing');
+        musicPlayBtn.innerHTML = '<i class="feather feather-pause"></i>';
+        musicStatus.innerText = 'Diputar ♪ For Revenge';
+        musicStatus.style.color = 'var(--accent)';
+      } else {
+        musicDisc.classList.remove('playing');
+        musicPlayBtn.innerHTML = '<i class="feather feather-play"></i>';
+        musicStatus.innerText = 'Musik Dihentikan';
+        musicStatus.style.color = 'var(--text-muted)';
+      }
+      if (window.feather) feather.replace();
+    }
+
     if (bgAudio && musicPlayBtn) {
-      musicPlayBtn.addEventListener('click', () => {
+      const startPlayback = () => {
+        bgAudio.play().then(() => {
+          updateAudioUI(true);
+        }).catch(err => {
+          console.log('Autoplay waiting for user interaction:', err);
+          updateAudioUI(false);
+        });
+      };
+
+      // Try autoplay immediately
+      startPlayback();
+
+      // Fallback: Start audio on first user click/touch anywhere if blocked by browser policy
+      const handleFirstInteraction = () => {
         if (bgAudio.paused) {
-          bgAudio.play().then(() => {
-            musicDisc.classList.add('playing');
-            musicPlayBtn.innerHTML = '<i class="feather feather-pause"></i>';
-            musicStatus.innerText = 'Diputar ♪ For Revenge';
-            musicStatus.style.color = 'var(--accent)';
-            if (window.feather) feather.replace();
-          }).catch(err => {
-            console.log('Audio autoplay prevented:', err);
-          });
+          startPlayback();
+        }
+      };
+
+      document.addEventListener('click', handleFirstInteraction, { once: true });
+      document.addEventListener('touchstart', handleFirstInteraction, { once: true });
+      document.addEventListener('keydown', handleFirstInteraction, { once: true });
+
+      // Manual Play/Pause Button Toggle
+      musicPlayBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (bgAudio.paused) {
+          bgAudio.play().then(() => updateAudioUI(true)).catch(err => console.log(err));
         } else {
           bgAudio.pause();
-          musicDisc.classList.remove('playing');
-          musicPlayBtn.innerHTML = '<i class="feather feather-play"></i>';
-          musicStatus.innerText = 'Musik Dihentikan';
-          musicStatus.style.color = 'var(--text-muted)';
-          if (window.feather) feather.replace();
+          updateAudioUI(false);
         }
       });
     }
