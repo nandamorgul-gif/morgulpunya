@@ -582,6 +582,35 @@ document.addEventListener('DOMContentLoaded', () => {
         header.classList.remove('scrolled');
       }
     });
+
+    // Floating Cyber Music Player Controller
+    const bgAudio = document.getElementById('bgAudio');
+    const musicPlayBtn = document.getElementById('musicPlayBtn');
+    const musicDisc = document.getElementById('musicDisc');
+    const musicStatus = document.getElementById('musicStatus');
+
+    if (bgAudio && musicPlayBtn) {
+      musicPlayBtn.addEventListener('click', () => {
+        if (bgAudio.paused) {
+          bgAudio.play().then(() => {
+            musicDisc.classList.add('playing');
+            musicPlayBtn.innerHTML = '<i class="feather feather-pause"></i>';
+            musicStatus.innerText = 'Diputar ♪ For Revenge';
+            musicStatus.style.color = 'var(--accent)';
+            if (window.feather) feather.replace();
+          }).catch(err => {
+            console.log('Audio autoplay prevented:', err);
+          });
+        } else {
+          bgAudio.pause();
+          musicDisc.classList.remove('playing');
+          musicPlayBtn.innerHTML = '<i class="feather feather-play"></i>';
+          musicStatus.innerText = 'Musik Dihentikan';
+          musicStatus.style.color = 'var(--text-muted)';
+          if (window.feather) feather.replace();
+        }
+      });
+    }
   }
 
   // Run initialization

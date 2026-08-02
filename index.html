@@ -933,6 +933,26 @@
     <span>Chat WhatsApp</span>
   </a>
 
+  <!-- Floating Cyber Background Music Player -->
+  <div class="floating-music-player" id="musicPlayer">
+    <div class="music-disc" id="musicDisc">
+      <i class="feather feather-music"></i>
+      <div class="equalizer-bars">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <div class="music-info">
+      <div class="music-title">For Revenge - I Miss You / Brand New Day</div>
+      <div class="music-status" id="musicStatus">Klik Play untuk memutar musik</div>
+    </div>
+    <button class="music-play-btn" id="musicPlayBtn" title="Putar / Hentikan Musik">
+      <i class="feather feather-play" id="musicPlayIcon"></i>
+    </button>
+    <audio id="bgAudio" loop preload="metadata">
+      <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=alternative-rock-modern-112347.mp3" type="audio/mpeg">
+    </audio>
+  </div>
+
   <!-- Scripts -->
   <script src="js/data.js"></script>
   <script src="js/app.js"></script>

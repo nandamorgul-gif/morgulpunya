@@ -1711,3 +1711,139 @@ textarea.form-control {
   }
 }
 
+/* ==========================================================================
+   Floating Cyber Music Player Widget
+   ========================================================================== */
+.floating-music-player {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 1.5rem;
+  z-index: 998;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0.85rem 0.5rem 0.65rem;
+  background: rgba(12, 18, 30, 0.85);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid var(--border-color);
+  border-radius: 40px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6), 0 0 15px rgba(0, 240, 255, 0.15);
+  transition: all 0.35s ease;
+  max-width: 320px;
+}
+
+.floating-music-player:hover {
+  border-color: var(--primary);
+  box-shadow: 0 12px 30px rgba(0, 240, 255, 0.25);
+  transform: translateY(-3px);
+}
+
+.music-disc {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 0.9rem;
+  position: relative;
+  flex-shrink: 0;
+  box-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
+}
+
+.music-disc.playing {
+  animation: spinDisc 4s linear infinite;
+}
+
+@keyframes spinDisc {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.equalizer-bars {
+  display: none;
+  align-items: flex-end;
+  gap: 2px;
+  height: 14px;
+}
+
+.music-disc.playing .feather-music {
+  display: none;
+}
+
+.music-disc.playing .equalizer-bars {
+  display: flex;
+}
+
+.equalizer-bars span {
+  width: 3px;
+  background: #fff;
+  border-radius: 1px;
+  animation: bounceBar 0.8s ease-in-out infinite alternate;
+}
+
+.equalizer-bars span:nth-child(1) { height: 60%; animation-delay: 0.1s; }
+.equalizer-bars span:nth-child(2) { height: 100%; animation-delay: 0.3s; }
+.equalizer-bars span:nth-child(3) { height: 40%; animation-delay: 0.5s; }
+
+@keyframes bounceBar {
+  0% { height: 20%; }
+  100% { height: 100%; }
+}
+
+.music-info {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.music-title {
+  font-size: 0.785rem;
+  font-weight: 600;
+  color: var(--text-main);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 190px;
+}
+
+.music-status {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+}
+
+.music-play-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--primary);
+  border: none;
+  color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: var(--transition);
+}
+
+.music-play-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 12px var(--primary);
+}
+
+@media (max-width: 640px) {
+  .floating-music-player {
+    bottom: 4.8rem;
+    left: 1rem;
+    max-width: 250px;
+    padding: 0.4rem 0.65rem;
+  }
+  .music-title {
+    max-width: 130px;
+  }
+}
+
