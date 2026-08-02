@@ -583,7 +583,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    // Floating Cyber Music Player Controller (With Autoplay & Interaction Fallback)
+    // Floating Cyber Music Player Controller (Instant Autoplay Engine)
     const bgAudio = document.getElementById('bgAudio');
     const musicPlayBtn = document.getElementById('musicPlayBtn');
     const musicDisc = document.getElementById('musicDisc');
@@ -606,33 +606,40 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (bgAudio && musicPlayBtn) {
-      const startPlayback = () => {
+      const attemptPlay = () => {
+        bgAudio.muted = false;
         bgAudio.play().then(() => {
           updateAudioUI(true);
-        }).catch(err => {
-          console.log('Autoplay waiting for user interaction:', err);
-          updateAudioUI(false);
+        }).catch(() => {
+          bgAudio.muted = true;
+          bgAudio.play().then(() => {
+            updateAudioUI(true);
+          }).catch(err => console.log('Autoplay deferred:', err));
         });
       };
 
-      // Try autoplay immediately
-      startPlayback();
+      // Attempt immediate autoplay on page load
+      attemptPlay();
 
-      // Fallback: Start audio on first user click/touch anywhere if blocked by browser policy
-      const handleFirstInteraction = () => {
-        if (bgAudio.paused) {
-          startPlayback();
+      // Instant trigger on any movement, scroll, touch, or click
+      const enableAudioInstantly = () => {
+        if (bgAudio.paused || bgAudio.muted) {
+          bgAudio.muted = false;
+          bgAudio.play().then(() => updateAudioUI(true)).catch(() => {});
         }
       };
 
-      document.addEventListener('click', handleFirstInteraction, { once: true });
-      document.addEventListener('touchstart', handleFirstInteraction, { once: true });
-      document.addEventListener('keydown', handleFirstInteraction, { once: true });
+      const events = ['mousemove', 'mouseenter', 'scroll', 'wheel', 'touchstart', 'touchend', 'pointermove', 'keydown', 'click'];
+      events.forEach(evt => {
+        window.addEventListener(evt, enableAudioInstantly, { passive: true });
+        document.addEventListener(evt, enableAudioInstantly, { passive: true });
+      });
 
       // Manual Play/Pause Button Toggle
       musicPlayBtn.addEventListener('click', (e) => {
         e.stopPropagation();
         if (bgAudio.paused) {
+          bgAudio.muted = false;
           bgAudio.play().then(() => updateAudioUI(true)).catch(err => console.log(err));
         } else {
           bgAudio.pause();
