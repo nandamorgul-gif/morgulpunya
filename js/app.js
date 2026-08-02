@@ -594,7 +594,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (isPlaying) {
         musicDisc.classList.add('playing');
         musicPlayBtn.innerHTML = '<i class="feather feather-pause"></i>';
-        musicStatus.innerText = 'Diputar ♪ For Revenge';
+        musicStatus.innerText = 'Diputar ♪ For Revenge - Penyangkalan';
         musicStatus.style.color = 'var(--accent)';
       } else {
         musicDisc.classList.remove('playing');
