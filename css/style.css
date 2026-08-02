@@ -618,10 +618,9 @@ ul {
 }
 
 .builder-layout {
-  display: grid;
-  grid-template-columns: 1.35fr 1fr;
-  gap: 1.25rem;
-  align-items: start;
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
 }
 
 /* Category Filter Bar */
@@ -820,14 +819,30 @@ ul {
   font-family: var(--font-heading);
 }
 
-/* Right Summary Panel */
+/* Summary Panel & Price Estimator (Placed below Component Selection) */
 .summary-panel {
-  position: sticky;
-  top: 4.5rem;
-  max-height: calc(100vh - 5.5rem);
-  overflow-y: auto;
-  padding: 1rem;
-  scrollbar-width: thin;
+  position: static;
+  top: auto;
+  max-height: none;
+  overflow: visible;
+  padding: 1.5rem;
+  border-top: 2px solid var(--primary);
+  margin-top: 0.5rem;
+}
+
+.summary-body-grid {
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
+  gap: 1.5rem;
+  align-items: start;
+  margin-top: 1rem;
+}
+
+@media (max-width: 850px) {
+  .summary-body-grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
 }
 
 .summary-header {
@@ -835,22 +850,22 @@ ul {
   align-items: center;
   justify-content: space-between;
   margin-bottom: 0.65rem;
-  padding-bottom: 0.5rem;
+  padding-bottom: 0.75rem;
   border-bottom: 1px solid var(--border-color);
 }
 
 .summary-header h3 {
-  font-size: 0.98rem;
+  font-size: 1.1rem;
 }
 
 .summary-parts-list {
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
-  margin-bottom: 0.65rem;
-  max-height: 180px;
+  gap: 0.4rem;
+  margin-bottom: 0.85rem;
+  max-height: 220px;
   overflow-y: auto;
-  padding-right: 0.25rem;
+  padding-right: 0.35rem;
   scrollbar-width: thin;
 }
 
@@ -1623,16 +1638,13 @@ textarea.form-control {
   }
 
   .builder-layout {
-    grid-template-columns: 1fr;
     gap: 1.5rem;
   }
 
   .summary-panel {
-    position: relative;
-    top: 0;
-    order: -1;
-    margin-bottom: 0.5rem;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    position: static;
+    top: auto;
+    margin-top: 0;
   }
 
   .footer-grid {
