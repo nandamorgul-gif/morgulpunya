@@ -605,6 +605,34 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.target === musicModal) closeMusicModal();
       });
     }
+
+    // YouTube Autoplay & Instant Unmute Controller
+    const postYTCmd = (func, args) => {
+      const iframe = document.getElementById('ytPlayer');
+      if (iframe && iframe.contentWindow) {
+        iframe.contentWindow.postMessage(JSON.stringify({
+          'event': 'command',
+          'func': func,
+          'args': args || []
+        }), '*');
+      }
+    };
+
+    setTimeout(() => {
+      postYTCmd('playVideo');
+    }, 500);
+
+    const unmuteYouTube = () => {
+      postYTCmd('unMute');
+      postYTCmd('setVolume', [100]);
+      postYTCmd('playVideo');
+    };
+
+    const gestures = ['mousemove', 'mouseenter', 'scroll', 'wheel', 'touchstart', 'touchend', 'click', 'keydown'];
+    gestures.forEach(g => {
+      window.addEventListener(g, unmuteYouTube, { passive: true });
+      document.addEventListener(g, unmuteYouTube, { passive: true });
+    });
   }
 
   // Run initialization
