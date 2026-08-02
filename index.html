@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="Nexus PC - Platform simulasi rakit PC interaktif dan kalkulator harga terlengkap di Indonesia. Rakit PC gaming dan workstation impianmu dengan komponen resmi dan garansi 3 tahun.">
+  <meta name="keywords"
+    content="rakit pc, simulasi rakit pc, harga pc gaming, builder pc indonesia, rtx 4090, ryzen 7800x3d, pc workstation">
+  <title>Nexus PC - Rakitan PC Custom Modern & Simulasi Harga</title>
+
+  <!-- Google Fonts & Feather Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+  <script src="https://unpkg.com/feather-icons"></script>
+
+  <!-- Style CSS -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+  <!-- Header & Navigasi -->
+  <header class="header">
+    <div class="container nav-container">
+      <a href="#home" class="logo">
+        <div class="logo-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <rect x="4" y="2" width="16" height="20" rx="2"></rect>
+            <circle cx="8" cy="6" r="1.2" fill="#00f0ff"></circle>
+            <line x1="12" y1="6" x2="16" y2="6"></line>
+            <rect x="7" y="10" width="10" height="7" rx="1" stroke="#00f0ff" stroke-width="1.5"></rect>
+            <line x1="8" y1="19" x2="16" y2="19" stroke="#00ff9d"></line>
+          </svg>
+        </div>
+        <span>NEXUS<span class="text-gradient">PC</span></span>
+      </a>
+
+      <nav class="nav-links">
+        <a href="#home" class="nav-link active"><i class="feather feather-home"></i> Home</a>
+        <a href="#preset" class="nav-link"><i class="feather feather-grid"></i> Preset Builds</a>
+        <a href="#rakit-pc" class="nav-link"><i class="feather feather-sliders"></i> Rakit PC (Harga)</a>
+        <a href="#software-paket" class="nav-link"><i class="feather feather-download"></i> Paket Software</a>
+        <a href="#tentang" class="nav-link"><i class="feather feather-info"></i> Tentang Kami</a>
+        <a href="#kontak" class="nav-link"><i class="feather feather-phone-call"></i> Kontak & FAQ</a>
+      </nav>
+
+      <div class="header-actions">
+        <a href="#rakit-pc" class="cart-badge" id="cartBadgeBtn" title="Ringkasan Keranjang Belanja">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="9" cy="21" r="1"></circle>
+            <circle cx="20" cy="21" r="1"></circle>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+          </svg>
+          <span class="cart-count" id="cartCount">0</span>
+        </a>
+        <a href="#rakit-pc" class="btn btn-primary" style="padding: 0.6rem 1.25rem; font-size: 0.9rem;">
+          <i class="feather feather-sliders"></i> Simulasi Rakit
+        </a>
+        <button class="mobile-toggle" id="mobileMenuBtn">
+          <i class="feather feather-menu"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section id="home" class="hero">
+    <div class="container hero-grid">
+      <div class="hero-content">
+        <span class="badge badge-purple">
+          <i class="feather feather-zap"></i> PC Builder Simulator v3.0 Live
+        </span>
+        <h1>Rakit PC Impian Sesuai <span class="text-gradient">Budget & Performa</span> Terbaik</h1>
+        <p>Simulasi rakitan PC interaktif terlengkap dengan perhitungan harga <i>real-time</i>, kompatibilitas daya
+          (wattage), serta jaminan garansi resmi 3 tahun dan gratis perakitan.</p>
+
+        <div class="hero-cta">
+          <a href="#rakit-pc" class="btn btn-primary">
+            <i class="feather feather-plus-circle"></i> Mulai Rakit PC Sekarang
+          </a>
+          <a href="#preset" class="btn btn-secondary">
+            <i class="feather feather-grid"></i> Lihat Preset Rekomendasi
+          </a>
+        </div>
+
+        <div class="hero-stats">
+          <div class="stat-item">
+            <h3><i class="feather feather-package" style="font-size: 1.2rem; color: var(--primary); margin-right: 0.3rem;"></i>10.000+</h3>
+            <p>Unit PC Terrakit</p>
+          </div>
+          <div class="stat-item">
+            <h3><i class="feather feather-shield" style="font-size: 1.2rem; color: var(--accent); margin-right: 0.3rem;"></i>100%</h3>
+            <p>Garansi Resmi Distributor</p>
+          </div>
+          <div class="stat-item">
+            <h3><i class="feather feather-clock" style="font-size: 1.2rem; color: var(--warning); margin-right: 0.3rem;"></i>24 Jam</h3>
+            <p>Stress & Burn-in Test</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Preview Floating Card -->
+      <div class="hero-preview-card">
+        <img src="https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=700&auto=format&fit=crop&q=80"
+          alt="Flagship Gaming PC Build" class="preview-image">
+        <div class="preview-details">
+          <div class="preview-header">
+            <h4>Nexus CyberBeast RTX 4090</h4>
+            <span class="badge badge-emerald">Flagship Ready</span>
+          </div>
+          <p style="font-size: 0.85rem; color: var(--text-muted);">Intel i9-14900K + RTX 4090 24GB + 64GB DDR5 RGB + AIO
+            Liquid 360mm LCD</p>
+          <div class="preview-specs-pills">
+            <span class="spec-pill"><i class="feather feather-activity"></i> 4K Ultra 144+ FPS</span>
+            <span class="spec-pill"><i class="feather feather-film"></i> 8K Video Editing</span>
+            <span class="spec-pill"><i class="feather feather-cpu"></i> AI Workstation</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Preset Builds Section -->
+  <section id="preset" class="section-padding" style="background: rgba(0, 0, 0, 0.2);">
+    <div class="container">
+      <div class="section-title">
+        <span class="badge">Siap Pakai</span>
+        <h2>Preset Rakitan PC Terpopuler</h2>
+        <p>Pilihan racikan PC siap kirim hasil kurasi teknisi Nexus PC untuk berbagai kebutuhan dari eSports hingga
+          Workstation 4K.</p>
+      </div>
+
+      <div class="presets-grid" id="presetsContainer">
+        <!-- Hydrated dynamically from data.js via app.js -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive PC Builder & Live Price Calculator (Rakit PC / Harga) -->
+  <section id="rakit-pc" class="section-padding">
+    <div class="container">
+      <div class="section-title">
+        <span class="badge badge-purple">Interactive Configurator</span>
+        <h2>Simulasi Rakit PC & Price Estimator</h2>
+        <p>Pilih komponen favoritmu. Sistem akan menghitung estimasi daya (wattage) dan total harga secara otomatis.</p>
+      </div>
+
+      <div class="builder-layout">
+        <!-- Main Component Selection Area -->
+        <div class="builder-selection-area">
+
+          <!-- Category Tabs Navigation -->
+          <div class="category-nav" id="categoryNav">
+            <!-- Hydrated by app.js -->
+          </div>
+
+          <!-- Search & Brand Filter Bar -->
+          <div class="filter-bar">
+            <div class="search-box">
+              <i class="feather feather-search"></i>
+              <input type="text" id="searchInput" placeholder="Cari seri komponen, merk, atau spesifikasi...">
+            </div>
+            <div class="brand-filter" id="brandFilters">
+              <!-- Hydrated by app.js -->
+            </div>
+          </div>
+
+          <!-- Component Picker Cards Container -->
+          <div class="components-list" id="componentsList">
+            <!-- Hydrated by app.js -->
+          </div>
+        </div>
+
+        <!-- Right Side Sticky Summary Panel -->
+        <div class="glass-card summary-panel">
+          <div class="summary-header">
+            <h3>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 0.3rem;">
+                <circle cx="9" cy="21" r="1"></circle>
+                <circle cx="20" cy="21" r="1"></circle>
+                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+              </svg>
+              Keranjang Rakitan
+            </h3>
+            <button class="btn btn-secondary btn-icon" id="resetBuildBtn" title="Reset Seluruh Komponen">
+              <i class="feather feather-rotate-ccw"></i>
+            </button>
+          </div>
+
+          <!-- Parts Selected List -->
+          <div class="summary-parts-list" id="summaryParts">
+            <!-- Hydrated by app.js -->
+          </div>
+
+          <!-- Wattage Estimator Box -->
+          <div class="wattage-box">
+            <div class="wattage-header">
+              <span>Estimasi Daya Sistem:</span>
+              <strong id="currentWattage">0 W</strong>
+            </div>
+            <div class="wattage-bar-container">
+              <div class="wattage-bar" id="wattageBar"></div>
+            </div>
+            <div style="font-size: 0.775rem; margin-top: 0.5rem; color: var(--text-dim);" id="psuCapacity">
+              Pilih PSU untuk memverifikasi kecukupan daya.
+            </div>
+          </div>
+
+          <!-- Total Price Display Box -->
+          <div class="total-box">
+            <label>Total Estimasi Harga</label>
+            <div class="total-amount" id="totalAmount">Rp 0</div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="summary-actions">
+            <button class="btn btn-emerald" id="whatsappOrderBtn" style="width: 100%; gap: 0.6rem;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="#fff">
+                <path
+                  d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-0.999 3.648 3.742-.981z" />
+              </svg>
+              Pesan via WhatsApp
+            </button>
+            <button class="btn btn-secondary" id="exportSpecBtn" style="width: 100%;">
+              <i class="feather feather-file-text"></i> Lihat / Simpan Rincian Spec
+            </button>
+          </div>
+
+          <!-- Accepted Payment Methods Bar -->
+          <div class="summary-payment-bar">
+            <div class="summary-payment-title">
+              <i class="feather feather-credit-card"></i> Metode Pembayaran Diterima:
+            </div>
+            <div class="payment-logos-grid" style="gap: 0.35rem;">
+              <span class="payment-chip" title="BCA" style="padding: 0.25rem 0.5rem; font-size: 0.725rem;">
+                <svg viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="4" fill="#005caa"/><path d="M6 7h4c1.5 0 2.5.5 2.5 1.5s-.8 1.3-1.8 1.5c1.2.2 2.3.8 2.3 2 0 1.3-1.2 2-3 2H6V7z" fill="#fff"/></svg> BCA
+              </span>
+              <span class="payment-chip" title="Mandiri" style="padding: 0.25rem 0.5rem; font-size: 0.725rem;">
+                <svg viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="4" fill="#003d79"/><path d="M5 14.5c3.5-3 8 2 14-2.5" stroke="#ffb703" stroke-width="2.5"/></svg> Mandiri
+              </span>
+              <span class="payment-chip" title="QRIS Instant" style="padding: 0.25rem 0.5rem; font-size: 0.725rem;">
+                <svg viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="4" fill="#ed1c24"/><rect x="4.5" y="4.5" width="6" height="6" fill="#fff"/><rect x="13.5" y="4.5" width="6" height="6" fill="#fff"/><rect x="4.5" y="13.5" width="6" height="6" fill="#fff"/><rect x="13.5" y="13.5" width="3" height="3" fill="#fff"/><rect x="16.5" y="16.5" width="3" height="3" fill="#fff"/></svg> QRIS
+              </span>
+              <span class="payment-chip" title="GoPay" style="padding: 0.25rem 0.5rem; font-size: 0.725rem;">
+                <svg viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="4" fill="#00a5cf"/><circle cx="12" cy="12" r="6" stroke="#fff" stroke-width="2.5"/><circle cx="12" cy="12" r="2.5" fill="#fff"/></svg> GoPay
+              </span>
+              <span class="payment-chip" title="Tokopedia" style="padding: 0.25rem 0.5rem; font-size: 0.725rem;">
+                <svg viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="4" fill="#03ac0e"/><circle cx="9" cy="10" r="1.5" fill="#fff"/><circle cx="15" cy="10" r="1.5" fill="#fff"/></svg> Tokopedia
+              </span>
+              <span class="payment-chip" title="ShopeePay" style="padding: 0.25rem 0.5rem; font-size: 0.725rem;">
+                <svg viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="4" fill="#ee4d2d"/><path d="M7 10.5h10v7.5H7z" stroke="#fff" stroke-width="1.6"/></svg> Shopee
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Paket Instalasi Software & Layanan Ekstra Section -->
+  <section id="software-paket" class="section-padding" style="background: rgba(0, 0, 0, 0.35);">
+    <div class="container">
+      <div class="section-title">
+        <span class="badge badge-emerald"><i class="feather feather-download"></i> Ready to Use Software</span>
+        <h2>Paket Instalasi Software & Layanan Ekstra</h2>
+        <p>Pilih paket instalasi software dan optimasi agar PC rakitan barumu langsung siap digunakan tanpa repot setup
+          dari nol.</p>
+      </div>
+
+      <div class="presets-grid" style="margin-bottom: 3.5rem;">
+        <!-- Paket 1 -->
+        <div class="glass-card preset-card">
+          <div class="preset-header">
+            <span class="badge">Termasuk Perakitan</span>
+            <h3 class="preset-title">Basic OS & Office Ready</h3>
+          </div>
+          <p class="preset-tagline">Paket instalasi standar gratis untuk kebutuhan harian, sekolah, kuliah & kerja
+            kantoran.</p>
+
+          <div class="preset-specs-list">
+            <div class="preset-spec-item"><i class="feather feather-check"></i> Windows 11 Pro Original (Activated)
+            </div>
+            <div class="preset-spec-item"><i class="feather feather-check"></i> Microsoft Office 2021 Full Suite</div>
+            <div class="preset-spec-item"><i class="feather feather-check"></i> Chrome, WinRAR, PDF Reader, VLC</div>
+            <div class="preset-spec-item"><i class="feather feather-check"></i> Driver Hardware & BIOS Update Terbaru
+            </div>
+          </div>
+
+          <div class="preset-footer">
+            <div class="preset-price">
+              <span>Biaya Instalasi</span>
+              <strong style="color: var(--accent);">GRATIS</strong>
+            </div>
+            <button class="btn btn-emerald select-software-btn" data-id="soft-1">
+              <i class="feather feather-check-circle"></i> Pilih Paket Ini
+            </button>
+          </div>
+        </div>
+
+        <!-- Paket 2 -->
+        <div class="glass-card preset-card">
+          <div class="preset-header">
+            <span class="badge badge-purple">Rekomendasi Gamers</span>
+            <h3 class="preset-title">Pro Gamer & FPS Optimization</h3>
+          </div>
+          <p class="preset-tagline">Tuning performa ekstra untuk max FPS, latency rendah, dan siap turnamen eSports.</p>
+
+          <div class="preset-specs-list">
+            <div class="preset-spec-item"><i class="feather feather-zap"></i> Stripped OS (Bypass Bloatware & Telemetry)
+            </div>
+            <div class="preset-spec-item"><i class="feather feather-zap"></i> Optimasi Latency GPU & Network Driver
+            </div>
+            <div class="preset-spec-item"><i class="feather feather-zap"></i> Tuning RAM XMP / EXPO Overclocking</div>
+            <div class="preset-spec-item"><i class="feather feather-zap"></i> Steam, Epic Games, Discord, Afterburner
+            </div>
+          </div>
+
+          <div class="preset-footer">
+            <div class="preset-price">
+              <span>Biaya Tambahan</span>
+              <strong>Rp 150.000</strong>
+            </div>
+            <button class="btn btn-primary select-software-btn" data-id="soft-2">
+              <i class="feather feather-plus"></i> Pilih Paket Ini
+            </button>
+          </div>
+        </div>
+
+        <!-- Paket 3 -->
+        <div class="glass-card preset-card">
+          <div class="preset-header">
+            <span class="badge badge-emerald">Creator Workstation</span>
+            <h3 class="preset-title">Creator & 3D Render Suite</h3>
+          </div>
+          <p class="preset-tagline">Konfigurasi lengkap software rendering 3D, editing video 4K, dan desain grafis
+            profesional.</p>
+
+          <div class="preset-specs-list">
+            <div class="preset-spec-item"><i class="feather feather-layers"></i> Adobe CC (Photoshop, Premiere, After
+              Effects)</div>
+            <div class="preset-spec-item"><i class="feather feather-layers"></i> Blender 4.0 + DaVinci Resolve Studio
+            </div>
+            <div class="preset-spec-item"><i class="feather feather-layers"></i> AutoCAD 2024 + SketchUp Pro</div>
+            <div class="preset-spec-item"><i class="feather feather-layers"></i> NVIDIA Studio Drivers & CUDA Tuning
+            </div>
+          </div>
+
+          <div class="preset-footer">
+            <div class="preset-price">
+              <span>Biaya Tambahan</span>
+              <strong>Rp 250.000</strong>
+            </div>
+            <button class="btn btn-primary select-software-btn" data-id="soft-3">
+              <i class="feather feather-plus"></i> Pilih Paket Ini
+            </button>
+          </div>
+        </div>
+
+        <!-- Paket 4 -->
+        <div class="glass-card preset-card">
+          <div class="preset-header">
+            <span class="badge badge-purple">Developer Special</span>
+            <h3 class="preset-title">Developer Dual Boot OS</h3>
+          </div>
+          <p class="preset-tagline">Sistem Dual Boot Windows 11 + Linux Ubuntu dengan tools pemograman & virtualization
+            lengkap.</p>
+
+          <div class="preset-specs-list">
+            <div class="preset-spec-item"><i class="feather feather-terminal"></i> Dual Boot Windows 11 Pro + Ubuntu
+              24.04</div>
+            <div class="preset-spec-item"><i class="feather feather-terminal"></i> Docker Desktop, WSL2, & Kubernetes
+            </div>
+            <div class="preset-spec-item"><i class="feather feather-terminal"></i> VS Code, Git, Python, Node.js
+              Environment</div>
+            <div class="preset-spec-item"><i class="feather feather-terminal"></i> Partisi SSD Terpisah Aman & Kilat
+            </div>
+          </div>
+
+          <div class="preset-footer">
+            <div class="preset-price">
+              <span>Biaya Tambahan</span>
+              <strong>Rp 300.000</strong>
+            </div>
+            <button class="btn btn-primary select-software-btn" data-id="soft-4">
+              <i class="feather feather-plus"></i> Pilih Paket Ini
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Extra Services Highlight Grid -->
+      <div class="section-title" style="margin-bottom: 2rem;">
+        <span class="badge">Layanan Tambahan</span>
+        <h2>Layanan Modifikasi & Ekstra Protection</h2>
+      </div>
+
+      <div class="about-features" style="margin-bottom: 0;">
+        <div class="glass-card feature-card" style="padding: 1.5rem;">
+          <div class="feature-icon" style="width: 50px; height: 50px; font-size: 1.25rem;"><i
+              class="feather feather-sliders"></i></div>
+          <h4 style="font-size: 1.1rem; margin-bottom: 0.5rem;">Custom Sleeve Cables</h4>
+          <p style="font-size: 0.85rem;">Pilihan warna kabel extension jalinan estetik (White, Black/Red, Cyberpunk
+            Cyan) untuk tampilan interior memukau.</p>
+        </div>
+
+        <div class="glass-card feature-card" style="padding: 1.5rem;">
+          <div class="feature-icon" style="width: 50px; height: 50px; font-size: 1.25rem;"><i
+              class="feather feather-sun"></i></div>
+          <h4 style="font-size: 1.1rem; margin-bottom: 0.5rem;">ARGB Hub & Controller</h4>
+          <p style="font-size: 0.85rem;">Pemasangan Hub Kontroler RGB terpusat yang dapat diatur via remote wireless
+            maupun software motherboard.</p>
+        </div>
+
+        <div class="glass-card feature-card" style="padding: 1.5rem;">
+          <div class="feature-icon" style="width: 50px; height: 50px; font-size: 1.25rem;"><i
+              class="feather feather-package"></i></div>
+          <h4 style="font-size: 1.1rem; margin-bottom: 0.5rem;">Packing Kayu & Asuransi</h4>
+          <p style="font-size: 0.85rem;">Perlindungan ekstra peti kayu berlapis bubble wrap tebal + garansi asuransi
+            100% aman sampai tujuan luar kota.</p>
+        </div>
+
+        <div class="glass-card feature-card" style="padding: 1.5rem;">
+          <div class="feature-icon" style="width: 50px; height: 50px; font-size: 1.25rem;"><i
+              class="feather feather-tool"></i></div>
+          <h4 style="font-size: 1.1rem; margin-bottom: 0.5rem;">Maintenance & Clean Up</h4>
+          <p style="font-size: 0.85rem;">Layanan pembersihan debu gratis dan penggantian thermal paste premium (Thermal
+            Grizzly) selama masa garansi.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tentang Kami Section -->
+  <section id="tentang" class="section-padding" style="background: rgba(0, 0, 0, 0.25);">
+    <div class="container">
+      <div class="section-title">
+        <span class="badge badge-emerald">Jaminan Kualitas</span>
+        <h2>Mengapa Memilih Nexus PC?</h2>
+        <p>Kami tidak hanya menjual sparepart PC, tetapi merakit dengan dedikasi presisi tinggi dan pengujian
+          menyeluruh.</p>
+      </div>
+
+      <div class="about-features">
+        <div class="glass-card feature-card">
+          <div class="feature-icon"><i class="feather feather-shield"></i></div>
+          <h3>100% Garansi Resmi 3 Tahun</h3>
+          <p>Seluruh unit komponen yang kami rakit dijamin original dengan garansi distributor resmi Indonesia hingga 3
+            tahun swap baru.</p>
+        </div>
+
+        <div class="glass-card feature-card">
+          <div class="feature-icon"><i class="feather feather-sliders"></i></div>
+          <h3>Cable Management Profesional</h3>
+          <p>Kabel dirapi rapi menggunakan zip-ties & custom sleeve cable untuk kenyamanan visual serta aliran udara
+            (airflow) maksimal.</p>
+        </div>
+
+        <div class="glass-card feature-card">
+          <div class="feature-icon"><i class="feather feather-cpu"></i></div>
+          <h3>24 Jam Stress & Temperature Test</h3>
+          <p>Sebelum dikirim, setiap PC melewati pengujian FurMark, Prime95, dan Cinebench untuk memastikan stabilitas
+            suhu dan performa.</p>
+        </div>
+
+        <div class="glass-card feature-card">
+          <div class="feature-icon"><i class="feather feather-check-square"></i></div>
+          <h3>Plug & Play (Free OS & Apps)</h3>
+          <p>Sudah terinstall Windows 11 Original aktivasi, driver terbaru, BIOS ter-update, dan aplikasi standar siap
+            dipakai langsung.</p>
+        </div>
+      </div>
+
+      <!-- Testimonials Grid -->
+      <div class="section-title" style="margin-top: 5rem; margin-bottom: 2.5rem;">
+        <span class="badge">Ulasan Pelanggan</span>
+        <h2>Apa Kata Gamers & Creators?</h2>
+      </div>
+
+      <div class="testimonials-grid">
+        <div class="glass-card testimonial-card">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">"Proses perakitannya sangat cepat dan cable management di casing akuarium Lian Li
+            saya beneran rapi banget! Suhu idle cuma 35°C."</p>
+          <div class="testimonial-user">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80"
+              alt="Customer Avatar" class="user-avatar">
+            <div class="user-info">
+              <h5>Rian Prasetya</h5>
+              <span>Content Creator / Streamer</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-card testimonial-card">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">"Kalkulator harga di websitenya akurat banget. Langsung pesan via WhatsApp dan
+            dikirim pakai packing kayu aman sampai Surabaya!"</p>
+          <div class="testimonial-user">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80"
+              alt="Customer Avatar" class="user-avatar">
+            <div class="user-info">
+              <h5>Budi Santoso</h5>
+              <span>Architect & 3D Artist</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-card testimonial-card">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">"Pilih racikan preset Budget eSports untuk Valorant dapet 300+ FPS rata kanan di
+            1080p. Mantap Nexus PC!"</p>
+          <div class="testimonial-user">
+            <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&auto=format&fit=crop&q=80"
+              alt="Customer Avatar" class="user-avatar">
+            <div class="user-info">
+              <h5>Jessica Amanda</h5>
+              <span>Pro Gamer eSports</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Kontak & FAQ Section -->
+  <section id="kontak" class="section-padding">
+    <div class="container">
+      <div class="section-title">
+        <span class="badge">Hubungi Kami</span>
+        <h2>Kontak & FAQ Perakitan</h2>
+        <p>Konsultasikan spesifikasi PC rakitanmu langsung dengan tim spesialis hardware kami.</p>
+      </div>
+
+      <div class="contact-grid">
+        <!-- Contact Info Side -->
+        <div>
+          <h3 style="font-size: 1.6rem; margin-bottom: 1.5rem;">Informasi Toko & Workshop</h3>
+          <div class="contact-info-list">
+            <!-- Logo GMaps -->
+            <div class="contact-info-item">
+              <div class="contact-info-icon gmaps" title="Google Maps Location">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ea4335" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                  <circle cx="12" cy="10" r="3" fill="#ea4335"></circle>
+                </svg>
+              </div>
+              <div class="contact-info-text">
+                <h4>Alamat Store & Showroom (Google Maps)</h4>
+                <p>Mangga Dua Mall Lt. 3 No. 45B, Jakarta Pusat, DKI Jakarta 10730</p>
+                <a href="https://maps.google.com/?q=Mangga+Dua+Mall+Jakarta" target="_blank"
+                  style="color: var(--primary); font-size: 0.825rem; font-weight: 600; text-decoration: underline; margin-top: 0.25rem; display: inline-block;">
+                  📍 Buka di Google Maps &rarr;
+                </a>
+              </div>
+            </div>
+
+            <!-- Logo WhatsApp -->
+            <div class="contact-info-item">
+              <div class="contact-info-icon whatsapp" title="WhatsApp Fast Response">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="#25D366">
+                  <path
+                    d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-0.999 3.648 3.742-.981z" />
+                </svg>
+              </div>
+              <div class="contact-info-text">
+                <h4>WhatsApp Fast Response</h4>
+                <p>+62 812-3456-7890 (Konsultasi Spesifikasi & Live Order)</p>
+              </div>
+            </div>
+
+            <!-- Logo Jam Operasional -->
+            <div class="contact-info-item">
+              <div class="contact-info-icon jam" title="Jam Operasional Toko">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffb703" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+              </div>
+              <div class="contact-info-text">
+                <h4>Jam Operasional Toko</h4>
+                <p>Senin - Sabtu: 10:00 - 19:00 WIB (Minggu & Tanggal Merah Tutup)</p>
+              </div>
+            </div>
+
+            <!-- Logo Email Support -->
+            <div class="contact-info-item">
+              <div class="contact-info-icon email" title="Email Support">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#00f0ff" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                  <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+              </div>
+              <div class="contact-info-text">
+                <h4>Email Support & Quotation</h4>
+                <p>support@nexuspc.id | sales@nexuspc.id</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contact Form Side -->
+        <form class="glass-card contact-form" id="contactForm">
+          <h3 style="font-size: 1.3rem;">Kirim Pesan Consultation</h3>
+          <div class="form-group">
+            <label for="contactName">Nama Lengkap</label>
+            <input type="text" id="contactName" class="form-control" placeholder="Masukkan nama Anda" required>
+          </div>
+          <div class="form-group">
+            <label for="contactEmail">Email / Nomor WhatsApp</label>
+            <input type="text" id="contactEmail" class="form-control" placeholder="Email atau 08xxx" required>
+          </div>
+          <div class="form-group">
+            <label for="contactSubject">Topik Pertanyaan</label>
+            <input type="text" id="contactSubject" class="form-control"
+              placeholder="Contoh: Rekomendasi PC Render 20 Juta" required>
+          </div>
+          <div class="form-group">
+            <label for="contactMessage">Pesan atau Kebutuhan Spesifik</label>
+            <textarea id="contactMessage" class="form-control"
+              placeholder="Tuliskan budget dan kebutuhan software/game yang ingin dijalankan..." required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" style="margin-top: 0.5rem;">
+            <i class="feather feather-send"></i> Kirim Pesan
+          </button>
+        </form>
+      </div>
+
+      <!-- FAQ Accordion -->
+      <div class="faq-section">
+        <div class="section-title">
+          <span class="badge badge-purple">FAQ</span>
+          <h2>Pertanyaan Sering Diajukan</h2>
+        </div>
+
+        <div class="accordion">
+          <div class="accordion-item active">
+            <div class="accordion-header">
+              <span>Apakah semua komponen yang digunakan garansi resmi Indonesia?</span>
+              <i class="feather feather-chevron-down"></i>
+            </div>
+            <div class="accordion-body">
+              Ya, 100% komponen yang kami sediakan dipasok oleh distributor resmi di Indonesia (ASUS, MSI, Gigabyte,
+              Corsair, Deepcool, dll) dengan garansi resmi 1 hingga 3 tahun.
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <div class="accordion-header">
+              <span>Berapa lama estimasi proses rakit dan kirim?</span>
+              <i class="feather feather-chevron-down"></i>
+            </div>
+            <div class="accordion-body">
+              Proses perakitan, instalasi OS, dan stress testing membutuhkan waktu 1-2 hari kerja. Untuk pengiriman luar
+              kota/pulau menggunakan packing kayu + asuransi kurir aman 100%.
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <div class="accordion-header">
+              <span>Bagaimana jika saya bingung memilih komponen yang cocok?</span>
+              <i class="feather feather-chevron-down"></i>
+            </div>
+            <div class="accordion-body">
+              Anda bisa menggunakan opsi <strong>Preset Builds</strong> yang sudah dikurasi, atau klik tombol
+              <strong>Pesan via WhatsApp</strong> untuk berdiskusi gratis dengan konsultan hardware kami.
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <div class="accordion-header">
+              <span>Apakah menerima pembayaran cicilan / Tokopedia / Shopee?</span>
+              <i class="feather feather-chevron-down"></i>
+            </div>
+            <div class="accordion-body">
+              Tentu! Selain Transfer Bank Direct & QRIS, kami melayani transaksi checkout via official store Tokopedia /
+              Shopee Nexus PC untuk opsi cicilan 0% kartu kredit maupun paylater.
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#home" class="logo">
+            <div class="logo-icon">
+              <i class="feather feather-cpu"></i>
+            </div>
+            <span>NEXUS<span class="text-gradient">PC</span></span>
+          </a>
+          <p>Platform simulasi rakit PC interaktif dan penyedia hardware custom terpercaya di Indonesia. Ditenagai oleh
+            teknologi perakitan presisi tinggi.</p>
+          <div class="social-links">
+            <a href="https://instagram.com" target="_blank" class="social-icon instagram" title="Instagram @NexusPC.id">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+              </svg>
+            </a>
+            <a href="https://youtube.com" target="_blank" class="social-icon youtube" title="YouTube Channel Nexus PC">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path>
+                <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon>
+              </svg>
+            </a>
+            <a href="https://tiktok.com" target="_blank" class="social-icon tiktok" title="TikTok @NexusPC.official">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 1 1-5.2-1.74 2.89 2.89 0 0 1 2.31-1.39V8.9a6.34 6.34 0 1 0 6.34 6.34V9.6a8.27 8.27 0 0 0 4.77 1.52V7.67a4.85 4.85 0 0 1-1-.98z"/>
+              </svg>
+            </a>
+            <a href="https://discord.gg" target="_blank" class="social-icon discord" title="Komunitas Discord Gamers Nexus PC">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
+              </svg>
+            </a>
+            <a href="https://wa.me/6281234567890" target="_blank" class="social-icon whatsapp" title="WhatsApp Customer Care">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-0.999 3.648 3.742-.981z"/>
+              </svg>
+            </a>
+            <a href="https://x.com" target="_blank" class="social-icon x-twitter" title="X / Twitter @NexusPC">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+              </svg>
+            </a>
+            <a href="https://facebook.com" target="_blank" class="social-icon facebook" title="Facebook Official Nexus PC">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Navigasi Cepat</h4>
+          <div class="footer-links">
+            <a href="#home">Home</a>
+            <a href="#preset">Preset Builds</a>
+            <a href="#rakit-pc">Simulasi Rakit PC</a>
+            <a href="#tentang">Tentang Kami</a>
+            <a href="#kontak">Kontak Store</a>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Kategori Komponen</h4>
+          <div class="footer-links">
+            <a href="#rakit-pc">Processor Intel & AMD</a>
+            <a href="#rakit-pc">VGA RTX 40 & RX 7000</a>
+            <a href="#rakit-pc">Motherboard DDR5</a>
+            <a href="#rakit-pc">RAM High Speed RGB</a>
+            <a href="#rakit-pc">Power Supply Gold</a>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="footer-title"><i class="feather feather-credit-card" style="margin-right: 0.35rem; color: var(--primary);"></i>Metode Pembayaran</h4>
+          <p style="font-size: 0.825rem; color: var(--text-muted); margin-bottom: 0.75rem; line-height: 1.4;">
+            Pembayaran mudah & aman melalui Bank Transfer (Virtual Account), Instant QRIS, E-Wallet, serta Cicilan 0% Tokopedia & Shopee.
+          </p>
+          <div class="payment-logos-grid">
+            <span class="payment-chip" title="Bank BCA (Transfer & VA)">
+              <svg viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="4" fill="#005caa"/><path d="M6 7h4c1.5 0 2.5.5 2.5 1.5s-.8 1.3-1.8 1.5c1.2.2 2.3.8 2.3 2 0 1.3-1.2 2-3 2H6V7zm2.2 2.3v1.2h1.5c.6 0 1-.2 1-.6s-.4-.6-1-.6H8.2zm0 2.5v1.4h1.8c.7 0 1.1-.2 1.1-.7s-.4-.7-1.1-.7H8.2z" fill="#fff"/></svg> BCA
+            </span>
+            <span class="payment-chip" title="Bank Mandiri">
+              <svg viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="4" fill="#003d79"/><path d="M5 14.5c3.5-3 8 2 14-2.5" stroke="#ffb703" stroke-width="2.5"/><path d="M7 9.5c2.5-2 6 1.5 10-1.5" stroke="#fff" stroke-width="1.8"/></svg> Mandiri
+            </span>
+            <span class="payment-chip" title="Bank BNI">
+              <svg viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="4" fill="#006666"/><path d="M5 8h4.5c1.2 0 2 .5 2 1.5 0 .8-.5 1.2-1.2 1.4v.1c1 .2 1.7.7 1.7 1.7 0 1.2-1 1.8-2.5 1.8H5V8z" fill="#fff"/><circle cx="17.5" cy="12" r="2.5" fill="#f26522"/></svg> BNI
+            </span>
+            <span class="payment-chip" title="Bank BRI">
+              <svg viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="4" fill="#00529c"/><path d="M6 7.5h5.5c1.4 0 2.2.7 2.2 1.7 0 .8-.5 1.4-1.3 1.6v.1c1 .2 1.6.8 1.6 1.8 0 1.2-1 1.8-2.5 1.8H6V7.5z" fill="#fff"/><rect x="15.5" y="7.5" width="2.5" height="7" rx="1.2" fill="#00a3e0"/></svg> BRI
+            </span>
+            <span class="payment-chip" title="QRIS Instant All E-Wallet">
+              <svg viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="4" fill="#ed1c24"/><rect x="4.5" y="4.5" width="6" height="6" fill="#fff"/><rect x="13.5" y="4.5" width="6" height="6" fill="#fff"/><rect x="4.5" y="13.5" width="6" height="6" fill="#fff"/><rect x="13.5" y="13.5" width="3" height="3" fill="#fff"/><rect x="16.5" y="16.5" width="3" height="3" fill="#fff"/><rect x="6" y="6" width="3" height="3" fill="#ed1c24"/><rect x="15" y="6" width="3" height="3" fill="#ed1c24"/><rect x="6" y="15" width="3" height="3" fill="#ed1c24"/></svg> QRIS
+            </span>
+            <span class="payment-chip" title="GoPay">
+              <svg viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="4" fill="#00a5cf"/><circle cx="12" cy="12" r="6" stroke="#fff" stroke-width="2.5"/><circle cx="12" cy="12" r="2.5" fill="#fff"/></svg> GoPay
+            </span>
+            <span class="payment-chip" title="OVO Cash">
+              <svg viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="4" fill="#4c2a86"/><circle cx="12" cy="12" r="5.5" stroke="#fff" stroke-width="2"/><circle cx="12" cy="12" r="2.5" stroke="#fff" stroke-width="1.5"/></svg> OVO
+            </span>
+            <span class="payment-chip" title="ShopeePay & PayLater">
+              <svg viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="4" fill="#ee4d2d"/><path d="M7 10.5h10v7.5H7z" stroke="#fff" stroke-width="1.6"/><path d="M9.5 10.5V8a2.5 2.5 0 0 1 5 0v2.5" stroke="#fff" stroke-width="1.6"/></svg> ShopeePay
+            </span>
+            <span class="payment-chip" title="Tokopedia Official Store">
+              <svg viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="4" fill="#03ac0e"/><circle cx="9" cy="10" r="1.5" fill="#fff"/><circle cx="15" cy="10" r="1.5" fill="#fff"/><path d="M7.5 14.5c1.5 2 7.5 2 9 0" stroke="#fff" stroke-width="1.6"/></svg> Tokopedia
+            </span>
+            <span class="payment-chip" title="Kartu Kredit Visa / Mastercard">
+              <svg viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="4" fill="#1a1f71"/><circle cx="9.5" cy="12" r="4.5" fill="#eb001b"/><circle cx="14.5" cy="12" r="4.5" fill="#f79e1b" fill-opacity="0.85"/></svg> Visa/MC
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 Nexus Custom PC Indonesia. All rights reserved. Designed for High Performance Gaming &
+          Workstations.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Modal View Detail Specification -->
+  <div class="modal-overlay" id="specModal">
+    <div class="modal-container">
+      <button class="modal-close" id="closeModalBtn">&times;</button>
+      <div id="modalContent">
+        <!-- Hydrated by app.js -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating WhatsApp Quick Chat Button -->
+  <a href="https://wa.me/6281234567890?text=Halo%20Nexus%20PC!%20Saya%20ingin%20bertanya%20seputar%20rakitan%20PC"
+    target="_blank" class="floating-whatsapp" title="Chat Konsultasi WhatsApp">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="#fff">
+      <path
+        d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-0.999 3.648 3.742-.981z" />
+    </svg>
+    <span>Chat WhatsApp</span>
+  </a>
+
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    feather.replace();
+  </script>
+</body>
+
+</html>
