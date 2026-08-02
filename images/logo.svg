@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%">
+  <defs>
+    <linearGradient id="morgulGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00f0ff" />
+      <stop offset="50%" stop-color="#7000ff" />
+      <stop offset="100%" stop-color="#ff007b" />
+    </linearGradient>
+    <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#121b2d" />
+      <stop offset="100%" stop-color="#07090e" />
+    </linearGradient>
+    <linearGradient id="goldAccent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00f0ff" />
+      <stop offset="100%" stop-color="#00ff9d" />
+    </linearGradient>
+    <filter id="neonGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background Shield -->
+  <polygon points="250,25 440,95 415,340 250,470 85,340 60,95" fill="url(#shieldGrad)" stroke="url(#morgulGrad)" stroke-width="7" filter="url(#neonGlow)" />
+  <polygon points="250,50 415,110 392,325 250,442 108,325 85,110" fill="none" stroke="rgba(0, 240, 255, 0.35)" stroke-width="2" stroke-dasharray="8 4" />
+
+  <!-- Cyber Dragon / 'M' Gaming Crest -->
+  <path d="M 150,140 L 210,140 L 250,225 L 290,140 L 350,140 L 350,290 L 305,290 L 305,195 L 262,280 L 238,280 L 195,195 L 195,290 L 150,290 Z" fill="url(#morgulGrad)" filter="url(#neonGlow)" />
+  
+  <!-- Z Wing Bottom Banner -->
+  <path d="M 130,315 L 370,315 L 230,348 L 370,348 L 370,372 L 130,372 L 270,338 L 130,338 Z" fill="url(#goldAccent)" filter="url(#neonGlow)" />
+
+  <!-- High-Tech Nodes & Lines -->
+  <circle cx="250" cy="75" r="7" fill="#00f0ff" filter="url(#neonGlow)" />
+  <circle cx="110" cy="115" r="5" fill="#ff007b" />
+  <circle cx="390" cy="115" r="5" fill="#ff007b" />
+  <line x1="250" y1="75" x2="250" y2="120" stroke="#00f0ff" stroke-width="3" />
+  <line x1="110" y1="115" x2="150" y2="140" stroke="rgba(255,0,123,0.5)" stroke-width="2" />
+  <line x1="390" y1="115" x2="350" y2="140" stroke="rgba(255,0,123,0.5)" stroke-width="2" />
+</svg>
