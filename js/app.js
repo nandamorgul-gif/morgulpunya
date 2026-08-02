@@ -583,68 +583,26 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    // Floating Cyber Music Player Controller (Instant Autoplay Engine)
-    const bgAudio = document.getElementById('bgAudio');
+    // Floating Cyber Music Player & YouTube Video Showcase Controller
+    const musicModal = document.getElementById('musicModal');
+    const closeMusicModalBtn = document.getElementById('closeMusicModalBtn');
     const musicPlayBtn = document.getElementById('musicPlayBtn');
-    const musicDisc = document.getElementById('musicDisc');
-    const musicStatus = document.getElementById('musicStatus');
+    const musicInfoBtn = document.getElementById('musicInfoBtn');
 
-    function updateAudioUI(isPlaying) {
-      if (!musicDisc || !musicPlayBtn || !musicStatus) return;
-      if (isPlaying) {
-        musicDisc.classList.add('playing');
-        musicPlayBtn.innerHTML = '<i class="feather feather-pause"></i>';
-        musicStatus.innerText = 'Diputar ♪ For Revenge - Penyangkalan';
-        musicStatus.style.color = 'var(--accent)';
-      } else {
-        musicDisc.classList.remove('playing');
-        musicPlayBtn.innerHTML = '<i class="feather feather-play"></i>';
-        musicStatus.innerText = 'Musik Dihentikan';
-        musicStatus.style.color = 'var(--text-muted)';
-      }
-      if (window.feather) feather.replace();
+    function openMusicModal() {
+      if (musicModal) musicModal.classList.add('active');
     }
 
-    if (bgAudio && musicPlayBtn) {
-      const attemptPlay = () => {
-        bgAudio.muted = false;
-        bgAudio.play().then(() => {
-          updateAudioUI(true);
-        }).catch(() => {
-          bgAudio.muted = true;
-          bgAudio.play().then(() => {
-            updateAudioUI(true);
-          }).catch(err => console.log('Autoplay deferred:', err));
-        });
-      };
+    function closeMusicModal() {
+      if (musicModal) musicModal.classList.remove('active');
+    }
 
-      // Attempt immediate autoplay on page load
-      attemptPlay();
-
-      // Instant trigger on any movement, scroll, touch, or click
-      const enableAudioInstantly = () => {
-        if (bgAudio.paused || bgAudio.muted) {
-          bgAudio.muted = false;
-          bgAudio.play().then(() => updateAudioUI(true)).catch(() => {});
-        }
-      };
-
-      const events = ['mousemove', 'mouseenter', 'scroll', 'wheel', 'touchstart', 'touchend', 'pointermove', 'keydown', 'click'];
-      events.forEach(evt => {
-        window.addEventListener(evt, enableAudioInstantly, { passive: true });
-        document.addEventListener(evt, enableAudioInstantly, { passive: true });
-      });
-
-      // Manual Play/Pause Button Toggle
-      musicPlayBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        if (bgAudio.paused) {
-          bgAudio.muted = false;
-          bgAudio.play().then(() => updateAudioUI(true)).catch(err => console.log(err));
-        } else {
-          bgAudio.pause();
-          updateAudioUI(false);
-        }
+    if (musicPlayBtn) musicPlayBtn.addEventListener('click', openMusicModal);
+    if (musicInfoBtn) musicInfoBtn.addEventListener('click', openMusicModal);
+    if (closeMusicModalBtn) closeMusicModalBtn.addEventListener('click', closeMusicModal);
+    if (musicModal) {
+      musicModal.addEventListener('click', (e) => {
+        if (e.target === musicModal) closeMusicModal();
       });
     }
   }
