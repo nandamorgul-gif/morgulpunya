@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const presetsContainerEl = document.getElementById('presetsContainer');
 
   // WhatsApp store number (Bisa diganti sesuai nomor pengguna)
-  const WHATSAPP_NUMBER = '6281234567890';
+  const WHATSAPP_NUMBER = '6288291967659';
 
   // Format IDR Helper
   function formatIDR(price) {
