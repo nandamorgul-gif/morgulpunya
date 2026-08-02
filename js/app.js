@@ -347,31 +347,50 @@ document.addEventListener('DOMContentLoaded', () => {
     const info = PAYMENT_INFO[paymentMethodKey] || PAYMENT_INFO['Transfer Bank BCA Direct'];
 
     cardEl.innerHTML = `
-      <div style="background: rgba(0, 0, 0, 0.45); border: 1px solid var(--border-glow); padding: 0.75rem 0.9rem; border-radius: var(--radius-md);">
-        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.4rem;">
-          <div style="display: flex; align-items: center; gap: 0.5rem;">
-            ${info.logoSvg}
-            <strong style="color: #fff; font-size: 0.85rem;">${info.bank}</strong>
+      <div class="bank-info-banner">
+        <div class="bank-banner-header">
+          <div class="bank-banner-brand">
+            <div class="bank-banner-icon">${info.logoSvg}</div>
+            <div>
+              <h4 style="color: #fff; font-size: 0.95rem; margin: 0; font-weight: 700;">${info.bank}</h4>
+              <span style="font-size: 0.725rem; color: var(--text-muted);">${info.notes}</span>
+            </div>
           </div>
-          <span style="font-size: 0.7rem; color: var(--accent); background: rgba(0, 255, 157, 0.12); padding: 0.15rem 0.5rem; border-radius: 4px; border: 1px solid rgba(0, 255, 157, 0.3);">
-            ✓ Terverifikasi
-          </span>
+          <span class="bank-verified-badge">✓ Terverifikasi Resmi</span>
         </div>
-        <div style="display: flex; align-items: center; justify-content: space-between; background: rgba(255, 255, 255, 0.05); padding: 0.45rem 0.7rem; border-radius: 6px; margin-bottom: 0.4rem; border: 1px solid rgba(255, 255, 255, 0.08);">
+
+        <div class="bank-banner-acc-box">
           <div>
-            <div style="font-size: 0.7rem; color: var(--text-muted);">Nomor Rekening / Kode Resmi:</div>
-            <div style="font-size: 0.95rem; font-weight: 800; color: var(--primary); letter-spacing: 0.5px; font-family: var(--font-heading);">${info.accountNumberFormatted}</div>
+            <span class="acc-label">NOMOR REKENING / KODE BAYAR:</span>
+            <div class="acc-number" id="bankAccNoDisplay">${info.accountNumberFormatted}</div>
           </div>
-          <button type="button" class="btn btn-secondary" id="copyBankAccBtn" data-copy="${info.accountNumber}" style="padding: 0.35rem 0.75rem; font-size: 0.75rem; gap: 0.35rem;">
-            📋 Salin Rekening
+          <button type="button" class="btn btn-secondary btn-copy-acc" id="copyBankAccBtn" data-copy="${info.accountNumber}">
+            📋 Salin No. Rekening
           </button>
         </div>
-        <div style="display: flex; justify-content: space-between; font-size: 0.775rem; color: var(--text-main);">
-          <span>👤 <strong>A.n. Penerima:</strong> <span style="color: var(--warning); font-weight: 700;">${info.accountName}</span></span>
-          <span style="color: var(--text-muted); font-size: 0.725rem;">${info.notes}</span>
+
+        <div class="bank-banner-footer">
+          <span>👤 <strong>Atas Nama (A.n.):</strong> <strong class="acc-name">${info.accountName}</strong></span>
+          <span style="color: var(--accent); font-size: 0.75rem;">🔒 Garansi Aman 100%</span>
         </div>
       </div>
     `;
+
+    // Sync visual active bank card item
+    const bankCards = document.querySelectorAll('.bank-card-item');
+    bankCards.forEach(card => {
+      if (card.dataset.payment === paymentMethodKey) {
+        card.classList.add('active');
+      } else {
+        card.classList.remove('active');
+      }
+    });
+
+    // Sync select dropdown value
+    const orderPaymentMethodEl = document.getElementById('orderPaymentMethod');
+    if (orderPaymentMethodEl && orderPaymentMethodEl.value !== paymentMethodKey) {
+      orderPaymentMethodEl.value = paymentMethodKey;
+    }
 
     const copyBtn = document.getElementById('copyBankAccBtn');
     if (copyBtn) {
@@ -379,8 +398,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const textToCopy = copyBtn.getAttribute('data-copy');
         if (navigator.clipboard) {
           navigator.clipboard.writeText(textToCopy).then(() => {
-            copyBtn.textContent = '✓ Tersalin!';
-            setTimeout(() => { copyBtn.textContent = '📋 Salin Rekening'; }, 2000);
+            copyBtn.innerHTML = '✓ Nomor Tersalin!';
+            copyBtn.style.background = 'var(--accent)';
+            copyBtn.style.color = '#000';
+            setTimeout(() => {
+              copyBtn.innerHTML = '📋 Salin No. Rekening';
+              copyBtn.style.background = '';
+              copyBtn.style.color = '';
+            }, 2200);
           });
         } else {
           alert(`Nomor Rekening: ${textToCopy}`);
@@ -745,6 +770,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const cancelOrderModalBtn = document.getElementById('cancelOrderModalBtn');
     const checkoutOrderForm = document.getElementById('checkoutOrderForm');
     const orderPaymentMethodEl = document.getElementById('orderPaymentMethod');
+
+    const bankCardsGrid = document.getElementById('bankCardsGrid');
+    if (bankCardsGrid) {
+      bankCardsGrid.addEventListener('click', (e) => {
+        const card = e.target.closest('.bank-card-item');
+        if (!card) return;
+        const paymentVal = card.dataset.payment;
+        if (paymentVal) {
+          updateBankDetailsCard(paymentVal);
+        }
+      });
+    }
 
     if (orderPaymentMethodEl) {
       orderPaymentMethodEl.addEventListener('change', (e) => {

@@ -1040,31 +1040,58 @@
           <textarea id="orderCustomerAddress" class="order-form-control" placeholder="Tuliskan jalan, RT/RW, Kecamatan, Kota, & Kode Pos..." rows="2" required style="resize: vertical; min-height: 65px;"></textarea>
         </div>
 
-        <div class="order-form-grid">
-          <div class="form-group">
-            <label for="orderPaymentMethod" class="order-label">Pilihan Metode Pembayaran</label>
-            <select id="orderPaymentMethod" class="order-form-control order-form-select">
-              <option value="Transfer Bank BCA Direct">Transfer Bank BCA Direct</option>
-              <option value="Transfer Mandiri Virtual Account">Transfer Mandiri VA</option>
-              <option value="QRIS Instant All Wallet (Gopay/OVO/ShopeePay)">QRIS Instant All Wallet</option>
-              <option value="Checkout via Official Tokopedia (Cicilan 0%)">Official Tokopedia Store (Cicilan 0%)</option>
-              <option value="Checkout via Official Shopee (PayLater/ShopeePay)">Official Shopee Store</option>
-            </select>
+        <div style="margin-bottom: 0.85rem;">
+          <label class="order-label" style="display: flex; justify-content: space-between; align-items: center;">
+            <span>Pilihan Metode Pembayaran & Rekening Resmi</span>
+            <span style="font-size: 0.725rem; color: var(--accent);">✓ Klik logo bank untuk memilih</span>
+          </label>
+
+          <!-- Visual Bank Card Selector Grid -->
+          <div class="bank-cards-grid" id="bankCardsGrid">
+            <div class="bank-card-item active" data-payment="Transfer Bank BCA Direct">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="4" fill="#005caa"/><path d="M6 7h4c1.5 0 2.5.5 2.5 1.5s-.8 1.3-1.8 1.5c1.2.2 2.3.8 2.3 2 0 1.3-1.2 2-3 2H6V7z" fill="#fff"/></svg>
+              <span>BCA</span>
+            </div>
+            <div class="bank-card-item" data-payment="Transfer Mandiri Virtual Account">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="4" fill="#003d79"/><path d="M5 14.5c3.5-3 8 2 14-2.5" stroke="#ffb703" stroke-width="2.5"/></svg>
+              <span>Mandiri</span>
+            </div>
+            <div class="bank-card-item" data-payment="QRIS Instant All Wallet (Gopay/OVO/ShopeePay)">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="4" fill="#ed1c24"/><rect x="4.5" y="4.5" width="6" height="6" fill="#fff"/><rect x="13.5" y="4.5" width="6" height="6" fill="#fff"/><rect x="4.5" y="13.5" width="6" height="6" fill="#fff"/><rect x="13.5" y="13.5" width="3" height="3" fill="#fff"/></svg>
+              <span>QRIS</span>
+            </div>
+            <div class="bank-card-item" data-payment="Checkout via Official Tokopedia (Cicilan 0%)">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="4" fill="#03ac0e"/><circle cx="9" cy="10" r="1.5" fill="#fff"/><circle cx="15" cy="10" r="1.5" fill="#fff"/><path d="M7.5 14.5c1.5 2 7.5 2 9 0" stroke="#fff" stroke-width="1.6"/></svg>
+              <span>Tokopedia</span>
+            </div>
+            <div class="bank-card-item" data-payment="Checkout via Official Shopee (PayLater/ShopeePay)">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="4" fill="#ee4d2d"/><path d="M7 10.5h10v7.5H7z" stroke="#fff" stroke-width="1.6"/><path d="M9.5 10.5V8a2.5 2.5 0 0 1 5 0v2.5" stroke="#fff" stroke-width="1.6"/></svg>
+              <span>Shopee</span>
+            </div>
           </div>
 
-          <div class="form-group">
-            <label for="orderDeliveryOption" class="order-label">Metode Pengiriman</label>
-            <select id="orderDeliveryOption" class="order-form-control order-form-select">
-              <option value="Packing Kayu + Asuransi 100% Aman (Luar Kota / Pulau)">Packing Kayu + Asuransi (Luar Kota/Pulau)</option>
-              <option value="Kurir Instant (Gojek / GrabExpress Jabodetabek)">Kurir Instant (Gojek / GrabExpress)</option>
-              <option value="Ambil Langsung di Workshop Store (Jonggol Bogor)">Ambil Langsung di Store (Pick Up)</option>
-            </select>
-          </div>
+          <!-- Synced Dropdown -->
+          <select id="orderPaymentMethod" class="order-form-control order-form-select" style="margin-top: 0.35rem;">
+            <option value="Transfer Bank BCA Direct">Transfer Bank BCA Direct (8830-9196-7659 a.n NANDA MORGUL)</option>
+            <option value="Transfer Mandiri Virtual Account">Transfer Mandiri VA (133-00-9196-7659 a.n NANDA MORGUL)</option>
+            <option value="QRIS Instant All Wallet (Gopay/OVO/ShopeePay)">QRIS Instant All Wallet (Scan QR Code)</option>
+            <option value="Checkout via Official Tokopedia (Cicilan 0%)">Official Tokopedia Store (Cicilan 0%)</option>
+            <option value="Checkout via Official Shopee (PayLater/ShopeePay)">Official Shopee Store</option>
+          </select>
         </div>
 
-        <!-- Dynamic Bank Account & Payment Details Card -->
+        <!-- Dynamic Bank Account & Payment Details Banner Card -->
         <div id="paymentBankDetailsCard" class="payment-bank-details-card" style="margin-bottom: 0.85rem;">
           <!-- Hydrated dynamically by app.js -->
+        </div>
+
+        <div class="form-group" style="margin-bottom: 0.85rem;">
+          <label for="orderDeliveryOption" class="order-label">Metode Pengiriman</label>
+          <select id="orderDeliveryOption" class="order-form-control order-form-select">
+            <option value="Packing Kayu + Asuransi 100% Aman (Luar Kota / Pulau)">Packing Kayu + Asuransi (Luar Kota / Pulau)</option>
+            <option value="Kurir Instant (Gojek / GrabExpress Jabodetabek)">Kurir Instant (Gojek / GrabExpress Jabodetabek)</option>
+            <option value="Ambil Langsung di Workshop Store (Jonggol Bogor)">Ambil Langsung di Workshop Store (Pick Up)</option>
+          </select>
         </div>
 
         <div class="form-group" style="margin-bottom: 1.25rem;">
