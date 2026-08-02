@@ -992,7 +992,7 @@
 
   <!-- Modal Form Pemesanan / Checkout Order Modal -->
   <div class="modal-overlay" id="orderModal">
-    <div class="modal-container" style="max-width: 650px; width: 92%; max-height: 90vh; overflow-y: auto;">
+    <div class="modal-container order-modal-container">
       <button class="modal-close" id="closeOrderModalBtn">&times;</button>
 
       <div style="text-align: center; margin-bottom: 1.25rem;">
@@ -1006,31 +1006,31 @@
 
       <form id="checkoutOrderForm">
         <!-- Preview Ringkasan Rakitan -->
-        <div id="orderSummaryPreview" style="background: rgba(0, 240, 255, 0.05); border: 1px solid var(--border-glow); padding: 0.85rem 1rem; border-radius: var(--radius-md); margin-bottom: 1.25rem;">
+        <div id="orderSummaryPreview" class="order-summary-box">
           <!-- Hydrated dynamically by app.js -->
         </div>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 0.85rem;">
+        <div class="order-form-grid">
           <div class="form-group">
-            <label for="orderCustomerName" style="font-size: 0.825rem; font-weight: 600; color: var(--text-main); display: block; margin-bottom: 0.35rem;">Nama Lengkap Pemesan <span style="color: var(--danger)">*</span></label>
-            <input type="text" id="orderCustomerName" class="form-control" placeholder="Contoh: Budi Santoso" required style="width: 100%; padding: 0.65rem 0.85rem; border-radius: var(--radius-sm); background: rgba(0, 0, 0, 0.4); border: 1px solid var(--border-color); color: #fff;">
+            <label for="orderCustomerName" class="order-label">Nama Lengkap Pemesan <span style="color: var(--danger)">*</span></label>
+            <input type="text" id="orderCustomerName" class="order-form-control" placeholder="Contoh: Budi Santoso" required>
           </div>
 
           <div class="form-group">
-            <label for="orderCustomerPhone" style="font-size: 0.825rem; font-weight: 600; color: var(--text-main); display: block; margin-bottom: 0.35rem;">Nomor WhatsApp <span style="color: var(--danger)">*</span></label>
-            <input type="tel" id="orderCustomerPhone" class="form-control" placeholder="Contoh: 081234567890" required style="width: 100%; padding: 0.65rem 0.85rem; border-radius: var(--radius-sm); background: rgba(0, 0, 0, 0.4); border: 1px solid var(--border-color); color: #fff;">
+            <label for="orderCustomerPhone" class="order-label">Nomor WhatsApp <span style="color: var(--danger)">*</span></label>
+            <input type="tel" id="orderCustomerPhone" class="order-form-control" placeholder="Contoh: 081234567890" required>
           </div>
         </div>
 
         <div class="form-group" style="margin-bottom: 0.85rem;">
-          <label for="orderCustomerAddress" style="font-size: 0.825rem; font-weight: 600; color: var(--text-main); display: block; margin-bottom: 0.35rem;">Alamat Pengiriman & Kota <span style="color: var(--danger)">*</span></label>
-          <textarea id="orderCustomerAddress" class="form-control" placeholder="Tuliskan jalan, RT/RW, Kecamatan, Kota, & Kode Pos..." rows="2" required style="width: 100%; padding: 0.65rem 0.85rem; border-radius: var(--radius-sm); background: rgba(0, 0, 0, 0.4); border: 1px solid var(--border-color); color: #fff; resize: vertical;"></textarea>
+          <label for="orderCustomerAddress" class="order-label">Alamat Pengiriman & Kota <span style="color: var(--danger)">*</span></label>
+          <textarea id="orderCustomerAddress" class="order-form-control" placeholder="Tuliskan jalan, RT/RW, Kecamatan, Kota, & Kode Pos..." rows="2" required style="resize: vertical; min-height: 65px;"></textarea>
         </div>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 0.85rem;">
+        <div class="order-form-grid">
           <div class="form-group">
-            <label for="orderPaymentMethod" style="font-size: 0.825rem; font-weight: 600; color: var(--text-main); display: block; margin-bottom: 0.35rem;">Pilihan Metode Pembayaran</label>
-            <select id="orderPaymentMethod" class="form-control" style="width: 100%; padding: 0.65rem 0.85rem; border-radius: var(--radius-sm); background: #121826; border: 1px solid var(--border-color); color: #fff;">
+            <label for="orderPaymentMethod" class="order-label">Pilihan Metode Pembayaran</label>
+            <select id="orderPaymentMethod" class="order-form-control order-form-select">
               <option value="Transfer Bank BCA Direct">Transfer Bank BCA Direct</option>
               <option value="Transfer Mandiri Virtual Account">Transfer Mandiri VA</option>
               <option value="QRIS Instant All Wallet (Gopay/OVO/ShopeePay)">QRIS Instant All Wallet</option>
@@ -1040,8 +1040,8 @@
           </div>
 
           <div class="form-group">
-            <label for="orderDeliveryOption" style="font-size: 0.825rem; font-weight: 600; color: var(--text-main); display: block; margin-bottom: 0.35rem;">Metode Pengiriman</label>
-            <select id="orderDeliveryOption" class="form-control" style="width: 100%; padding: 0.65rem 0.85rem; border-radius: var(--radius-sm); background: #121826; border: 1px solid var(--border-color); color: #fff;">
+            <label for="orderDeliveryOption" class="order-label">Metode Pengiriman</label>
+            <select id="orderDeliveryOption" class="order-form-control order-form-select">
               <option value="Packing Kayu + Asuransi 100% Aman (Luar Kota / Pulau)">Packing Kayu + Asuransi (Luar Kota/Pulau)</option>
               <option value="Kurir Instant (Gojek / GrabExpress Jabodetabek)">Kurir Instant (Gojek / GrabExpress)</option>
               <option value="Ambil Langsung di Workshop Store (Jonggol Bogor)">Ambil Langsung di Store (Pick Up)</option>
@@ -1050,13 +1050,13 @@
         </div>
 
         <div class="form-group" style="margin-bottom: 1.25rem;">
-          <label for="orderNotes" style="font-size: 0.825rem; font-weight: 600; color: var(--text-main); display: block; margin-bottom: 0.35rem;">Catatan Khusus / Permintaan Ekstra (Opsional)</label>
-          <input type="text" id="orderNotes" class="form-control" placeholder="Contoh: Minta warna kabel putih, minta partisi SSD dipisah C: & D:" style="width: 100%; padding: 0.65rem 0.85rem; border-radius: var(--radius-sm); background: rgba(0, 0, 0, 0.4); border: 1px solid var(--border-color); color: #fff;">
+          <label for="orderNotes" class="order-label">Catatan Khusus / Permintaan Ekstra (Opsional)</label>
+          <input type="text" id="orderNotes" class="order-form-control" placeholder="Contoh: Minta warna kabel putih, minta partisi SSD dipisah C: & D:">
         </div>
 
-        <div style="display: flex; gap: 0.75rem; justify-content: flex-end; align-items: center; border-top: 1px solid var(--border-color); padding-top: 1rem;">
-          <button type="button" class="btn btn-secondary" id="cancelOrderModalBtn" style="padding: 0.6rem 1.2rem; font-size: 0.875rem;">Batal</button>
-          <button type="submit" class="btn btn-emerald" style="padding: 0.6rem 1.4rem; font-size: 0.9rem; gap: 0.5rem;">
+        <div class="order-form-actions">
+          <button type="button" class="btn btn-secondary" id="cancelOrderModalBtn">Batal</button>
+          <button type="submit" class="btn btn-emerald">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="#fff">
               <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-0.999 3.648 3.742-.981z" />
             </svg>
