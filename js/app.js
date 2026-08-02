@@ -1,5 +1,5 @@
 /**
- * Nexus Custom PC - App Logic & Interactivity
+ * Morgulzxz Gaming Performance - App Logic & Interactivity
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -297,7 +297,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 8. Generate WhatsApp Message Link
   function generateWhatsAppLink() {
-    let msg = `Halo Nexus PC! Saya ingin berkonsultasi / memesan rakitan PC dengan rincian berikut:\n\n`;
+    let msg = `Halo Morgulzxz Gaming Performance! Saya ingin berkonsultasi / memesan rakitan PC dengan rincian berikut:\n\n`;
     let totalPrice = 0;
     let count = 0;
 
@@ -350,7 +350,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     modalContentEl.innerHTML = `
       <div style="text-align: center; margin-bottom: 1.5rem;">
-        <h3 style="font-size: 1.6rem;" class="text-gradient">NEXUS CUSTOM PC BUILD SPEC</h3>
+        <h3 style="font-size: 1.6rem;" class="text-gradient">MORGULZXZ GAMING PERFORMANCE SPEC</h3>
         <p style="color: var(--text-muted); font-size: 0.9rem;">Rincian Konfigurasi & Estimasi Biaya</p>
       </div>
 
@@ -528,7 +528,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (contactForm) {
       contactForm.addEventListener('submit', (e) => {
         e.preventDefault();
-        alert('Terima kasih! Pesan Anda telah terkirim. Tim konsultasi Nexus PC akan menghubungi Anda secepatnya.');
+        alert('Terima kasih! Pesan Anda telah terkirim. Tim konsultasi Morgulzxz Gaming Performance akan menghubungi Anda secepatnya.');
         contactForm.reset();
       });
     }

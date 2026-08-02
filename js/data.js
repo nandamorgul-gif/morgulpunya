@@ -1,5 +1,5 @@
 /**
- * Database Komponen PC Terbaru & Preset Rakitan - Nexus PC Builder
+ * Database Komponen PC Terbaru & Preset Rakitan - Morgulzxz Gaming Performance
  */
 
 const PC_DATA = {
@@ -356,7 +356,7 @@ const PC_DATA = {
       {
         id: 'acc-2',
         name: 'Kabel Extension Custom Sleeved Power Supply Full Set (White/Black)',
-        brand: 'Nexus Custom',
+        brand: 'Morgulzxz Custom',
         price: 350000,
         watts: 0,
         image: 'https://images.unsplash.com/photo-1562976540-1502c2145186?w=300&auto=format&fit=crop&q=80',
@@ -377,7 +377,7 @@ const PC_DATA = {
       {
         id: 'soft-1',
         name: 'Paket Basic OS & Office Ready (Gratis / Included)',
-        brand: 'Nexus Software',
+        brand: 'Morgulzxz Software',
         price: 0,
         watts: 0,
         image: 'https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?w=300&auto=format&fit=crop&q=80',
@@ -386,7 +386,7 @@ const PC_DATA = {
       {
         id: 'soft-2',
         name: 'Paket Pro Gamer & FPS Tuning Optimization',
-        brand: 'Nexus Software',
+        brand: 'Morgulzxz Software',
         price: 150000,
         watts: 0,
         image: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=300&auto=format&fit=crop&q=80',
@@ -395,7 +395,7 @@ const PC_DATA = {
       {
         id: 'soft-3',
         name: 'Paket Creator Workstation & 3D Render Suite',
-        brand: 'Nexus Software',
+        brand: 'Morgulzxz Software',
         price: 250000,
         watts: 0,
         image: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=300&auto=format&fit=crop&q=80',
@@ -404,7 +404,7 @@ const PC_DATA = {
       {
         id: 'soft-4',
         name: 'Paket Developer Dual-Boot Windows 11 + Linux Ubuntu',
-        brand: 'Nexus Software',
+        brand: 'Morgulzxz Software',
         price: 300000,
         watts: 0,
         image: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?w=300&auto=format&fit=crop&q=80',
