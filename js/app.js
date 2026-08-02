@@ -295,6 +295,100 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  // Bank Payment Information Database
+  const PAYMENT_INFO = {
+    'Transfer Bank BCA Direct': {
+      bank: 'Bank Central Asia (BCA)',
+      logoSvg: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="4" fill="#005caa"/><path d="M6 7h4c1.5 0 2.5.5 2.5 1.5s-.8 1.3-1.8 1.5c1.2.2 2.3.8 2.3 2 0 1.3-1.2 2-3 2H6V7z" fill="#fff"/></svg>`,
+      accountNumber: '883091967659',
+      accountNumberFormatted: '8830-9196-7659',
+      accountName: 'NANDA MORGUL',
+      notes: 'Transfer Langsung BCA / M-BCA'
+    },
+    'Transfer Mandiri Virtual Account': {
+      bank: 'Bank Mandiri',
+      logoSvg: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="4" fill="#003d79"/><path d="M5 14.5c3.5-3 8 2 14-2.5" stroke="#ffb703" stroke-width="2.5"/></svg>`,
+      accountNumber: '1330091967659',
+      accountNumberFormatted: '133-00-9196-7659',
+      accountName: 'NANDA MORGUL',
+      notes: 'Transfer Livin by Mandiri / Virtual Account'
+    },
+    'QRIS Instant All Wallet (Gopay/OVO/ShopeePay)': {
+      bank: 'QRIS All Payment (GoPay, OVO, Dana, ShopeePay)',
+      logoSvg: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="4" fill="#ed1c24"/><rect x="4.5" y="4.5" width="6" height="6" fill="#fff"/><rect x="13.5" y="4.5" width="6" height="6" fill="#fff"/><rect x="4.5" y="13.5" width="6" height="6" fill="#fff"/><rect x="13.5" y="13.5" width="3" height="3" fill="#fff"/></svg>`,
+      accountNumber: '088291967659',
+      accountNumberFormatted: 'NPM-MORGULZXZ-QRIS (Scan QR)',
+      accountName: 'MORGULZXZ GAMING PERFORMANCE',
+      notes: 'Scan QRIS Instant All Wallet & M-Banking'
+    },
+    'Checkout via Official Tokopedia (Cicilan 0%)': {
+      bank: 'Tokopedia Official Store',
+      logoSvg: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="4" fill="#03ac0e"/><circle cx="9" cy="10" r="1.5" fill="#fff"/><circle cx="15" cy="10" r="1.5" fill="#fff"/><path d="M7.5 14.5c1.5 2 7.5 2 9 0" stroke="#fff" stroke-width="1.6"/></svg>`,
+      accountNumber: 'Official Store Tokopedia Morgulzxz',
+      accountNumberFormatted: 'Official Tokopedia: Morgulzxz Gaming',
+      accountName: 'Morgulzxz Gaming Performance',
+      notes: 'Tersedia Cicilan 0% s/d 24 Bulan'
+    },
+    'Checkout via Official Shopee (PayLater/ShopeePay)': {
+      bank: 'Shopee Official Store',
+      logoSvg: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="4" fill="#ee4d2d"/><path d="M7 10.5h10v7.5H7z" stroke="#fff" stroke-width="1.6"/><path d="M9.5 10.5V8a2.5 2.5 0 0 1 5 0v2.5" stroke="#fff" stroke-width="1.6"/></svg>`,
+      accountNumber: 'Official Store Shopee Morgulzxz',
+      accountNumberFormatted: 'Official Shopee: Morgulzxz Gaming',
+      accountName: 'Morgulzxz Gaming Performance',
+      notes: 'Bisa SPayLater & ShopeePay'
+    }
+  };
+
+  // Render Dynamic Bank Account Details Card in Order Form
+  function updateBankDetailsCard(paymentMethodKey) {
+    const cardEl = document.getElementById('paymentBankDetailsCard');
+    if (!cardEl) return;
+
+    const info = PAYMENT_INFO[paymentMethodKey] || PAYMENT_INFO['Transfer Bank BCA Direct'];
+
+    cardEl.innerHTML = `
+      <div style="background: rgba(0, 0, 0, 0.45); border: 1px solid var(--border-glow); padding: 0.75rem 0.9rem; border-radius: var(--radius-md);">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.4rem;">
+          <div style="display: flex; align-items: center; gap: 0.5rem;">
+            ${info.logoSvg}
+            <strong style="color: #fff; font-size: 0.85rem;">${info.bank}</strong>
+          </div>
+          <span style="font-size: 0.7rem; color: var(--accent); background: rgba(0, 255, 157, 0.12); padding: 0.15rem 0.5rem; border-radius: 4px; border: 1px solid rgba(0, 255, 157, 0.3);">
+            ✓ Terverifikasi
+          </span>
+        </div>
+        <div style="display: flex; align-items: center; justify-content: space-between; background: rgba(255, 255, 255, 0.05); padding: 0.45rem 0.7rem; border-radius: 6px; margin-bottom: 0.4rem; border: 1px solid rgba(255, 255, 255, 0.08);">
+          <div>
+            <div style="font-size: 0.7rem; color: var(--text-muted);">Nomor Rekening / Kode Resmi:</div>
+            <div style="font-size: 0.95rem; font-weight: 800; color: var(--primary); letter-spacing: 0.5px; font-family: var(--font-heading);">${info.accountNumberFormatted}</div>
+          </div>
+          <button type="button" class="btn btn-secondary" id="copyBankAccBtn" data-copy="${info.accountNumber}" style="padding: 0.35rem 0.75rem; font-size: 0.75rem; gap: 0.35rem;">
+            📋 Salin Rekening
+          </button>
+        </div>
+        <div style="display: flex; justify-content: space-between; font-size: 0.775rem; color: var(--text-main);">
+          <span>👤 <strong>A.n. Penerima:</strong> <span style="color: var(--warning); font-weight: 700;">${info.accountName}</span></span>
+          <span style="color: var(--text-muted); font-size: 0.725rem;">${info.notes}</span>
+        </div>
+      </div>
+    `;
+
+    const copyBtn = document.getElementById('copyBankAccBtn');
+    if (copyBtn) {
+      copyBtn.addEventListener('click', () => {
+        const textToCopy = copyBtn.getAttribute('data-copy');
+        if (navigator.clipboard) {
+          navigator.clipboard.writeText(textToCopy).then(() => {
+            copyBtn.textContent = '✓ Tersalin!';
+            setTimeout(() => { copyBtn.textContent = '📋 Salin Rekening'; }, 2000);
+          });
+        } else {
+          alert(`Nomor Rekening: ${textToCopy}`);
+        }
+      });
+    }
+  }
+
   // 8. Open Order Form Modal (Form Pemesanan)
   function openOrderModal() {
     let count = 0;
@@ -338,6 +432,11 @@ document.addEventListener('DOMContentLoaded', () => {
       `;
     }
 
+    const orderPaymentMethodEl = document.getElementById('orderPaymentMethod');
+    if (orderPaymentMethodEl) {
+      updateBankDetailsCard(orderPaymentMethodEl.value);
+    }
+
     const orderModal = document.getElementById('orderModal');
     if (orderModal) {
       orderModal.classList.add('open');
@@ -354,6 +453,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const payment = document.getElementById('orderPaymentMethod').value;
     const delivery = document.getElementById('orderDeliveryOption').value;
     const notes = document.getElementById('orderNotes').value.trim();
+
+    const payInfo = PAYMENT_INFO[payment] || PAYMENT_INFO['Transfer Bank BCA Direct'];
 
     let totalPrice = 0;
     let totalWatts = 0;
@@ -381,7 +482,9 @@ document.addEventListener('DOMContentLoaded', () => {
     msg += `• *Nama*: ${name}\n`;
     msg += `• *No. WhatsApp*: ${phone}\n`;
     msg += `• *Alamat & Kota*: ${address}\n`;
-    msg += `• *Pembayaran*: ${payment}\n`;
+    msg += `• *Metode Pembayaran*: ${payment}\n`;
+    msg += `• *No. Rekening Tujuan*: ${payInfo.accountNumberFormatted}\n`;
+    msg += `• *Atas Nama (A.n.)*: ${payInfo.accountName}\n`;
     msg += `• *Pengiriman*: ${delivery}\n`;
     if (notes) {
       msg += `• *Catatan Khusus*: ${notes}\n`;
@@ -392,7 +495,7 @@ document.addEventListener('DOMContentLoaded', () => {
     msg += `\n⚡ *Estimasi Konsumsi Daya*: ${totalWatts} Watts\n`;
     msg += `💰 *TOTAL ESTIMASI HARGA*: ${formatIDR(totalPrice)}\n`;
     msg += `=========================================\n\n`;
-    msg += `Mohon konfirmasi ketersediaan stok komponen di atas dan nomor rekening pembayarannya. Terima kasih!`;
+    msg += `Mohon konfirmasi ketersediaan stok komponen di atas dan konfirmasi pembayaran. Terima kasih!`;
 
     const encoded = encodeURIComponent(msg);
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encoded}`, '_blank');
@@ -614,6 +717,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeOrderModalBtn = document.getElementById('closeOrderModalBtn');
     const cancelOrderModalBtn = document.getElementById('cancelOrderModalBtn');
     const checkoutOrderForm = document.getElementById('checkoutOrderForm');
+    const orderPaymentMethodEl = document.getElementById('orderPaymentMethod');
+
+    if (orderPaymentMethodEl) {
+      orderPaymentMethodEl.addEventListener('change', (e) => {
+        updateBankDetailsCard(e.target.value);
+      });
+    }
 
     if (closeOrderModalBtn && orderModal) {
       closeOrderModalBtn.addEventListener('click', () => orderModal.classList.remove('open'));
