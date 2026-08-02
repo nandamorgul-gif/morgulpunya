@@ -295,31 +295,117 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // 8. Generate WhatsApp Message Link
-  function generateWhatsAppLink() {
-    let msg = `Halo Morgulzxz Gaming Performance! Saya ingin berkonsultasi / memesan rakitan PC dengan rincian berikut:\n\n`;
-    let totalPrice = 0;
+  // 8. Open Order Form Modal (Form Pemesanan)
+  function openOrderModal() {
     let count = 0;
+    let totalPrice = 0;
+    let totalWatts = 0;
+    const partsSummary = [];
 
     PC_DATA.categories.forEach(cat => {
       const part = state.userBuild[cat.id];
       if (part) {
         count++;
         totalPrice += part.price;
-        msg += `🔹 *${cat.name.split(' ')[0]}*: ${part.name} (${formatIDR(part.price)})\n`;
+        if (part.watts) totalWatts += part.watts;
+        partsSummary.push(`<li style="margin-bottom: 0.25rem;"><strong style="color: var(--primary);">${cat.name.split(' ')[0]}:</strong> ${part.name}</li>`);
       }
     });
 
     if (count === 0) {
-      alert('Silakan pilih minimal 1 komponen sebelum membuat pesanan WhatsApp!');
+      alert('Silakan pilih minimal 1 komponen terlebih dahulu sebelum membuat pesanan!');
       return;
     }
 
-    msg += `\n💰 *ESTIMASI TOTAL HARGA*: ${formatIDR(totalPrice)}\n`;
-    msg += `\nApakah semua stok komponen di atas tersedia? Mohon info estimasi perakitannya. Terima kasih!`;
+    const orderSummaryPreviewEl = document.getElementById('orderSummaryPreview');
+    if (orderSummaryPreviewEl) {
+      orderSummaryPreviewEl.innerHTML = `
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; border-bottom: 1px dashed var(--border-color); padding-bottom: 0.5rem;">
+          <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase;">
+            📦 Total (${count} Komponen Terpilih)
+          </span>
+          <span style="font-size: 1.1rem; font-weight: 800; color: var(--accent); font-family: var(--font-heading);">
+            ${formatIDR(totalPrice)}
+          </span>
+        </div>
+        <ul style="font-size: 0.775rem; color: var(--text-main); list-style: none; max-height: 110px; overflow-y: auto; padding-right: 0.35rem;">
+          ${partsSummary.join('')}
+        </ul>
+        <div style="margin-top: 0.5rem; font-size: 0.775rem; color: var(--warning); font-weight: 600; display: flex; justify-content: space-between;">
+          <span>⚡ Estimasi Konsumsi Daya: ${totalWatts} Watts</span>
+          <span style="color: var(--accent);">✓ Siap Dirakit</span>
+        </div>
+      `;
+    }
+
+    const orderModal = document.getElementById('orderModal');
+    if (orderModal) {
+      orderModal.classList.add('open');
+    }
+  }
+
+  // Submit Order Form to WhatsApp
+  function handleCheckoutOrderSubmit(e) {
+    e.preventDefault();
+
+    const name = document.getElementById('orderCustomerName').value.trim();
+    const phone = document.getElementById('orderCustomerPhone').value.trim();
+    const address = document.getElementById('orderCustomerAddress').value.trim();
+    const payment = document.getElementById('orderPaymentMethod').value;
+    const delivery = document.getElementById('orderDeliveryOption').value;
+    const notes = document.getElementById('orderNotes').value.trim();
+
+    let totalPrice = 0;
+    let totalWatts = 0;
+    let count = 0;
+    let partsListMsg = '';
+
+    PC_DATA.categories.forEach(cat => {
+      const part = state.userBuild[cat.id];
+      if (part) {
+        count++;
+        totalPrice += part.price;
+        if (part.watts) totalWatts += part.watts;
+        partsListMsg += `• *${cat.name.split(' ')[0]}*: ${part.name} (${formatIDR(part.price)})\n`;
+      }
+    });
+
+    if (count === 0) {
+      alert('Tidak ada komponen terpilih!');
+      return;
+    }
+
+    let msg = `🛒 *FORM PEMESANAN PC RAKITAN - MORGULZXZ GAMING*\n`;
+    msg += `=========================================\n\n`;
+    msg += `👤 *DATA PEMESAN:*\n`;
+    msg += `• *Nama*: ${name}\n`;
+    msg += `• *No. WhatsApp*: ${phone}\n`;
+    msg += `• *Alamat & Kota*: ${address}\n`;
+    msg += `• *Pembayaran*: ${payment}\n`;
+    msg += `• *Pengiriman*: ${delivery}\n`;
+    if (notes) {
+      msg += `• *Catatan Khusus*: ${notes}\n`;
+    }
+    msg += `\n-----------------------------------------\n`;
+    msg += `💻 *RINCIAN PAKET PC RAKITAN:*\n`;
+    msg += partsListMsg;
+    msg += `\n⚡ *Estimasi Konsumsi Daya*: ${totalWatts} Watts\n`;
+    msg += `💰 *TOTAL ESTIMASI HARGA*: ${formatIDR(totalPrice)}\n`;
+    msg += `=========================================\n\n`;
+    msg += `Mohon konfirmasi ketersediaan stok komponen di atas dan nomor rekening pembayarannya. Terima kasih!`;
 
     const encoded = encodeURIComponent(msg);
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encoded}`, '_blank');
+
+    const orderModal = document.getElementById('orderModal');
+    if (orderModal) {
+      orderModal.classList.remove('open');
+    }
+  }
+
+  // Legacy fallback alias
+  function generateWhatsAppLink() {
+    openOrderModal();
   }
 
   // 9. Show Specification Modal Dialog / Print View
@@ -404,7 +490,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (modalWaBtn) {
       modalWaBtn.addEventListener('click', () => {
         specModal.classList.remove('open');
-        generateWhatsAppLink();
+        openOrderModal();
       });
     }
   }
@@ -505,7 +591,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // WhatsApp Order button
     if (whatsappOrderBtn) {
-      whatsappOrderBtn.addEventListener('click', generateWhatsAppLink);
+      whatsappOrderBtn.addEventListener('click', openOrderModal);
     }
 
     // Export Spec Modal button
@@ -513,7 +599,7 @@ document.addEventListener('DOMContentLoaded', () => {
       exportSpecBtn.addEventListener('click', showSpecModal);
     }
 
-    // Close Modal button
+    // Spec Modal close handlers
     if (closeModalBtn) {
       closeModalBtn.addEventListener('click', () => specModal.classList.remove('open'));
     }
@@ -521,6 +607,27 @@ document.addEventListener('DOMContentLoaded', () => {
       specModal.addEventListener('click', (e) => {
         if (e.target === specModal) specModal.classList.remove('open');
       });
+    }
+
+    // Order Modal Handlers
+    const orderModal = document.getElementById('orderModal');
+    const closeOrderModalBtn = document.getElementById('closeOrderModalBtn');
+    const cancelOrderModalBtn = document.getElementById('cancelOrderModalBtn');
+    const checkoutOrderForm = document.getElementById('checkoutOrderForm');
+
+    if (closeOrderModalBtn && orderModal) {
+      closeOrderModalBtn.addEventListener('click', () => orderModal.classList.remove('open'));
+    }
+    if (cancelOrderModalBtn && orderModal) {
+      cancelOrderModalBtn.addEventListener('click', () => orderModal.classList.remove('open'));
+    }
+    if (orderModal) {
+      orderModal.addEventListener('click', (e) => {
+        if (e.target === orderModal) orderModal.classList.remove('open');
+      });
+    }
+    if (checkoutOrderForm) {
+      checkoutOrderForm.addEventListener('submit', handleCheckoutOrderSubmit);
     }
 
     // Contact Form submission handler
