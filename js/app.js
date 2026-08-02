@@ -443,16 +443,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Submit Order Form to WhatsApp
-  function handleCheckoutOrderSubmit(e) {
-    e.preventDefault();
-
+  // Helper to build formatted Order Message
+  function buildOrderMessageText() {
     const name = document.getElementById('orderCustomerName').value.trim();
     const phone = document.getElementById('orderCustomerPhone').value.trim();
     const address = document.getElementById('orderCustomerAddress').value.trim();
     const payment = document.getElementById('orderPaymentMethod').value;
     const delivery = document.getElementById('orderDeliveryOption').value;
     const notes = document.getElementById('orderNotes').value.trim();
+
+    if (!name || !phone || !address) {
+      alert('Mohon lengkapi Nama Lengkap, Nomor HP/WA, dan Alamat Pengiriman!');
+      return null;
+    }
 
     const payInfo = PAYMENT_INFO[payment] || PAYMENT_INFO['Transfer Bank BCA Direct'];
 
@@ -473,14 +476,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (count === 0) {
       alert('Tidak ada komponen terpilih!');
-      return;
+      return null;
     }
 
     let msg = `🛒 *FORM PEMESANAN PC RAKITAN - MORGULZXZ GAMING*\n`;
     msg += `=========================================\n\n`;
     msg += `👤 *DATA PEMESAN:*\n`;
     msg += `• *Nama*: ${name}\n`;
-    msg += `• *No. WhatsApp*: ${phone}\n`;
+    msg += `• *No. HP/WA*: ${phone}\n`;
     msg += `• *Alamat & Kota*: ${address}\n`;
     msg += `• *Metode Pembayaran*: ${payment}\n`;
     msg += `• *No. Rekening Tujuan*: ${payInfo.accountNumberFormatted}\n`;
@@ -497,8 +500,32 @@ document.addEventListener('DOMContentLoaded', () => {
     msg += `=========================================\n\n`;
     msg += `Mohon konfirmasi ketersediaan stok komponen di atas dan konfirmasi pembayaran. Terima kasih!`;
 
+    return msg;
+  }
+
+  // Submit Order Form to WhatsApp
+  function handleCheckoutOrderSubmit(e) {
+    if (e) e.preventDefault();
+
+    const msg = buildOrderMessageText();
+    if (!msg) return;
+
     const encoded = encodeURIComponent(msg);
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encoded}`, '_blank');
+
+    const orderModal = document.getElementById('orderModal');
+    if (orderModal) {
+      orderModal.classList.remove('open');
+    }
+  }
+
+  // Submit Order Form to Telegram Direct @nandamorgul
+  function sendOrderToTelegram() {
+    const msg = buildOrderMessageText();
+    if (!msg) return;
+
+    const encoded = encodeURIComponent(msg);
+    window.open(`https://t.me/nandamorgul?text=${encoded}`, '_blank');
 
     const orderModal = document.getElementById('orderModal');
     if (orderModal) {
@@ -736,6 +763,11 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.target === orderModal) orderModal.classList.remove('open');
       });
     }
+    const sendOrderTelegramBtn = document.getElementById('sendOrderTelegramBtn');
+    if (sendOrderTelegramBtn) {
+      sendOrderTelegramBtn.addEventListener('click', sendOrderToTelegram);
+    }
+
     if (checkoutOrderForm) {
       checkoutOrderForm.addEventListener('submit', handleCheckoutOrderSubmit);
     }

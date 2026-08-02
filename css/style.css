@@ -251,6 +251,19 @@ ul {
   border-color: #fff;
 }
 
+.btn-telegram {
+  background: linear-gradient(135deg, #0088cc 0%, #006699 100%);
+  color: #fff;
+  box-shadow: 0 4px 20px rgba(0, 136, 204, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.btn-telegram:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(0, 136, 204, 0.7);
+  border-color: #fff;
+}
+
 /* Specialty Navigation & Hero Simulation Buttons */
 .btn-simulasi-nav {
   padding: 0.6rem 1.35rem;
