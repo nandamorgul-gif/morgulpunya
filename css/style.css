@@ -170,53 +170,121 @@ ul {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.6rem;
-  padding: 0.85rem 1.75rem;
+  gap: 0.65rem;
+  padding: 0.85rem 1.8rem;
   border-radius: var(--radius-md);
   font-family: var(--font-heading);
-  font-weight: 600;
-  font-size: 1rem;
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.3px;
   cursor: pointer;
   border: 1px solid transparent;
-  transition: var(--transition);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;
   overflow: hidden;
+  user-select: none;
+  z-index: 1;
+}
+
+.btn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+  transform: skewX(-20deg);
+  transition: none;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.btn:hover::after {
+  left: 140%;
+  transition: all 0.75s ease-in-out;
+}
+
+.btn:active {
+  transform: translateY(1px) scale(0.98) !important;
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--primary) 0%, #00b4d8 100%);
-  color: #000;
-  box-shadow: var(--shadow-glow-cyan);
+  background: linear-gradient(135deg, #00f0ff 0%, #0088ff 100%);
+  color: #050a14;
+  box-shadow: 0 4px 20px rgba(0, 240, 255, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.25);
 }
 
 .btn-primary:hover {
   transform: translateY(-3px);
-  box-shadow: 0 0 35px rgba(0, 240, 255, 0.5);
+  box-shadow: 0 8px 30px rgba(0, 240, 255, 0.6);
+  border-color: #fff;
 }
 
 .btn-secondary {
-  background: var(--bg-card);
+  background: rgba(18, 24, 38, 0.85);
   color: var(--text-main);
-  border-color: var(--border-color);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   backdrop-filter: var(--backdrop-blur);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
 .btn-secondary:hover {
-  background: var(--bg-card-hover);
+  background: rgba(26, 35, 54, 0.95);
   border-color: var(--primary);
   color: var(--primary);
   transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 240, 255, 0.2);
 }
 
 .btn-emerald {
-  background: linear-gradient(135deg, var(--accent) 0%, #00b36b 100%);
-  color: #000;
-  box-shadow: 0 0 25px rgba(0, 255, 157, 0.3);
+  background: linear-gradient(135deg, #00ff9d 0%, #00b36b 100%);
+  color: #04140c;
+  box-shadow: 0 4px 20px rgba(0, 255, 157, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.25);
 }
 
 .btn-emerald:hover {
   transform: translateY(-3px);
-  box-shadow: 0 0 35px rgba(0, 255, 157, 0.5);
+  box-shadow: 0 8px 30px rgba(0, 255, 157, 0.6);
+  border-color: #fff;
+}
+
+/* Specialty Navigation & Hero Simulation Buttons */
+.btn-simulasi-nav {
+  padding: 0.6rem 1.35rem;
+  font-size: 0.875rem;
+  border-radius: var(--radius-full);
+  background: linear-gradient(135deg, #00f0ff 0%, #7000ff 100%);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+  animation: pulseGlow 3s infinite alternate;
+}
+
+@keyframes pulseGlow {
+  0% { box-shadow: 0 0 12px rgba(0, 240, 255, 0.3); }
+  100% { box-shadow: 0 0 25px rgba(112, 0, 255, 0.6); }
+}
+
+.btn-simulasi-hero {
+  padding: 0.95rem 2.2rem;
+  font-size: 1.05rem;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, #00f0ff 0%, #0099ff 100%);
+  color: #050a14;
+  font-weight: 800;
+  box-shadow: 0 6px 25px rgba(0, 240, 255, 0.45);
+}
+
+.btn-simulasi-hero i {
+  font-size: 1.2rem;
+  transition: transform 0.3s ease;
+}
+
+.btn-simulasi-hero:hover i {
+  transform: rotate(90deg) scale(1.15);
 }
 
 .btn-icon {
