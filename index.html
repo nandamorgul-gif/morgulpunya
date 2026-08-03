@@ -1083,60 +1083,72 @@
           </label>
 
           <!-- Visual Bank Card Selector Grid -->
-          <div class="bank-cards-grid" id="bankCardsGrid">
-            <div class="bank-card-item active" data-payment="Transfer Bank BCA Direct">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <rect width="24" height="24" rx="4" fill="#005caa" />
-                <path d="M6 7h4c1.5 0 2.5.5 2.5 1.5s-.8 1.3-1.8 1.5c1.2.2 2.3.8 2.3 2 0 1.3-1.2 2-3 2H6V7z"
-                  fill="#fff" />
-              </svg>
+          <div class="bank-cards-grid" id="bankCardsGrid" style="grid-template-columns: repeat(3, 1fr);">
+
+            <!-- BCA -->
+            <div class="bank-card-item active" data-payment="Transfer Bank BCA Direct" title="Bank BCA - 8830-9196-7659">
+              <div class="bank-card-logo-pill" style="background: #005caa;">
+                <span style="color: #fff; font-weight: 900; font-size: 0.85rem; letter-spacing: 1px;">BCA</span>
+              </div>
               <span>BCA</span>
+              <span class="bank-card-accno">8830-9196-7659</span>
             </div>
-            <div class="bank-card-item" data-payment="Transfer Mandiri Virtual Account">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <rect width="24" height="24" rx="4" fill="#003d79" />
-                <path d="M5 14.5c3.5-3 8 2 14-2.5" stroke="#ffb703" stroke-width="2.5" />
-              </svg>
+
+            <!-- Mandiri -->
+            <div class="bank-card-item" data-payment="Transfer Mandiri Virtual Account" title="Bank Mandiri - 133-00-9196-7659">
+              <div class="bank-card-logo-pill" style="background: #003d79;">
+                <span style="color: #ffb703; font-weight: 900; font-size: 0.7rem; letter-spacing: 0.5px;">MANDIRI</span>
+              </div>
               <span>Mandiri</span>
+              <span class="bank-card-accno">133-00-9196-7659</span>
             </div>
-            <div class="bank-card-item" data-payment="QRIS Instant All Wallet (Gopay/OVO/ShopeePay)">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <rect width="24" height="24" rx="4" fill="#ed1c24" />
-                <rect x="4.5" y="4.5" width="6" height="6" fill="#fff" />
-                <rect x="13.5" y="4.5" width="6" height="6" fill="#fff" />
-                <rect x="4.5" y="13.5" width="6" height="6" fill="#fff" />
-                <rect x="13.5" y="13.5" width="3" height="3" fill="#fff" />
-              </svg>
+
+            <!-- SeaBank -->
+            <div class="bank-card-item" data-payment="Transfer SeaBank" title="SeaBank - 1231-3213-2131-4">
+              <div class="bank-card-logo-pill" style="background: linear-gradient(135deg, #2ec4b6, #1a9e92);">
+                <span style="color: #fff; font-weight: 900; font-size: 0.7rem; letter-spacing: 0.3px;">SeaBank</span>
+              </div>
+              <span>SeaBank</span>
+              <span class="bank-card-accno">1231-3213-2131-4</span>
+            </div>
+
+            <!-- QRIS -->
+            <div class="bank-card-item" data-payment="QRIS Instant All Wallet (Gopay/OVO/ShopeePay)" title="QRIS All Wallet">
+              <div class="bank-card-logo-pill" style="background: #ed1c24;">
+                <span style="color: #fff; font-weight: 900; font-size: 0.75rem;">QRIS</span>
+              </div>
               <span>QRIS</span>
+              <span class="bank-card-accno">Scan QR</span>
             </div>
-            <div class="bank-card-item" data-payment="Checkout via Official Tokopedia (Cicilan 0%)">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <rect width="24" height="24" rx="4" fill="#03ac0e" />
-                <circle cx="9" cy="10" r="1.5" fill="#fff" />
-                <circle cx="15" cy="10" r="1.5" fill="#fff" />
-                <path d="M7.5 14.5c1.5 2 7.5 2 9 0" stroke="#fff" stroke-width="1.6" />
-              </svg>
+
+            <!-- Tokopedia -->
+            <div class="bank-card-item" data-payment="Checkout via Official Tokopedia (Cicilan 0%)" title="Tokopedia Official">
+              <div class="bank-card-logo-pill" style="background: #03ac0e;">
+                <span style="color: #fff; font-weight: 900; font-size: 0.6rem;">TOKOPEDIA</span>
+              </div>
               <span>Tokopedia</span>
+              <span class="bank-card-accno">Cicilan 0%</span>
             </div>
-            <div class="bank-card-item" data-payment="Checkout via Official Shopee (PayLater/ShopeePay)">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <rect width="24" height="24" rx="4" fill="#ee4d2d" />
-                <path d="M7 10.5h10v7.5H7z" stroke="#fff" stroke-width="1.6" />
-                <path d="M9.5 10.5V8a2.5 2.5 0 0 1 5 0v2.5" stroke="#fff" stroke-width="1.6" />
-              </svg>
+
+            <!-- Shopee -->
+            <div class="bank-card-item" data-payment="Checkout via Official Shopee (PayLater/ShopeePay)" title="Shopee Official">
+              <div class="bank-card-logo-pill" style="background: #ee4d2d;">
+                <span style="color: #fff; font-weight: 900; font-size: 0.7rem; letter-spacing: 0.3px;">SHOPEE</span>
+              </div>
               <span>Shopee</span>
+              <span class="bank-card-accno">SPayLater</span>
             </div>
+
           </div>
 
           <!-- Synced Dropdown -->
           <select id="orderPaymentMethod" class="order-form-control order-form-select" style="margin-top: 0.35rem;">
-            <option value="Transfer Bank BCA Direct">Transfer Bank BCA Direct (8830-9196-7659 a.n NANDA MORGUL)</option>
-            <option value="Transfer Mandiri Virtual Account">Transfer Mandiri VA (133-00-9196-7659 a.n NANDA MORGUL)
-            </option>
-            <option value="QRIS Instant All Wallet (Gopay/OVO/ShopeePay)">QRIS Instant All Wallet (Scan QR Code)
-            </option>
-            <option value="Checkout via Official Tokopedia (Cicilan 0%)">Official Tokopedia Store (Cicilan 0%)</option>
-            <option value="Checkout via Official Shopee (PayLater/ShopeePay)">Official Shopee Store</option>
+            <option value="Transfer Bank BCA Direct">🏦 BCA — 8830-9196-7659 (a.n NANDA MORGUL)</option>
+            <option value="Transfer Mandiri Virtual Account">🏦 Mandiri — 133-00-9196-7659 (a.n NANDA MORGUL)</option>
+            <option value="Transfer SeaBank">🌊 SeaBank — 1231-3213-2131-4 (a.n NANDA MORGUL)</option>
+            <option value="QRIS Instant All Wallet (Gopay/OVO/ShopeePay)">📱 QRIS All Wallet (GoPay, OVO, Dana, ShopeePay)</option>
+            <option value="Checkout via Official Tokopedia (Cicilan 0%)">🛍️ Official Tokopedia Store (Cicilan 0%)</option>
+            <option value="Checkout via Official Shopee (PayLater/ShopeePay)">🛒 Official Shopee Store (SPayLater)</option>
           </select>
         </div>
 

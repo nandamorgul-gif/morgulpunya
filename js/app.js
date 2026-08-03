@@ -299,43 +299,81 @@ document.addEventListener('DOMContentLoaded', () => {
   const PAYMENT_INFO = {
     'Transfer Bank BCA Direct': {
       bank: 'Bank Central Asia (BCA)',
-      logoSvg: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="4" fill="#005caa"/><path d="M6 7h4c1.5 0 2.5.5 2.5 1.5s-.8 1.3-1.8 1.5c1.2.2 2.3.8 2.3 2 0 1.3-1.2 2-3 2H6V7z" fill="#fff"/></svg>`,
-      accountNumber: '883091967659',
+      logoSvg: `<svg width="38" height="22" viewBox="0 0 76 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="76" height="44" rx="6" fill="#005caa"/>
+        <text x="38" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-weight="900" font-size="20" fill="#ffffff" letter-spacing="1">BCA</text>
+      </svg>`,
+      accountNumber: '8830919678659',
       accountNumberFormatted: '8830-9196-7659',
       accountName: 'NANDA MORGUL',
+      color: '#005caa',
       notes: 'Transfer Langsung BCA / M-BCA'
     },
     'Transfer Mandiri Virtual Account': {
       bank: 'Bank Mandiri',
-      logoSvg: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="4" fill="#003d79"/><path d="M5 14.5c3.5-3 8 2 14-2.5" stroke="#ffb703" stroke-width="2.5"/></svg>`,
+      logoSvg: `<svg width="38" height="22" viewBox="0 0 76 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="76" height="44" rx="6" fill="#003d79"/>
+        <text x="38" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-weight="900" font-size="13" fill="#ffb703" letter-spacing="0.5">MANDIRI</text>
+      </svg>`,
       accountNumber: '1330091967659',
       accountNumberFormatted: '133-00-9196-7659',
       accountName: 'NANDA MORGUL',
-      notes: 'Transfer Livin by Mandiri / Virtual Account'
+      color: '#003d79',
+      notes: 'Transfer Livin by Mandiri / ATM Mandiri'
+    },
+    'Transfer SeaBank': {
+      bank: 'SeaBank Indonesia',
+      logoSvg: `<svg width="38" height="22" viewBox="0 0 76 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="76" height="44" rx="6" fill="#2ec4b6"/>
+        <text x="38" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-weight="900" font-size="14" fill="#ffffff" letter-spacing="0.5">SeaBank</text>
+      </svg>`,
+      accountNumber: '1231321321314',
+      accountNumberFormatted: '1231-3213-2131-4',
+      accountName: 'NANDA MORGUL',
+      color: '#2ec4b6',
+      notes: 'Transfer Instan SeaBank / Sea Mobile'
     },
     'QRIS Instant All Wallet (Gopay/OVO/ShopeePay)': {
       bank: 'QRIS All Payment (GoPay, OVO, Dana, ShopeePay)',
-      logoSvg: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="4" fill="#ed1c24"/><rect x="4.5" y="4.5" width="6" height="6" fill="#fff"/><rect x="13.5" y="4.5" width="6" height="6" fill="#fff"/><rect x="4.5" y="13.5" width="6" height="6" fill="#fff"/><rect x="13.5" y="13.5" width="3" height="3" fill="#fff"/></svg>`,
+      logoSvg: `<svg width="38" height="22" viewBox="0 0 76 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="76" height="44" rx="6" fill="#ed1c24"/>
+        <rect x="8" y="6" width="12" height="12" fill="#fff" rx="1"/>
+        <rect x="10" y="8" width="4" height="4" fill="#ed1c24"/>
+        <rect x="22" y="6" width="12" height="12" fill="#fff" rx="1"/>
+        <rect x="24" y="8" width="4" height="4" fill="#ed1c24"/>
+        <rect x="8" y="20" width="12" height="12" fill="#fff" rx="1"/>
+        <rect x="10" y="22" width="4" height="4" fill="#ed1c24"/>
+        <text x="52" y="29" text-anchor="middle" font-family="Arial, sans-serif" font-weight="900" font-size="12" fill="#ffffff">QRIS</text>
+      </svg>`,
       accountNumber: '088291967659',
-      accountNumberFormatted: 'NPM-MORGULZXZ-QRIS (Scan QR)',
+      accountNumberFormatted: 'Scan QR Code (QRIS)',
       accountName: 'MORGULZXZ GAMING PERFORMANCE',
-      notes: 'Scan QRIS Instant All Wallet & M-Banking'
+      color: '#ed1c24',
+      notes: 'Scan QRIS · GoPay · OVO · Dana · ShopeePay'
     },
     'Checkout via Official Tokopedia (Cicilan 0%)': {
       bank: 'Tokopedia Official Store',
-      logoSvg: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="4" fill="#03ac0e"/><circle cx="9" cy="10" r="1.5" fill="#fff"/><circle cx="15" cy="10" r="1.5" fill="#fff"/><path d="M7.5 14.5c1.5 2 7.5 2 9 0" stroke="#fff" stroke-width="1.6"/></svg>`,
+      logoSvg: `<svg width="38" height="22" viewBox="0 0 76 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="76" height="44" rx="6" fill="#03ac0e"/>
+        <text x="38" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-weight="900" font-size="11" fill="#ffffff" letter-spacing="0.3">TOKOPEDIA</text>
+      </svg>`,
       accountNumber: 'Official Store Tokopedia Morgulzxz',
-      accountNumberFormatted: 'Official Tokopedia: Morgulzxz Gaming',
+      accountNumberFormatted: 'Morgulzxz Gaming (Official)',
       accountName: 'Morgulzxz Gaming Performance',
-      notes: 'Tersedia Cicilan 0% s/d 24 Bulan'
+      color: '#03ac0e',
+      notes: 'Cicilan 0% s/d 24 Bulan · Kredit & Debit'
     },
     'Checkout via Official Shopee (PayLater/ShopeePay)': {
       bank: 'Shopee Official Store',
-      logoSvg: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="4" fill="#ee4d2d"/><path d="M7 10.5h10v7.5H7z" stroke="#fff" stroke-width="1.6"/><path d="M9.5 10.5V8a2.5 2.5 0 0 1 5 0v2.5" stroke="#fff" stroke-width="1.6"/></svg>`,
+      logoSvg: `<svg width="38" height="22" viewBox="0 0 76 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="76" height="44" rx="6" fill="#ee4d2d"/>
+        <text x="38" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-weight="900" font-size="13" fill="#ffffff" letter-spacing="0.5">SHOPEE</text>
+      </svg>`,
       accountNumber: 'Official Store Shopee Morgulzxz',
-      accountNumberFormatted: 'Official Shopee: Morgulzxz Gaming',
+      accountNumberFormatted: 'Morgulzxz Gaming (Official)',
       accountName: 'Morgulzxz Gaming Performance',
-      notes: 'Bisa SPayLater & ShopeePay'
+      color: '#ee4d2d',
+      notes: 'SPayLater · ShopeePay · Kredit & Debit'
     }
   };
 
