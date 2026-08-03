@@ -414,8 +414,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // 8. Open Order Form Modal (Form Pemesanan)
-  function openOrderModal() {
+  // Render Order Summary Preview with Ongkir & Packing Kayu Calculation
+  function renderOrderSummaryPreview() {
+    const orderSummaryPreviewEl = document.getElementById('orderSummaryPreview');
+    if (!orderSummaryPreviewEl) return;
+
     let count = 0;
     let totalPrice = 0;
     let totalWatts = 0;
@@ -427,8 +430,60 @@ document.addEventListener('DOMContentLoaded', () => {
         count++;
         totalPrice += part.price;
         if (part.watts) totalWatts += part.watts;
-        partsSummary.push(`<li style="margin-bottom: 0.25rem;"><strong style="color: var(--primary);">${cat.name.split(' ')[0]}:</strong> ${part.name}</li>`);
+        partsSummary.push(`<li style="margin-bottom: 0.2rem;"><strong style="color: var(--primary);">${cat.name.split(' ')[0]}:</strong> ${part.name}</li>`);
       }
+    });
+
+    const deliveryEl = document.getElementById('orderDeliveryOption');
+    const packingCheckEl = document.getElementById('orderPackingKayuCheck');
+
+    let ongkir = 150000;
+    if (deliveryEl) {
+      const opt = deliveryEl.options[deliveryEl.selectedIndex];
+      ongkir = parseInt(opt?.dataset.ongkir || '0', 10);
+    }
+
+    let packing = 0;
+    if (packingCheckEl && packingCheckEl.checked) {
+      packing = 100000;
+    }
+
+    const grandTotal = totalPrice + ongkir + packing;
+
+    orderSummaryPreviewEl.innerHTML = `
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem; border-bottom: 1px dashed var(--border-color); padding-bottom: 0.4rem;">
+        <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase;">
+          📦 Subtotal (${count} Komponen PC)
+        </span>
+        <span style="font-size: 0.95rem; font-weight: 700; color: #fff;">
+          ${formatIDR(totalPrice)}
+        </span>
+      </div>
+      <ul style="font-size: 0.775rem; color: var(--text-main); list-style: none; max-height: 85px; overflow-y: auto; padding-right: 0.35rem; margin-bottom: 0.4rem;">
+        ${partsSummary.join('')}
+      </ul>
+      <div style="background: rgba(0, 0, 0, 0.4); padding: 0.5rem 0.65rem; border-radius: 6px; font-size: 0.775rem; display: flex; flex-direction: column; gap: 0.25rem; border: 1px stroke rgba(255, 255, 255, 0.08);">
+        <div style="display: flex; justify-content: space-between; color: var(--text-muted);">
+          <span>🚚 Est. Biaya Kirim & Asuransi:</span>
+          <span style="color: #fff; font-weight: 600;">+${formatIDR(ongkir)}</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; color: var(--text-muted);">
+          <span>🪵 Jasa Packing Kayu & Proteksi:</span>
+          <span style="color: #fff; font-weight: 600;">+${formatIDR(packing)}</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.25rem; border-top: 1px dashed rgba(0, 240, 255, 0.3); padding-top: 0.35rem;">
+          <strong style="color: var(--accent); font-size: 0.825rem;">💰 TOTAL KESELURUHAN:</strong>
+          <strong style="color: var(--accent); font-size: 1.15rem; font-family: var(--font-heading); text-shadow: 0 0 10px rgba(0, 255, 157, 0.3);">${formatIDR(grandTotal)}</strong>
+        </div>
+      </div>
+    `;
+  }
+
+  // 8. Open Order Form Modal (Form Pemesanan)
+  function openOrderModal() {
+    let count = 0;
+    PC_DATA.categories.forEach(cat => {
+      if (state.userBuild[cat.id]) count++;
     });
 
     if (count === 0) {
@@ -436,26 +491,7 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    const orderSummaryPreviewEl = document.getElementById('orderSummaryPreview');
-    if (orderSummaryPreviewEl) {
-      orderSummaryPreviewEl.innerHTML = `
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; border-bottom: 1px dashed var(--border-color); padding-bottom: 0.5rem;">
-          <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase;">
-            📦 Total (${count} Komponen Terpilih)
-          </span>
-          <span style="font-size: 1.1rem; font-weight: 800; color: var(--accent); font-family: var(--font-heading);">
-            ${formatIDR(totalPrice)}
-          </span>
-        </div>
-        <ul style="font-size: 0.775rem; color: var(--text-main); list-style: none; max-height: 110px; overflow-y: auto; padding-right: 0.35rem;">
-          ${partsSummary.join('')}
-        </ul>
-        <div style="margin-top: 0.5rem; font-size: 0.775rem; color: var(--warning); font-weight: 600; display: flex; justify-content: space-between;">
-          <span>⚡ Estimasi Konsumsi Daya: ${totalWatts} Watts</span>
-          <span style="color: var(--accent);">✓ Siap Dirakit</span>
-        </div>
-      `;
-    }
+    renderOrderSummaryPreview();
 
     const orderPaymentMethodEl = document.getElementById('orderPaymentMethod');
     if (orderPaymentMethodEl) {
@@ -474,12 +510,31 @@ document.addEventListener('DOMContentLoaded', () => {
     const phone = document.getElementById('orderCustomerPhone').value.trim();
     const address = document.getElementById('orderCustomerAddress').value.trim();
     const payment = document.getElementById('orderPaymentMethod').value;
-    const delivery = document.getElementById('orderDeliveryOption').value;
+    const deliveryEl = document.getElementById('orderDeliveryOption');
+    const packingCheckEl = document.getElementById('orderPackingKayuCheck');
+    const proofFileEl = document.getElementById('orderPaymentProof');
     const notes = document.getElementById('orderNotes').value.trim();
 
     if (!name || !phone || !address) {
       alert('Mohon lengkapi Nama Lengkap, Nomor HP/WA, dan Alamat Pengiriman!');
       return null;
+    }
+
+    const delivery = deliveryEl ? deliveryEl.value : '';
+    let ongkir = 0;
+    if (deliveryEl) {
+      const opt = deliveryEl.options[deliveryEl.selectedIndex];
+      ongkir = parseInt(opt?.dataset.ongkir || '0', 10);
+    }
+
+    let packing = 0;
+    if (packingCheckEl && packingCheckEl.checked) {
+      packing = 100000;
+    }
+
+    let proofFileName = '';
+    if (proofFileEl && proofFileEl.files && proofFileEl.files[0]) {
+      proofFileName = proofFileEl.files[0].name;
     }
 
     const payInfo = PAYMENT_INFO[payment] || PAYMENT_INFO['Transfer Bank BCA Direct'];
@@ -504,6 +559,8 @@ document.addEventListener('DOMContentLoaded', () => {
       return null;
     }
 
+    const grandTotal = totalPrice + ongkir + packing;
+
     let msg = `🛒 *FORM PEMESANAN PC RAKITAN - MORGULZXZ GAMING*\n`;
     msg += `=========================================\n\n`;
     msg += `👤 *DATA PEMESAN:*\n`;
@@ -514,6 +571,11 @@ document.addEventListener('DOMContentLoaded', () => {
     msg += `• *No. Rekening Tujuan*: ${payInfo.accountNumberFormatted}\n`;
     msg += `• *Atas Nama (A.n.)*: ${payInfo.accountName}\n`;
     msg += `• *Pengiriman*: ${delivery}\n`;
+    msg += `• *Est. Biaya Kirim & Asuransi*: ${formatIDR(ongkir)}\n`;
+    msg += `• *Jasa Packing Kayu*: ${packing > 0 ? formatIDR(packing) + ' (Heavy-Duty Crate)' : 'Tidak'}\n`;
+    if (proofFileName) {
+      msg += `• *Bukti Pembayaran*: 📄 File Terlampir (${proofFileName})\n`;
+    }
     if (notes) {
       msg += `• *Catatan Khusus*: ${notes}\n`;
     }
@@ -521,7 +583,9 @@ document.addEventListener('DOMContentLoaded', () => {
     msg += `💻 *RINCIAN PAKET PC RAKITAN:*\n`;
     msg += partsListMsg;
     msg += `\n⚡ *Estimasi Konsumsi Daya*: ${totalWatts} Watts\n`;
-    msg += `💰 *TOTAL ESTIMASI HARGA*: ${formatIDR(totalPrice)}\n`;
+    msg += `🖥️ *SUBTOTAL COMPONENT PC*: ${formatIDR(totalPrice)}\n`;
+    msg += `🚚 *ESTIMASI ONGKIR & PACKING*: ${formatIDR(ongkir + packing)}\n`;
+    msg += `💰 *TOTAL KESELURUHAN*: ${formatIDR(grandTotal)}\n`;
     msg += `=========================================\n\n`;
     msg += `Mohon konfirmasi ketersediaan stok komponen di atas dan konfirmasi pembayaran. Terima kasih!`;
 
@@ -779,6 +843,29 @@ document.addEventListener('DOMContentLoaded', () => {
         const paymentVal = card.dataset.payment;
         if (paymentVal) {
           updateBankDetailsCard(paymentVal);
+        }
+      });
+    }
+
+    const orderDeliveryOptionEl = document.getElementById('orderDeliveryOption');
+    const orderPackingKayuCheckEl = document.getElementById('orderPackingKayuCheck');
+    const orderPaymentProofEl = document.getElementById('orderPaymentProof');
+
+    if (orderDeliveryOptionEl) {
+      orderDeliveryOptionEl.addEventListener('change', renderOrderSummaryPreview);
+    }
+    if (orderPackingKayuCheckEl) {
+      orderPackingKayuCheckEl.addEventListener('change', renderOrderSummaryPreview);
+    }
+    if (orderPaymentProofEl) {
+      orderPaymentProofEl.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        const fileNameEl = document.getElementById('paymentProofFileName');
+        const subtextEl = document.getElementById('paymentProofSubtext');
+        if (file && fileNameEl) {
+          fileNameEl.textContent = `✓ Terlampir: ${file.name}`;
+          fileNameEl.style.color = 'var(--accent)';
+          if (subtextEl) subtextEl.textContent = `Ukuran: ${(file.size / 1024).toFixed(1)} KB (Siap dikirim)`;
         }
       });
     }

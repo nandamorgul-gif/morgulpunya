@@ -235,8 +235,10 @@
 
               <!-- Action Buttons -->
               <div class="summary-actions">
-                <button class="btn btn-emerald" id="whatsappOrderBtn" style="width: 100%; gap: 0.6rem; font-size: 1rem; font-weight: 700;">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <button class="btn btn-emerald" id="whatsappOrderBtn"
+                  style="width: 100%; gap: 0.6rem; font-size: 1rem; font-weight: 700;">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                    stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="9" cy="21" r="1"></circle>
                     <circle cx="20" cy="21" r="1"></circle>
                     <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
@@ -1144,15 +1146,54 @@
         </div>
 
         <div class="form-group" style="margin-bottom: 0.85rem;">
-          <label for="orderDeliveryOption" class="order-label">Metode Pengiriman</label>
+          <label for="orderDeliveryOption" class="order-label">Metode Pengiriman & Estimasi Ongkir</label>
           <select id="orderDeliveryOption" class="order-form-control order-form-select">
-            <option value="Packing Kayu + Asuransi 100% Aman (Luar Kota / Pulau)">Packing Kayu + Asuransi (Luar Kota /
-              Pulau)</option>
-            <option value="Kurir Instant (Gojek / GrabExpress Jabodetabek)">Kurir Instant (Gojek / GrabExpress
-              Jabodetabek)</option>
-            <option value="Ambil Langsung di Workshop Store (Jonggol Bogor)">Ambil Langsung di Workshop Store (Pick Up)
-            </option>
+            <option value="Packing Kayu + Asuransi 100% Aman (Luar Kota / Pulau)" data-ongkir="150000"
+              data-packing="100000">📦 Packing Kayu + Asuransi 100% Aman (Luar Kota / Pulau) — Est. Ongkir & Asuransi Rp
+              150rb</option>
+            <option value="Kurir Instant (Gojek / GrabExpress Jabodetabek)" data-ongkir="75000" data-packing="0">🚀
+              Kurir Instant Gojek / GrabExpress (Jabodetabek) — Est. Ongkir Rp 75rb</option>
+            <option value="Ambil Langsung di Workshop Store (Jonggol Bogor)" data-ongkir="0" data-packing="0">🏬 Ambil
+              Langsung di Workshop Store (Jonggol Bogor) — Rp 0 (Free Pick Up)</option>
           </select>
+        </div>
+
+        <!-- Jasa Packing Kayu Extra Option -->
+        <div id="packingKayuOptionBox"
+          style="margin-bottom: 0.85rem; background: rgba(255, 183, 3, 0.08); border: 1px solid rgba(255, 183, 3, 0.25); padding: 0.65rem 0.85rem; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: space-between;">
+          <label
+            style="font-size: 0.8rem; color: #fff; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; margin: 0;">
+            <input type="checkbox" id="orderPackingKayuCheck" checked
+              style="accent-color: var(--primary); width: 16px; height: 16px;">
+            <span>🪵 <strong>Jasa Heavy-Duty Wooden Crate & Extra Foam</strong> (+Rp 100.000)</span>
+          </label>
+          <span style="font-size: 0.725rem; color: var(--warning); font-weight: 600;">Proteksi Maksimal</span>
+        </div>
+
+        <!-- Upload Bukti Pembayaran Section -->
+        <div class="form-group" style="margin-bottom: 0.85rem;">
+          <label class="order-label" style="display: flex; justify-content: space-between; align-items: center;">
+            <span>Upload Bukti Pembayaran / Struk Transfer (Opsional)</span>
+            <span style="font-size: 0.725rem; color: var(--accent);">Foto / Screenshot Transfer</span>
+          </label>
+          <div class="payment-proof-upload-box" id="paymentProofDropArea">
+            <input type="file" id="orderPaymentProof" accept="image/*,.pdf" class="payment-proof-file-input">
+            <div class="payment-proof-content" id="paymentProofContent">
+              <div class="upload-icon-circle">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="17 8 12 3 7 8"></polyline>
+                  <line x1="12" y1="3" x2="12" y2="15"></line>
+                </svg>
+              </div>
+              <div class="upload-text-group">
+                <span class="upload-title" id="paymentProofFileName">Klik atau Seret Foto Struk Transfer ke Sini</span>
+                <span class="upload-subtitle" id="paymentProofSubtext">Bisa di-upload sekarang atau dikirim langsung via
+                  chat WA / Telegram</span>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div class="form-group" style="margin-bottom: 1.25rem;">
