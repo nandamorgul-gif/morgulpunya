@@ -303,9 +303,9 @@ document.addEventListener('DOMContentLoaded', () => {
         <rect width="76" height="44" rx="6" fill="#005caa"/>
         <text x="38" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-weight="900" font-size="20" fill="#ffffff" letter-spacing="1">BCA</text>
       </svg>`,
-      accountNumber: '8830919678659',
-      accountNumberFormatted: '8830-9196-7659',
-      accountName: 'NANDA MORGUL',
+      accountNumber: '7401439823',
+      accountNumberFormatted: '7401-4398-23',
+      accountName: 'NANDA NUGRAHA',
       color: '#005caa',
       notes: 'Transfer Langsung BCA / M-BCA'
     },
@@ -315,22 +315,22 @@ document.addEventListener('DOMContentLoaded', () => {
         <rect width="76" height="44" rx="6" fill="#003d79"/>
         <text x="38" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-weight="900" font-size="13" fill="#ffb703" letter-spacing="0.5">MANDIRI</text>
       </svg>`,
-      accountNumber: '1330091967659',
-      accountNumberFormatted: '133-00-9196-7659',
-      accountName: 'NANDA MORGUL',
+      accountNumber: '1330030841159',
+      accountNumberFormatted: '133-003-084-1159',
+      accountName: 'NANDA NUGRAHA',
       color: '#003d79',
       notes: 'Transfer Livin by Mandiri / ATM Mandiri'
     },
     'Transfer SeaBank': {
       bank: 'SeaBank Indonesia',
       logoSvg: `<svg width="38" height="22" viewBox="0 0 76 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect width="76" height="44" rx="6" fill="#2ec4b6"/>
+        <rect width="76" height="44" rx="6" fill="#ff6b00"/>
         <text x="38" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-weight="900" font-size="14" fill="#ffffff" letter-spacing="0.5">SeaBank</text>
       </svg>`,
-      accountNumber: '1231321321314',
-      accountNumberFormatted: '1231-3213-2131-4',
-      accountName: 'NANDA MORGUL',
-      color: '#2ec4b6',
+      accountNumber: '901424567091',
+      accountNumberFormatted: '9014-2456-7091',
+      accountName: 'NANDA NUGRAHA',
+      color: '#ff6b00',
       notes: 'Transfer Instan SeaBank / Sea Mobile'
     },
     'QRIS Instant All Wallet (Gopay/OVO/ShopeePay)': {
