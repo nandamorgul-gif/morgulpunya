@@ -256,19 +256,32 @@
                   <i class="feather feather-credit-card"></i> Metode Pembayaran Diterima:
                 </div>
                 <div class="payment-logos-grid" style="gap: 0.35rem;">
-                  <span class="payment-chip" title="BCA" style="padding: 0.25rem 0.5rem; font-size: 0.725rem;">
-                    <svg viewBox="0 0 24 24" fill="none">
-                      <rect width="24" height="24" rx="4" fill="#005caa" />
-                      <path d="M6 7h4c1.5 0 2.5.5 2.5 1.5s-.8 1.3-1.8 1.5c1.2.2 2.3.8 2.3 2 0 1.3-1.2 2-3 2H6V7z"
-                        fill="#fff" />
-                    </svg> BCA
-                  </span>
-                  <span class="payment-chip" title="Mandiri" style="padding: 0.25rem 0.5rem; font-size: 0.725rem;">
-                    <svg viewBox="0 0 24 24" fill="none">
-                      <rect width="24" height="24" rx="4" fill="#003d79" />
-                      <path d="M5 14.5c3.5-3 8 2 14-2.5" stroke="#ffb703" stroke-width="2.5" />
-                    </svg> Mandiri
-                  </span>
+                  <!-- BCA -->
+                  <svg class="bank-card-logo-pill" viewBox="0 0 76 44" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-bottom: 0; width: 54px; height: 31px; cursor: help;" title="BCA">
+                    <rect width="76" height="44" rx="8" fill="#005caa"/>
+                    <text x="38" y="32" text-anchor="middle" font-family="'Arial Black', Arial, sans-serif" font-weight="900" font-style="italic" font-size="24" fill="#ffffff" letter-spacing="2">BCA</text>
+                  </svg>
+                  
+                  <!-- Mandiri -->
+                  <svg class="bank-card-logo-pill" viewBox="0 0 76 44" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-bottom: 0; width: 54px; height: 31px; cursor: help;" title="Mandiri">
+                    <rect width="76" height="44" rx="8" fill="#003d79"/>
+                    <path d="M 16 32 C 16 10, 30 10, 38 22 C 46 34, 60 34, 60 12" stroke="#ffb703" stroke-width="4.5" stroke-linecap="round" fill="none" opacity="0.85"/>
+                    <text x="38" y="27" text-anchor="middle" font-family="Arial, sans-serif" font-weight="900" font-style="italic" font-size="13" fill="#ffffff" letter-spacing="0.5">mandiri</text>
+                  </svg>
+                  
+                  <!-- SeaBank -->
+                  <svg class="bank-card-logo-pill" viewBox="0 0 76 44" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-bottom: 0; width: 54px; height: 31px; cursor: help;" title="SeaBank">
+                    <rect width="76" height="44" rx="8" fill="url(#seaGradEstimator)"/>
+                    <defs>
+                      <linearGradient id="seaGradEstimator" x1="0" y1="0" x2="76" y2="44" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#ff6b00"/>
+                        <stop offset="1" stop-color="#e55a00"/>
+                      </linearGradient>
+                    </defs>
+                    <circle cx="20" cy="22" r="10" fill="#ffffff"/>
+                    <path d="M 23 18 C 17 18, 17 22, 20 22 C 23 22, 23 26, 17 26" stroke="#ff6b00" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+                    <text x="50" y="27" text-anchor="middle" font-family="Arial, sans-serif" font-weight="800" font-size="12" fill="#ffffff" letter-spacing="0">SeaBank</text>
+                  </svg>
                   <span class="payment-chip" title="QRIS Instant" style="padding: 0.25rem 0.5rem; font-size: 0.725rem;">
                     <svg viewBox="0 0 24 24" fill="none">
                       <rect width="24" height="24" rx="4" fill="#ed1c24" />
