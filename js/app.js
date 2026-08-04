@@ -1010,12 +1010,37 @@ document.addEventListener('DOMContentLoaded', () => {
     const musicPlayBtn = document.getElementById('musicPlayBtn');
     const musicInfoBtn = document.getElementById('musicInfoBtn');
 
+    const postYTCmd = (func, args) => {
+      const iframe = document.getElementById('ytPlayer');
+      if (iframe && iframe.contentWindow) {
+        iframe.contentWindow.postMessage(JSON.stringify({
+          'event': 'command',
+          'func': func,
+          'args': args || []
+        }), '*');
+      }
+    };
+
     function openMusicModal() {
-      if (musicModal) musicModal.classList.add('active');
+      if (musicModal) {
+        musicModal.classList.add('active');
+        postYTCmd('pauseVideo'); // Pause background music
+        const modalIframe = document.getElementById('modalYtPlayer');
+        if (modalIframe && !modalIframe.src) {
+          modalIframe.src = "https://www.youtube.com/embed/8_y6w1V9PXs?autoplay=1&list=RD8_y6w1V9PXs";
+        }
+      }
     }
 
     function closeMusicModal() {
-      if (musicModal) musicModal.classList.remove('active');
+      if (musicModal) {
+        musicModal.classList.remove('active');
+        const modalIframe = document.getElementById('modalYtPlayer');
+        if (modalIframe) {
+          modalIframe.src = ""; // Stop modal video
+        }
+        postYTCmd('playVideo'); // Resume background music
+      }
     }
 
     if (musicPlayBtn) musicPlayBtn.addEventListener('click', openMusicModal);
@@ -1049,16 +1074,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // YouTube Autoplay & Instant Unmute Controller
-    const postYTCmd = (func, args) => {
-      const iframe = document.getElementById('ytPlayer');
-      if (iframe && iframe.contentWindow) {
-        iframe.contentWindow.postMessage(JSON.stringify({
-          'event': 'command',
-          'func': func,
-          'args': args || []
-        }), '*');
-      }
-    };
+    // postYTCmd is defined above
 
     setTimeout(() => {
       postYTCmd('playVideo');
