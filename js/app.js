@@ -299,9 +299,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const PAYMENT_INFO = {
     'Transfer Bank BCA Direct': {
       bank: 'Bank Central Asia (BCA)',
-      logoSvg: `<svg width="38" height="22" viewBox="0 0 76 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect width="76" height="44" rx="6" fill="#005caa"/>
-        <text x="38" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-weight="900" font-size="20" fill="#ffffff" letter-spacing="1">BCA</text>
+      logoSvg: `<svg width="76" height="44" viewBox="0 0 76 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="76" height="44" rx="8" fill="#005caa"/>
+        <text x="38" y="32" text-anchor="middle" font-family="'Arial Black', Arial, sans-serif" font-weight="900" font-style="italic" font-size="24" fill="#ffffff" letter-spacing="2">BCA</text>
       </svg>`,
       accountNumber: '7401439823',
       accountNumberFormatted: '7401-4398-23',
@@ -311,9 +311,10 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     'Transfer Mandiri Virtual Account': {
       bank: 'Bank Mandiri',
-      logoSvg: `<svg width="38" height="22" viewBox="0 0 76 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect width="76" height="44" rx="6" fill="#003d79"/>
-        <text x="38" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-weight="900" font-size="13" fill="#ffb703" letter-spacing="0.5">MANDIRI</text>
+      logoSvg: `<svg width="76" height="44" viewBox="0 0 76 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="76" height="44" rx="8" fill="#003d79"/>
+        <path d="M 16 32 C 16 10, 30 10, 38 22 C 46 34, 60 34, 60 12" stroke="#ffb703" stroke-width="4.5" stroke-linecap="round" fill="none" opacity="0.85"/>
+        <text x="38" y="27" text-anchor="middle" font-family="Arial, sans-serif" font-weight="900" font-style="italic" font-size="13" fill="#ffffff" letter-spacing="0.5">mandiri</text>
       </svg>`,
       accountNumber: '1330030841159',
       accountNumberFormatted: '133-003-084-1159',
@@ -323,9 +324,18 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     'Transfer SeaBank': {
       bank: 'SeaBank Indonesia',
-      logoSvg: `<svg width="38" height="22" viewBox="0 0 76 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect width="76" height="44" rx="6" fill="#ff6b00"/>
-        <text x="38" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-weight="900" font-size="14" fill="#ffffff" letter-spacing="0.5">SeaBank</text>
+      logoSvg: `<svg width="76" height="44" viewBox="0 0 76 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="76" height="44" rx="8" fill="url(#seaGradBanner)"/>
+        <defs>
+          <linearGradient id="seaGradBanner" x1="0" y1="0" x2="76" y2="44" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#ff6b00"/>
+            <stop offset="1" stop-color="#e55a00"/>
+          </linearGradient>
+        </defs>
+        <!-- Stylized S shape inside an orange circle -->
+        <circle cx="20" cy="22" r="10" fill="#ffffff"/>
+        <path d="M 23 18 C 17 18, 17 22, 20 22 C 23 22, 23 26, 17 26" stroke="#ff6b00" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+        <text x="50" y="27" text-anchor="middle" font-family="Arial, sans-serif" font-weight="800" font-size="12" fill="#ffffff" letter-spacing="0">SeaBank</text>
       </svg>`,
       accountNumber: '901424567091',
       accountNumberFormatted: '9014-2456-7091',
