@@ -26,7 +26,7 @@ export async function ensureDb(env) {
 function b64(bytes) {
   let s = "";
   bytes.forEach(byte => s += String.fromCharCode(byte));
-  return btoa(s).replace(/\\+/g, "-").replace(/\\//g, "_").replace(/=+$/,"");
+  return btoa(s).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/,"");
 }
 function unb64(str) {
   const padded = str.replace(/-/g, "+").replace(/_/g, "/");
