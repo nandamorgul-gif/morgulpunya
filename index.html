@@ -29,9 +29,11 @@
   <link rel="stylesheet" href="css/final.css">
   <link rel="stylesheet" href="css/studio.css">
   <link rel="stylesheet" href="css/services-expansion.css">
+  <link rel="stylesheet" href="css/polish.css">
 </head>
 
 <body>
+  <a class="svo-skip-link" href="#layanan">Langsung ke layanan</a>
 
   <!-- Header & Navigasi -->
   <header class="header">
@@ -442,6 +444,7 @@
         <div class="svo-payment-method">
           <div class="svo-payment-logo-frame">
             <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Bank_Central_Asia.svg" alt="Logo BCA" width="180" height="70" loading="lazy" decoding="async">
+            <span class="svo-payment-logo-fallback" aria-hidden="true">BCA</span>
           </div>
           <strong>BCA</strong>
           <small>Transfer bank</small>
@@ -449,6 +452,7 @@
         <div class="svo-payment-method">
           <div class="svo-payment-logo-frame">
             <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Bank_Mandiri_logo_2016.svg" alt="Logo Mandiri" width="180" height="70" loading="lazy" decoding="async">
+            <span class="svo-payment-logo-fallback" aria-hidden="true">Mandiri</span>
           </div>
           <strong>Mandiri</strong>
           <small>Transfer bank</small>
@@ -456,6 +460,7 @@
         <div class="svo-payment-method">
           <div class="svo-payment-logo-frame">
             <img src="https://commons.wikimedia.org/wiki/Special:FilePath/SeaBank.svg" alt="Logo SeaBank" width="180" height="70" loading="lazy" decoding="async">
+            <span class="svo-payment-logo-fallback" aria-hidden="true">SeaBank</span>
           </div>
           <strong>SeaBank</strong>
           <small>Transfer bank</small>
@@ -463,6 +468,7 @@
         <div class="svo-payment-method">
           <div class="svo-payment-logo-frame">
             <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Bank_Jago_2026.svg" alt="Logo Bank Jago" width="180" height="70" loading="lazy" decoding="async">
+            <span class="svo-payment-logo-fallback" aria-hidden="true">Bank Jago</span>
           </div>
           <strong>Bank Jago</strong>
           <small>Transfer bank</small>
@@ -470,6 +476,7 @@
         <div class="svo-payment-method">
           <div class="svo-payment-logo-frame">
             <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Logo_dana_blue.svg" alt="Logo DANA" width="180" height="70" loading="lazy" decoding="async">
+            <span class="svo-payment-logo-fallback" aria-hidden="true">DANA</span>
           </div>
           <strong>DANA</strong>
           <small>Dompet digital</small>
@@ -556,11 +563,11 @@
   <footer class="footer svo-footer">
     <div class="container svo-footer-main">
       <div><a href="#home" class="svo-footer-brand"><img src="images/logo.svg" width="46" height="46" alt="Logo SEMEISTVO TECH"><span>SEMEISTVO <em>TECH</em></span></a>
-      <p>Rakit PC, instalasi, server GTA 5 Roleplay, dan pembuatan website. From Hardware to Digital.</p></div>
-      <div class="svo-footer-links"><h4>Jelajahi</h4><a href="#layanan">Layanan</a><a href="#roleplay">Server Roleplay</a><a href="#digital">Pembuatan Website</a><a href="#rakit-pc">PC Builder</a></div>
-      <div class="svo-footer-links"><h4>Bantuan</h4><a href="#software-paket">Layanan Tambahan</a><a href="#pembayaran">Pembayaran</a><a href="#kontak">Konsultasi</a><a href="https://wa.me/6288291967659" target="_blank" rel="noopener noreferrer">WhatsApp</a></div>
+      <p>Studio layanan rakit PC, instalasi, pengembangan server roleplay, dan website. Solusi teknologi dari ide hingga siap digunakan.</p></div>
+      <nav class="svo-footer-links" aria-label="Jelajahi SEMEISTVO TECH"><h4>Jelajahi</h4><a href="#layanan">Layanan</a><a href="#roleplay">Server Roleplay</a><a href="#digital">Pembuatan Website</a><a href="#preset">Rekomendasi PC</a><a href="#rakit-pc">PC Builder</a></nav>
+      <nav class="svo-footer-links" aria-label="Bantuan dan informasi"><h4>Informasi</h4><a href="#software-paket">Layanan Tambahan</a><a href="#pembayaran">Pembayaran</a><a href="#kontak">Konsultasi</a><a href="https://wa.me/6288291967659" target="_blank" rel="noopener noreferrer">WhatsApp</a></nav>
     </div>
-    <div class="container svo-footer-bottom"><span>© 2026 SEMEISTVO TECH · SVO</span><span>Ruang lingkup, biaya, dan jadwal dikonfirmasi sebelum pengerjaan.</span></div>
+    <div class="container svo-footer-bottom"><span>© 2026 SEMEISTVO TECH · SVO</span><span>Hosting, domain, dan biaya pihak ketiga dikonfirmasi terpisah dalam penawaran.</span></div>
   </footer>
 
   
@@ -741,6 +748,7 @@
   <script src="js/app.js"></script>
   <script src="js/store.js"></script>
   <script src="js/music.js"></script>
+  <script src="js/ui-polish.js"></script>
   <script>
     feather.replace();
   </script>
