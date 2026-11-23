@@ -14,7 +14,7 @@ test('Pages public build includes all website assets and excludes server/databas
     cwd: root, encoding: 'utf8'
   });
   assert.equal(built.status, 0, built.stderr || built.stdout);
-  for (const entry of ['index.html','site.webmanifest','images/favicon.svg','images/gta-roleplay-night.jpg',
+  for (const entry of ['index.html','site.webmanifest','robots.txt','sitemap.xml','images/favicon.svg','images/gta-roleplay-night.jpg',
     'images/catalog/photos/cpu-r5-9600x.webp','js/store.js','css/polish.css','_redirects','_headers','_routes.json','404.html']) {
     assert.ok(fs.existsSync(path.join(root, 'dist', entry)), 'missing public asset ' + entry);
   }
@@ -26,6 +26,13 @@ test('Pages public build includes all website assets and excludes server/databas
   assert.deepEqual(JSON.parse(read('dist/_routes.json')), {
     version: 1, include: ['/api/*'], exclude: []
   });
+  const homepage = 'https://semeistvotech.pages.dev/';
+  const html = read('dist/index.html');
+  assert.ok(html.includes('<link rel="canonical" href="' + homepage + '">'));
+  assert.deepEqual([...read('dist/sitemap.xml').matchAll(/<loc>([^<]+)<\/loc>/g)].map(match => match[1]), [homepage]);
+  assert.ok(read('dist/robots.txt').includes('Sitemap: ' + homepage + 'sitemap.xml'));
+  const structuredData = JSON.parse(html.match(/<script type="application\/ld\+json">([^]*?)<\/script>/)[1]);
+  assert.ok(structuredData['@graph'].some(item => item['@type'] === 'WebSite' && item.url === homepage));
 });
 test('D1 schema and catalogue seed initialize valid SQLite without fictitious stock', () => {
   const db = new Database(':memory:');

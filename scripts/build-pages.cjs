@@ -9,7 +9,7 @@ const path = require('node:path');
 const root = path.resolve(__dirname, '..');
 const output = path.join(root, 'dist');
 const folders = ['css', 'js', 'images'];
-const files = ['index.html', 'site.webmanifest'];
+const files = ['index.html', 'site.webmanifest', 'robots.txt', 'sitemap.xml'];
 fs.rmSync(output, { recursive: true, force: true });
 fs.mkdirSync(output, { recursive: true });
 for (const folder of folders) {

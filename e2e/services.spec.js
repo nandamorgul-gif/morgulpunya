@@ -2,10 +2,10 @@ const { test, expect } = require('@playwright/test');
 
 test('services-first landing keeps the existing music and PC Builder', async ({ page }) => {
   await page.goto('/', { waitUntil: 'domcontentloaded' });
-  await expect(page.locator('h1')).toContainText('Teknologi yang kamu butuhkan');
+  await expect(page.locator('h1')).toContainText('Jasa Rakit PC Custom');
   await expect(page.locator('#svoServicesTitle')).toBeVisible();
   await expect(page.locator('.svo-offer')).toHaveCount(7);
-  await expect(page.locator('#svoDigitalTitle')).toContainText('website');
+  await expect(page.locator('#svoDigitalTitle')).toContainText('Pembuatan Website');
   await expect(page.locator('#svoRoleplayTitle')).toContainText('GTA 5 Roleplay');
   await expect(page.locator('#svoPaymentTitle')).toContainText('Metode Pembayaran');
   await expect(page.locator('#rakit-pc')).toBeAttached();
