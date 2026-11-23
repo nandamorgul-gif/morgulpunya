@@ -1,6 +1,10 @@
 const { test, expect } = require('@playwright/test');
 
-const viewports = [360, 390, 430, 768, 1024, 1280, 1440, 1920];
+const viewports = [360, 390, 430, 768, 1024, 1200, 1280, 1440, 1920];
+const serviceOrder = [
+  '01 / HARDWARE', '02 / ADVISORY', '03 / SETUP', '04 / WEB DEVELOPMENT',
+  '05 / ROLEPLAY SERVER', '06 / MAINTENANCE', '07 / CREATOR'
+];
 
 for (const width of viewports) {
   test('polished layout has no horizontal overflow at ' + width + 'px', async ({ browser }) => {
@@ -12,7 +16,34 @@ for (const width of viewports) {
     await page.goto('/', { waitUntil: 'domcontentloaded' });
     await expect(page.locator('h1')).toBeVisible();
     await expect(page.locator('#presetsContainer .preset-card')).toHaveCount(5);
-    await expect(page.locator('.svo-services-grid .svo-offer')).toHaveCount(7);
+    const grid = page.locator('.svo-services-grid');
+    await expect(grid.locator('.svo-offer-media > span')).toHaveText(serviceOrder);
+    const layout = await grid.evaluate(node => {
+      const bounds = node.getBoundingClientRect();
+      const rows = [];
+      for (const card of node.children) {
+        const rect = card.getBoundingClientRect();
+        const prev = rows.at(-1);
+        if (!prev || Math.abs(prev.top - rect.top) > 1) {
+          rows.push({ top: rect.top, left: rect.left, right: rect.right, count: 1 });
+        } else {
+          prev.right = rect.right;
+          prev.count++;
+        }
+      }
+      return {
+        rows: rows.map(row => row.count),
+        fillsGrid: rows.every(row => Math.abs(row.left - bounds.left) <= 1 && Math.abs(row.right - bounds.right) <= 1),
+        touchTargets: [...node.querySelectorAll('.svo-offer-link')]
+          .every(link => link.getBoundingClientRect().height >= 44)
+      };
+    });
+    const expectedRows = width <= 760 ? [1, 1, 1, 1, 1, 1, 1]
+      : width <= 1024 ? [1, 2, 2, 2]
+        : width <= 1260 ? [2, 2, 3] : [3, 4];
+    expect(layout.rows).toEqual(expectedRows);
+    expect(layout.fillsGrid).toBe(true);
+    if (width <= 1024) expect(layout.touchTargets).toBe(true);
     await expect(page.locator('#pembayaran .svo-payment-method')).toHaveCount(5);
     await expect(page.locator('#svoMusicPlayer')).toHaveClass(/is-collapsed/);
     const dimensions = await page.evaluate(() => ({

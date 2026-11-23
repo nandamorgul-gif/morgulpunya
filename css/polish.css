@@ -129,7 +129,7 @@ section[id] {scroll-margin-top:90px}
 .svo-offer-body>p {font-size:.84rem;line-height:1.75;color:#bbb0c8;margin:0}
 .svo-offer-tags {gap:6px}
 .svo-offer-tags span {font-size:.63rem;padding:5px 9px;border:1px solid #554364;background:#2b2039;border-radius:99px}
-.svo-offer-link {margin-top:7px;color:#dfbdf9;font-size:.84rem}
+.svo-offer-link {margin-top:7px;color:#dfbdf9;font-size:.84rem;gap:.35em}
 .svo-service-note {font-size:.74rem;margin-top:18px}
 /* Four practical steps, no floating ornaments. */
 .svo-process {background:#0e0c15}
@@ -299,8 +299,8 @@ section[id] {scroll-margin-top:90px}
   .header .btn-simulasi-nav {display:none}
   .header .nav-links {gap:clamp(6px,1.1vw,14px)}
   .svo-services-grid {grid-template-columns:repeat(3,minmax(0,1fr))}
-  .svo-services-grid .svo-offer:first-child {grid-column:span 2}
-  .svo-services-grid .svo-offer:last-child {grid-column:span 2}
+  .svo-services-grid .svo-offer-web {grid-column:span 2}
+  .svo-offer-web .svo-offer-media {aspect-ratio:2.6/1}
   .svo-store-grid {grid-template-columns:repeat(3,minmax(0,1fr))}
 }
 @media(max-width:1024px) {
@@ -318,8 +318,9 @@ section[id] {scroll-margin-top:90px}
   .header .nav-links .nav-link:focus-visible {outline-offset:-2px}
   .header .mobile-toggle {display:grid!important}
   .svo-services-grid {grid-template-columns:repeat(2,minmax(0,1fr))}
-  .svo-services-grid .svo-offer:first-child {grid-column:span 2}
-  .svo-services-grid .svo-offer:last-child {grid-column:span 2}
+  .svo-services-grid .svo-offer-web {grid-column:auto}
+  .svo-offer-web .svo-offer-media {aspect-ratio:16/9}
+  .svo-offer-link {min-height:44px;margin-top:0}
   .svo-studio-heading {align-items:start}
   .svo-preset-section .presets-grid {grid-template-columns:repeat(2,minmax(0,1fr))}
   .svo-preset-section .preset-card,.svo-preset-section .preset-card:nth-last-child(-n+2) {grid-column:auto}
@@ -337,7 +338,8 @@ section[id] {scroll-margin-top:90px}
   .svo-studio-hero .svo-hero-desc {font-size:.93rem!important}
   .svo-studio-heading {gap:12px;margin-bottom:24px}
   .svo-services-grid {grid-template-columns:1fr;gap:13px}
-  .svo-services-grid .svo-offer:first-child,.svo-services-grid .svo-offer:last-child {grid-column:auto}
+  .svo-services-grid .svo-offer {max-width:none}
+  .svo-services-grid .svo-offer:first-child {grid-column:auto}
   .svo-offer:first-child .svo-offer-media {aspect-ratio:16/9}
   .svo-offer-media {max-height:230px}
   .svo-offer-body {padding:17px}
