@@ -15,7 +15,9 @@ test('music player restored with original video, controls and opt-in playback', 
   assert.match(html, /js\/music\.js/);
   assert.match(html, /css\/music\.css/);
   assert.match(music, /8_y6w1V9PXs/);
-  assert.match(music, /autoplay: 0/);
+  assert.match(music, /autoplay: 1/);
+  assert.match(music, /mute: 1/);
+  assert.match(music, /svoMusicMute/);
   assert.match(music, /player\.pauseVideo\(\)/);
   assert.doesNotMatch(music, /document\.addEventListener\('mousemove'/);
 });
@@ -24,12 +26,16 @@ test('catalogue has traceable reference images and local fallbacks', () => {
   const data = require('../js/product-photos.js')(require('../js/data.js'));
   const products = Object.values(data.components).flat();
   const photoProducts = products.filter(p => p.imageType === 'reference-photo');
+  assert.equal(products.length, 46);
+  for (const p of products) {
+    assert.ok(fs.existsSync(path.join(__dirname, '..', 'images/catalog/' + p.id + '.svg')), p.id);
+    assert.ok(p.image && p.fallbackImage, p.id);
+  }
   assert.ok(photoProducts.length >= 22, 'not enough reference product photos');
   for (const p of photoProducts) {
     assert.match(p.image, /^https:\/\//i, p.id);
     assert.match(p.imageCreditUrl, /^https:\/\//i, p.id);
-    assert.equal(p.fallbackImage, 'images/products/' + Object.entries(data.components)
-      .find(([category, entries]) => entries.includes(p))[0] + '.svg');
+    assert.equal(p.fallbackImage, 'images/catalog/' + p.id + '.svg');
     assert.ok(fs.existsSync(path.join(__dirname, '..', p.fallbackImage)), p.id);
   }
 });
