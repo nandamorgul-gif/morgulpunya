@@ -14,10 +14,11 @@ test('Pages public build includes all website assets and excludes server/databas
     cwd: root, encoding: 'utf8'
   });
   assert.equal(built.status, 0, built.stderr || built.stdout);
-  for (const entry of ['index.html','admin.html','site.webmanifest','images/favicon.svg',
+  for (const entry of ['index.html','site.webmanifest','images/favicon.svg','images/gta-roleplay-scene.svg',
     'js/store.js','css/polish.css','_redirects','_headers','_routes.json','404.html']) {
     assert.ok(fs.existsSync(path.join(root, 'dist', entry)), 'missing public asset ' + entry);
   }
+  assert.ok(!fs.existsSync(path.join(root, 'dist/admin.html')), 'admin page must not deploy');
   for (const privateEntry of ['server','db','migrations','functions','runtime-data',
     '.env','.git','package.json','package-lock.json','node_modules','scripts']) {
     assert.ok(!fs.existsSync(path.join(root, 'dist', privateEntry)), 'private asset leaked: ' + privateEntry);
@@ -94,66 +95,52 @@ function makeFixture() {
   };
   return { send, db, env };
 }
-test('Cloudflare D1 endpoints: live catalogue, safe checkout, protected admin', async () => {
-  const { send, db } = makeFixture();
+test('Cloudflare D1 endpoints keep catalogue and quote-only flow while removing admin login', async () => {
+  const { send,db } = makeFixture();
   const health = await send('/api/health');
-  assert.equal(health.status, 200);
-  assert.equal(health.data.database, 'd1');
-  assert.equal(health.data.checkout_enabled, false);
-  const products = await send('/api/products');
-  assert.equal(products.status, 200);
-  assert.equal(products.data.products.length, 46);
-  assert.equal(products.data.checkout_enabled, false);
-  assert.equal(products.data.products.every(p => p.stock === 0), true);
-  const payment = await send('/api/orders', 'POST', { customer: { name: 'Test' }, items: [] });
-  assert.equal(payment.status, 503);
-  assert.equal((await send('/api/admin/products')).status, 401);
-  assert.equal((await send('/api/admin/me')).status, 401);
-  assert.equal((await send('/api/health', 'GET', undefined, {}, {})).status, 503);
-
-  const origin = { Origin: 'https://semeistvo.test' };
-  const login = await send('/api/admin/login', 'POST', {
-    email: 'admin@example.com', password: 'testing-only-very-long-secret-123'
-  }, origin);
-  assert.equal(login.status, 200, JSON.stringify(login.data));
-  const cookie = login.response.headers.get('set-cookie');
-  assert.match(cookie, /HttpOnly; Secure; SameSite=Strict/);
-  const cookieHeader = cookie.split(';')[0];
-  const me = await send('/api/admin/me', 'GET', undefined, { Cookie: cookieHeader });
-  assert.equal(me.data.email, 'admin@example.com');
-  const admin = await send('/api/admin/products', 'GET', undefined, { Cookie: cookieHeader });
-  assert.equal(admin.data.products.length, 46);
-  const productId = 'gpu-rtx5060ti16';
-  const updated = await send('/api/admin/products/' + productId, 'PATCH', {
-    price: 12345678, stock: 3
-  }, { ...origin, Cookie: cookieHeader });
-  assert.equal(updated.status, 200, JSON.stringify(updated.data));
-  assert.equal(updated.data.product.price, 12345678);
-  const live = await send('/api/products');
-  assert.equal(live.data.products.find(p => p.id === productId).stock, 3);
-  const invalid = await send('/api/admin/products/' + productId, 'PATCH', {
-    image: 'javascript:alert(1)'
-  }, { ...origin, Cookie: cookieHeader });
-  assert.equal(invalid.status, 400);
-  const csrf = await send('/api/admin/products/' + productId, 'PATCH', {
-    price: 1
-  }, { Origin: 'https://evil.invalid', Cookie: cookieHeader });
-  assert.equal(csrf.status, 403);
-  assert.equal(db.prepare('SELECT price FROM products WHERE id = ?').get(productId).price, 12345678);
-  const orders = await send('/api/admin/orders', 'GET', undefined, { Cookie: cookieHeader });
-  assert.deepEqual(orders.data.orders, []);
-  const logout = await send('/api/admin/logout', 'POST', undefined, { ...origin, Cookie: cookieHeader });
-  assert.equal(logout.status, 200);
-  assert.equal((await send('/api/admin/me','GET',undefined,{ Cookie: cookieHeader })).status, 401);
+  assert.equal(health.status,200);
+  assert.equal(health.data.database,'d1');
+  assert.equal(health.data.checkout_enabled,false);
+  const list = await send('/api/products');
+  assert.equal(list.status,200);
+  assert.equal(list.data.products.length,46);
+  assert.equal(list.data.pricing.status,'not_configured');
+  assert.equal(list.data.pricing.live_products,0);
+  assert.ok(list.data.products.every(p=>p.price_live===false));
+  const order = await send('/api/orders','POST',{items:[]});
+  assert.equal(order.status,503);
+  assert.equal((await send('/api/admin/me')).status,404);
+  assert.equal((await send('/api/admin/products')).status,404);
+  assert.equal((await send('/api/admin/login','POST',{email:'test@example.com',password:'irrelevant'},
+    {Origin:'https://semeistvo.test'})).status,404);
+  assert.equal((await send('/api/health','GET',undefined,{},{})).status,503);
   db.close();
 });
-test('Cloudflare admin login limits repeated failed attempts', async () => {
-  const { send, db } = makeFixture();
-  let last;
-  for (let i=0;i<9;i++) {
-    last = await send('/api/admin/login','POST',{ email:'admin@example.com',password:'wrong' },
-      { Origin:'https://semeistvo.test' });
-  }
-  assert.equal(last.status, 429);
-  db.close();
+test('Supplier price feed overrides matching SKUs with fresh IDR prices only', async () => {
+  const {send,db,env}=makeFixture();
+  env.PRICE_FEED_URL='https://supplier.example.test/api/catalog';
+  env.PRICE_FEED_TOKEN='testing-token';
+  const originalFetch=globalThis.fetch;
+  let called=0;
+  globalThis.fetch=async (_url,options) => {
+    called++;
+    assert.equal(options.headers.Authorization,'Bearer testing-token');
+    return new Response(JSON.stringify({
+      updated_at:new Date().toISOString(),
+      currency:'IDR',
+      products:[{id:'gpu-rtx5060ti16',price:17000000,stock:6}]
+    }),{status:200,headers:{'Content-Type':'application/json'}});
+  };
+  try {
+    const response=await send('/api/products');
+    assert.equal(response.status,200);
+    assert.equal(response.data.pricing.status,'live');
+    assert.equal(response.data.pricing.live_products,1);
+    assert.equal(response.data.products.find(p=>p.id==='gpu-rtx5060ti16').price,17000000);
+    assert.equal(response.data.products.find(p=>p.id==='gpu-rtx5060ti16').stock,6);
+    assert.equal(response.data.products.find(p=>p.id==='gpu-rtx5060ti16').price_live,true);
+    assert.equal(response.data.products.find(p=>p.id==='cpu-r5-9600x').price_live,false);
+    assert.equal(called,1);
+    assert.notEqual(db.prepare('SELECT price FROM products WHERE id = ?').get('gpu-rtx5060ti16').price,17000000);
+  } finally {globalThis.fetch=originalFetch;db.close();}
 });
