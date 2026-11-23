@@ -1,16 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 400" role="img" aria-labelledby="svoTitle svoDesc">
-<title id="svoTitle">SEMEISTVO TECH — SVO monogram</title><desc id="svoDesc">Premium geometric SVO symbol with platinum lettering and purple edge.</desc><defs>
-  <linearGradient id="metal" x1="0" y1="0" x2=".95" y2="1"><stop stop-color="#FFFFFF"/><stop offset=".43" stop-color="#DEE1ED"/><stop offset="1" stop-color="#A7A6BD"/></linearGradient>
-  <linearGradient id="edge" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#C4A3FF"/><stop offset=".47" stop-color="#8853D8"/><stop offset="1" stop-color="#3B245A"/></linearGradient>
-  <radialGradient id="surface"><stop stop-color="#231934"/><stop offset="1" stop-color="#0B0A10"/></radialGradient>
-</defs>
-<path d="M93 23h294l76 77v200l-76 77H93l-76-77V100z" fill="#09090B" stroke="#FFFFFF" stroke-width="7"/>
-<path d="M112 43h256l68 68v178l-68 67H112l-68-67V111z" fill="none" stroke="#888888" stroke-width="2" opacity=".7"/>
-<g fill="none" stroke="#FFFFFF" stroke-width="20" stroke-linecap="square" stroke-linejoin="bevel">
-  <path d="M89 147h79m-79 0v48h79v51H89"/>
-  <path d="m194 147 44 100 44-100"/>
-  <path d="M303 147h79v100h-79z"/>
-</g><path d="M94 264h288" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round"/>
-<path d="M181 286h118" stroke="#FFFFFF" stroke-width="3" opacity=".65"/>
-<text x="240" y="330" text-anchor="middle" fill="#FFFFFF" font-size="25" font-family="Outfit,Arial,sans-serif" font-weight="800" letter-spacing="12">TECH</text>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 380" role="img" aria-labelledby="title desc"><title id="title">SEMEISTVO TECH</title><desc id="desc">Elegant silver ribbon monogram enclosed in an open violet orbit.</desc><defs>
+<linearGradient id="silver" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffffff"/><stop offset=".4" stop-color="#e7e6ee"/><stop offset=".75" stop-color="#bcb9ca"/><stop offset="1" stop-color="#f1ecf8"/></linearGradient>
+<linearGradient id="violet" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#e2bdff"/><stop offset=".46" stop-color="#9b4cf4"/><stop offset="1" stop-color="#46207d"/></linearGradient></defs><g transform="translate(-3 -1)"><g aria-hidden="true">
+<path d="M345 91 C315 54 260 57 222 75 C176 97 148 139 153 196" stroke="#fff" stroke-width="7" fill="none" stroke-linecap="round"/>
+<path d="M161 226 C176 288 234 315 294 300 C326 292 347 273 361 248" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round" opacity=".9"/>
+<path d="M350 105 C315 94 273 98 250 120 C233 136 239 151 264 164 L309 186 C355 213 346 246 320 268 C291 294 241 293 204 278 C240 303 310 309 346 275 C378 246 380 208 337 182 L281 151 C254 136 281 111 350 105Z" fill="#fff"/>
+<path d="M111 253 C150 207 190 207 241 215 C204 217 176 248 139 292 C152 254 151 234 111 253Z" fill="#fff" opacity=".95"/>
+<path d="M365 85 L254 317 L269 288 L389 76Z" fill="#fff"/>
+</g></g></svg>
