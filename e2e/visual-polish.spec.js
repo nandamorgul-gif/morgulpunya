@@ -36,7 +36,7 @@ test('desktop service card composition fills balanced rows', async ({ page }) =>
   await page.goto('/', { waitUntil: 'domcontentloaded' });
   const layout = await page.locator('.svo-services-grid').evaluate(node => ({
     cols: getComputedStyle(node).gridTemplateColumns.split(' ').length,
-    first: getComputedStyle(node.firstElementChild).gridColumnEnd,
+    first: getComputedStyle(node.firstElementChild).gridColumnStart,
     count: node.children.length
   }));
   expect(layout.cols).toBe(4);
