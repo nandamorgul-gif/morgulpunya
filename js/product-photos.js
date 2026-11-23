@@ -275,15 +275,39 @@ if (typeof document !== 'undefined') {
     return false;
   };
   const hideUnavailableMedia = image => {
-    if (tryVerifiedAlternate(image)) return;
     if (isPaymentLogo(image) || image.dataset.svoMediaHidden === 'true') return;
+    if (tryVerifiedAlternate(image)) return;
+
+    // Prefer the original, locally hosted, SKU-specific illustration whenever
+    // a third-party site blocks product photography. Never show a broken image.
+    const fallback = image.getAttribute('data-svo-fallback');
+    const finalFallback = image.getAttribute('data-svo-final-fallback');
+    const stage = image.dataset.svoFallbackStage || '';
+    const current = image.getAttribute('src') || '';
+    const next = stage === '' ? fallback : stage === 'model' ? finalFallback : null;
+    if (next && next !== current && /^images\/(?:catalog|products)\/[a-z0-9-]+\.svg$/.test(next)) {
+      image.dataset.svoFallbackStage = stage === '' ? 'model' : 'category';
+      image.setAttribute('src', next);
+      const badge = image.parentElement?.querySelector('.svo-illustration-chip, .svo-preset-caption');
+      if (badge) badge.textContent = 'Ilustrasi komponen (bukan foto asli)';
+      const productCredit = image.closest('.svo-product,.svo-featured-card')?.querySelector('.svo-photo-credit');
+      if (productCredit) productCredit.hidden = true;
+      image.alt = 'Ilustrasi produk untuk ' + (image.alt || 'komponen');
+      return;
+    }
+
+    // GTA RP media is always shipped as two self-hosted assets, so it has a
+    // second internal fallback and is never dependent on an external hotlink.
+    if (current.includes('gta-roleplay-scene.svg') && image.dataset.svoFallbackStage !== 'legacy-scene') {
+      image.dataset.svoFallbackStage = 'legacy-scene';
+      image.setAttribute('src','images/roleplay-server.svg');
+      return;
+    }
+
     image.dataset.svoMediaHidden = 'true';
     image.hidden = true;
     image.classList.add('svo-image-unavailable');
     image.removeAttribute('srcset');
-    image.removeAttribute('data-svo-fallback');
-    image.removeAttribute('data-svo-final-fallback');
-
     const media = image.closest(
       '.svo-product-media, .svo-featured-image, .svo-offer-media, ' +
       '.svo-studio-hero-media, .svo-roleplay-media, .svo-digital-media'
@@ -297,24 +321,8 @@ if (typeof document !== 'undefined') {
       '.component-card, .svo-cart-item, .svo-category-tile'
     );
     if (card) card.classList.add('svo-card-without-photo');
-    // Catalog cards with broken external photos are excluded from the public
-    // product grid. PC Builder cards keep usable text and selection controls.
-    if (card?.classList.contains('svo-product')) {
-      const grid = card.closest('#svoProductGrid');
-      if (grid) {
-        const visible = grid.querySelectorAll('.svo-product:not(.svo-card-without-photo)').length;
-        const count = document.getElementById('svoProductCount');
-        if (count) count.textContent = visible + ' produk bergambar tersedia untuk referensi';
-      }
-    }
-    // A source link should not imply the customer is seeing a photo that failed.
     const credit = card?.querySelector('.svo-photo-credit');
     if (credit) credit.hidden = true;
-
-    if (card?.classList.contains('preset-card')) {
-      const caption = card.querySelector('.svo-preset-caption');
-      if (caption) caption.hidden = true;
-    }
     if (media?.classList.contains('svo-studio-hero-media')) {
       document.getElementById('home')?.classList.add('svo-hero-without-photo');
     }
@@ -325,7 +333,6 @@ if (typeof document !== 'undefined') {
       media.closest('.svo-roleplay-layout')?.classList.add('svo-layout-without-photo');
     }
   };
-
   // Error events from <img> elements don't bubble, so capture them on document.
   document.addEventListener('error', event => {
     const image = event.target;
