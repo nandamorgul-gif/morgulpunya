@@ -28,6 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
   };
   const storageKey = 'svo-tech-cart-v1';
   let cart = {};
+  let builderSelections = {}; // Category -> SKU id from PC Builder; manual cart is separate.
   try {
     const stored = JSON.parse(localStorage.getItem(storageKey) || '{}');
     if (stored && typeof stored === 'object' && !Array.isArray(stored)) {
@@ -38,9 +39,38 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   } catch (_) { /* cart still works when storage is unavailable */ }
   const persist = () => { try { localStorage.setItem(storageKey, JSON.stringify(cart)); } catch (_) {} };
-  const entries = () => Object.entries(cart).filter(([id, qty]) => productMap.has(id) && qty > 0).map(([id, qty]) => ({ product: productMap.get(id), qty }));
+  const entries = () => {
+    const combined = new Map();
+    for (const [id, qty] of Object.entries(cart)) {
+      const product = productMap.get(id);
+      if (!product || qty < 1) continue;
+      combined.set(id, { product, qty, manualQty: qty, builderQty: 0, builderCategory: null });
+    }
+    for (const [category, id] of Object.entries(builderSelections)) {
+      const product = productMap.get(id);
+      if (!product || product.category !== category) continue;
+      const entry = combined.get(id) || { product, qty: 0, manualQty: 0, builderQty: 0, builderCategory: null };
+      entry.qty += 1; entry.builderQty = 1; entry.builderCategory = category;
+      combined.set(id, entry);
+    }
+    return [...combined.values()];
+  };
   const subtotal = () => entries().reduce((sum, { product, qty }) => sum + product.price * qty, 0);
   const count = () => entries().reduce((sum, { qty }) => sum + qty, 0);
+  const canPayOnline = () => {
+    const items = entries();
+    return serverCheckoutEnabled && items.length > 0 && items.every(({ product, qty }) =>
+      Number.isInteger(product.stock) && product.stock >= qty
+    );
+  };
+  const syncPaymentMode = () => {
+    const note = document.querySelector('#svoCheckoutView > p');
+    const submit = els.checkout.querySelector('button[type="submit"]');
+    if (submit) submit.textContent = canPayOnline() ? 'Lanjutkan ke Pembayaran Resmi' : 'Kirim Permintaan via WhatsApp';
+    if (note) note.textContent = canPayOnline()
+      ? 'Periksa data dan alamat. Pembayaran hanya melalui gateway resmi dengan verifikasi server.'
+      : 'Ini keranjang konsultasi. Harga dan stok perlu dikonfirmasi admin, belum ada tagihan atau pembayaran.';
+  };
   const toggleView = checkout => {
     els.cartView.hidden = checkout;
     els.checkoutView.hidden = !checkout;
