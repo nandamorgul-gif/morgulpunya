@@ -25,7 +25,8 @@ td select{min-width:125px}td button{white-space:nowrap}.toolbar{display:flex;gap
 <div><a href="/">← Lihat Toko</a> <button id="logout" type="button" hidden>Keluar</button></div></header>
 <p id="status" role="status"></p>
 <section id="loginSection"><h2>Login Admin</h2>
-<p class="muted">Gunakan akun admin yang dibuat saat konfigurasi server.</p>
+<p class="muted">Masuk dengan email dan password administrator yang disimpan sebagai Secret di Cloudflare Pages Production.</p>
+<p class="muted" style="font-size:.82rem">Jika login belum siap, atur <code>ADMIN_EMAIL</code> dan <code>ADMIN_PASSWORD</code> (minimal 16 karakter) di Cloudflare → Pages → Settings → Variables and secrets, lalu deploy ulang. Jangan mengirim password melalui chat.</p>
 <form id="loginForm"><label>Email admin<input type="email" name="email" autocomplete="username" required></label>
 <label>Password<input type="password" name="password" autocomplete="current-password" required minlength="16"></label>
 <button>Masuk Dashboard</button></form></section>
