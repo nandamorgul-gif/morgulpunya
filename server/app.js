@@ -81,14 +81,28 @@ function sameOrigin(req, res, next) {
 const validStr = (v, max, min = 1) => typeof v === 'string' && v.trim().length >= min && v.trim().length <= max;
 const clean = str => String(str || '').trim();
 const safeToken = t => typeof t === 'string' && /^[0-9a-f]{64}$/.test(t);
-function cleanupOrders() {
+async function cleanupOrders() {
   const cutoff = now();
-  for (const { id } of store.expired(cutoff)) store.releaseOrder(id, 'expired', cutoff);
   db.prepare('DELETE FROM admin_sessions WHERE expires_at < ?').run(cutoff);
+  if (!gatewayReady) {
+    for (const { id } of store.expired(cutoff)) store.releaseOrder(id, 'expired', cutoff);
+    return;
+  }
+  for (const { id } of store.expired(cutoff)) {
+    const order = store.getOrder(id);
+    if (!order || order.status !== 'pending_payment') continue;
+    try {
+      await reconcilePayment(order);
+      // Remote may still say pending after local expiry. Do not release reserved
+      // stock until Midtrans confirms expiration/cancellation.
+    } catch (err) {
+      console.error('Deferred reservation expiry verification', id, err.message);
+    }
+  }
 }
-const cleanupTimer = setInterval(cleanupOrders, 60 * 1000);
+const cleanupTimer = setInterval(() => { cleanupOrders().catch(err => console.error('Order expiry sweep:', err.message)); }, 60 * 1000);
 cleanupTimer.unref();
-cleanupOrders();
+cleanupOrders().catch(err => console.error('Initial expiry sweep:', err.message));
 
 const midtransBase = () => midtransEnv === 'production' ? 'https://app.midtrans.com' : 'https://app.sandbox.midtrans.com';
 async function midtransRequest(resource, options = {}) {
@@ -172,7 +186,7 @@ app.post('/api/orders', strictLimiter, sameOrigin, async (req, res, next) => {
         expiry: { unit: 'minute', duration: 30 }
       })
     });
-    if (!response.redirect_url || !new URL(response.redirect_url).hostname.endsWith('.midtrans.com')) throw Error('Invalid gateway redirect');
+    if (!response.redirect_url || !['app.midtrans.com', 'app.sandbox.midtrans.com'].includes(new URL(response.redirect_url).hostname)) throw Error('Invalid gateway redirect');
     store.updatePaymentUrl(orderId, response.redirect_url);
     return res.status(201).json({ order: { ...order, payment_url: response.redirect_url }, access_token: accessToken });
   } catch (err) {
@@ -261,7 +275,19 @@ app.patch('/api/admin/orders/:id', sameOrigin, requireAdmin, (req, res) => {
   res.json({ ok: true, status, refund_automatic: false });
 });
 
-app.use(express.static(path.resolve(__dirname, '..'), { extensions: ['html'], dotfiles: 'deny', index: 'index.html' }));
+// Allow-list public assets. Never expose the SQLite DB, .env, server code or node_modules.
+const publicRoot = path.resolve(__dirname, '..');
+const staticOptions = { dotfiles: 'deny', fallthrough: false, setHeaders(res) {
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+}};
+for (const dir of ['css', 'js', 'images']) {
+  app.use('/' + dir, express.static(path.join(publicRoot, dir), staticOptions));
+}
+app.get('/', (req, res) => res.sendFile(path.join(publicRoot, 'index.html')));
+app.get('/index.html', (req, res) => res.sendFile(path.join(publicRoot, 'index.html')));
+app.get('/admin', (req, res) => res.sendFile(path.join(publicRoot, 'admin.html')));
+app.get('/admin.html', (req, res) => res.sendFile(path.join(publicRoot, 'admin.html')));
+app.use((req, res) => fail(res, 404, 'Halaman tidak ditemukan.'));
 app.use((err, req, res, next) => {
   console.error('[SEMEISTVO API]', err.message);
   if (res.headersSent) return next(err);
