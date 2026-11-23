@@ -121,7 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const isSelected = selectedPart && selectedPart.id === item.id;
       return `
         <div class="component-card ${isSelected ? 'selected' : ''}">
-          <img src="${item.image}" alt="Ilustrasi kategori ${state.selectedCategory}" class="component-img" loading="lazy">
+          <img src="${item.image}" data-svo-fallback="${item.fallbackImage || ('images/products/' + state.selectedCategory + '.svg')}" alt="Foto referensi atau ilustrasi komponen ${item.name}" class="component-img" loading="lazy">
           <div class="component-info">
             <h4>${item.name}</h4>
             <p>${item.description}</p>
@@ -148,7 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!presetsContainerEl) return;
     presetsContainerEl.innerHTML = PC_DATA.presets.map(preset => `
       <div class="glass-card preset-card">
-        <img src="${preset.image}" alt="Ilustrasi rakitan PC ${preset.title}" class="preset-image" loading="lazy">
+        <img src="${preset.image}" data-svo-fallback="images/products/pcbuild.svg" alt="Foto konsep rakitan PC, bukan konfigurasi final ${preset.title}" class="preset-image" loading="lazy">
         <div class="preset-header">
           <span class="badge ${preset.id.includes('beast') ? 'badge-purple' : 'badge'}">${preset.badge}</span>
           <h3 class="preset-title">${preset.title}</h3>
