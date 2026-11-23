@@ -75,7 +75,10 @@ export function allowedStock(stock) { return stock === null || (Number.isSafeInt
 export function allowedImage(image) {
   if (image === null) return true;
   if (typeof image !== "string" || image.length > 2048) return false;
-  try { const u=new URL(image); return u.protocol === "https:" && !u.username && !u.password; }
+  try {
+    const u = new URL(image);
+    return u.protocol === "https:" && !u.username && !u.password && !/[<>"'\\s]/.test(image);
+  }
   catch { return false; }
 }
 export async function writePrice(env, item, sourceLabel) {
