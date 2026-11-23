@@ -35,6 +35,6 @@ if (all.some(entry => ['server', 'runtime-data', '.env', 'package.json', 'node_m
   throw Error('Refusing to publish private server assets');
 }
 if (fs.existsSync(path.join(output, 'admin.html'))) throw Error('Public admin login must not be published');
-if (!fs.existsSync(path.join(output, 'images/gta-roleplay-scene.svg'))) throw Error('Missing local GTA Roleplay artwork');
+if (!fs.existsSync(path.join(output, 'images/gta-roleplay-night.jpg'))) throw Error('Missing local GTA Roleplay artwork');
 if (!fs.existsSync(path.join(output, 'images/favicon.svg'))) throw Error('Missing public favicon');
 console.log('Safe Cloudflare Pages bundle created in dist/');

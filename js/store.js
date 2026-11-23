@@ -96,26 +96,25 @@ document.addEventListener('DOMContentLoaded', () => {
   const showImage = p => {
     const matched = window.SVO_PHOTOS?.[p.id];
     const current = typeof p.image === 'string' ? p.image : '';
-    // Existing SQLite installs may still point to either old category or SKU art.
-    // Upgrade these default visuals to actual reference photographs without
-    // overriding custom images uploaded/selected through the admin dashboard.
-    const oldDefault = !current || current.startsWith('images/products/') || current.startsWith('images/catalog/');
-    const modelArt = 'images/catalog/' + p.id + '.svg';
-    const image = oldDefault ? (matched?.url || '') : current; // hide media when no trusted reference exists
+    const reference = matched?.local || matched?.url;
+    // Both old deployments and new seeds can supply catalogue image paths.
+    const oldDefault = !current || /^images\/(?:products|catalog)\/[a-z0-9-]+\.svg$/.test(current)
+      || current === matched?.url || current === matched?.alternate?.url;
+    const categoryArtwork = 'images/products/' + (db.components[p.category] ? p.category : 'accessories') + '.svg';
+    const image = oldDefault ? reference || current || categoryArtwork : current;
     return {
       image,
-      credit: matched && image === matched.url ? matched.credit : (image === p.image ? p.imageCreditUrl : null),
-      photo: /^https:\/\//i.test(image),
-      servicePhoto: matched?.kind === 'service-photo' && image === matched.url,
-      fallback: modelArt,
-      finalFallback: 'images/products/' + (db.components[p.category] ? p.category : 'accessories') + '.svg'
+      credit: image === reference ? matched.credit : (image === p.image ? p.imageCreditUrl : null),
+      photo: image === matched?.local || /^https:\/\//i.test(image),
+      servicePhoto: matched?.kind === 'service-photo' && image === reference,
+      fallback: 'images/catalog/' + p.id + '.svg',
+      finalFallback: categoryArtwork
     };
   };
   const renderProducts = () => {
     // Only a supplier-confirmed stock=0 hides a product. Seeded stock=0
     // means availability is unverified, not necessarily unavailable.
-    let list = products.filter(p => p.active !== 0 && p.active !== false &&
-      !!showImage(p).image && !(p.stock_live === true && p.stock === 0));
+    let list = products.filter(p => p.active !== 0 && p.active !== false && !(p.stock_live === true && p.stock === 0));
     const query = els.search.value.trim().toLowerCase();
     if (query) list = list.filter(p => (p.name + ' ' + p.brand + ' ' + p.description).toLowerCase().includes(query));
     if (els.category.value !== 'all') list = list.filter(p => p.category === els.category.value);
@@ -123,25 +122,29 @@ document.addEventListener('DOMContentLoaded', () => {
     if (els.sort.value === 'high') list.sort((a, b) => b.price - a.price);
     if (els.sort.value === 'name') list.sort((a, b) => a.name.localeCompare(b.name, 'id'));
     els.total.textContent = list.length + ' komponen ditemukan';
-    grid.innerHTML = list.length ? list.map(p => `
+    grid.innerHTML = list.length ? list.map(p => {
+      const picture = showImage(p);
+      const pictureLabel = picture.servicePhoto ? 'Foto ilustrasi layanan' : picture.photo ? 'Foto referensi model' : 'Ilustrasi model';
+      return `
       <article class="svo-product" data-svo-category="${escapeHTML(p.category)}">
-        <div class="svo-product-media ${showImage(p).servicePhoto ? 'has-service-photo' : (showImage(p).photo ? 'has-photo' : 'has-illustration')}" style="background-image:url('${escapeHTML(showImage(p).fallback)}')">
-          <img src="${escapeHTML(showImage(p).image)}"
-               data-svo-fallback="${escapeHTML(showImage(p).fallback)}" data-svo-final-fallback="${escapeHTML(showImage(p).finalFallback)}"
-               alt="${showImage(p).servicePhoto ? 'Foto ilustrasi layanan: ' + escapeHTML(p.name) : (showImage(p).photo ? 'Foto referensi model hardware: ' + escapeHTML(p.name) : 'Visual ilustratif model: ' + escapeHTML(p.name))}"
+        <div class="svo-product-media ${picture.servicePhoto ? 'has-service-photo' : picture.photo ? 'has-photo' : 'has-illustration'}">
+          <img src="${escapeHTML(picture.image)}"
+               data-svo-fallback="${escapeHTML(picture.fallback)}" data-svo-final-fallback="${escapeHTML(picture.finalFallback)}"
+               alt="${pictureLabel}: ${escapeHTML(p.name)}"
                class="svo-product-image" loading="lazy" width="600" height="400">
-          <span class="svo-illustration-chip">${showImage(p).servicePhoto ? 'Foto ilustrasi layanan' : (showImage(p).photo ? 'Foto referensi model' : 'Ilustrasi model')}</span>
+          <span class="svo-illustration-chip">${pictureLabel}</span>
         </div>
         <div class="svo-product-body">
           <span class="svo-product-brand">${escapeHTML(p.brand)} · ${escapeHTML((db.categories.find(c => c.id === p.category) || {}).name || p.category)}</span>
           <h3 class="svo-product-name">${escapeHTML(p.name)}</h3>
           <p class="svo-product-description">${escapeHTML(p.description)}</p>
-          ${showImage(p).credit ? `<a class="svo-photo-credit" href="${escapeHTML(showImage(p).credit)}" target="_blank" rel="noopener noreferrer">Sumber foto referensi ↗</a>` : ''}
+          ${picture.credit ? `<a class="svo-photo-credit" href="${escapeHTML(picture.credit)}" target="_blank" rel="noopener noreferrer">Sumber foto referensi ↗</a>` : ''}
           <span class="svo-stock-status">${serverCatalogAvailable ? (p.stock > 0 ? 'Stok tercatat: ' + p.stock : 'Stok belum tersedia') : 'Tanyakan ketersediaan'}</span>
           <p class="svo-product-price"><span class="svo-price-caption">${p.price_live ? 'Harga pemasok terverifikasi' : 'Harga referensi / estimasi'}</span><br>${formatPrice(p.price)}</p>
           <button class="svo-store-btn" type="button" data-svo-add="${escapeHTML(p.id)}">${serverCatalogAvailable && p.stock < 1 ? '+ Tanya Stok via Keranjang' : '+ Tambah ke Keranjang'}</button>
         </div>
-      </article>`).join('') : '<p class="svo-cart-empty">Tidak ada produk yang sesuai dengan pencarian.</p>';
+      </article>`;
+    }).join('') : '<p class="svo-cart-empty">Tidak ada produk yang sesuai dengan pencarian.</p>';
   };
   const renderFeatured = () => {
     const container = document.getElementById('svoFeaturedGrid');
@@ -152,7 +155,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const picture = showImage(p);
       return `
         <article class="svo-featured-card">
-          <div class="svo-featured-image" style="background-image:url('${escapeHTML(picture.fallback)}')">
+          <div class="svo-featured-image">
             <img src="${escapeHTML(picture.image)}" data-svo-fallback="${escapeHTML(picture.fallback)}"
               data-svo-final-fallback="${escapeHTML(picture.finalFallback)}" width="640" height="640"
               loading="lazy" alt="${escapeHTML(p.name)} — foto referensi atau ilustrasi model">

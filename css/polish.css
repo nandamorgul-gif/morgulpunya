@@ -221,7 +221,7 @@ section[id] {scroll-margin-top:90px}
 .svo-category-section {padding-block:50px;background:#0e0c16}
 .svo-category-tiles {gap:12px}
 .svo-category-tile {background:#201929;border:1px solid #4a3b59;border-radius:13px;padding:10px 10px 16px}
-.svo-category-tile img {aspect-ratio:4/3;object-fit:contain;background:#251e31;height:105px;padding:8px}
+.svo-category-tile img {aspect-ratio:4/3;object-fit:contain;background:#f7f4fb;height:105px;padding:8px}
 .svo-category-tile span {font-size:.84rem}
 .svo-featured-section {padding-block:60px;background:#110e19}
 .svo-featured-grid {gap:13px}
@@ -426,29 +426,21 @@ img.svo-image-unavailable,
 .svo-hero-without-photo .svo-hero-grid {grid-template-columns:minmax(0,1fr);max-width:880px}
 .svo-layout-without-photo {grid-template-columns:minmax(0,1fr);max-width:880px}
 .svo-studio-hero-media.svo-media-unavailable + * {margin-top:0}
-/* These are navigation tiles, not product photography. */
 .svo-category-tiles {align-items:stretch}
 .svo-category-tile {
-  min-height:132px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;
-  text-align:left;gap:14px;padding:21px 18px;border:1px solid #544162;border-radius:14px;
+  min-height:132px;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;
+  text-align:left;gap:10px;padding:10px 10px 15px;border:1px solid #544162;border-radius:14px;
   background:linear-gradient(145deg,#251b33,#17121f);
 }
-.svo-category-tile .svo-category-number {
-  display:inline-flex;align-items:center;justify-content:center;
-  width:38px;height:38px;border-radius:10px;background:#3b294e;
-  color:#d8baf5;font-size:.75rem;font-weight:900;letter-spacing:.05em;
-  border:1px solid #6b5186;
-}
-.svo-category-tile span:not(.svo-category-number) {font-size:.94rem;text-align:left;line-height:1.3}
+.svo-category-tile span {font-size:.94rem;text-align:left;line-height:1.3}
 .svo-category-tile small {font-size:.73rem;line-height:1.5;color:#bcb0c9}
 .svo-category-tile:hover {border-color:#a87cda;background:linear-gradient(145deg,#332441,#1f152a)}
 @media(max-width:1024px) {
   #rakit-pc .component-card.svo-card-without-photo {grid-template-columns:minmax(0,1fr) minmax(145px,auto)}
 }
 @media(max-width:560px) {
-  .svo-category-tile {min-height:112px;padding:15px 12px;gap:9px}
-  .svo-category-tile .svo-category-number {height:31px;width:31px;border-radius:8px}
-  .svo-category-tile span:not(.svo-category-number) {font-size:.8rem}
+  .svo-category-tile {padding:8px 8px 12px}
+  .svo-category-tile span {font-size:.8rem}
   .svo-category-tile small {font-size:.65rem}
   #rakit-pc .component-card.svo-card-without-photo {grid-template-columns:minmax(0,1fr)}
 }
@@ -465,22 +457,12 @@ img.svo-image-unavailable,
 .mobile-toggle[aria-expanded="true"] .svo-menu-lines span:nth-child(3) {transform:translateY(-7px) rotate(-45deg);}
 .mobile-toggle {position:relative;align-items:center;justify-content:center;z-index:1100;}
 .mobile-toggle:focus-visible,.svo-addon a:focus-visible {outline:2px solid #c9a6ff;outline-offset:3px;}
-.svo-roleplay-media .svo-roleplay-source {
-  display:inline-block;margin:7px 6px 0;color:#dfc6ff;text-decoration:underline;
-  font-size:.73rem;line-height:1.5;font-weight:600;
-}
-.svo-roleplay-media .svo-roleplay-source[hidden] {display:none!important;}
-.svo-roleplay-media > img[data-svo-roleplay-reference="yes"] {
-  display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;
-  background:#120b22;max-height:450px;
-}
 @media(max-width:1024px){
   .header .mobile-toggle {display:flex!important;min-width:44px;min-height:44px;}
   .header .svo-menu-lines {flex-shrink:0;}
 }
 @media(max-width:560px){
   .header .mobile-toggle {min-width:42px;min-height:42px;padding:8px;}
-  .svo-roleplay-media > img[data-svo-roleplay-reference="yes"] {aspect-ratio:16/10;}
 }
 @media(prefers-reduced-motion:reduce) {.svo-menu-lines span{transition:none;}}
 
@@ -499,23 +481,8 @@ img.svo-image-unavailable,
 }
 .svo-product-image {object-fit:contain}
 .svo-featured-image {background-size:contain;background-position:center;background-repeat:no-repeat;background-color:#f7f4fb}
-.svo-product.svo-card-without-photo{display:none!important}
-#svoProductGrid:has(.svo-product):not(:has(.svo-product:not(.svo-card-without-photo))))::after {
-  content:"Produk dengan gambar valid belum tersedia. Hubungi SEMEISTVO TECH untuk rekomendasi.";
-  display:block;grid-column:1/-1;text-align:center;color:#d6c3e8;padding:20px;
-}
-.svo-roleplay-media,.svo-offer-media:has(img[src*="gta-roleplay-scene.svg"]) {
-  background-color:#1f1532;
-  background-image:url('/images/gta-roleplay-scene.svg');
-  background-size:cover;background-position:center;
-}
-.svo-roleplay-media .svo-roleplay-scene-caption {
-  display:block;padding:5px 6px 9px;color:#ddc5ef;font-size:.73rem;line-height:1.5;
-}
-.svo-roleplay-media>img[src*="gta-roleplay-scene.svg"] {
-  display:block;width:100%;aspect-ratio:16/9;object-fit:cover;min-height:260px;
-}
+.svo-roleplay-media > img {aspect-ratio:1672/941}
+.svo-offer-roleplay .svo-offer-media img {object-position:center 58%;filter:none}
 @media(max-width:560px){
   .svo-pricing-status{font-size:.76rem;padding:10px 12px}
-  .svo-roleplay-media>img[src*="gta-roleplay-scene.svg"]{min-height:180px}
 }

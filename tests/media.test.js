@@ -22,7 +22,7 @@ test('music player restored with original video, controls and autoplay fallback'
   assert.doesNotMatch(music, /document\.addEventListener\('mousemove'/);
 });
 
-test('catalogue maintains traceable photographic references and legacy media assets', () => {
+test('all hardware products have local WebP photos and a source credit', () => {
   const data = require('../js/product-photos.js')(require('../js/data.js'));
   const products = Object.values(data.components).flat();
   const photoProducts = products.filter(p => p.imageType === 'reference-photo');
@@ -31,9 +31,12 @@ test('catalogue maintains traceable photographic references and legacy media ass
     assert.ok(fs.existsSync(path.join(__dirname, '..', 'images/catalog/' + p.id + '.svg')), p.id);
     assert.ok(p.image && p.fallbackImage, p.id);
   }
-  assert.ok(photoProducts.length >= 22, 'not enough reference product photos');
+  assert.equal(photoProducts.length, 43);
   for (const p of photoProducts) {
-    assert.match(p.image, /^https:\/\//i, p.id);
+    assert.equal(p.image, 'images/catalog/photos/' + p.id + '.webp');
+    const bytes = fs.readFileSync(path.join(__dirname, '..', p.image));
+    assert.equal(bytes.toString('ascii', 0, 4), 'RIFF', p.id);
+    assert.equal(bytes.toString('ascii', 8, 12), 'WEBP', p.id);
     assert.match(p.imageCreditUrl, /^https:\/\//i, p.id);
     assert.equal(p.fallbackImage, 'images/catalog/' + p.id + '.svg');
     assert.ok(fs.existsSync(path.join(__dirname, '..', p.fallbackImage)), p.id);

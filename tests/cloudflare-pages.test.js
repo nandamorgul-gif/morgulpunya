@@ -14,8 +14,8 @@ test('Pages public build includes all website assets and excludes server/databas
     cwd: root, encoding: 'utf8'
   });
   assert.equal(built.status, 0, built.stderr || built.stdout);
-  for (const entry of ['index.html','site.webmanifest','images/favicon.svg','images/gta-roleplay-scene.svg',
-    'js/store.js','css/polish.css','_redirects','_headers','_routes.json','404.html']) {
+  for (const entry of ['index.html','site.webmanifest','images/favicon.svg','images/gta-roleplay-night.jpg',
+    'images/catalog/photos/cpu-r5-9600x.webp','js/store.js','css/polish.css','_redirects','_headers','_routes.json','404.html']) {
     assert.ok(fs.existsSync(path.join(root, 'dist', entry)), 'missing public asset ' + entry);
   }
   assert.ok(!fs.existsSync(path.join(root, 'dist/admin.html')), 'admin page must not deploy');

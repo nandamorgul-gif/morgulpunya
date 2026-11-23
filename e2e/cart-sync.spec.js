@@ -54,11 +54,10 @@ test('loading and clearing the Mini-ITX preset updates header cart quantity', as
   await expect(page.locator('#svoShopCartCount')).toHaveText('0');
 });
 
-test('all catalogue SKUs have genuine-photo references, with a separate label for service photos', async ({ page }) => {
+test('all hardware photos load locally even with third-party requests blocked', async ({ page }) => {
+  await page.route(/^(?!http:\/\/127\.0\.0\.1:3000\/)/, route => route.abort());
   await page.goto('/', { waitUntil: 'domcontentloaded' });
   await expect(page.locator('.svo-product')).toHaveCount(46);
-  // The external image host may block hotlinking in CI; verify the authored
-  // sources and explicit fallback chain rather than requiring network success.
   const authored = await page.evaluate(() => ({
     refs: Object.keys(window.SVO_PHOTOS || {}).length,
     models: Object.values(window.PC_DATA.components).flat().map(p => ({
@@ -69,10 +68,21 @@ test('all catalogue SKUs have genuine-photo references, with a separate label fo
   expect(authored.models.length).toBe(46);
   expect(authored.models.filter(p => p.kind === 'reference-photo').length).toBe(43);
   expect(authored.models.filter(p => p.kind === 'service-photo').length).toBe(3);
-  expect(authored.models.every(p => p.url.startsWith('https://') && p.fallback === 'images/catalog/' + p.id + '.svg')).toBeTruthy();
-  const cards = page.locator('.svo-product-image');
-  await expect(cards).toHaveCount(46);
-  // When a remote source fails, error handling may deliberately discard the
-  // old fallback attributes. The product card must remain in the catalogue.
-  await expect(page.locator('.svo-product-name')).toHaveCount(46);
+  for (const model of authored.models) {
+    expect(model.fallback).toBe('images/catalog/' + model.id + '.svg');
+    if (model.kind === 'reference-photo') expect(model.url).toBe('images/catalog/photos/' + model.id + '.webp');
+  }
+  const hardwarePhotos = page.locator('.svo-product-media.has-photo img');
+  await expect(hardwarePhotos).toHaveCount(43);
+  await hardwarePhotos.evaluateAll(images => Promise.all(images.map(image => {
+    image.loading = 'eager';
+    return image.decode();
+  })));
+  expect(await hardwarePhotos.evaluateAll(images => images.every(image =>
+    image.getAttribute('src').startsWith('images/catalog/photos/') && image.naturalWidth > 0
+  ))).toBe(true);
+  const builder = page.locator('.component-img').first();
+  await builder.scrollIntoViewIfNeeded();
+  await expect(builder).toHaveAttribute('src', /^images\/catalog\/photos\/.+\.webp$/);
+  await builder.evaluate(image => image.decode());
 });
