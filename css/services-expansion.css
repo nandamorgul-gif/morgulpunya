@@ -66,3 +66,64 @@
 .svo-product-media.has-service-photo .svo-illustration-chip{background:rgba(20,15,31,.85);color:#f0e9fa}
 .svo-product-media.has-photo .svo-product-image{max-width:100%;max-height:100%}
 .svo-product-media img{color:transparent}
+
+/* SEMEISTVO TECH — FINAL PRESET + AUTHENTIC BANK LOGOS */
+/* Preset rekomendasi sebelum PC Builder. */
+.svo-preset-section {
+  padding: clamp(3.5rem,6vw,5.5rem) 0;
+  background: linear-gradient(150deg,#16101f,#0e0b15);
+  border-top: 1px solid #45325c;
+  border-bottom: 1px solid #322640;
+  scroll-margin-top: 85px;
+}
+.svo-preset-section .section-title {max-width:790px;margin:0 auto 2.5rem}
+.svo-preset-section .presets-grid {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.svo-preset-section .preset-card {min-width:0}
+.svo-preset-section .preset-image {display:block;width:100%;aspect-ratio:4/3;object-fit:cover}
+.svo-preset-next {
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;
+  gap:20px;margin-top:24px;padding:20px 24px;background:#22182f;
+  border:1px solid #6b4a93;border-radius:15px;
+}
+.svo-preset-next>div {display:grid;gap:5px}
+.svo-preset-next strong {color:#f4eafb;font-size:1rem}
+.svo-preset-next span {color:#bcb1c9;font-size:.84rem;line-height:1.6}
+.svo-preset-next .btn {white-space:normal;text-align:center}
+.svo-preset-fineprint {margin:13px 0 0;color:#a99eb6;font-size:.75rem;line-height:1.7}
+
+/* Logo pembayaran asli: warna logo tetap dan bingkai kontras untuk keterbacaan. */
+.svo-payment-logos {display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px}
+.svo-payment-logos .svo-payment-method {
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;
+  min-width:0;padding:15px;background:linear-gradient(155deg,#23182e,#17111f);
+  border:1px solid #57406e;border-radius:16px;text-align:center;
+  transition:transform .2s ease,border-color .2s ease;
+}
+.svo-payment-logos .svo-payment-method:hover {transform:translateY(-3px);border-color:#b48ae5}
+.svo-payment-logo-frame {
+  display:grid;place-items:center;width:100%;min-height:96px;padding:16px 10px;
+  border-radius:11px;background:#fff;
+}
+.svo-payment-logo-frame img {
+  display:block;width:100%;max-width:164px;height:64px;object-fit:contain;object-position:center;
+}
+.svo-payment-logos .svo-payment-method strong {color:#f7f2fa;font-size:.98rem;font-weight:750}
+.svo-payment-logos .svo-payment-method small {color:#bdb1ca;font-size:.75rem}
+.svo-payment-logos + .svo-payment-note {margin-top:24px}
+@media(max-width:1100px) {
+  .svo-payment-logos {grid-template-columns:repeat(3,minmax(0,1fr))}
+  .svo-preset-section .presets-grid {grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:650px) {
+  .svo-payment-logos {grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .svo-payment-logos .svo-payment-method {padding:10px}
+  .svo-payment-logo-frame {min-height:74px;padding:10px 7px}
+  .svo-payment-logo-frame img {height:51px}
+  .svo-preset-section .presets-grid {grid-template-columns:1fr}
+  .svo-preset-next {padding:17px;align-items:stretch}
+  .svo-preset-next .btn {width:100%}
+}
+@media(prefers-reduced-motion:reduce) {
+  .svo-payment-logos .svo-payment-method {transition:none}
+  .svo-payment-logos .svo-payment-method:hover {transform:none}
+}
