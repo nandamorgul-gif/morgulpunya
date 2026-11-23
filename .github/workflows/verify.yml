@@ -30,6 +30,20 @@ jobs:
           for file in js/*.js server/*.js scripts/*.js tests/*.test.js; do
             node --check "$file"
           done
+      - name: Install Chromium for viewport smoke tests
+        run: npx playwright install --with-deps chromium
+      - name: Responsive browser checks (360–1440px)
+        run: npm run test:e2e
+      - name: Upload visual debug artifacts on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-test-results
+          path: |
+            test-results/
+            playwright-report/
+          retention-days: 5
+          if-no-files-found: ignore
       - name: Smoke test secure web routes and assets
         env:
           ADMIN_EMAIL: testadmin@example.com
