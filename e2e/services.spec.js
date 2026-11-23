@@ -7,7 +7,7 @@ test('services-first landing keeps the existing music and PC Builder', async ({ 
   await expect(page.locator('.svo-offer')).toHaveCount(7);
   await expect(page.locator('#svoDigitalTitle')).toContainText('website');
   await expect(page.locator('#svoRoleplayTitle')).toContainText('GTA 5 Roleplay');
-  await expect(page.locator('#svoPaymentTitle')).toContainText('Preferensi pembayaran');
+  await expect(page.locator('#svoPaymentTitle')).toContainText('Metode Pembayaran');
   await expect(page.locator('#rakit-pc')).toBeAttached();
   await expect(page.locator('#svoMusicPlayer')).toHaveClass(/is-collapsed/);
   await expect(page.locator('a[href="https://www.youtube.com/watch?v=8_y6w1V9PXs"]')).toHaveCount(1);
