@@ -697,7 +697,7 @@ const PC_DATA = {
       "title": "SVO STARTER 1080p",
       "badge": "Gaming & Entry Creator",
       "tagline": "Ryzen 5 9600X · RTX 5060 Ti 16GB · DDR5 32GB. Basis gaming modern.",
-      "image": "images/products/pcbuild.svg",
+      "image": "https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=1000&auto=format&fit=crop&q=85",
       "components": {
         "cpu": "cpu-r5-9600x",
         "gpu": "gpu-rtx5060ti16",
@@ -717,7 +717,7 @@ const PC_DATA = {
       "title": "SVO STREAM PRO",
       "badge": "1440p Streaming",
       "tagline": "Ryzen 7 9850X3D · RTX 5070 Ti 16GB · RAM DDR5 32GB.",
-      "image": "images/products/pcbuild.svg",
+      "image": "https://images.unsplash.com/photo-1555680202-c86f0e12f086?w=1000&auto=format&fit=crop&q=85",
       "components": {
         "cpu": "cpu-r7-9850x3d",
         "gpu": "gpu-rtx5070ti",
@@ -737,7 +737,7 @@ const PC_DATA = {
       "title": "SVO CREATOR ULTRA",
       "badge": "4K / Workstation",
       "tagline": "Ryzen 9 9950X3D · RTX 5080 · DDR5 64GB untuk pekerjaan intensif.",
-      "image": "images/products/pcbuild.svg",
+      "image": "https://mikepc.com.au/cdn/shop/files/a_fcef53a5-14ba-4822-91df-89a3a5179a23_960x.png?v=1745457693",
       "components": {
         "cpu": "cpu-r9-9950x3d",
         "gpu": "gpu-rtx5080",
@@ -757,7 +757,7 @@ const PC_DATA = {
       "title": "SVO INTEL WORK",
       "badge": "Intel 2026",
       "tagline": "Core Ultra 7 270K Plus · RTX 5070 · DDR5 32GB untuk kerja dan gaming.",
-      "image": "images/products/pcbuild.svg",
+      "image": "https://bybcomputers.com.au/cdn/shop/files/AMD-gaming-pc-ryzen7-9700x-rtx5070-12gb-32gb-2tb-antec-c5-white-007.jpg?v=1755493357&width=1000",
       "components": {
         "cpu": "cpu-ultra7-270kplus",
         "gpu": "gpu-rtx5070",
