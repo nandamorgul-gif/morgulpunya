@@ -1,7 +1,8 @@
 /**
- * SEMEISTVO TECH Music — Restored from the original storefront.
- * Embeds the original YouTube video ID on user interaction only.
- * Audio/video is streamed by YouTube, never hosted or re-uploaded here.
+ * SEMEISTVO TECH — discreet background music controller.
+ * Original YouTube track ID retained; no ripped or hosted audio.
+ * Browsers may restrict autoplay with sound. We attempt autoplay muted,
+ * and expose one-tap unmute without intrusive gesture listeners.
  */
 (() => {
   'use strict';
@@ -11,109 +12,145 @@
     const toggle = document.getElementById('svoMusicCollapse');
     const play = document.getElementById('svoMusicPlay');
     const pause = document.getElementById('svoMusicPause');
+    const mute = document.getElementById('svoMusicMute');
     const status = document.getElementById('svoMusicStatus');
     const content = document.getElementById('svoMusicContent');
-    const videoId = '8_y6w1V9PXs'; // Existing video reference in pre-rebrand website.
+    const videoId = '8_y6w1V9PXs';
+    const SESSION_KEY = 'svo-music-muted-v2';
     let player = null;
-    let isReady = false;
+    let ready = false;
     let apiLoading = false;
-    let wantsPlay = false;
-    let started = false;
+    let pending = false;
+    let playing = false;
+    let muted = true;
+    let error = false;
 
-    function setStatus(text) { status.textContent = text; }
-    function setPlaying(playing) {
+    // Session preference is only a preference: browser policy takes priority.
+    try { muted = sessionStorage.getItem(SESSION_KEY) !== 'false'; } catch (_) {}
+    const setStatus = (message) => { status.textContent = message; };
+    function updateControls() {
       root.classList.toggle('is-playing', playing);
+      root.classList.toggle('is-muted', muted);
       play.disabled = playing;
       pause.disabled = !playing;
-      play.setAttribute('aria-pressed', String(playing));
-      pause.setAttribute('aria-pressed', String(!playing));
-      setStatus(playing ? 'Sedang diputar via YouTube' : (started ? 'Dijeda' : 'Siap diputar'));
+      mute.textContent = muted ? 'Aktifkan suara' : 'Matikan suara';
+      mute.setAttribute('aria-pressed', String(!muted));
+      root.setAttribute('data-music-state', error ? 'error' : (playing ? (muted ? 'muted' : 'playing') : 'paused'));
     }
-    function expand() {
-      root.classList.remove('is-collapsed');
-      content.hidden = false;
-      toggle.setAttribute('aria-expanded', 'true');
-      toggle.setAttribute('aria-label', 'Kecilkan pemutar musik');
+    function collapse(value) {
+      root.classList.toggle('is-collapsed', value);
+      content.hidden = value;
+      toggle.setAttribute('aria-expanded', String(!value));
+      toggle.setAttribute('aria-label', value ? 'Buka kontrol musik' : 'Sembunyikan kontrol musik');
     }
-    function togglePanel() {
-      const collapsed = root.classList.toggle('is-collapsed');
-      content.hidden = collapsed;
-      toggle.setAttribute('aria-expanded', String(!collapsed));
-      toggle.setAttribute('aria-label', collapsed ? 'Buka pemutar musik' : 'Kecilkan pemutar musik');
+    function applyMute(shouldMute) {
+      muted = shouldMute;
+      try { sessionStorage.setItem(SESSION_KEY, String(shouldMute)); } catch (_) {}
+      if (player && ready) {
+        try { shouldMute ? player.mute() : player.unMute(); } catch (_) {}
+      }
+      updateControls();
+      setStatus(shouldMute ? 'Musik berjalan tanpa suara — ketuk untuk aktifkan suara'
+                           : (playing ? 'Musik sedang diputar' : 'Musik siap diputar'));
     }
-    function ready() {
-      isReady = true;
-      setStatus('Siap diputar');
-      if (wantsPlay) {
-        wantsPlay = false;
-        // Some browsers may still require another click on the YouTube control.
-        try { player.playVideo(); } catch (_) {}
+    function startPlayback() {
+      if (!player || !ready) { pending = true; return; }
+      try {
+        // Mute before autoplay attempt to comply with browser autoplay rules.
+        player.mute();
+        player.playVideo();
+        pending = false;
+        if (!muted) {
+          // Restore user session intent once ready; browser can still block audio.
+          player.unMute();
+        }
+      } catch (_) {
+        setStatus('Autoplay diblokir — tekan Putar untuk memulai.');
       }
     }
-    function initializePlayer() {
-      if (player || !window.YT || typeof window.YT.Player !== 'function') return;
+    function createPlayer() {
+      if (player || !window.YT?.Player) return;
       player = new window.YT.Player('svoMusicVideoSlot', {
-        height: '195', width: '346', videoId,
-        playerVars: { playsinline: 1, controls: 1, rel: 0, autoplay: 0 },
+        width: '240', height: '200', videoId,
+        playerVars: { playsinline: 1, autoplay: 1, mute: 1, controls: 1, loop: 1, playlist: videoId, rel: 0 },
         events: {
-          onReady: ready,
-          onStateChange(event) {
-            if (!window.YT) return;
-            if (event.data === window.YT.PlayerState.PLAYING) {
-              started = true; setPlaying(true);
-            } else if (event.data === window.YT.PlayerState.PAUSED ||
-                       event.data === window.YT.PlayerState.ENDED ||
-                       event.data === window.YT.PlayerState.CUED) {
-              setPlaying(false);
-            }
+          onReady: () => {
+            ready = true;
+            setStatus('Mempersiapkan musik...');
+            startPlayback();
           },
-          onError() {
-            wantsPlay = false;
-            play.disabled = false;
-            pause.disabled = true;
-            setStatus('Video tidak tersedia. Buka tautan YouTube.');
+          onStateChange: (e) => {
+            if (!window.YT?.PlayerState) return;
+            if (e.data === window.YT.PlayerState.PLAYING) {
+              playing = true;
+              const actualMute = typeof player.isMuted === 'function' ? player.isMuted() : true;
+              muted = actualMute;
+              setStatus(muted ? 'Musik diputar tanpa suara — ketuk untuk aktifkan suara' : 'Musik sedang diputar');
+            } else if (e.data === window.YT.PlayerState.PAUSED || e.data === window.YT.PlayerState.ENDED) {
+              playing = false; setStatus('Musik dijeda');
+            }
+            updateControls();
+          },
+          onAutoplayBlocked: () => {
+            playing = false;
+            try { player?.mute(); player?.playVideo(); } catch (_) {}
+            setStatus('Browser menahan autoplay. Ketuk ikon musik untuk memulai.');
+            updateControls();
+          },
+          onError: () => {
+            error = true; playing = false; pending = false;
+            setStatus('Video tidak tersedia. Buka melalui YouTube.');
+            updateControls();
           }
         }
       });
     }
     function loadApi() {
-      if (window.YT?.Player) { initializePlayer(); return; }
+      if (window.YT?.Player) { createPlayer(); return; }
       if (apiLoading) return;
       apiLoading = true;
-      setStatus('Menghubungkan pemutar YouTube...');
-      const previousCallback = window.onYouTubeIframeAPIReady;
+      const prior = window.onYouTubeIframeAPIReady;
       window.onYouTubeIframeAPIReady = () => {
-        if (typeof previousCallback === 'function') previousCallback();
-        initializePlayer();
+        if (typeof prior === 'function') prior();
+        createPlayer();
       };
       const script = document.createElement('script');
       script.src = 'https://www.youtube.com/iframe_api';
       script.async = true;
       script.onerror = () => {
-        apiLoading = false; wantsPlay = false;
-        setStatus('Gagal memuat YouTube. Gunakan tautan eksternal.');
-        play.disabled = false;
+        error = true; apiLoading = false; pending = false;
+        setStatus('YouTube tidak dapat dimuat. Buka video secara langsung.');
+        updateControls();
       };
       document.head.appendChild(script);
     }
-    toggle.addEventListener('click', togglePanel);
+    toggle.addEventListener('click', () => {
+      collapse(!root.classList.contains('is-collapsed'));
+      if (root.classList.contains('is-collapsed')) return;
+      if (!ready && !apiLoading) loadApi();
+    });
     play.addEventListener('click', () => {
-      expand();
-      if (!player) {
-        wantsPlay = true;
-        loadApi();
-        return;
-      }
-      if (!isReady) { wantsPlay = true; setStatus('Memuat video...'); return; }
-      try { player.playVideo(); } catch (_) { setStatus('Gunakan tombol play pada video.'); }
+      pending = true;
+      if (!ready) { loadApi(); setStatus('Memuat pemutar musik...'); return; }
+      startPlayback();
     });
     pause.addEventListener('click', () => {
-      wantsPlay = false;
-      if (player?.pauseVideo) {
-        try { player.pauseVideo(); } catch (_) {}
-      }
-      setPlaying(false);
+      pending = false;
+      try { player?.pauseVideo(); } catch (_) {}
+      playing = false; setStatus('Musik dijeda'); updateControls();
     });
-    setPlaying(false);
+    mute.addEventListener('click', () => {
+      applyMute(!muted);
+      if (!ready) { pending = true; loadApi(); }
+      else if (!playing) { startPlayback(); }
+    });
+    document.addEventListener('visibilitychange', () => {
+      // Never force unmute or resume on unrelated browsing gestures.
+      if (document.hidden && !playing) updateControls();
+    });
+    collapse(true);
+    updateControls();
+    pending = true;
+    loadApi(); // Browser may allow muted autoplay. Sound requires its permission or click.
   });
 })();
