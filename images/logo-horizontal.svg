@@ -1,16 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 240" role="img" aria-labelledby="title desc">
-<title id="title">SEMEISTVO TECH horizontal logo</title><desc id="desc">Luxury SVO monogram with SEMEISTVO TECH wordmark.</desc>
-<defs>
-  <linearGradient id="metal" x1="0" y1="0" x2=".95" y2="1"><stop stop-color="#FFFFFF"/><stop offset=".43" stop-color="#DEE1ED"/><stop offset="1" stop-color="#A7A6BD"/></linearGradient>
-  <linearGradient id="edge" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#C4A3FF"/><stop offset=".47" stop-color="#8853D8"/><stop offset="1" stop-color="#3B245A"/></linearGradient>
-  <radialGradient id="surface"><stop stop-color="#231934"/><stop offset="1" stop-color="#0B0A10"/></radialGradient>
-</defs>
-<g transform="translate(8 18) scale(.49)"><path d="M93 23h294l76 77v200l-76 77H93l-76-77V100z" fill="url(#surface)" stroke="url(#edge)" stroke-width="7"/><g fill="none" stroke="url(#metal)" stroke-width="20" stroke-linecap="square" stroke-linejoin="bevel">
-  <path d="M89 147h79m-79 0v48h79v51H89"/>
-  <path d="m194 147 44 100 44-100"/>
-  <path d="M303 147h79v100h-79z"/>
-</g><path d="M94 264h288" stroke="#8E62DD" stroke-width="5" stroke-linecap="round"/></g>
-<text x="270" y="118" font-family="Outfit,Arial,sans-serif" font-size="70" font-weight="900" fill="url(#metal)" letter-spacing="7">SEMEISTVO</text>
-<text x="274" y="179" font-family="Outfit,Arial,sans-serif" font-size="42" font-weight="700" fill="#B995EF" letter-spacing="22">TECH</text>
-<path d="M274 198h615" stroke="#8051C8" stroke-width="2" opacity=".8"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1130 235" role="img" aria-labelledby="title desc"><title id="title">SEMEISTVO TECH — PC Build and Digital Studio</title><desc id="desc">Premium silver S monogram and clean SEMEISTVO TECH wordmark.</desc><defs>
+<linearGradient id="silver" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffffff"/><stop offset=".4" stop-color="#e7e6ee"/><stop offset=".75" stop-color="#bcb9ca"/><stop offset="1" stop-color="#f1ecf8"/></linearGradient>
+<linearGradient id="violet" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#e2bdff"/><stop offset=".46" stop-color="#9b4cf4"/><stop offset="1" stop-color="#46207d"/></linearGradient></defs>
+<g transform="translate(-72 -30) scale(.70)"><g aria-hidden="true">
+<path d="M345 91 C315 54 260 57 222 75 C176 97 148 139 153 196" stroke="url(#violet)" stroke-width="7" fill="none" stroke-linecap="round"/>
+<path d="M161 226 C176 288 234 315 294 300 C326 292 347 273 361 248" stroke="url(#violet)" stroke-width="4" fill="none" stroke-linecap="round" opacity=".9"/>
+<path d="M350 105 C315 94 273 98 250 120 C233 136 239 151 264 164 L309 186 C355 213 346 246 320 268 C291 294 241 293 204 278 C240 303 310 309 346 275 C378 246 380 208 337 182 L281 151 C254 136 281 111 350 105Z" fill="url(#silver)"/>
+<path d="M111 253 C150 207 190 207 241 215 C204 217 176 248 139 292 C152 254 151 234 111 253Z" fill="url(#silver)" opacity=".95"/>
+<path d="M365 85 L254 317 L269 288 L389 76Z" fill="url(#violet)"/>
+</g></g>
+<path d="M265 54 V193" stroke="#A77BDB" stroke-width="1.6" opacity=".8"/>
+<text x="297" y="127" fill="url(#silver)" font-family="Outfit,Montserrat,Arial,sans-serif" font-size="62" font-weight="600" letter-spacing="9">SEMEISTVO</text>
+<path d="M301 168h94 M560 168h270" stroke="#B8A6CC" stroke-width="1.4" opacity=".72"/>
+<text x="416" y="178" fill="#B98AEF" font-family="Outfit,Arial,sans-serif" font-size="30" font-weight="600" letter-spacing="16">TECH</text></svg>
