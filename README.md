@@ -2,6 +2,20 @@
 
 Service-first PC and digital studio with retained PC Builder and an optional backend catalogue.
 
+## Real hardware reference photos and unified cart (23 November 2026)
+
+- **43 model/family-matched physical component and accessory photographs** plus **3 distinct context photographs** for software setup services; all 46 catalogue entries now have a reference image URL in `js/product-photos.js`. Product images are *reference photography*, not proof of the exact variant in stock. They are externally hosted.
+- Service photography is labeled as an *illustration of the service*, never a photo of the promised result. A failed or hotlink-blocked external image still falls back to locally retained per-SKU illustration (`images/catalog/<id>.svg`) and then category artwork. No broken white/empty tiles.
+- Existing SQLite product records with older `images/products/` or `images/catalog/` illustration URLs now show the latest reference photo in the client; **custom admin-selected images remain untouched**. Production rollout must obtain supplier/manufacturer permissions or replace with commercially licensed photographs and can consider downloading authorized photos locally.
+- **One common header cart:** the PC Builder and hardware catalogue now both contribute to `#svoShopCartCount` and `#svoCartItems`.
+- PC Builder controls for selecting/swapping/removing hardware, loading presets, restoring saved configurations and resetting a build emit `svo:builder-change`. The cart listens and displays these items as `Dari PC Builder`, with accurate combined quantity and estimated subtotal.
+- Manual catalogue additions are persisted as before and remain separate from builder selections internally: changing CPU/GPU will not silently erase items manually placed in the cart.
+- Removing an item originating in the Builder from the header cart clears that component in the Builder; removing a manual item does not touch the other source. The old duplicate header cart badge was removed.
+- PC Builder includes a **Lihat di Keranjang Atas** shortcut to the same drawer. Stok-out items can still be included in a WhatsApp inquiry, **but an online payment is blocked** until real server stock is available and the gateway is configured. Server-pricing and verification rules remain authoritative.
+- New `e2e/cart-sync.spec.js` checks builder selection, replacement, removal, manual+builder coexistence, preset load/reset, and full reference photo coverage.
+
+**Important:** Live retail photos from third-party stores/manufacturers may be blocked, expire, or require permission. This branch remains a **draft for review**, not a commercially cleared product-image catalogue.
+
 ## Roleplay servers, premium logo, and payment preferences (2026-11-23)
 
 - Updated SEMEISTVO TECH **luxury brand symbol** into a flowing silver/violet ribbon icon and matching wordmark/favicon.
@@ -60,7 +74,7 @@ Images in service cards and the website development feature are illustrative, no
 ## Music + product imagery restoration (November 2026)
 - The original music track reference, **"I Miss You Every Brand New Day"** (YouTube video ID `8_y6w1V9PXs`), is back via a floating mini player.
 - Play, pause, minimize, and open-on-YouTube controls; no forced auto-unmute or unsolicited autoplay. Browser/YouTube restrictions can affect playback.
-- 22 researched **model/family-matched reference photo links** for key 2026 hardware entries, defined in `js/product-photos.js`. These external images may expire or block hotlinks.
+- 43 model/family-matched **hardware photo reference links** plus 3 service context photos for key 2026 hardware entries, defined in `js/product-photos.js`. These external images may expire or block hotlinks.
 - Four PC build concept images and the homepage hero use actual PC photography. They are labeled **concept/reference** and are **not photographs of the exact preset configuration**.
 - The catalogue displays `Foto referensi model` badges and source links. There are **46 unique locally hosted fallback SVG illustrations**, one per catalogue SKU in `images/catalog/`. If a third-party image fails, the relevant SKU art is used first, then a category art fallback.
 - These are **temporary external imagery references, not a commercial photo license**. Obtain image-owner/manufacturer/supplier permission or substitute owned, licensed product images before any public commercial deployment.
