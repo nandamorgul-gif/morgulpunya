@@ -1,0 +1,43 @@
+/* SEMEISTVO TECH · compact premium YouTube music player */
+.svo-music-player{
+ position:fixed;left:20px;bottom:21px;z-index:9998;
+ width:min(370px,calc(100vw - 40px));
+ border:1px solid rgba(181,144,230,.42);
+ border-radius:17px;
+ background:linear-gradient(135deg,rgba(37,27,53,.98),rgba(14,12,22,.98));
+ box-shadow:0 18px 50px rgba(0,0,0,.4);color:#f5f0fe;
+ overflow:hidden;backdrop-filter:blur(18px)
+}
+.svo-music-head{display:flex;align-items:center;gap:10px;padding:11px 12px}
+.svo-music-disc{
+ width:37px;height:37px;min-width:37px;display:grid;place-items:center;
+ border-radius:50%;border:1px solid rgba(193,155,250,.65);
+ background:radial-gradient(circle at center,#af8ce5 0 13%,#231831 15% 34%,#392449 36% 52%,#1d1727 56% 100%);
+ color:#d6baff;font-size:17px;cursor:pointer
+}
+.svo-music-player.is-playing .svo-music-disc{animation:svo-spin 5s linear infinite}
+@keyframes svo-spin{to{transform:rotate(360deg)}}
+.svo-music-info{min-width:0;flex:1}
+.svo-music-name{display:block;color:#f7f2ff;font-size:.83rem;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.svo-music-status{display:block;color:#bdaed1;font-size:.69rem;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.svo-music-control{
+ display:grid;place-items:center;height:34px;min-width:34px;padding:0 5px;cursor:pointer;
+ color:#eee5fc;border-radius:9px;border:1px solid #675180;background:#443059;font-size:.95rem
+}
+.svo-music-control:hover{background:#624281;color:white}
+.svo-music-control:disabled{opacity:.5;cursor:default}
+.svo-music-link{display:grid;place-items:center;color:#d9c5ff;font-size:1.13rem;width:23px;height:34px}
+.svo-music-content{padding:0 13px 13px}
+.svo-music-content[hidden]{display:none}
+#svoMusicVideoSlot{display:block;width:100%;min-height:190px;max-height:220px;border-radius:10px;background:#12111b;border:1px solid #4a3b61}
+.svo-music-note{font-size:.67rem;line-height:1.5;color:#a99db8;margin:9px 0 0}
+.svo-music-player.is-collapsed{width:min(365px,calc(100vw - 40px))}
+@media(max-width:760px){
+ .svo-music-player{left:11px;bottom:13px;width:min(345px,calc(100vw - 22px))}
+ .svo-music-head{padding:9px 10px;gap:7px}
+ .svo-music-disc{width:34px;height:34px;min-width:34px}
+ .svo-music-control{height:31px;min-width:31px}
+ #svoMusicVideoSlot{min-height:175px}
+ .floating-whatsapp{bottom:15px;right:12px}
+}
+@media(prefers-reduced-motion:reduce){.svo-music-player.is-playing .svo-music-disc{animation:none}}
