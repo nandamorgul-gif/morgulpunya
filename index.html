@@ -195,7 +195,28 @@
     </div>
   </section>
 
-<!-- Interactive PC Builder & Live Price Calculator (Rakit PC / Harga) -->
+<!-- Rekomendasi rakitan: pilihan preset tampil SEBELUM PC Builder -->
+  <section id="preset" class="section-padding svo-preset-section" aria-labelledby="svoPresetTitle">
+    <div class="container">
+      <div class="section-title">
+        <span class="badge badge-purple">CUSTOM PC / BUILD GUIDE</span>
+        <h2 id="svoPresetTitle">Rekomendasi Rakitan PC 2026</h2>
+        <p>Pilih salah satu dari lima konfigurasi referensi untuk gaming, streaming, editing, workstation, atau Mini-ITX White. Komponen dan harga bisa disesuaikan dengan kebutuhan, budget, serta ketersediaan aktual.</p>
+      </div>
+      <!-- Diproses otomatis oleh js/app.js; ID ini harus tetap unik. -->
+      <div class="presets-grid" id="presetsContainer"></div>
+      <div class="svo-preset-next">
+        <div>
+          <strong>Belum menemukan rakitan yang cocok?</strong>
+          <span>Atur CPU, GPU, RAM, casing, dan komponen lain lewat PC Builder.</span>
+        </div>
+        <a href="#rakit-pc" class="btn btn-primary">Sesuaikan di PC Builder ↗</a>
+      </div>
+      <p class="svo-preset-fineprint">Harga yang tampil adalah estimasi komponen, belum termasuk jasa rakit, instalasi/lisensi perangkat lunak, pengiriman, serta biaya tambahan lainnya. Pemilihan akhir perlu konfirmasi kompatibilitas dan stok.</p>
+    </div>
+  </section>
+
+  <!-- Interactive PC Builder & Live Price Calculator (Rakit PC / Harga) -->
   <section id="rakit-pc" class="section-padding">
     <div class="container">
       <div class="section-title">
@@ -319,21 +340,6 @@
     </div>
   </section>
 
-  <!-- Preset Builds Section -->
-  <section id="preset" class="section-padding" style="background: rgba(0, 0, 0, 0.2);">
-    <div class="container">
-      <div class="section-title">
-        <span class="badge">PC BUILD REFERENCES</span>
-        <h2>Contoh Rakitan PC Sesuai Kebutuhan</h2>
-        <p>Lima contoh konfigurasi PC 2026 untuk gaming, streaming, editing, workstation, dan Mini-ITX White. Semua rakitan dapat disesuaikan dengan budget, kebutuhan serta stok aktual. Harga hanya simulasi komponen; jasa perakitan, lisensi OS, dan pengiriman dibahas terpisah.</p>
-      </div>
-
-      <div class="presets-grid" id="presetsContainer">
-        <!-- Hydrated dynamically from data.js via app.js -->
-      </div>
-    </div>
-  </section>
-
   <!-- Additional support services -->
 <section id="software-paket" class="svo-studio-section svo-addons" aria-labelledby="svoAddonsTitle">
   <div class="container">
@@ -422,24 +428,59 @@
 </section>
 
 <!-- Consultation intake: WhatsApp handoff, no fake form submission -->
-  <!-- Payment preferences, NOT bank account instructions or confirmed active channels -->
+  <!-- Logo bank merek asli dari Wikimedia Commons; metode merupakan preferensi, bukan pembayaran otomatis -->
   <section id="pembayaran" class="svo-studio-section svo-payments" aria-labelledby="svoPaymentTitle">
     <div class="container">
       <div class="svo-studio-heading">
-        <div><span class="svo-kicker">PAYMENT OPTIONS / BY REQUEST</span><h2 id="svoPaymentTitle">Preferensi pembayaran</h2></div>
-        <p>Setelah penawaran dan rincian pekerjaan disetujui, kamu dapat menyampaikan pilihan transfer bank atau dompet digital untuk dikonfirmasi bersama admin.</p>
+        <div>
+          <span class="svo-kicker">PAYMENT PREFERENCES</span>
+          <h2 id="svoPaymentTitle">Metode Pembayaran</h2>
+        </div>
+        <p>Sampaikan bank atau dompet digital yang ingin digunakan setelah rincian jasa, barang, dan harga akhir dikonfirmasi admin.</p>
       </div>
-      <div class="svo-payment-methods" aria-label="Pilihan metode untuk dikonfirmasi">
-        <div class="svo-payment-method"><span class="svo-payment-symbol">B</span><strong>BCA</strong><small>Transfer bank</small></div>
-        <div class="svo-payment-method"><span class="svo-payment-symbol">M</span><strong>Mandiri</strong><small>Transfer bank</small></div>
-        <div class="svo-payment-method"><span class="svo-payment-symbol">S</span><strong>SeaBank</strong><small>Transfer bank</small></div>
-        <div class="svo-payment-method"><span class="svo-payment-symbol">J</span><strong>Bank Jago</strong><small>Transfer bank</small></div>
-        <div class="svo-payment-method"><span class="svo-payment-symbol">D</span><strong>DANA</strong><small>Dompet digital</small></div>
+      <div class="svo-payment-methods svo-payment-logos" aria-label="Pilihan metode pembayaran">
+        <div class="svo-payment-method">
+          <div class="svo-payment-logo-frame">
+            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Bank_Central_Asia.svg" alt="Logo BCA" width="180" height="70" loading="lazy" decoding="async">
+          </div>
+          <strong>BCA</strong>
+          <small>Transfer bank</small>
+        </div>
+        <div class="svo-payment-method">
+          <div class="svo-payment-logo-frame">
+            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Bank_Mandiri_logo_2016.svg" alt="Logo Mandiri" width="180" height="70" loading="lazy" decoding="async">
+          </div>
+          <strong>Mandiri</strong>
+          <small>Transfer bank</small>
+        </div>
+        <div class="svo-payment-method">
+          <div class="svo-payment-logo-frame">
+            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/SeaBank.svg" alt="Logo SeaBank" width="180" height="70" loading="lazy" decoding="async">
+          </div>
+          <strong>SeaBank</strong>
+          <small>Transfer bank</small>
+        </div>
+        <div class="svo-payment-method">
+          <div class="svo-payment-logo-frame">
+            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Bank_Jago_2026.svg" alt="Logo Bank Jago" width="180" height="70" loading="lazy" decoding="async">
+          </div>
+          <strong>Bank Jago</strong>
+          <small>Transfer bank</small>
+        </div>
+        <div class="svo-payment-method">
+          <div class="svo-payment-logo-frame">
+            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Logo_dana_blue.svg" alt="Logo DANA" width="180" height="70" loading="lazy" decoding="async">
+          </div>
+          <strong>DANA</strong>
+          <small>Dompet digital</small>
+        </div>
       </div>
-      <div class="svo-payment-note" role="note"><i class="feather feather-info"></i>
-        <p><strong>Belum ada instruksi transfer di halaman ini.</strong> Daftar ini adalah pilihan preferensi, bukan jaminan kanal pembayaran telah aktif. Nomor rekening/tujuan DANA serta instruksi resmi hanya diberikan setelah diverifikasi admin. Jangan mentransfer sebelum menerima invoice dan detail tujuan yang sah. Jika checkout melalui payment gateway digunakan, metode yang benar-benar tersedia mengikuti penyedia pembayaran.</p>
+      <div class="svo-payment-note" role="note">
+        <p><strong>Belum ada instruksi transfer di halaman ini.</strong>
+          Logo menunjukkan preferensi pembayaran yang dapat ditanyakan kepada admin, bukan bukti seluruh kanal telah aktif atau kerja sama resmi dengan pemilik merek.
+          Jangan mengirim uang sebelum mendapat invoice dan tujuan pembayaran terverifikasi.</p>
       </div>
-      <a href="#kontak" class="svo-payment-link">Diskusikan penawaran dan pembayaran <span aria-hidden="true">↗</span></a>
+      <a href="#kontak" class="svo-payment-link">Konfirmasi metode pembayaran bersama admin ↗</a>
     </div>
   </section>
 
