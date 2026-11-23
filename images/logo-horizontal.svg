@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 240" role="img" aria-labelledby="title desc">
+<title id="title">SEMEISTVO TECH horizontal logo</title><desc id="desc">Luxury SVO monogram with SEMEISTVO TECH wordmark.</desc>
+<defs>
+  <linearGradient id="metal" x1="0" y1="0" x2=".95" y2="1"><stop stop-color="#FFFFFF"/><stop offset=".43" stop-color="#DEE1ED"/><stop offset="1" stop-color="#A7A6BD"/></linearGradient>
+  <linearGradient id="edge" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#C4A3FF"/><stop offset=".47" stop-color="#8853D8"/><stop offset="1" stop-color="#3B245A"/></linearGradient>
+  <radialGradient id="surface"><stop stop-color="#231934"/><stop offset="1" stop-color="#0B0A10"/></radialGradient>
+</defs>
+<g transform="translate(8 18) scale(.49)"><path d="M93 23h294l76 77v200l-76 77H93l-76-77V100z" fill="url(#surface)" stroke="url(#edge)" stroke-width="7"/><g fill="none" stroke="url(#metal)" stroke-width="20" stroke-linecap="square" stroke-linejoin="bevel">
+  <path d="M89 147h79m-79 0v48h79v51H89"/>
+  <path d="m194 147 44 100 44-100"/>
+  <path d="M303 147h79v100h-79z"/>
+</g><path d="M94 264h288" stroke="#8E62DD" stroke-width="5" stroke-linecap="round"/></g>
+<text x="270" y="118" font-family="Outfit,Arial,sans-serif" font-size="70" font-weight="900" fill="url(#metal)" letter-spacing="7">SEMEISTVO</text>
+<text x="274" y="179" font-family="Outfit,Arial,sans-serif" font-size="42" font-weight="700" fill="#B995EF" letter-spacing="22">TECH</text>
+<path d="M274 198h615" stroke="#8051C8" stroke-width="2" opacity=".8"/>
+</svg>
