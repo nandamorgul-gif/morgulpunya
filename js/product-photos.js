@@ -240,5 +240,6 @@ if (typeof document !== 'undefined') {
     const label = card?.querySelector('.svo-illustration-chip');
     if (label) label.textContent = 'Ilustrasi model produk';
     card?.classList.replace('has-photo', 'has-illustration');
+    card?.classList.replace('has-service-photo', 'has-illustration');
   }, true);
 }
