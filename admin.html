@@ -1,10 +1,10 @@
 <!doctype html>
 <html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>SEMEISTVO TECH · Admin</title>
-<link rel="icon" href="images/logo.svg">
+<link rel="icon" type="image/svg+xml" href="images/favicon.svg">
 <style>
 :root{color-scheme:dark;font-family:Inter,system-ui,sans-serif;background:#0d0b14;color:#f1ebfa}
-*{box-sizing:border-box}body{margin:0;padding:22px}main{max-width:1350px;margin:auto}h1{margin:0;font-size:clamp(1.3rem,3vw,2.4rem)}
+*{box-sizing:border-box}body{margin:0;padding:22px}main{max-width:1350px;margin:auto}h1{margin:0;font-size:clamp(1.3rem,3vw,2.4rem)}.svo-admin-brand{display:flex;align-items:center;gap:12px}.svo-admin-brand img{width:52px;height:52px;object-fit:contain}
 h2{font-size:1.2rem}header{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:16px 0 28px;border-bottom:1px solid #413454;flex-wrap:wrap}
 a{color:#c7a6ff}button,input,select{font:inherit;border-radius:8px;padding:10px;border:1px solid #604b7f}
 button{background:#7138ca;color:white;font-weight:700;cursor:pointer}button:disabled{opacity:.45;cursor:not-allowed}input,select{background:#20182d;color:white;max-width:100%}
@@ -21,7 +21,7 @@ td select{min-width:125px}td button{white-space:nowrap}.toolbar{display:flex;gap
 @media(max-width:650px){body{padding:12px}td{padding:7px}}
 </style></head>
 <body><main>
-<header><div><h1>SEMEISTVO <span style="color:#b590f2">TECH</span></h1><p class="muted">Dashboard administrasi toko</p></div>
+<header><div class="svo-admin-brand"><img src="images/logo.svg" alt="Logo SVO" width="52" height="52"><div><h1>SEMEISTVO <span style="color:#b590f2">TECH</span></h1><p class="muted">Dashboard administrasi toko</p></div></div>
 <div><a href="/">← Lihat Toko</a> <button id="logout" type="button" hidden>Keluar</button></div></header>
 <p id="status" role="status"></p>
 <section id="loginSection"><h2>Login Admin</h2>
