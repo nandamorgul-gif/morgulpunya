@@ -291,6 +291,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const cartCountEl = document.getElementById('cartCount');
     if (cartCountEl) cartCountEl.textContent = count;
     renderCompatibility();
+    // Shared cart synchronization: all builder mutations (select, remove,
+    // load preset, restore and reset) use updateSummary as a single source.
+    const selections = Object.fromEntries(Object.entries(state.userBuild)
+      .filter(([category, part]) => !!part && !!PC_DATA.components[category])
+      .map(([category, part]) => [category, part.id]));
+    window.SVOBuilderSelections = selections;
+    document.dispatchEvent(new CustomEvent('svo:builder-change', { detail: { selections } }));
   }
 
   // 6. Select or Unselect a Component
@@ -595,6 +602,18 @@ document.addEventListener('DOMContentLoaded', () => {
         renderComponents();
       });
     }
+
+    // If an item is removed from the shared header cart, remove it from
+    // the builder as well, including the local configuration summary.
+    document.addEventListener('svo:builder-remove', event => {
+      const category = event.detail?.category;
+      const id = event.detail?.id;
+      if (!category || !id || state.userBuild[category]?.id !== id) return;
+      state.userBuild[category] = null;
+      renderCategoryTabs();
+      renderComponents();
+      updateSummary();
+    });
 
     // Component selection button click
     if (componentsListEl) {
