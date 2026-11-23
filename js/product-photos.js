@@ -249,6 +249,9 @@ if (typeof document !== 'undefined') {
       '.component-card, .svo-cart-item, .svo-category-tile'
     );
     if (card) card.classList.add('svo-card-without-photo');
+    // A source link should not imply the customer is seeing a photo that failed.
+    const credit = card?.querySelector('.svo-photo-credit');
+    if (credit) credit.hidden = true;
 
     if (card?.classList.contains('preset-card')) {
       const caption = card.querySelector('.svo-preset-caption');
