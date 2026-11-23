@@ -410,30 +410,60 @@
     </div>
   </section>
 
-  <!-- Kontak & FAQ Section -->
-  <section id="kontak" class="section-padding svo-contact-section">
+  <!-- Consultation intake: WhatsApp handoff, no fake form submission -->
+  <section id="kontak" class="svo-studio-section svo-contact-section svo-studio-contact" aria-labelledby="svoContactTitle">
     <div class="container">
-      <div class="section-title">
-        <span class="svo-kicker">CONTACT / CONSULTATION</span>
-        <h2>Ada rakitan yang ingin kamu konsultasikan?</h2>
-        <p>Ceritakan kebutuhan gaming, editing, streaming, atau workstation. Tim SEMEISTVO TECH akan membantu menyusun penawaran sesuai komponen yang tersedia.</p>
+      <div class="svo-studio-heading">
+        <div><span class="svo-kicker">START YOUR PROJECT</span><h2 id="svoContactTitle">Ceritakan kebutuhanmu, mulai dari sini.</h2></div>
+        <p>Rakit PC, instalasi, upgrade, atau website baru? Isi brief singkat untuk menyiapkan pesan konsultasi melalui WhatsApp. Belum ada tagihan atau komitmen pekerjaan.</p>
       </div>
-      <div class="svo-contact-layout">
-        <div class="svo-contact-info">
-          <span class="svo-contact-mark">SVO / LET'S BUILD</span>
-          <h3>PC yang tepat dimulai dari kebutuhanmu.</h3>
-          <p>Kirim budget, resolusi monitor, aplikasi utama, dan preferensi tampilan untuk diskusi spesifikasi.</p>
-          <a class="btn btn-primary" href="https://wa.me/6288291967659?text=Halo%20SEMEISTVO%20TECH%2C%20saya%20ingin%20konsultasi%20rakitan%20PC" target="_blank" rel="noopener noreferrer"><i class="feather feather-message-circle"></i> Chat WhatsApp</a>
+      <div class="svo-contact-layout svo-studio-contact-layout">
+        <div class="svo-contact-info svo-studio-contact-info">
+          <span class="svo-contact-mark">SVO / LET'S CREATE</span>
+          <h3>Satu pesan untuk memulai ide besarmu.</h3>
+          <p>Detail seperti anggaran, aplikasi yang dipakai, atau contoh website membantu diskusi kebutuhan menjadi lebih tepat.</p>
+          <div class="svo-contact-facts">
+            <div><i class="feather feather-check-circle"></i><span>Pilih layanan yang sesuai kebutuhan</span></div>
+            <div><i class="feather feather-check-circle"></i><span>Uraikan spesifikasi, kendala, atau fitur</span></div>
+            <div><i class="feather feather-check-circle"></i><span>Diskusikan biaya dan pelaksanaan sebelum mulai</span></div>
+          </div>
+          <a class="btn btn-secondary" href="https://wa.me/6288291967659?text=Halo%20SEMEISTVO%20TECH%2C%20saya%20ingin%20konsultasi%20jasa%20teknologi" target="_blank" rel="noopener noreferrer"><i class="feather feather-message-circle"></i> WhatsApp Langsung</a>
           <a class="svo-contact-alt" href="https://t.me/nandamorgul" target="_blank" rel="noopener noreferrer">Alternatif: Telegram @nandamorgul ↗</a>
-          <small>Kontak dan ketersediaan layanan mengikuti konfirmasi langsung dari admin.</small>
+          <small>Respons, lokasi layanan, estimasi, dan jadwal bergantung pada konfirmasi langsung.</small>
         </div>
-        <form class="glass-card contact-form" id="contactForm">
-          <h3>Kirim permintaan konsultasi</h3>
-          <div class="form-group"><label for="contactName">Nama</label><input type="text" id="contactName" class="form-control" placeholder="Nama lengkap" maxlength="100" required></div>
-          <div class="form-group"><label for="contactEmail">Email atau WhatsApp</label><input type="text" id="contactEmail" class="form-control" placeholder="Alamat email atau nomor WhatsApp" maxlength="100" required></div>
-          <div class="form-group"><label for="contactSubject">Topik</label><input type="text" id="contactSubject" class="form-control" placeholder="Misalnya: PC streaming 25 juta" maxlength="150" required></div>
-          <div class="form-group"><label for="contactMessage">Detail kebutuhan</label><textarea id="contactMessage" class="form-control" placeholder="Game, aplikasi, budget, dan preferensi PC" maxlength="1500" required></textarea></div>
-          <button type="submit" class="btn btn-primary"><i class="feather feather-send"></i> Kirim Permintaan</button>
+        <form class="glass-card contact-form svo-service-form" id="contactForm">
+          <div class="svo-form-heading"><span>PROJECT INQUIRY</span><h3>Form Konsultasi</h3><p>Form ini menyiapkan pesan WhatsApp. Data tidak dikirim ke server SEMEISTVO TECH melalui formulir ini.</p></div>
+          <div class="form-group"><label for="contactService">Pilih layanan <span aria-hidden="true">*</span></label>
+            <select id="contactService" name="service" class="form-control" required>
+              <option value="">Pilih jenis layanan...</option>
+              <option value="Rakit PC Custom">Rakit PC Custom</option>
+              <option value="Konsultasi PC & Hardware">Konsultasi PC & Hardware</option>
+              <option value="Instalasi & Optimasi PC">Instalasi & Optimasi PC</option>
+              <option value="Pembuatan Website">Pembuatan Website</option>
+              <option value="Upgrade & Troubleshooting">Upgrade & Troubleshooting</option>
+              <option value="Setup Gaming & Streaming">Setup Gaming & Streaming</option>
+              <option value="Setup Kerja & Produktivitas">Setup Kerja & Produktivitas</option>
+              <option value="Konfigurasi Jaringan Dasar">Konfigurasi Jaringan Dasar</option>
+              <option value="Perawatan Website">Perawatan Website</option>
+              <option value="Layanan Lainnya">Layanan Lainnya</option>
+            </select>
+          </div>
+          <div class="svo-form-row">
+            <div class="form-group"><label for="contactName">Nama <span aria-hidden="true">*</span></label><input type="text" id="contactName" name="name" class="form-control" placeholder="Nama panggilan" autocomplete="name" maxlength="100" required></div>
+            <div class="form-group"><label for="contactEmail">Kontak (WA/email) <span aria-hidden="true">*</span></label><input type="text" id="contactEmail" name="contact" class="form-control" placeholder="Nomor WA atau email" maxlength="100" required></div>
+          </div>
+          <div class="form-group"><label for="contactSubject">Judul kebutuhan <span aria-hidden="true">*</span></label><input type="text" id="contactSubject" name="subject" class="form-control" placeholder="Mis. PC streaming 25 juta / website bisnis" maxlength="150" required></div>
+          <div class="svo-form-row">
+            <div class="form-group"><label for="contactBudget">Perkiraan budget <small>(opsional)</small></label>
+              <select id="contactBudget" name="budget" class="form-control"><option value="">Belum ditentukan</option><option value="Di bawah Rp1 juta">Di bawah Rp1 juta</option><option value="Rp1–5 juta">Rp1–5 juta</option><option value="Rp5–15 juta">Rp5–15 juta</option><option value="Rp15–30 juta">Rp15–30 juta</option><option value="Di atas Rp30 juta">Di atas Rp30 juta</option><option value="Perlu diskusi">Perlu diskusi</option></select>
+            </div>
+            <div class="form-group"><label for="contactMethod">Metode <small>(opsional)</small></label>
+              <select id="contactMethod" name="method" class="form-control"><option value="Diskusikan metode">Diskusikan metode</option><option value="Remote/online">Remote/online</option><option value="Onsite (jika tersedia)">Onsite (jika tersedia)</option><option value="Kirim perangkat (jika tersedia)">Kirim perangkat (jika tersedia)</option></select>
+            </div>
+          </div>
+          <div class="form-group"><label for="contactMessage">Detail kebutuhan <span aria-hidden="true">*</span></label><textarea id="contactMessage" name="details" class="form-control" rows="5" placeholder="Ceritakan PC yang diinginkan, kendala, spesifikasi, halaman website, fitur, atau referensi desain..." maxlength="2000" required></textarea></div>
+          <button type="submit" class="btn btn-primary svo-service-submit"><i class="feather feather-send"></i> Lanjutkan Konsultasi via WhatsApp</button>
+          <small class="svo-form-privacy">Periksa pesan di WhatsApp sebelum mengirim. Jangan sertakan password, OTP, atau data sensitif.</small>
         </form>
       </div>
     </div>
