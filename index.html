@@ -25,6 +25,7 @@
 
   <!-- Style CSS -->
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/site-fixes.css">
 </head>
 
 <body>
@@ -40,7 +41,7 @@
         <span>MORGULZXZ <span class="text-gradient">GAMING</span></span>
       </a>
 
-      <nav class="nav-links">
+      <nav class="nav-links" id="sitePrimaryNav">
         <a href="#home" class="nav-link active"><i class="feather feather-home"></i> Home</a>
         <a href="#preset" class="nav-link"><i class="feather feather-grid"></i> Preset Builds</a>
         <a href="#rakit-pc" class="nav-link"><i class="feather feather-sliders"></i> Rakit PC (Harga)</a>
@@ -62,8 +63,8 @@
         <a href="#rakit-pc" class="btn btn-primary btn-simulasi-nav">
           <i class="feather feather-sliders"></i> Simulasi Rakit
         </a>
-        <button class="mobile-toggle" id="mobileMenuBtn">
-          <i class="feather feather-menu"></i>
+        <button type="button" class="mobile-toggle" id="mobileMenuBtn" aria-label="Buka menu navigasi" aria-controls="sitePrimaryNav" aria-expanded="false">
+          <span class="mobile-menu-glyph" aria-hidden="true"><span></span><span></span><span></span></span>
         </button>
       </div>
     </div>
@@ -1349,8 +1350,9 @@
   <!-- Scripts -->
   <script src="js/data.js"></script>
   <script src="js/app.js"></script>
+  <script src="js/icons-fix.js"></script>
   <script>
-    feather.replace();
+    if (window.feather) feather.replace();
   </script>
 </body>
 
