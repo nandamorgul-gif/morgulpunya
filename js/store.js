@@ -157,33 +157,52 @@ document.addEventListener('DOMContentLoaded', () => {
   };
   const renderCart = () => {
     const items = entries();
-    els.count.textContent = count();
+    els.count.textContent = String(count());
     els.cartTotal.textContent = formatPrice(subtotal());
-    els.cartList.innerHTML = items.length ? items.map(({product:p, qty}) => `
+    els.cartList.innerHTML = items.length ? items.map(({product:p, qty, manualQty, builderQty}) => `
       <div class="svo-cart-item">
-        <img src="${escapeHTML(showImage(p).image)}" data-svo-fallback="${escapeHTML(showImage(p).fallback)}" data-svo-final-fallback="${escapeHTML(showImage(p).finalFallback)}" alt="" loading="lazy">
+        <img src="${escapeHTML(showImage(p).image)}" data-svo-fallback="${escapeHTML(showImage(p).fallback)}"
+             data-svo-final-fallback="${escapeHTML(showImage(p).finalFallback)}" alt="${escapeHTML(p.name)}" loading="lazy">
         <div class="svo-cart-item-main">
           <strong>${escapeHTML(p.name)}</strong>
+          ${builderQty ? '<span class="svo-builder-cart-tag">Dari PC Builder · 1 unit</span>' : ''}
+          ${manualQty ? '<span class="svo-manual-cart-tag">Dari katalog · ' + manualQty + ' unit</span>' : ''}
           <p class="svo-cart-item-price">${formatPrice(p.price)} × ${qty}</p>
           <div class="svo-cart-qty">
             <button type="button" aria-label="Kurangi ${escapeHTML(p.name)}" data-svo-delta="-1" data-svo-id="${escapeHTML(p.id)}">−</button>
-            <span>${qty}</span>
+            <span aria-label="Jumlah ${escapeHTML(p.name)}">${qty}</span>
             <button type="button" aria-label="Tambah ${escapeHTML(p.name)}" data-svo-delta="1" data-svo-id="${escapeHTML(p.id)}">+</button>
             <button type="button" class="svo-cart-remove" data-svo-remove="${escapeHTML(p.id)}">Hapus</button>
           </div>
         </div>
-      </div>`).join('') : '<p class="svo-cart-empty">Keranjang masih kosong. Pilih komponen dari katalog terlebih dahulu.</p>';
+      </div>`).join('') : '<p class="svo-cart-empty">Keranjang masih kosong. Pilih komponen di PC Builder atau katalog.</p>';
     document.getElementById('svoCheckoutButton').disabled = !items.length;
+    syncPaymentMode();
   };
   const setQty = (id, qty) => {
     if (!productMap.has(id)) return;
-    const product = productMap.get(id);
-    if (serverCatalogAvailable && qty > 0 && product.stock < qty) return;
     const n = Math.max(0, Math.min(20, qty));
     if (!n) delete cart[id]; else cart[id] = n;
-    persist();
+    persist(); renderCart();
+  };
+  const removeBuilderPart = id => {
+    const entry = Object.entries(builderSelections).find(([category, sku]) => (
+      sku === id && productMap.get(id)?.category === category
+    ));
+    if (!entry) return;
+    document.dispatchEvent(new CustomEvent('svo:builder-remove', { detail: { category: entry[0], id } }));
+  };
+  const updateBuilderCart = payload => {
+    const next = {};
+    for (const [category, id] of Object.entries(payload || {})) {
+      const product = productMap.get(id);
+      if (product && product.category === category) next[category] = id;
+    }
+    builderSelections = next;
     renderCart();
   };
+  updateBuilderCart(window.SVOBuilderSelections || {});
+  document.addEventListener('svo:builder-change', event => updateBuilderCart(event.detail?.selections));
   db.categories.forEach(c => {
     const opt = document.createElement('option');
     opt.value = c.id;
