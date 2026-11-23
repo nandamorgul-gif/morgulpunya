@@ -483,3 +483,26 @@ img.svo-image-unavailable,
   .svo-roleplay-media > img[data-svo-roleplay-reference="yes"] {aspect-ratio:16/10;}
 }
 @media(prefers-reduced-motion:reduce) {.svo-menu-lines span{transition:none;}}
+
+/* SVO 2026 final storefront photo and admin visibility fixes */
+.svo-admin-entry {
+  display:inline-flex;align-items:center;justify-content:center;
+  color:#e6d4ff;font-size:.8rem;font-weight:750;text-decoration:none;
+  border:1px solid rgba(194,154,242,.48);border-radius:10px;
+  background:rgba(121,75,170,.13);padding:.55rem .75rem;white-space:nowrap;
+  min-height:38px;line-height:1.2;
+}
+.svo-admin-entry:hover,.svo-admin-entry:focus-visible{color:#fff;background:rgba(137,90,204,.28);outline-offset:3px}
+.svo-product.svo-card-without-photo{display:none!important}
+#svoProductGrid:has(.svo-product):not(:has(.svo-product:not(.svo-card-without-photo))))::after{
+ content:"Foto referensi produk belum tersedia. Hubungi admin untuk informasi komponen yang sesuai.";
+ display:block;grid-column:1/-1;color:#c4b0d7;padding:1.5rem;text-align:center;
+ border:1px solid rgba(183,148,217,.23);border-radius:13px;
+}
+.svo-roleplay-media .svo-roleplay-scene-caption {display:block;padding:4px 6px 8px;color:#cbb4df;font-size:.72rem;}
+@media(max-width:760px){
+ .header-actions .svo-admin-entry{padding:.45rem .58rem;min-height:40px;font-size:.73rem}
+}
+@media(max-width:390px){
+ .header-actions .svo-admin-entry{font-size:.65rem;padding:.39rem .43rem}
+}
