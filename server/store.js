@@ -8,7 +8,7 @@ const path = require('node:path');
 const fs = require('node:fs');
 const crypto = require('node:crypto');
 
-function openStore(dataDir) {
+function openStore(dataDir, options = {}) {
   fs.mkdirSync(dataDir, { recursive: true, mode: 0o700 });
   const db = new Database(path.join(dataDir, 'semeistvo.sqlite'));
   db.pragma('journal_mode = WAL');
@@ -70,6 +70,7 @@ function openStore(dataDir) {
     CREATE INDEX IF NOT EXISTS idx_orders_expiry ON orders(expires_at);
   `);
 
+  if (!options.skipSeed) {
   const seed = require('../js/data.js');
   const initialStock = Math.max(0, Math.min(3, Number(process.env.SEED_DEMO_STOCK || '0') || 0));
   const insert = db.prepare(`INSERT OR IGNORE INTO products (id, category, name, brand, description, image, price, stock)
@@ -85,6 +86,7 @@ function openStore(dataDir) {
       }
     }
   })();
+  }
 
   const sha = value => crypto.createHash('sha256').update(value).digest('hex');
   const publicProduct = row => ({
