@@ -2,6 +2,18 @@
 
 Service-first PC and digital studio with retained PC Builder and an optional backend catalogue.
 
+## Ready-to-paste layout and payment logo revision — 23 November 2026
+
+- Repositioned `#preset` (five 2026 configuration suggestions) **before** `#rakit-pc` in `index.html`, preserving the single `#presetsContainer` so the existing `js/app.js` preset cards keep working.
+- Added a prompt under the preset cards that links directly to the PC Builder.
+- Replaced placeholder initial letters in payment cards with authentic trademark logo images for **BCA, Mandiri, SeaBank Indonesia, Bank Jago (2026 logo), and DANA**. The sources are Wikimedia Commons `Special:FilePath` references; external network access is required to render the logos, and trademark rights continue to apply.
+- Appended responsive layout and logo-frame styles to `css/services-expansion.css`, with two-column mobile payment cards and single-column mobile PC presets.
+- The payment area is **information and preference only**, not a statement that transfer methods are activated, not an invoice, and not a request for users to send funds without admin confirmation.
+- The original logo, music player, synced header cart, FiveM/GTA RP service, web development, server/admin and price estimates are retained.
+- Added `e2e/preset-payment-layout.spec.js` for order, unique IDs, logo sources and retained music/cart verification.
+
+**Commercial launch note:** Replace remote Wikimedia assets with locally hosted authorized official bank asset files after reviewing each logo’s trademark/brand guidelines. Do not copy assets or imply endorsement beyond your permission.
+
 ## Real hardware reference photos and unified cart (23 November 2026)
 
 - **43 model/family-matched physical component and accessory photographs** plus **3 distinct context photographs** for software setup services; all 46 catalogue entries now have a reference image URL in `js/product-photos.js`. Product images are *reference photography*, not proof of the exact variant in stock. They are externally hosted.
