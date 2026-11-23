@@ -194,8 +194,8 @@
   <section class="svo-featured-section" aria-labelledby="svoFeaturedTitle">
     <div class="container">
       <div class="svo-category-heading">
-        <div><span class="svo-kicker">EDITOR'S PICKS / 2026</span><h2 id="svoFeaturedTitle">Pilihan hardware 2026</h2>
-          <p class="svo-featured-intro">Pilihan model untuk membandingkan performa dan kebutuhan. Harga masih estimasi.</p>
+        <div><span class="svo-kicker">EDITOR'S PICKS / 2026</span><h2 id="svoFeaturedTitle">Referensi hardware 2026</h2>
+          <p class="svo-featured-intro">Model pilihan untuk membantu konsultasi spesifikasi. Harga masih berupa simulasi.</p>
         </div>
         <a href="#svo-shop" class="svo-category-all">Buka katalog lengkap <span aria-hidden="true">↗</span></a>
       </div>
@@ -207,9 +207,9 @@
   <section id="svo-shop" class="section-padding svo-store-section" aria-labelledby="svoShopTitle">
     <div class="container">
       <div class="section-title">
-        <span class="badge badge-purple">SEMEISTVO TECH · HARDWARE STORE</span>
-        <h2 id="svoShopTitle">Temukan Komponen PC Pilihanmu</h2>
-        <p class="svo-store-subtitle">Jelajahi katalog komponen gaming dan workstation. Tambahkan pilihan ke keranjang dan ajukan permintaan pembelian melalui WhatsApp.</p>
+        <span class="badge badge-purple">HARDWARE / REFERENCE CATALOG</span>
+        <h2 id="svoShopTitle">Komponen untuk Rencana Rakitanmu</h2>
+        <p class="svo-store-subtitle">Gunakan katalog sebagai referensi pemilihan part. Keranjang komponen dan fondasi checkout yang lama tetap tersedia sebagai fitur tambahan, bukan fokus utama layanan.</p>
       </div>
       <div class="svo-store-toolbar" role="search" aria-label="Cari komponen toko">
         <input type="search" id="svoProductSearch" placeholder="Cari CPU, GPU, RAM, casing..." aria-label="Cari produk">
@@ -225,7 +225,7 @@
       <div class="svo-store-grid" id="svoProductGrid"></div>
       <p class="svo-store-note">Harga adalah estimasi katalog dan belum menunjukkan stok real-time. Konfirmasi stok, harga akhir, ongkir, dan pembayaran dilakukan melalui admin.</p>
       <div style="margin-top:1.4rem;text-align:center">
-        <button type="button" class="svo-store-btn" id="svoOpenCartFromShop">Lihat Keranjang Toko</button>
+        <button type="button" class="svo-store-btn" id="svoOpenCartFromShop">Lihat Pilihan Komponen</button>
       </div>
     </div>
   </section>
@@ -234,11 +234,9 @@
   <section id="preset" class="section-padding" style="background: rgba(0, 0, 0, 0.2);">
     <div class="container">
       <div class="section-title">
-        <span class="badge">Siap Pakai</span>
-        <h2>Preset Rakitan PC Terpopuler</h2>
-        <p>Pilihan racikan PC siap kirim hasil kurasi teknisi SEMEISTVO TECH untuk berbagai kebutuhan dari
-          eSports hingga
-          Workstation 4K.</p>
+        <span class="badge">PC BUILD REFERENCES</span>
+        <h2>Referensi Konfigurasi PC</h2>
+        <p>Contoh spesifikasi untuk gaming, streaming, dan workstation. Bukan stok PC siap kirim atau dokumentasi proyek pelanggan.</p>
       </div>
 
       <div class="presets-grid" id="presetsContainer">
@@ -368,49 +366,37 @@
     </div>
   </section>
 
-  <!-- Paket Instalasi Software & Layanan Ekstra Section -->
-  <section id="software-paket" class="section-padding svo-surface-section">
-    <div class="container">
-      <div class="section-title">
-        <span class="svo-kicker">SERVICES / TECH SUPPORT</span>
-        <h2>Tambahkan layanan sesuai kebutuhan</h2>
-        <p>Setup, driver dan optimalisasi PC sebagai layanan teknisi. Lisensi perangkat lunak berbayar tidak termasuk kecuali disebutkan secara terpisah dalam penawaran.</p>
-      </div>
-      <div class="svo-service-grid">
-        <article class="glass-card svo-service-card"><span class="svo-service-no">01 / ESSENTIAL</span>
-          <h3>Driver & Setup Dasar</h3><p>Instalasi driver, pembaruan sistem, dan pengecekan perangkat.</p>
-          <strong>Estimasi Rp150.000</strong><button type="button" class="btn btn-secondary select-software-btn" data-id="soft-drivers">Tambahkan ke Simulasi</button>
-        </article>
-        <article class="glass-card svo-service-card"><span class="svo-service-no">02 / GAMING</span>
-          <h3>Game & Streaming Setup</h3><p>Konfigurasi OBS, game launcher resmi, audio, dan utilitas monitoring.</p>
-          <strong>Estimasi Rp250.000</strong><button type="button" class="btn btn-secondary select-software-btn" data-id="soft-gamer">Tambahkan ke Simulasi</button>
-        </article>
-        <article class="glass-card svo-service-card"><span class="svo-service-no">03 / CREATOR</span>
-          <h3>Creator & Developer</h3><p>Konfigurasi tool kreatif dan pengembangan yang berlisensi sah.</p>
-          <strong>Estimasi Rp325.000</strong><button type="button" class="btn btn-secondary select-software-btn" data-id="soft-creator">Tambahkan ke Simulasi</button>
-        </article>
-      </div>
+  <!-- Additional support services -->
+<section id="software-paket" class="svo-studio-section svo-addons" aria-labelledby="svoAddonsTitle">
+  <div class="container">
+    <div class="svo-studio-heading"><div><span class="svo-kicker">ADDITIONAL SUPPORT</span><h2 id="svoAddonsTitle">Butuh bantuan lain? Bisa didiskusikan.</h2></div>
+      <p>Selain layanan utama, konsultasi tersedia untuk berbagai kebutuhan setup dan digital. Ruang lingkup dan biaya menyesuaikan proyek.</p></div>
+    <div class="svo-addons-grid">
+      <article class="svo-addon"><div class="svo-addon-icon"><i class="feather feather-monitor"></i></div><h3>Setup Produktivitas</h3><p>Konfigurasi aplikasi resmi, periferal, file kerja, dan setup perangkat.</p><a href="#kontak" data-svo-service="Setup Kerja & Produktivitas">Ajukan konsultasi ↗</a></article>
+      <article class="svo-addon"><div class="svo-addon-icon"><i class="feather feather-server"></i></div><h3>Jaringan Dasar</h3><p>Konsultasi koneksi dan perangkat jaringan rumah atau kantor kecil.</p><a href="#kontak" data-svo-service="Konfigurasi Jaringan Dasar">Bahas kebutuhan ↗</a></article>
+      <article class="svo-addon"><div class="svo-addon-icon"><i class="feather feather-layout"></i></div><h3>Perawatan Website</h3><p>Perubahan konten, perbaikan tampilan, dan pengembangan fitur.</p><a href="#kontak" data-svo-service="Perawatan Website">Diskusikan website ↗</a></article>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- Tentang Kami Section -->
-  <section id="tentang" class="section-padding">
-    <div class="container">
-      <div class="section-title">
-        <span class="svo-kicker">BUILT WITH PURPOSE</span>
-        <h2>Hardware yang tepat. Keputusan lebih mudah.</h2>
-        <p>SEMEISTVO TECH memadukan katalog komponen, simulasi PC, dan konsultasi untuk membantu kamu membandingkan pilihan sebelum membeli.</p>
+<!-- Service studio positioning -->
+<section id="tentang" class="svo-studio-section svo-about" aria-labelledby="svoAboutTitle">
+  <div class="container svo-about-layout">
+    <div class="svo-about-label"><span class="svo-kicker">ABOUT / SEMEISTVO TECH</span><img src="images/logo.svg" width="200" height="170" loading="lazy" alt="Logo monogram SEMEISTVO TECH"><p>HARDWARE × SOFTWARE × DIGITAL</p></div>
+    <div class="svo-about-copy">
+      <h2 id="svoAboutTitle">Bukan sekadar jual komponen. <span class="text-gradient">Kami bantu mencari solusi.</span></h2>
+      <p>SEMEISTVO TECH adalah konsep studio teknologi yang menggabungkan kebutuhan perangkat dengan solusi digital. Setiap rakitan, setup, maupun website dimulai dari tujuan penggunanya, bukan sekadar spesifikasi atau tren.</p>
+      <div class="svo-about-principles">
+        <div><strong>Diskusi lebih dulu</strong><small>Kebutuhan dan anggaran dipahami sebelum menyusun rekomendasi.</small></div>
+        <div><strong>Ruang lingkup jelas</strong><small>Fitur, revisi, lisensi, biaya, serta jadwal ditentukan berdasarkan kebutuhan.</small></div>
+        <div><strong>Transparan</strong><small>Simulasi harga, stok, dan foto referensi ditandai dengan jelas.</small></div>
       </div>
-      <div class="svo-value-grid">
-        <div class="svo-value-card"><span class="svo-value-icon">01</span><h3>Pilihan hardware 2026</h3><p>Model AMD, Intel, NVIDIA, dan Radeon yang relevan untuk gaming serta kreasi konten.</p></div>
-        <div class="svo-value-card"><span class="svo-value-icon">02</span><h3>Simulasi yang transparan</h3><p>Perkiraan harga dan konsumsi daya ditampilkan sebelum kamu melakukan konsultasi.</p></div>
-        <div class="svo-value-card"><span class="svo-value-icon">03</span><h3>Periksa kecocokan</h3><p>Pengecekan dasar socket, ukuran motherboard, dan daya; verifikasi fisik tetap diperlukan.</p></div>
-        <div class="svo-value-card"><span class="svo-value-icon">04</span><h3>Konsultasi sebelum order</h3><p>Harga akhir, garansi setiap produk, ongkos kirim, dan stok disepakati sebelum transaksi.</p></div>
-      </div>
+      <a class="svo-about-cta" href="#kontak">Ceritakan proyekmu ↗</a>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- Consultation intake: WhatsApp handoff, no fake form submission -->
+<!-- Consultation intake: WhatsApp handoff, no fake form submission -->
   <section id="kontak" class="svo-studio-section svo-contact-section svo-studio-contact" aria-labelledby="svoContactTitle">
     <div class="container">
       <div class="svo-studio-heading">
@@ -473,11 +459,11 @@
   <footer class="footer svo-footer">
     <div class="container svo-footer-main">
       <div><a href="#home" class="svo-footer-brand"><img src="images/logo.svg" width="46" height="46" alt="Logo SEMEISTVO TECH"><span>SEMEISTVO <em>TECH</em></span></a>
-      <p>Custom PC, gaming hardware, dan simulasi rakitan. Build smarter. Play beyond.</p></div>
-      <div class="svo-footer-links"><h4>Jelajahi</h4><a href="#svo-shop">Produk</a><a href="#rakit-pc">PC Builder</a><a href="#preset">Paket Rakitan</a></div>
-      <div class="svo-footer-links"><h4>Bantuan</h4><a href="#software-paket">Layanan</a><a href="#kontak">Konsultasi</a><a href="https://wa.me/6288291967659" target="_blank" rel="noopener noreferrer">WhatsApp</a></div>
+      <p>Rakit PC, konsultasi hardware, instalasi komputer, dan pembuatan website. From Hardware to Digital.</p></div>
+      <div class="svo-footer-links"><h4>Jelajahi</h4><a href="#layanan">Layanan</a><a href="#digital">Pembuatan Website</a><a href="#rakit-pc">PC Builder</a></div>
+      <div class="svo-footer-links"><h4>Bantuan</h4><a href="#software-paket">Layanan Tambahan</a><a href="#kontak">Konsultasi</a><a href="https://wa.me/6288291967659" target="_blank" rel="noopener noreferrer">WhatsApp</a></div>
     </div>
-    <div class="container svo-footer-bottom"><span>© 2026 SEMEISTVO TECH · SVO</span><span>Harga simulasi, stok & pembayaran wajib dikonfirmasi.</span></div>
+    <div class="container svo-footer-bottom"><span>© 2026 SEMEISTVO TECH · SVO</span><span>Ruang lingkup, biaya, dan jadwal dikonfirmasi sebelum pengerjaan.</span></div>
   </footer>
 
   
