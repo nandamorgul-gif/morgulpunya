@@ -2,12 +2,25 @@
 
 Professional PC storefront foundation with retained PC Builder.
 
+## Final design implementation (November 2026)
+
+- **SVO brand assets**: geometric platinum-purple `images/logo.svg`, `images/logo-horizontal.svg`, `images/logo-mono.svg`, plus `images/favicon.svg`. The admin, header and footer use the updated identity.
+- **Responsive design**: `css/final.css` adds mobile-first navigation, category tiles, desktop/mobile product grids, 1:1 product art, responsive cart and footer at 360/390/430/768/1024/1440px design targets.
+- **Home sections**: direct category jump shortcuts and four curated 2026 hardware pick cards whose buttons filter the product catalogue.
+- **PC Builder**: explicit `Simpan Rakitan` / `Muat Rakitan` local browser storage by component ID; existing presets and compatibility checks retained.
+- **Consultation**: form opens an editable WhatsApp message and never claims successful sending without user action. Unverified bank-transfer/marketplace icons removed from the legacy simulator.
+- **Hidden music**: tiny collapsed icon with auto-play attempt, pause and one-tap unmute. Browser policies may prevent either autoplay or audio; the original YouTube link is retained as a direct fallback.
+- **PWA metadata**: `site.webmanifest` (installability depends on browser requirements; maskable PNG/iOS touch icons remain a deployment enhancement).
+- **CI**: `.github/workflows/verify.yml` runs Node regression tests, secure route smoke check and Chromium browser checks. Local commands: `npm test` and `npm run test:e2e` after `npx playwright install chromium`.
+
+**Before a commercial launch**: replace third-party photo references with manufacturer-licensed, supplier-approved, or owned exact SKU photos, verify all prices and stock, and pass live/sandbox payment and shipping acceptance testing.
+
 ## Music + product imagery restoration (November 2026)
 - The original music track reference, **"I Miss You Every Brand New Day"** (YouTube video ID `8_y6w1V9PXs`), is back via a floating mini player.
 - Play, pause, minimize, and open-on-YouTube controls; no forced auto-unmute or unsolicited autoplay. Browser/YouTube restrictions can affect playback.
-- 22 researched **model/family-matched reference photos** for key 2026 CPU, GPU, motherboard, RAM, PSU, SSD, chassis and cooler products, defined in `js/product-photos.js`.
+- 22 researched **model/family-matched reference photo links** for key 2026 hardware entries, defined in `js/product-photos.js`. These external images may expire or block hotlinks.
 - Four PC build concept images and the homepage hero use actual PC photography. They are labeled **concept/reference** and are **not photographs of the exact preset configuration**.
-- The catalogue displays `Foto referensi model` badges and source links. If a third-party image fails to load, the original local category illustration is displayed instead.
+- The catalogue displays `Foto referensi model` badges and source links. There are **46 unique locally hosted fallback SVG illustrations**, one per catalogue SKU in `images/catalog/`. If a third-party image fails, the relevant SKU art is used first, then a category art fallback.
 - These are **temporary external imagery references, not a commercial photo license**. Obtain image-owner/manufacturer/supplier permission or substitute owned, licensed product images before any public commercial deployment.
 - On existing databases, `npm run catalog:sync` is a non-mutating preview; `npm run catalog:sync -- --apply` updates product image URLs and curated catalogue entries, preserving admin-managed matching-product prices and stock.
 - The client can show reference photos even if an existing SQLite database still has the old local category images, while server catalogue remains authoritative for prices and stock.
