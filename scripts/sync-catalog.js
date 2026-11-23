@@ -9,7 +9,7 @@ require('dotenv').config();
 const path = require('node:path');
 const fs = require('node:fs');
 const { openStore } = require('../server/store');
-const catalogue = require('../js/data.js');
+const catalogue = require('../js/product-photos.js')(require('../js/data.js'));
 const apply = process.argv.includes('--apply');
 const dataDir = path.resolve(process.env.DATA_DIR || './runtime-data');
 const dbPath = path.join(dataDir, 'semeistvo.sqlite');
