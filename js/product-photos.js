@@ -195,6 +195,30 @@ const SVO_PHOTOS = {
   }
 };
 
+/* Alternate references transferred selectively from the earlier main-branch
+ * photo update. Only model-matched images are eligible, never generic photos. */
+const SVO_PHOTO_BACKUPS = {
+  "cpu-r7-9700x": {
+    url: "https://img.overclockers.co.uk/images/PRO-AMD-02676/a8d93e23fe04aad9922477829187340b.jpg?auto=compress%2Cformat&fill=solid&fill-color=fff&fit=fill&h=2258&q=70&w=2258",
+    credit: "https://www.overclockers.co.uk/"
+  },
+  "psu-msi-650": {
+    url: "https://media.cdnws.com/_i/45353/m840-46043/3156/43/materiels-informatique-alimentation-msi-mag-a650bn-80plus-bronze-infinytech-reunion-04.jpeg",
+    credit: "https://www.infinytech-reunion.com/"
+  },
+  "case-air903": {
+    url: "https://p.jarcomputers.com/1000x1000/cc/CASEPMONTECHAIR903MAXBK_1000x1000.jpg",
+    credit: "https://www.jarcomputers.com/"
+  },
+  "case-o11": {
+    url: "https://mytechnics.com.ua/image/cache/catalog/products/parced/2024/06/100378519/100378519_1-1000x1000.jpg",
+    credit: "https://mytechnics.com.ua/"
+  }
+};
+for (const [sku, alternate] of Object.entries(SVO_PHOTO_BACKUPS)) {
+  if (SVO_PHOTOS[sku]) SVO_PHOTOS[sku].alternate = alternate;
+}
+
 function applySvoReferencePhotos(catalogue) {
   if (!catalogue?.components) return catalogue;
   for (const [category, products] of Object.entries(catalogue.components)) {
@@ -227,7 +251,31 @@ if (typeof module !== 'undefined' && module.exports) module.exports = applySvoRe
    artwork, but are never substituted for missing product photography. */
 if (typeof document !== 'undefined') {
   const isPaymentLogo = image => !!image.closest('.svo-payment-logo-frame');
+  const tryVerifiedAlternate = image => {
+    if (image.dataset.svoTriedAlternate === 'yes') return false;
+    const source = image.getAttribute('src') || '';
+    const known = Object.values(SVO_PHOTOS).find(photo => photo.url === source && photo.alternate);
+    if (known) {
+      image.dataset.svoTriedAlternate = 'yes';
+      image.src = known.alternate.url;
+      const credit = image.closest('.svo-product, .svo-featured-card, .component-card')
+        ?.querySelector('.svo-photo-credit');
+      if (credit) credit.href = known.alternate.credit;
+      return true;
+    }
+    // GTA RP reference image remains optional; original locally hosted SVG is
+    // used if the other community's illustration is blocked.
+    if (image.dataset.svoRoleplayReference === 'yes') {
+      image.dataset.svoTriedAlternate = 'yes';
+      image.src = 'images/roleplay-server.svg';
+      const sourceLink = image.closest('.svo-roleplay-media')?.querySelector('.svo-roleplay-source');
+      if (sourceLink) sourceLink.hidden = true;
+      return true;
+    }
+    return false;
+  };
   const hideUnavailableMedia = image => {
+    if (tryVerifiedAlternate(image)) return;
     if (isPaymentLogo(image) || image.dataset.svoMediaHidden === 'true') return;
     image.dataset.svoMediaHidden = 'true';
     image.hidden = true;
