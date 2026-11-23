@@ -2,6 +2,22 @@
 
 Professional PC storefront foundation with retained PC Builder.
 
+## 2026 visual + catalogue refresh (23 November 2026)
+- Curated 2026 sample component catalogue with **46 entries in 10 categories**, including CPUs, GPUs, motherboards, cases, coolers and service packages.
+- 2026 highlights: Ryzen 7 9850X3D, Ryzen 9 9950X3D, Intel Core Ultra 250K/270K Plus, GeForce RTX 5060 Ti 16GB / RTX 5070 Ti / RTX 5080 / RTX 5090, Radeon RX 9060 XT / RX 9070 XT.
+- Four updated preset builds with basic checks for CPU socket, RAM type, motherboard form factor, PSU type and estimated power margin.
+- Home page, services, contact and footer simplified for mobile and desktop; removed unrelated autoplay media and unverified sample testimonials.
+- Original **category-specific SVG illustrations** under `images/products/`. These are not photographs of the exact SKU. Admin may replace images with **approved/licensed product photo URLs** over HTTPS; broken URLs fall back to illustrations.
+- **All component prices are illustrative rupiah estimates**, not live quotations. Before selling, admin must confirm product SKU variant, actual photos, pricing, manufacturer warranty and stock.
+- Official specifications used for model selection: [AMD Ryzen 7 9850X3D](https://www.amd.com/en/products/processors/desktops/ryzen/9000-series/amd-ryzen-7-9850x3d.html), [NVIDIA RTX 50](https://www.nvidia.com/id-id/geforce/graphics-cards/50-series/), [AMD Radeon RX 9000](https://www.amd.com/en/products/specifications/graphics.html), [Intel Core Ultra](https://www.intel.com/content/www/us/en/support/articles/000099656/processors.html).
+
+### Update an existing SQLite catalog
+- Backup `runtime-data/semeistvo.sqlite` and verify backups can be restored.
+- Run `npm run catalog:sync` to preview which legacy SKUs will become inactive; curated new products retain zero stock.
+- Review the preview, then run `npm run catalog:sync -- --apply` for the actual migration.
+- Existing matching SKUs retain their admin-defined price/stock. Old SKUs are deactivated, not deleted; order history is preserved.
+- New curated models come with zero stock; update actual stock, price, and photos in `/admin` before transactions.
+
 ## Currently implemented
 - SEMEISTVO TECH rebrand, SVO logo, Dark Luxury storefront.
 - Preserved existing PC Builder, preset builds, consultation, and content.
@@ -9,7 +25,7 @@ Professional PC storefront foundation with retained PC Builder.
 - Node.js Express API, SQLite database, products and available stock.
 - Server-authoritative totals and transactionally reserved stock (30-minute checkout).
 - Midtrans Snap sandbox/production integration scaffold with server-side status verification.
-- Protected admin login, product price/stock editing, order list and fulfillment status transitions.
+- Protected admin login, product price/stock/**photo URL** editing, order list and fulfillment status transitions.
 - Private order access tokens for customers to check their most recent order status.
 
 ## Getting started locally
