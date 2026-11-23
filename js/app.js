@@ -121,7 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const isSelected = selectedPart && selectedPart.id === item.id;
       return `
         <div class="component-card ${isSelected ? 'selected' : ''}">
-          <img src="${item.image}" alt="${item.name}" class="component-img" loading="lazy">
+          <img src="${item.image}" alt="Ilustrasi kategori ${state.selectedCategory}" class="component-img" loading="lazy">
           <div class="component-info">
             <h4>${item.name}</h4>
             <p>${item.description}</p>
@@ -133,7 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
           </div>
           <div class="component-action">
-            <span class="component-price">${formatIDR(item.price)}</span>
+            <span class="component-price"><small>Estimasi</small>${formatIDR(item.price)}</span>
             <button class="btn ${isSelected ? 'btn-emerald' : 'btn-secondary'} select-part-btn" data-id="${item.id}">
               ${isSelected ? '✓ Terpilih' : 'Pilih Komponen'}
             </button>
@@ -148,7 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!presetsContainerEl) return;
     presetsContainerEl.innerHTML = PC_DATA.presets.map(preset => `
       <div class="glass-card preset-card">
-        <img src="${preset.image}" alt="${preset.title}" class="preset-image" loading="lazy">
+        <img src="${preset.image}" alt="Ilustrasi rakitan PC ${preset.title}" class="preset-image" loading="lazy">
         <div class="preset-header">
           <span class="badge ${preset.id.includes('beast') ? 'badge-purple' : 'badge'}">${preset.badge}</span>
           <h3 class="preset-title">${preset.title}</h3>
@@ -171,6 +171,48 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
       </div>
     `).join('');
+  }
+
+  // Basic compatibility screening from known catalogue metadata only.
+  // This does not replace motherboard BIOS, PSU connector or physical clearance checks.
+  function getCompatibilityIssues() {
+    const b = state.userBuild;
+    const issues = [];
+    if (b.cpu && b.motherboard && b.cpu.socket && b.motherboard.socket && b.cpu.socket !== b.motherboard.socket) {
+      issues.push('Socket CPU (' + b.cpu.socket + ') tidak cocok dengan motherboard (' + b.motherboard.socket + ').');
+    }
+    if (b.ram && b.motherboard && b.ram.memoryType && b.motherboard.memoryType && b.ram.memoryType !== b.motherboard.memoryType) {
+      issues.push('Tipe RAM ' + b.ram.memoryType + ' tidak cocok dengan slot ' + b.motherboard.memoryType + '.');
+    }
+    if (b.case && b.motherboard && Array.isArray(b.case.supportedFormFactors) &&
+        b.motherboard.formFactor && !b.case.supportedFormFactors.includes(b.motherboard.formFactor)) {
+      issues.push('Ukuran motherboard (' + b.motherboard.formFactor + ') tidak didukung casing ini.');
+    }
+    if (b.case && b.psu && Array.isArray(b.case.supportedPsuTypes) && b.psu.psuFormFactor &&
+        !b.case.supportedPsuTypes.includes(b.psu.psuFormFactor)) {
+      issues.push('PSU tipe ' + b.psu.psuFormFactor + ' tidak didukung casing pilihan.');
+    }
+    const estimated = Object.values(b).reduce((sum, item) => sum + (item?.watts || 0), 0);
+    if (b.psu?.capacityWatts && estimated * 1.25 > b.psu.capacityWatts) {
+      issues.push('PSU ' + b.psu.capacityWatts + 'W belum mencukupi margin 25% dari estimasi ' + estimated + 'W.');
+    }
+    return issues;
+  }
+
+  function renderCompatibility() {
+    const target = document.getElementById('svoCompatibilityIssues');
+    if (!target) return;
+    const issues = getCompatibilityIssues();
+    target.className = 'svo-compatibility ' + (issues.length ? 'svo-compatibility-warning' : 'svo-compatibility-pass');
+    target.replaceChildren();
+    const title = document.createElement('strong');
+    title.textContent = issues.length ? '⚠ Cek kompatibilitas rakitan' : '✓ Pemeriksaan dasar kompatibilitas';
+    target.appendChild(title);
+    const list = document.createElement('p');
+    list.textContent = issues.length
+      ? issues.join(' ')
+      : 'Periksa kembali BIOS, konektor daya, ruang GPU, tinggi cooler dan dukungan radiator sebelum pembelian. Kalkulasi watt adalah perkiraan.';
+    target.appendChild(list);
   }
 
   // 5. Update Summary Panel & Wattage Meter
@@ -247,6 +289,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Update cart badge count in nav
     const cartCountEl = document.getElementById('cartCount');
     if (cartCountEl) cartCountEl.textContent = count;
+    renderCompatibility();
   }
 
   // 6. Select or Unselect a Component
@@ -539,6 +582,13 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
+    const issues = getCompatibilityIssues();
+    if (issues.length) {
+      alert('Periksa kompatibilitas rakitan terlebih dahulu:\\n' + issues.join('\\n'));
+      document.getElementById('svoCompatibilityIssues')?.scrollIntoView({ behavior:'smooth', block:'center' });
+      return;
+    }
+
     renderOrderSummaryPreview();
 
     const orderPaymentMethodEl = document.getElementById('orderPaymentMethod');
@@ -703,7 +753,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     modalContentEl.innerHTML = `
       <div style="text-align: center; margin-bottom: 1.5rem;">
-        <h3 style="font-size: 1.6rem;" class="text-gradient">MORGULZXZ GAMING PERFORMANCE SPEC</h3>
+        <h3 style="font-size: 1.6rem;" class="text-gradient">SEMEISTVO TECH · CUSTOM BUILD SPEC</h3>
         <p style="color: var(--text-muted); font-size: 0.9rem;">Rincian Konfigurasi & Estimasi Biaya</p>
       </div>
 
@@ -1004,93 +1054,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    // Floating Cyber Music Player & YouTube Video Showcase Controller
-    const musicModal = document.getElementById('musicModal');
-    const closeMusicModalBtn = document.getElementById('closeMusicModalBtn');
-    const musicPlayBtn = document.getElementById('musicPlayBtn');
-    const musicInfoBtn = document.getElementById('musicInfoBtn');
 
-    const postYTCmd = (func, args) => {
-      const iframe = document.getElementById('ytPlayer');
-      if (iframe && iframe.contentWindow) {
-        iframe.contentWindow.postMessage(JSON.stringify({
-          'event': 'command',
-          'func': func,
-          'args': args || []
-        }), '*');
-      }
-    };
-
-    function openMusicModal() {
-      if (musicModal) {
-        musicModal.classList.add('active');
-        postYTCmd('pauseVideo'); // Pause background music
-        const modalIframe = document.getElementById('modalYtPlayer');
-        if (modalIframe && !modalIframe.src) {
-          modalIframe.src = "https://www.youtube.com/embed/8_y6w1V9PXs?autoplay=1&list=RD8_y6w1V9PXs";
-        }
-      }
-    }
-
-    function closeMusicModal() {
-      if (musicModal) {
-        musicModal.classList.remove('active');
-        const modalIframe = document.getElementById('modalYtPlayer');
-        if (modalIframe) {
-          modalIframe.src = ""; // Stop modal video
-        }
-        postYTCmd('playVideo'); // Resume background music
-      }
-    }
-
-    if (musicPlayBtn) musicPlayBtn.addEventListener('click', openMusicModal);
-    if (musicInfoBtn) musicInfoBtn.addEventListener('click', openMusicModal);
-    if (closeMusicModalBtn) closeMusicModalBtn.addEventListener('click', closeMusicModal);
-    if (musicModal) {
-      musicModal.addEventListener('click', (e) => {
-        if (e.target === musicModal) closeMusicModal();
-      });
-    }
-
-    // Minimize / Expand Floating Music Player Toggle
-    const musicPlayer = document.getElementById('musicPlayer');
-    const musicToggleBtn = document.getElementById('musicToggleBtn');
-    const musicDisc = document.getElementById('musicDisc');
-
-    if (musicPlayer && musicToggleBtn) {
-      musicToggleBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        musicPlayer.classList.toggle('minimized');
-      });
-
-      if (musicDisc) {
-        musicDisc.addEventListener('click', (e) => {
-          if (musicPlayer.classList.contains('minimized')) {
-            e.stopPropagation();
-            musicPlayer.classList.remove('minimized');
-          }
-        });
-      }
-    }
-
-    // YouTube Autoplay & Instant Unmute Controller
-    // postYTCmd is defined above
-
-    setTimeout(() => {
-      postYTCmd('playVideo');
-    }, 500);
-
-    const unmuteYouTube = () => {
-      postYTCmd('unMute');
-      postYTCmd('setVolume', [100]);
-      postYTCmd('playVideo');
-    };
-
-    const gestures = ['mousemove', 'mouseenter', 'scroll', 'wheel', 'touchstart', 'touchend', 'click', 'keydown'];
-    gestures.forEach(g => {
-      window.addEventListener(g, unmuteYouTube, { passive: true });
-      document.addEventListener(g, unmuteYouTube, { passive: true });
-    });
   }
 
   // Run initialization
