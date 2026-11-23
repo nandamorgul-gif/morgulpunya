@@ -3,14 +3,23 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Foto asli dari sumber luar dapat gagal dimuat. Sembunyikan gambar rusak,
-  // jangan pernah menampilkan foto barang lain untuk komponen yang sama.
+  // Gambar katalog yang diblokir sumbernya diberi placeholder jujur,
+  // bukan foto produk lain. Pengunjung tidak melihat gambar kosong/rusak.
   document.addEventListener('error', (event) => {
     const img = event.target;
-    if (!(img instanceof HTMLImageElement)) return;
+    if (!(img instanceof HTMLImageElement) || img.dataset.fallback === '1') return;
+    img.dataset.fallback = '1';
     img.hidden = true;
     const card = img.closest('.component-card');
-    if (card) card.classList.add('image-unavailable');
+    if (card && !card.querySelector('.product-image-fallback')) {
+      card.classList.add('image-unavailable');
+      const fallback = document.createElement('span');
+      fallback.className = 'product-image-fallback';
+      fallback.setAttribute('role', 'img');
+      fallback.setAttribute('aria-label', 'Foto produk belum tersedia');
+      fallback.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7 17l4-4 3 3 3-4 3 5M9 9h.01"/></svg><small>No photo</small>';
+      img.insertAdjacentElement('afterend',fallback);
+    }
   }, true);
 
   // State Application
@@ -70,6 +79,42 @@ document.addEventListener('DOMContentLoaded', () => {
     renderPresets();
     updateSummary();
     setupEventListeners();
+  }
+
+    // Harga dari Cloudflare D1: angka default adalah estimasi, bukan data real-time.
+  async function loadCatalogPrices() {
+    const indicator = document.getElementById('catalogPriceStatus');
+    try {
+      const response = await fetch('/api/catalog/prices', {cache:'no-store'});
+      if (!response.ok) throw new Error('Data harga belum tersedia');
+      const data = await response.json();
+      const lookup = new Map(Object.values(PC_DATA.components).flat().map(item => [item.id,item]));
+      for (const price of (data.items || [])) {
+        const product = lookup.get(price.id);
+        if (!product || !Number.isSafeInteger(price.price) || price.price < 0) continue;
+        product.price = price.price;
+        product.stock = price.stock;
+        if (price.image && /^https:\/\//.test(price.image) && !/[<>"'\\s]/.test(price.image)) product.image = price.image;
+        product.priceSource = price.source_label || 'admin';
+        product.updatedAt = price.updated_at;
+      }
+      for (const preset of PC_DATA.presets) {
+        const selected = Object.entries(preset.components).map(([category,id]) =>
+          (PC_DATA.components[category] || []).find(part => part.id===id)).filter(Boolean);
+        if (selected.some(item=>item.priceSource)) preset.totalPrice = selected.reduce((sum,item)=>sum+item.price,0);
+      }
+      renderComponents();renderPresets();updateSummary();
+      const prices = (data.items || []);
+      if (indicator) {
+        const latest = prices.map(x=>x.updated_at).filter(Boolean).sort().at(-1);
+        indicator.textContent = prices.length ? 'Harga tersimpan di D1: '+prices.length+' produk diperbarui' +
+          (latest ? ' • update '+new Date(latest).toLocaleString('id-ID') : '') +
+          '. Harga komponen lain masih estimasi; konfirmasi sebelum pembayaran.' :
+          'Harga yang tampil masih estimasi, belum tersinkron otomatis dari pemasok.';
+      }
+    } catch {
+      if (indicator) indicator.textContent = 'Harga estimasi katalog. Verifikasi harga dan stok melalui admin sebelum transaksi.';
+    }
   }
 
   // 1. Render Category Tabs
@@ -144,8 +189,8 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
           <div class="component-action">
             <span class="component-price">${formatIDR(item.price)}</span>
-            <button class="btn ${isSelected ? 'btn-emerald' : 'btn-secondary'} select-part-btn" data-id="${item.id}">
-              ${isSelected ? '✓ Terpilih' : 'Pilih Komponen'}
+            <button class="btn ${isSelected ? 'btn-emerald' : 'btn-secondary'} select-part-btn" data-id="${item.id}" ${item.stock === 0 ? 'disabled title="Stok habis"' : ''}>
+              ${item.stock === 0 ? 'Stok Habis' : isSelected ? '✓ Terpilih' : 'Pilih Komponen'}
             </button>
           </div>
         </div>
@@ -1109,4 +1154,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Run initialization
   init();
+  loadCatalogPrices();
 });
