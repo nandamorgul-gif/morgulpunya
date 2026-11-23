@@ -173,79 +173,7 @@
     </div>
   </section>
 
-<!-- Visual categories with live catalogue filtering -->
-  <section class="svo-category-section" aria-labelledby="svoCategoryTitle">
-    <div class="container">
-      <div class="svo-category-heading">
-        <div><span class="svo-kicker">EXPLORE / HARDWARE</span><h2 id="svoCategoryTitle">Belanja berdasarkan kategori</h2></div>
-        <a href="#svo-shop" class="svo-category-all">Lihat seluruh produk <span aria-hidden="true">↗</span></a>
-      </div>
-      <div class="svo-category-tiles">
-        <a href="#svo-shop" class="svo-category-tile" data-svo-category-link="cpu"><img src="images/products/cpu.svg" alt="" loading="lazy" width="160" height="110"><span>Processor <small>AMD &amp; Intel</small></span></a>
-        <a href="#svo-shop" class="svo-category-tile" data-svo-category-link="gpu"><img src="images/products/gpu.svg" alt="" loading="lazy" width="160" height="110"><span>Graphics Card <small>RTX &amp; Radeon</small></span></a>
-        <a href="#svo-shop" class="svo-category-tile" data-svo-category-link="motherboard"><img src="images/products/motherboard.svg" alt="" loading="lazy" width="160" height="110"><span>Motherboard <small>AM5 &amp; Intel</small></span></a>
-        <a href="#svo-shop" class="svo-category-tile" data-svo-category-link="ram"><img src="images/products/ram.svg" alt="" loading="lazy" width="160" height="110"><span>Memory <small>DDR5</small></span></a>
-        <a href="#svo-shop" class="svo-category-tile" data-svo-category-link="storage"><img src="images/products/storage.svg" alt="" loading="lazy" width="160" height="110"><span>Storage <small>NVMe SSD</small></span></a>
-        <a href="#svo-shop" class="svo-category-tile" data-svo-category-link="case"><img src="images/products/case.svg" alt="" loading="lazy" width="160" height="110"><span>PC Case <small>ATX &amp; Mini-ITX</small></span></a>
-      </div>
-    </div>
-  </section>
-
-  <section class="svo-featured-section" aria-labelledby="svoFeaturedTitle">
-    <div class="container">
-      <div class="svo-category-heading">
-        <div><span class="svo-kicker">EDITOR'S PICKS / 2026</span><h2 id="svoFeaturedTitle">Referensi hardware 2026</h2>
-          <p class="svo-featured-intro">Model pilihan untuk membantu konsultasi spesifikasi. Harga masih berupa simulasi.</p>
-        </div>
-        <a href="#svo-shop" class="svo-category-all">Buka katalog lengkap <span aria-hidden="true">↗</span></a>
-      </div>
-      <div class="svo-featured-grid" id="svoFeaturedGrid" aria-live="polite"></div>
-    </div>
-  </section>
-
-  <!-- SEMEISTVO TECH store catalogue: existing product data, estimates only -->
-  <section id="svo-shop" class="section-padding svo-store-section" aria-labelledby="svoShopTitle">
-    <div class="container">
-      <div class="section-title">
-        <span class="badge badge-purple">HARDWARE / REFERENCE CATALOG</span>
-        <h2 id="svoShopTitle">Komponen untuk Rencana Rakitanmu</h2>
-        <p class="svo-store-subtitle">Gunakan katalog sebagai referensi pemilihan part. Keranjang komponen dan fondasi checkout yang lama tetap tersedia sebagai fitur tambahan, bukan fokus utama layanan.</p>
-      </div>
-      <div class="svo-store-toolbar" role="search" aria-label="Cari komponen toko">
-        <input type="search" id="svoProductSearch" placeholder="Cari CPU, GPU, RAM, casing..." aria-label="Cari produk">
-        <select id="svoProductCategory" aria-label="Filter kategori"><option value="all">Semua kategori</option></select>
-        <select id="svoProductSort" aria-label="Urutkan produk">
-          <option value="default">Urutan katalog</option>
-          <option value="low">Harga terendah</option>
-          <option value="high">Harga tertinggi</option>
-          <option value="name">Nama A–Z</option>
-        </select>
-      </div>
-      <div class="svo-store-meta" id="svoProductCount" role="status"></div>
-      <div class="svo-store-grid" id="svoProductGrid"></div>
-      <p class="svo-store-note">Harga adalah estimasi katalog dan belum menunjukkan stok real-time. Konfirmasi stok, harga akhir, ongkir, dan pembayaran dilakukan melalui admin.</p>
-      <div style="margin-top:1.4rem;text-align:center">
-        <button type="button" class="svo-store-btn" id="svoOpenCartFromShop">Lihat Pilihan Komponen</button>
-      </div>
-    </div>
-  </section>
-
-  <!-- Preset Builds Section -->
-  <section id="preset" class="section-padding" style="background: rgba(0, 0, 0, 0.2);">
-    <div class="container">
-      <div class="section-title">
-        <span class="badge">PC BUILD REFERENCES</span>
-        <h2>Referensi Konfigurasi PC</h2>
-        <p>Contoh spesifikasi untuk gaming, streaming, dan workstation. Bukan stok PC siap kirim atau dokumentasi proyek pelanggan.</p>
-      </div>
-
-      <div class="presets-grid" id="presetsContainer">
-        <!-- Hydrated dynamically from data.js via app.js -->
-      </div>
-    </div>
-  </section>
-
-  <!-- Interactive PC Builder & Live Price Calculator (Rakit PC / Harga) -->
+<!-- Interactive PC Builder & Live Price Calculator (Rakit PC / Harga) -->
   <section id="rakit-pc" class="section-padding">
     <div class="container">
       <div class="section-title">
@@ -366,6 +294,21 @@
     </div>
   </section>
 
+  <!-- Preset Builds Section -->
+  <section id="preset" class="section-padding" style="background: rgba(0, 0, 0, 0.2);">
+    <div class="container">
+      <div class="section-title">
+        <span class="badge">PC BUILD REFERENCES</span>
+        <h2>Referensi Konfigurasi PC</h2>
+        <p>Contoh spesifikasi untuk gaming, streaming, dan workstation. Bukan stok PC siap kirim atau dokumentasi proyek pelanggan.</p>
+      </div>
+
+      <div class="presets-grid" id="presetsContainer">
+        <!-- Hydrated dynamically from data.js via app.js -->
+      </div>
+    </div>
+  </section>
+
   <!-- Additional support services -->
 <section id="software-paket" class="svo-studio-section svo-addons" aria-labelledby="svoAddonsTitle">
   <div class="container">
@@ -379,7 +322,64 @@
   </div>
 </section>
 
-<!-- Service studio positioning -->
+<!-- Visual categories with live catalogue filtering -->
+  <section class="svo-category-section" aria-labelledby="svoCategoryTitle">
+    <div class="container">
+      <div class="svo-category-heading">
+        <div><span class="svo-kicker">EXPLORE / HARDWARE</span><h2 id="svoCategoryTitle">Eksplorasi Komponen PC</h2></div>
+        <a href="#svo-shop" class="svo-category-all">Lihat referensi komponen <span aria-hidden="true">↗</span></a>
+      </div>
+      <div class="svo-category-tiles">
+        <a href="#svo-shop" class="svo-category-tile" data-svo-category-link="cpu"><img src="images/products/cpu.svg" alt="" loading="lazy" width="160" height="110"><span>Processor <small>AMD &amp; Intel</small></span></a>
+        <a href="#svo-shop" class="svo-category-tile" data-svo-category-link="gpu"><img src="images/products/gpu.svg" alt="" loading="lazy" width="160" height="110"><span>Graphics Card <small>RTX &amp; Radeon</small></span></a>
+        <a href="#svo-shop" class="svo-category-tile" data-svo-category-link="motherboard"><img src="images/products/motherboard.svg" alt="" loading="lazy" width="160" height="110"><span>Motherboard <small>AM5 &amp; Intel</small></span></a>
+        <a href="#svo-shop" class="svo-category-tile" data-svo-category-link="ram"><img src="images/products/ram.svg" alt="" loading="lazy" width="160" height="110"><span>Memory <small>DDR5</small></span></a>
+        <a href="#svo-shop" class="svo-category-tile" data-svo-category-link="storage"><img src="images/products/storage.svg" alt="" loading="lazy" width="160" height="110"><span>Storage <small>NVMe SSD</small></span></a>
+        <a href="#svo-shop" class="svo-category-tile" data-svo-category-link="case"><img src="images/products/case.svg" alt="" loading="lazy" width="160" height="110"><span>PC Case <small>ATX &amp; Mini-ITX</small></span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="svo-featured-section" aria-labelledby="svoFeaturedTitle">
+    <div class="container">
+      <div class="svo-category-heading">
+        <div><span class="svo-kicker">EDITOR'S PICKS / 2026</span><h2 id="svoFeaturedTitle">Referensi hardware 2026</h2>
+          <p class="svo-featured-intro">Model pilihan untuk membantu konsultasi spesifikasi. Harga masih berupa simulasi.</p>
+        </div>
+        <a href="#svo-shop" class="svo-category-all">Buka katalog lengkap <span aria-hidden="true">↗</span></a>
+      </div>
+      <div class="svo-featured-grid" id="svoFeaturedGrid" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <!-- SEMEISTVO TECH store catalogue: existing product data, estimates only -->
+  <section id="svo-shop" class="section-padding svo-store-section" aria-labelledby="svoShopTitle">
+    <div class="container">
+      <div class="section-title">
+        <span class="badge badge-purple">HARDWARE / REFERENCE CATALOG</span>
+        <h2 id="svoShopTitle">Komponen untuk Rencana Rakitanmu</h2>
+        <p class="svo-store-subtitle">Gunakan katalog sebagai referensi pemilihan part. Keranjang komponen dan fondasi checkout yang lama tetap tersedia sebagai fitur tambahan, bukan fokus utama layanan.</p>
+      </div>
+      <div class="svo-store-toolbar" role="search" aria-label="Cari komponen toko">
+        <input type="search" id="svoProductSearch" placeholder="Cari CPU, GPU, RAM, casing..." aria-label="Cari produk">
+        <select id="svoProductCategory" aria-label="Filter kategori"><option value="all">Semua kategori</option></select>
+        <select id="svoProductSort" aria-label="Urutkan produk">
+          <option value="default">Urutan katalog</option>
+          <option value="low">Harga terendah</option>
+          <option value="high">Harga tertinggi</option>
+          <option value="name">Nama A–Z</option>
+        </select>
+      </div>
+      <div class="svo-store-meta" id="svoProductCount" role="status"></div>
+      <div class="svo-store-grid" id="svoProductGrid"></div>
+      <p class="svo-store-note">Harga adalah estimasi katalog dan belum menunjukkan stok real-time. Konfirmasi stok, harga akhir, ongkir, dan pembayaran dilakukan melalui admin.</p>
+      <div style="margin-top:1.4rem;text-align:center">
+        <button type="button" class="svo-store-btn" id="svoOpenCartFromShop">Lihat Pilihan Komponen</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Service studio positioning -->
 <section id="tentang" class="svo-studio-section svo-about" aria-labelledby="svoAboutTitle">
   <div class="container svo-about-layout">
     <div class="svo-about-label"><span class="svo-kicker">ABOUT / SEMEISTVO TECH</span><img src="images/logo.svg" width="200" height="170" loading="lazy" alt="Logo monogram SEMEISTVO TECH"><p>HARDWARE × SOFTWARE × DIGITAL</p></div>
