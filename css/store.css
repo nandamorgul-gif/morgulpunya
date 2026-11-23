@@ -43,7 +43,6 @@
 .svo-store-btn-secondary:hover { background: #403451; }
 .svo-store-note { color: var(--text-muted); font-size: .85rem; margin-top: 1.4rem; }
 .svo-header-cart { position: relative; white-space: nowrap; padding: .5rem .7rem; min-height: 38px; }
-.svo-header-count { border-radius: 999px; background: #fff; color: #2c1852; min-width: 20px; padding: 0 .25rem; font-size: .77rem; line-height: 19px; text-align: center; }
 .svo-cart-layer { position: fixed; z-index: 99999; inset: 0; display: none; }
 .svo-cart-layer.is-open { display: block; }
 .svo-cart-overlay { position: absolute; inset: 0; background: rgba(0,0,0,.72); }

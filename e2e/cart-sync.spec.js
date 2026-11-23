@@ -4,6 +4,7 @@ test('PC Builder selection and replacement synchronize with the one header cart'
   await page.goto('/', { waitUntil: 'domcontentloaded' });
   await page.locator('.select-part-btn[data-id="cpu-r5-9600x"]').click();
   await expect(page.locator('#svoShopCartCount')).toHaveText('1');
+  await expect(page.locator('#svoShopCartButton')).toHaveAccessibleDescription('1 item di keranjang');
   await expect(page.locator('#svoBuilderCartCount')).toHaveText('1');
   await page.locator('#svoBuilderViewCart').click();
   await expect(page.locator('#svoCartLayer')).toHaveClass(/is-open/);

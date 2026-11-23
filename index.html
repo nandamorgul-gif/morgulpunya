@@ -89,7 +89,14 @@
       </nav>
 
       <div class="header-actions">
-        <button type="button" id="svoShopCartButton" class="svo-store-btn svo-header-cart" aria-label="Buka keranjang PC Builder dan katalog">Keranjang <span class="svo-header-count" id="svoShopCartCount">0</span></button>
+        <button type="button" id="svoShopCartButton" class="svo-store-btn svo-header-cart"
+          aria-label="Buka keranjang PC Builder dan katalog" aria-describedby="svoShopCartStatus"
+          aria-controls="svoCartLayer">
+          <i class="feather feather-shopping-cart" aria-hidden="true"></i>
+        </button>
+        <span id="svoShopCartStatus" class="svo-header-cart-status" role="status">
+          <span id="svoShopCartCount">0</span> item di keranjang
+        </span>
         <a href="#rakit-pc" class="btn btn-primary btn-simulasi-nav">
           <i class="feather feather-sliders"></i> Simulasi Rakit
         </a>

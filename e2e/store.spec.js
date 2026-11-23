@@ -9,6 +9,13 @@ for (const width of widths) {
     await page.goto('/', { waitUntil: 'domcontentloaded' });
     await expect(page.locator('.svo-product')).toHaveCount(46);
     await expect(page.locator('#svoMusicPlayer')).toHaveClass(/is-collapsed/);
+    const cart = page.getByRole('button', { name: 'Buka keranjang PC Builder dan katalog' });
+    await expect(cart.locator('svg.feather-shopping-cart')).toBeVisible();
+    await expect(cart).toHaveText('');
+    await expect(cart).toHaveAccessibleDescription('0 item di keranjang');
+    const cartTarget = await cart.boundingBox();
+    expect(cartTarget.width).toBeGreaterThanOrEqual(44);
+    expect(cartTarget.height).toBeGreaterThanOrEqual(44);
     const appWidth = await page.evaluate(() => ({ body: document.body.scrollWidth, viewport: innerWidth }));
     expect(appWidth.body).toBeLessThanOrEqual(appWidth.viewport + 3);
     // Remote photo hosts may block hotlinks. Product text/cart must remain usable.

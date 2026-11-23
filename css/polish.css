@@ -45,10 +45,15 @@ section[id] {scroll-margin-top:90px}
 .nav-links .nav-link.active::after {background:var(--svo-accent-lilac);height:2px;bottom:-3px}
 .header-actions {display:flex;align-items:center;gap:9px;flex-shrink:0}
 .svo-header-cart {
-  min-height:40px;padding:7px 12px;border:1px solid #6c527e;background:#261b33;
-  border-radius:12px;color:#f4eafb;font-size:.77rem;font-weight:750;white-space:nowrap;
+  flex:none;width:44px;height:44px;min-width:44px;min-height:44px;padding:0;
+  border:1px solid #6c527e;border-radius:12px;background:#261b33;color:#f4eafb;
 }
+.svo-header-cart svg {width:22px;height:22px}
 .svo-header-cart:hover {border-color:#bd91ee;background:#342447}
+.svo-header-cart-status {
+  position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+  overflow:hidden;clip-path:inset(50%);white-space:nowrap;
+}
 .header .btn-simulasi-nav {font-size:.76rem;padding:9px 12px;border-radius:11px;min-height:41px}
 .mobile-toggle {color:#e9d5ff}
 /* Unified buttons, labels, hierarchy. */
@@ -362,8 +367,6 @@ section[id] {scroll-margin-top:90px}
   .header .nav-container {min-height:45px;gap:8px}
   .svo-brand .svo-logo-mark {height:36px;width:37px}
   .svo-brand .svo-logo-mobile {font-size:clamp(.73rem,3.4vw,.95rem);letter-spacing:0}
-  .svo-header-cart {min-height:37px;padding:7px 9px;font-size:.73rem}
-  .svo-header-count {min-width:20px;height:20px;font-size:.68rem}
   .svo-studio-hero .hero-content h1 {font-size:clamp(2.3rem,10vw,3.18rem);letter-spacing:-.052em}
   .svo-studio-hero .hero-cta .btn {width:100%;font-size:.88rem}
   .svo-hero-service-strip {gap:5px}

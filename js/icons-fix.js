@@ -8,6 +8,7 @@
     "code": '<path d="m8 8-4 4 4 4m8-8 4 4-4 4m-4-11-4 22"/>',
     "message-square": '<path d="M21 11.5a9 9 0 0 1-9 9 9 9 0 0 1-4-.9L2 22l2.4-5.6a9 9 0 1 1 16.6-4.9z"/>',
     "shopping-bag": '<path d="M4 8h16l-1 13H5L4 8zM9 9V6a3 3 0 1 1 6 0v3"/>',
+    "shopping-cart": '<circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>',
     "save": '<path d="M3 3h15l3 3v15H3zM7 3v7h10V3m-10 18v-8h10v8"/>',
     "folder": '<path d="M3 6h7l2 3h9v11H3z"/>',
     "home": '<path d="M3 10 12 3l9 7v11h-6v-7H9v7H3z"/>',
