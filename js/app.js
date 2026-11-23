@@ -3,6 +3,16 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
+  // Foto asli dari sumber luar dapat gagal dimuat. Sembunyikan gambar rusak,
+  // jangan pernah menampilkan foto barang lain untuk komponen yang sama.
+  document.addEventListener('error', (event) => {
+    const img = event.target;
+    if (!(img instanceof HTMLImageElement)) return;
+    img.hidden = true;
+    const card = img.closest('.component-card');
+    if (card) card.classList.add('image-unavailable');
+  }, true);
+
   // State Application
   const state = {
     selectedCategory: 'cpu',
@@ -148,7 +158,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!presetsContainerEl) return;
     presetsContainerEl.innerHTML = PC_DATA.presets.map(preset => `
       <div class="glass-card preset-card">
-        <img src="${preset.image}" alt="${preset.title}" class="preset-image" loading="lazy">
+        <img src="${preset.image}" alt="Contoh casing untuk ${preset.title}, bukan foto lengkap rakitan" class="preset-image" loading="lazy">
+        <span class="preset-photo-note">Foto casing acuan paket • komponen lain sesuai spesifikasi</span>
         <div class="preset-header">
           <span class="badge ${preset.id.includes('beast') ? 'badge-purple' : 'badge'}">${preset.badge}</span>
           <h3 class="preset-title">${preset.title}</h3>
@@ -963,35 +974,38 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
 
-    // Mobile Menu Toggle logic
+    // Mobile navigation: icon built with CSS, not dependent on Feather/CDN.
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
     const navLinks = document.querySelector('.nav-links');
-
     if (mobileMenuBtn && navLinks) {
+      const setMobileMenu = (opened) => {
+        navLinks.classList.toggle('open', opened);
+        mobileMenuBtn.setAttribute('aria-expanded', String(opened));
+        mobileMenuBtn.setAttribute('aria-label', opened ? 'Tutup menu navigasi' : 'Buka menu navigasi');
+      };
       mobileMenuBtn.addEventListener('click', () => {
-        navLinks.classList.toggle('open');
-        const icon = mobileMenuBtn.querySelector('i');
-        if (icon) {
-          if (navLinks.classList.contains('open')) {
-            icon.className = 'feather feather-x';
-          } else {
-            icon.className = 'feather feather-menu';
-          }
-          if (window.feather) feather.replace();
+        setMobileMenu(!navLinks.classList.contains('open'));
+      });
+      navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => setMobileMenu(false));
+      });
+      document.addEventListener('click', event => {
+        if (!navLinks.classList.contains('open')) return;
+        if (!navLinks.contains(event.target) && !mobileMenuBtn.contains(event.target)) {
+          setMobileMenu(false);
         }
       });
-
-      // Close mobile menu when clicking any nav link
-      navLinks.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
-          navLinks.classList.remove('open');
-          const icon = mobileMenuBtn.querySelector('i');
-          if (icon) {
-            icon.className = 'feather feather-menu';
-            if (window.feather) feather.replace();
-          }
-        });
+      document.addEventListener('keydown', event => {
+        if (event.key === 'Escape' && navLinks.classList.contains('open')) {
+          setMobileMenu(false);
+          mobileMenuBtn.focus();
+        }
       });
+      window.addEventListener('resize', () => {
+        if (window.innerWidth > 992 && navLinks.classList.contains('open')) {
+          setMobileMenu(false);
+        }
+      }, { passive: true });
     }
 
     // Header scroll background change
