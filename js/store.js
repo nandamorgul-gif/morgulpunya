@@ -294,6 +294,16 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!Array.isArray(data.products)) return;
     serverCatalogAvailable = true;
     serverCheckoutEnabled = data.checkout_enabled === true;
+    const instructions = document.querySelector('#svoCheckoutView > p');
+    const sendButton = els.checkout.querySelector('button[type="submit"]');
+    if (serverCheckoutEnabled) {
+      if (instructions) instructions.textContent = 'Periksa kembali data dan alamat. Pembayaran hanya dilakukan melalui tautan resmi yang diterbitkan server dan diverifikasi oleh penyedia pembayaran.';
+      if (sendButton) sendButton.textContent = 'Lanjutkan ke Pembayaran Resmi';
+    } else {
+      if (instructions) instructions.textContent = 'Checkout online belum aktif. Formulir ini menyiapkan permintaan pembelian melalui WhatsApp; stok dan harga akhir dikonfirmasi admin.';
+      if (sendButton) sendButton.textContent = 'Kirim Permintaan via WhatsApp';
+    }
+
     products = data.products.filter(p => p && p.id && Number.isSafeInteger(p.price) && Number.isInteger(p.stock) && p.stock >= 0);
     productMap = new Map(products.map(p => [p.id, p]));
     for (const id of Object.keys(cart)) {
