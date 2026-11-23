@@ -1,0 +1,30 @@
+name: Validate SEMEISTVOTECH Site
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  static-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate JavaScript syntax
+        run: |
+          find js -name '*.js' -type f -print -exec node --check {} \;
+      - name: Check critical static files
+        run: |
+          test -f index.html
+          test -f admin.html
+          test -f css/style.css
+          test -f css/site-fixes.css
+          test -f css/admin.css
+          test -f js/data.js
+          test -f js/app.js
+          test -f js/icons-fix.js
+          test -f js/admin.js
+          test -f functions/_lib/store.js
+          test -f functions/api/catalog/prices.js
+          test -f functions/api/admin/login.js
+          test -f functions/api/admin/products.js
