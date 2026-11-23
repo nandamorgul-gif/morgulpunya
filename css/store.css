@@ -264,3 +264,10 @@ body::selection{background:#6a40ab;color:#fff}
 .svo-compatibility-warning{border-color:#b98a65;background:#30211b}
 .svo-compatibility-warning p{color:#f7cdaa}
 .component-price small{display:block;font-size:.68rem;color:#9e92b1;font-weight:600;margin-bottom:.2rem}
+
+
+.svo-inquiry-notice{padding:1rem 1.1rem;border:1px solid #6e5788;background:#231a30;border-radius:12px;margin:1rem 0}
+.svo-inquiry-notice strong{font-size:.9rem;color:#e5d7fa}
+.svo-inquiry-notice p{font-size:.83rem;line-height:1.65;color:#c2b6ce;margin-top:.5rem}
+#orderSummaryPreview{background:#181320;border:1px solid #49365d;border-radius:12px;padding:1rem;margin-bottom:1rem}
+#orderSummaryPreview ul li{font-size:.85rem;color:#cbbfdb}
