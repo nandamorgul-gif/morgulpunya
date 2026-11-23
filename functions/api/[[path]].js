@@ -184,7 +184,17 @@ export async function onRequest(context) {
   try {
     const path = pathParts(request.url);
     if (!path.length) return failure(404, 'Endpoint tidak ditemukan.');
-    if (!env.DB) return failure(503, 'Database D1 belum terhubung. Hubungkan binding DB di Cloudflare Pages.');
+    if (!env.DB || typeof env.DB.prepare !== 'function') {
+      // No secret values or environment binding names are reflected to clients.
+      // This specifically distinguishes a missing PRODUCTION deployment binding
+      // from an SQL error in an otherwise connected database.
+      return json({
+        ok: false,
+        error: 'Binding D1 bernama DB belum tersedia pada deployment Cloudflare Pages ini.',
+        diagnostic: 'D1_BINDING_MISSING_ON_ACTIVE_DEPLOYMENT',
+        next_step: 'Periksa Settings > Production > Bindings, lalu terbitkan deployment Production baru dari branch Cloudflare.'
+      }, 503);
+    }
     if (path.length === 1 && path[0] === 'health' && request.method === 'GET') {
       await env.DB.prepare('SELECT id FROM products LIMIT 1').first();
       return json({ ok: true, database: 'd1', payment_mode: 'disabled', checkout_enabled: false });
