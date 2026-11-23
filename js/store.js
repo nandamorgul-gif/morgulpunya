@@ -64,10 +64,15 @@ document.addEventListener('DOMContentLoaded', () => {
     );
   };
   const syncPaymentMode = () => {
+    const online = canPayOnline();
     const note = document.querySelector('#svoCheckoutView > p');
     const submit = els.checkout.querySelector('button[type="submit"]');
-    if (submit) submit.textContent = canPayOnline() ? 'Lanjutkan ke Pembayaran Resmi' : 'Kirim Permintaan via WhatsApp';
-    if (note) note.textContent = canPayOnline()
+    const email = document.getElementById('svoCheckoutEmail');
+    const emailLabel = els.checkout.querySelector('label[for="svoCheckoutEmail"]');
+    if (submit) submit.textContent = online ? 'Lanjutkan ke Pembayaran Resmi' : 'Kirim Permintaan via WhatsApp';
+    if (email) email.required = online;
+    if (emailLabel) emailLabel.hidden = !online;
+    if (note) note.textContent = online
       ? 'Periksa data dan alamat. Pembayaran hanya melalui gateway resmi dengan verifikasi server.'
       : 'Ini keranjang konsultasi. Harga dan stok perlu dikonfirmasi admin, belum ada tagihan atau pembayaran.';
   };
@@ -366,8 +371,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (note) note.textContent = serverCheckoutEnabled ?
       'Ketersediaan stok dan harga dihitung ulang saat checkout. Ongkos kirim sementara mengikuti tarif flat yang ditetapkan toko.' :
       'Katalog terhubung ke server. Pembayaran online belum aktif; checkout saat ini masih permintaan pembelian melalui WhatsApp.';
-    const label = els.checkout.querySelector('label[for="svoCheckoutEmail"]');
-    if (label) { label.hidden = false; document.getElementById('svoCheckoutEmail').required = serverCheckoutEnabled; }
+    syncPaymentMode();
     const prev = document.getElementById('svoPreviousOrder');
     let last; try { last = JSON.parse(localStorage.getItem('svo-last-order') || 'null'); } catch (_) {}
     if (prev && last?.id && last?.token) {
