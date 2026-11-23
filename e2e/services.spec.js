@@ -14,6 +14,27 @@ test('services-first landing keeps the existing music and PC Builder', async ({ 
   await expect(page.locator('.svo-product')).toHaveCount(46);
 });
 
+test('mobile GTA 5 RP navigation opens the FiveM service page and its quote link', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await page.getByRole('button', { name: 'Buka menu navigasi' }).click();
+  await page.locator('#svoPrimaryNav').getByRole('link', { name: 'GTA 5 RP' }).click();
+  await expect(page).toHaveURL(/\/jasa-server-fivem\/$/);
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Jasa Pembuatan Server GTA 5 Roleplay');
+  const artwork = page.locator('.fivem-hero-media img');
+  await artwork.evaluate(image => image.decode());
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
+
+  await page.locator('#demo summary').filter({ hasText: 'Bengkel mekanik' }).click();
+  await expect(page.getByText('Perbaikan selesai dan transaksi tercatat.')).toBeVisible();
+  await page.locator('#faq summary').filter({ hasText: 'Apakah hosting VPS sudah termasuk?' }).click();
+  await expect(page.getByText('VPS, domain, dan resource premium dihitung terpisah.', { exact: false })).toBeVisible();
+
+  const quote = new URL(await page.getByRole('link', { name: 'Minta Penawaran via WhatsApp' }).first().getAttribute('href'));
+  expect(quote.origin + quote.pathname).toBe('https://wa.me/6288291967659');
+  expect(quote.searchParams.get('text')).toContain('server GTA 5 Roleplay (FiveM)');
+});
+
 test('web development CTA creates a service-specific WhatsApp brief, not a paid order', async ({ page }) => {
   await page.goto('/', { waitUntil: 'domcontentloaded' });
   await page.evaluate(() => {

@@ -26,10 +26,10 @@ for (const width of widths) {
       await expect(toggle).toBeFocused();
       await expect(toggle).toHaveAttribute('aria-expanded', 'false');
       await toggle.click();
-      await nav.getByRole('link', { name: 'GTA 5 RP' }).click();
+      await nav.getByRole('link', { name: 'Layanan' }).click();
       await expect(nav).not.toHaveClass(/open/);
-      await expect(page).toHaveURL(/#roleplay$/);
-      await expect(nav.locator('[aria-current="location"]')).toHaveText('GTA 5 RP');
+      await expect(page).toHaveURL(/#layanan$/);
+      await expect(nav.locator('[aria-current="location"]')).toHaveText('Layanan');
     } else {
       await expect(nav).toBeVisible();
     }

@@ -29,7 +29,9 @@ test('Pages public build includes all website assets and excludes server/databas
   const homepage = 'https://semeistvotech.pages.dev/';
   const html = read('dist/index.html');
   assert.ok(html.includes('<link rel="canonical" href="' + homepage + '">'));
-  assert.deepEqual([...read('dist/sitemap.xml').matchAll(/<loc>([^<]+)<\/loc>/g)].map(match => match[1]), [homepage]);
+  const fivemPage = homepage + 'jasa-server-fivem/';
+  assert.deepEqual([...read('dist/sitemap.xml').matchAll(/<loc>([^<]+)<\/loc>/g)].map(match => match[1]), [homepage, fivemPage]);
+  assert.ok(read('dist/jasa-server-fivem/index.html').includes('<link rel="canonical" href="' + fivemPage + '">'));
   assert.ok(read('dist/robots.txt').includes('Sitemap: ' + homepage + 'sitemap.xml'));
   const structuredData = JSON.parse(html.match(/<script type="application\/ld\+json">([^]*?)<\/script>/)[1]);
   assert.ok(structuredData['@graph'].some(item => item['@type'] === 'WebSite' && item.url === homepage));

@@ -1,0 +1,387 @@
+.fivem-page {
+  --fivem-border: #40324f;
+  --fivem-panel: #191424;
+  background: #0f0c16;
+}
+
+.fivem-header {
+  background: #100d17;
+  border-bottom: 1px solid var(--fivem-border);
+}
+
+.fivem-header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 75px;
+}
+
+.fivem-brand img {
+  width: clamp(145px, 18vw, 211px);
+  height: auto;
+  display: block;
+}
+
+.fivem-nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: clamp(10px, 2.25vw, 30px);
+}
+
+.fivem-nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--svo-txt-soft);
+  font-size: .88rem;
+  font-weight: 650;
+}
+
+.fivem-nav a:hover,
+.fivem-footer a:hover {
+  color: var(--svo-txt);
+}
+
+.fivem-hero {
+  padding-block: clamp(53px, 7.2vw, 112px);
+  background: radial-gradient(ellipse at 75% 30%, #251936 0%, #100d17 60%);
+  border-bottom: 1px solid var(--fivem-border);
+}
+
+.fivem-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, .97fr) minmax(0, 1.03fr);
+  align-items: center;
+  gap: clamp(30px, 4vw, 65px);
+}
+
+.fivem-hero h1 {
+  margin: 0 0 22px;
+  font-size: clamp(2.35rem, 4.65vw, 4.65rem);
+  font-weight: 780;
+  line-height: 1.04;
+  letter-spacing: -.055em;
+}
+
+.fivem-hero h1 span {
+  display: block;
+}
+
+.fivem-hero-copy > p,
+.fivem-section-heading p,
+.fivem-scope-card p,
+.fivem-steps p,
+.fivem-faq-list details p,
+.fivem-contact-panel p {
+  color: var(--svo-txt-soft);
+  line-height: 1.75;
+}
+
+.fivem-hero-copy > p {
+  max-width: 50ch;
+}
+
+.fivem-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 26px;
+}
+
+.fivem-page .btn {
+  min-height: 48px;
+  justify-content: center;
+  gap: 8px;
+  text-align: center;
+  font-size: .86rem;
+}
+
+.fivem-hero-copy .fivem-hero-note {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 16px;
+  font-size: .84rem;
+  color: #d2b6eb;
+}
+
+.fivem-hero-note svg {
+  flex: none;
+  width: 16px;
+  height: 16px;
+}
+
+.fivem-hero-media {
+  margin: 0;
+  border: 1px solid #614778;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #181121;
+  box-shadow: 0 22px 52px #08050e7a;
+}
+
+.fivem-hero-media img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1.5;
+  object-fit: cover;
+  object-position: 53% 50%;
+}
+
+.fivem-hero-media figcaption {
+  padding: 10px 15px;
+  color: var(--svo-txt-soft);
+  font-size: .76rem;
+}
+
+.fivem-section {
+  padding-block: clamp(49px, 7vw, 92px);
+}
+
+.fivem-section[id] {
+  scroll-margin-top: 16px;
+}
+
+.fivem-section-heading {
+  max-width: 64ch;
+}
+
+.fivem-section-heading h2,
+.fivem-contact-panel h2 {
+  color: var(--svo-txt);
+  font-size: clamp(1.75rem, 3.2vw, 2.8rem);
+  line-height: 1.12;
+  letter-spacing: -.035em;
+}
+
+.fivem-section-heading p,
+.fivem-contact-panel p {
+  margin-top: 10px;
+}
+
+.fivem-scope-grid,
+.fivem-steps {
+  display: grid;
+  gap: 14px;
+  margin-top: 25px;
+}
+
+.fivem-scope-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.fivem-scope-card {
+  padding: 22px;
+  border: 1px solid var(--fivem-border);
+  border-radius: 14px;
+  background: var(--fivem-panel);
+}
+
+.fivem-scope-card > svg {
+  width: 24px;
+  height: 24px;
+  margin-bottom: 12px;
+  color: var(--svo-accent-lilac);
+}
+
+.fivem-scope-card h3,
+.fivem-steps h3 {
+  font-size: 1.12rem;
+  line-height: 1.25;
+  margin-bottom: 7px;
+}
+
+.fivem-scope-card p,
+.fivem-steps p {
+  font-size: .91rem;
+}
+
+.fivem-demo,
+.fivem-faq {
+  background: #15101e;
+  border-block: 1px solid var(--fivem-border);
+}
+
+.fivem-demo-grid,
+.fivem-faq-grid {
+  display: grid;
+  grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
+  align-items: start;
+  gap: clamp(22px, 6vw, 82px);
+}
+
+.fivem-demo-list,
+.fivem-faq-list {
+  border: 1px solid var(--fivem-border);
+  border-radius: 16px;
+  background: #100d17;
+  padding-inline: 18px;
+}
+
+.fivem-page details + details {
+  border-top: 1px solid var(--fivem-border);
+}
+
+.fivem-page summary {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  min-height: 56px;
+  padding: 12px 4px;
+  color: var(--svo-txt);
+  font-weight: 700;
+  list-style: none;
+  cursor: pointer;
+}
+
+.fivem-page summary::-webkit-details-marker {
+  display: none;
+}
+
+.fivem-page summary::after {
+  content: "";
+  inline-size: 8px;
+  block-size: 8px;
+  flex: none;
+  margin-inline: auto 4px;
+  border: solid var(--svo-accent-lilac);
+  border-width: 0 2px 2px 0;
+  transform: translateY(-2px) rotate(45deg);
+}
+
+.fivem-page details[open] > summary::after {
+  transform: translateY(2px) rotate(225deg);
+}
+
+.fivem-demo-list summary svg {
+  color: var(--svo-accent-lilac);
+  flex: none;
+}
+
+.fivem-demo-list ol,
+.fivem-faq-list details p {
+  margin: 0 4px 17px;
+  color: var(--svo-txt-soft);
+  font-size: .9rem;
+}
+
+.fivem-demo-list ol {
+  display: grid;
+  gap: 6px;
+  padding-left: 30px;
+}
+
+.fivem-steps {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  padding-left: 0;
+  margin-bottom: 0;
+  list-style: none;
+  counter-reset: fivem-step;
+}
+
+.fivem-steps li {
+  border-top: 2px solid #684990;
+  padding: 13px 10px 0 0;
+  counter-increment: fivem-step;
+}
+
+.fivem-steps li::before {
+  content: counter(fivem-step, decimal-leading-zero);
+  display: block;
+  color: #c6a4f4;
+  font-size: .83rem;
+  font-weight: 750;
+  margin-bottom: 8px;
+}
+
+.fivem-contact {
+  padding-block: clamp(42px, 7vw, 82px);
+}
+
+.fivem-contact-panel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 18px;
+  padding: clamp(20px, 4vw, 36px);
+  border: 1px solid #624685;
+  border-radius: 19px;
+  background: linear-gradient(125deg, #21162e, #2c1c3c);
+}
+
+.fivem-footer {
+  padding-block: 23px;
+  background: #100d17;
+  border-top: 1px solid var(--fivem-border);
+  color: var(--svo-txt-soft);
+  font-size: .79rem;
+}
+
+.fivem-footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px 22px;
+  margin-top: 12px;
+}
+
+.fivem-footer a {
+  color: var(--svo-accent-lilac);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (max-width: 920px) {
+  .fivem-scope-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .fivem-hero-grid,
+  .fivem-demo-grid,
+  .fivem-faq-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .fivem-hero {
+    padding-block: 43px 50px;
+  }
+
+  .fivem-hero-media img {
+    aspect-ratio: 1672 / 941;
+  }
+}
+
+@media (max-width: 510px) {
+  .fivem-header-inner {
+    flex-wrap: wrap;
+    gap: 3px;
+    padding-block: 11px 4px;
+  }
+
+  .fivem-nav {
+    width: 100%;
+    justify-content: space-between;
+    gap: 6px;
+  }
+
+  .fivem-nav a {
+    min-height: 44px;
+    padding-inline: 6px;
+  }
+
+  .fivem-actions .btn,
+  .fivem-contact-panel .btn {
+    width: 100%;
+  }
+
+  .fivem-scope-grid,
+  .fivem-steps {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

@@ -298,6 +298,7 @@ app.get('/site.webmanifest', (req, res) => res.type('application/manifest+json')
 app.get('/robots.txt', (req, res) => res.sendFile(path.join(publicRoot, 'robots.txt')));
 app.get('/sitemap.xml', (req, res) => res.sendFile(path.join(publicRoot, 'sitemap.xml')));
 app.get('/', (req, res) => res.sendFile(path.join(publicRoot, 'index.html')));
+app.get('/jasa-server-fivem/', (req, res) => res.sendFile(path.join(publicRoot, 'jasa-server-fivem', 'index.html')));
 app.get('/index.html', (req, res) => res.sendFile(path.join(publicRoot, 'index.html')));
 app.get('/admin', (req, res) => res.sendFile(path.join(publicRoot, 'admin.html')));
 app.get('/admin.html', (req, res) => res.sendFile(path.join(publicRoot, 'admin.html')));
