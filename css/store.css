@@ -271,3 +271,37 @@ body::selection{background:#6a40ab;color:#fff}
 .svo-inquiry-notice p{font-size:.83rem;line-height:1.65;color:#c2b6ce;margin-top:.5rem}
 #orderSummaryPreview{background:#181320;border:1px solid #49365d;border-radius:12px;padding:1rem;margin-bottom:1rem}
 #orderSummaryPreview ul li{font-size:.85rem;color:#cbbfdb}
+
+
+/* Image polish — actual model references are shown as product photography,
+   while unmatched products keep branded artwork (never a broken thumbnail). */
+.svo-product-media.has-photo{
+  background:radial-gradient(circle at 50% 25%, #ffffff 0%, #f2eef8 68%, #dfd9e9 100%);
+}
+.svo-product-media.has-photo .svo-product-image{
+  display:block;object-fit:contain;object-position:center;
+  padding:9px;background:transparent;
+  width:100%;aspect-ratio:3/2;mix-blend-mode:multiply;
+}
+.svo-product-media.has-illustration{background:linear-gradient(160deg,#231c37,#110d1c)}
+.svo-photo-credit{
+  display:inline-flex;align-self:flex-start;
+  margin-top:-.25rem;font-size:.71rem;
+  color:#c9b7e8;text-decoration:underline;text-underline-offset:3px;
+}
+.svo-photo-credit:hover{color:#fff}
+.svo-illustration-chip{font-size:.63rem;letter-spacing:.01em}
+.svo-concept-note{
+  display:inline-block;color:#a89abc;font-size:.62rem;font-weight:800;
+  letter-spacing:.12em;margin-bottom:.6rem
+}
+.svo-hero-feature .svo-hero-visual{
+  object-fit:cover;object-position:center;
+  background:#1a1526;min-height:260px;
+}
+.preset-image{object-fit:cover;background:#181423}
+.component-img{object-fit:contain;background:linear-gradient(130deg,#efebf7,#e3dded);padding:3px}
+@media(max-width:760px){
+  .svo-hero-feature .svo-hero-visual{min-height:0}
+  .svo-product-media.has-photo .svo-product-image{padding:6px}
+}
