@@ -40,6 +40,22 @@ test('D1 schema and catalogue seed initialize valid SQLite without fictitious st
   assert.equal(db.prepare('SELECT price FROM products WHERE id = ?').get('gpu-rtx5060ti16').price, 123);
   db.close();
 });
+test('single-statement dashboard import inserts all 46 rows and is idempotent', () => {
+  const sql = read('db/seed-console-one-statement.sql');
+  // All 46 tuples must be importable as a single D1 Console query.
+  const statements = sql.split('\n').filter(line => !line.trim().startsWith('--')).join('\n')
+    .split(';').filter(part => part.trim());
+  assert.equal(statements.length, 1);
+  assert.ok(sql.length < 100000);
+  const db = new Database(':memory:');
+  db.exec(read('migrations/0001_schema.sql'));
+  db.exec(sql);
+  assert.equal(db.prepare('SELECT COUNT(*) AS total FROM products').get().total, 46);
+  assert.equal(db.prepare('SELECT COALESCE(SUM(stock),0) AS total FROM products').get().total, 0);
+  db.exec(sql);
+  assert.equal(db.prepare('SELECT COUNT(*) AS total FROM products').get().total, 46);
+  db.close();
+});
 function makeFixture() {
   const db = new Database(':memory:');
   db.exec(read('migrations/0001_schema.sql'));
