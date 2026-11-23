@@ -253,6 +253,7 @@ export async function onRequest(context) {
         if (!entry) return { ...row, price_live: false };
         refreshed++;
         return { ...row, price: entry.price, stock: entry.stock ?? row.stock,
+          stock_live: entry.stock !== undefined,
           price_live: true, price_updated_at: feed.updated_at };
       });
       return json({
