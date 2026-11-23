@@ -256,3 +256,11 @@ body::selection{background:#6a40ab;color:#fff}
 @media(prefers-reduced-motion:reduce){
   .svo-product,.svo-hero-feature,.preset-card,.btn{transition:none!important;animation:none!important}
 }
+
+/* PC Builder compatibility feedback */
+.svo-compatibility{margin:0 auto 1.25rem;padding:1rem 1.25rem;border:1px solid #5a4776;border-radius:12px;background:#231a32;color:#e8def4}
+.svo-compatibility strong{display:block;font-size:.94rem;margin-bottom:.25rem}
+.svo-compatibility p{font-size:.82rem;line-height:1.65;color:#c3b4d3;margin:0}
+.svo-compatibility-warning{border-color:#b98a65;background:#30211b}
+.svo-compatibility-warning p{color:#f7cdaa}
+.component-price small{display:block;font-size:.68rem;color:#9e92b1;font-weight:600;margin-bottom:.2rem}
