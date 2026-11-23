@@ -1,1 +1,117 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 650" role="img" aria-labelledby="title desc"><title id="title">SEMEISTVO TECH — Roleplay server development</title><desc id="desc">Original dark violet cityscape and server network illustration, not affiliated with any videogame publisher.</desc><defs><linearGradient id="bg" x1="0" x2=".9" y1="0" y2="1"><stop stop-color="#24152F"/><stop offset=".55" stop-color="#0E0A18"/><stop offset="1" stop-color="#08080F"/></linearGradient><radialGradient id="halo"><stop stop-color="#773DA9" stop-opacity=".47"/><stop offset="1" stop-color="#3A155B" stop-opacity="0"/></radialGradient><linearGradient id="net" x1="0" x2="1"><stop stop-color="#7D4BD4"/><stop offset=".5" stop-color="#D2A8FF"/><stop offset="1" stop-color="#7441C2"/></linearGradient></defs><rect width="960" height="650" fill="url(#bg)"/><ellipse cx="500" cy="270" rx="380" ry="300" fill="url(#halo)"/><path d="M0 455 Q230 380 460 424 T960 405V650H0Z" fill="#171124"/><g fill="#251A39" stroke="#4F316F" stroke-width="2"><path d="M15 455V272H107V455M107 455V240H175V455M182 455V189H277V455M280 455V308H366V455M366 455V143H460V455M460 455V264H560V455M565 455V175H673V455M673 455V272H748V455M752 455V210H852V455M860 455V305H946V455"/></g><g stroke="#BE94F0" stroke-width="2" opacity=".7"><path d="M48 293h26m-26 25h26m-26 25h26m82-64h20m26-60h52m-51 26h51m-51 25h51m171-85h50m-50 30h50m-50 30h50m175-35h50m-50 31h50m-50 31h50m98 30h35" stroke-dasharray="6 7"/></g><path d="M40 514C188 455 252 532 378 479S646 460 760 501S890 490 949 461" fill="none" stroke="url(#net)" stroke-width="5"/><g fill="#E6C9FF"><circle cx="40" cy="514" r="9"/><circle cx="244" cy="507" r="10"/><circle cx="445" cy="460" r="9"/><circle cx="662" cy="475" r="8"/><circle cx="827" cy="504" r="11"/></g><g transform="translate(355 220)"><rect x="0" y="0" width="247" height="235" rx="17" fill="#0C0B13" stroke="#A274E1" stroke-width="8"/><rect x="18" y="20" width="210" height="47" rx="7" fill="#302344" stroke="#7654AA" stroke-width="3"/><rect x="18" y="92" width="210" height="47" rx="7" fill="#302344" stroke="#7654AA" stroke-width="3"/><rect x="18" y="164" width="210" height="47" rx="7" fill="#302344" stroke="#7654AA" stroke-width="3"/><g fill="#BF98EF"><circle cx="45" cy="44" r="8"/><circle cx="45" cy="115" r="8"/><circle cx="45" cy="187" r="8"/></g><g stroke="#B7A1CF" stroke-width="5" stroke-linecap="round"><path d="M76 44h130M76 115h130M76 187h130"/></g></g><text x="46" y="80" fill="#CDB9E2" font-family="Arial,sans-serif" font-size="25" font-weight="800" letter-spacing="5">SVO / DIGITAL</text><text x="45" y="610" fill="#EEE6FA" font-family="Arial,sans-serif" font-size="31" letter-spacing="6" font-weight="800">ROLEPLAY SERVER STUDIO</text></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 650" width="960" height="650" role="img" aria-labelledby="title desc">
+  <title id="title">SEMEISTVO TECH — Roleplay Server Development &amp; Architecture</title>
+  <desc id="desc">Visualisasi server cluster FiveM GTA 5 Roleplay dengan arsitektur jaringan terdistribusi, database performa tinggi, dan proteksi DDoS bertema neon ungu dan cyan.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#140824"/>
+      <stop offset="50%" stop-color="#0b0614"/>
+      <stop offset="100%" stop-color="#05030a"/>
+    </linearGradient>
+    <radialGradient id="centerGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#b537f2" stop-opacity="0.35"/>
+      <stop offset="70%" stop-color="#00f3ff" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#140824" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="serverGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#1b122e"/>
+      <stop offset="50%" stop-color="#281747"/>
+      <stop offset="100%" stop-color="#1b122e"/>
+    </linearGradient>
+    <linearGradient id="cyanLine" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#00f3ff" stop-opacity="0.1"/>
+      <stop offset="50%" stop-color="#00f3ff" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#ff2a85" stop-opacity="0.8"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="960" height="650" fill="url(#bg)"/>
+  <ellipse cx="480" cy="325" rx="440" ry="280" fill="url(#centerGlow)"/>
+
+  <!-- Network Grid Gridlines -->
+  <g stroke="#3a225c" stroke-width="1" opacity="0.4">
+    <line x1="80" y1="0" x2="80" y2="650"/>
+    <line x1="240" y1="0" x2="240" y2="650"/>
+    <line x1="400" y1="0" x2="400" y2="650"/>
+    <line x1="560" y1="0" x2="560" y2="650"/>
+    <line x1="720" y1="0" x2="720" y2="650"/>
+    <line x1="880" y1="0" x2="880" y2="650"/>
+    <line x1="0" y1="130" x2="960" y2="130"/>
+    <line x1="0" y1="260" x2="960" y2="260"/>
+    <line x1="0" y1="390" x2="960" y2="390"/>
+    <line x1="0" y1="520" x2="960" y2="520"/>
+  </g>
+
+  <!-- Skyline Silhouette Silhouette at the base -->
+  <g fill="#160e26" stroke="#48256e" stroke-width="1.5">
+    <rect x="40" y="380" width="70" height="180"/>
+    <rect x="130" y="320" width="85" height="240"/>
+    <rect x="235" y="410" width="60" height="150"/>
+    <rect x="665" y="390" width="70" height="170"/>
+    <rect x="755" y="310" width="90" height="250"/>
+    <rect x="865" y="370" width="65" height="190"/>
+  </g>
+
+  <!-- Central High-Tech FiveM Server Rack Cluster -->
+  <g transform="translate(320, 150)">
+    <!-- Main Outer Rack Enclosure -->
+    <rect x="0" y="0" width="320" height="360" rx="18" fill="url(#serverGrad)" stroke="#a829f0" stroke-width="4" filter="url(#glow)"/>
+    
+    <!-- Top Display Header -->
+    <rect x="20" y="22" width="280" height="42" rx="8" fill="#0d071a" stroke="#00f3ff" stroke-width="1.5"/>
+    <circle cx="45" cy="43" r="5" fill="#00e676" filter="url(#glow)"/>
+    <text x="65" y="48" fill="#00f3ff" font-family="'Segoe UI',Roboto,sans-serif" font-size="13" font-weight="900" letter-spacing="2">FIVEM CORE CLUSTER</text>
+    <text x="240" y="48" fill="#ff79b0" font-family="'Segoe UI',Roboto,sans-serif" font-size="12" font-weight="800">128/128</text>
+
+    <!-- Server Blade Units -->
+    <!-- Blade 1 -->
+    <rect x="20" y="80" width="280" height="60" rx="8" fill="#130b24" stroke="#5d3294" stroke-width="2"/>
+    <circle cx="45" cy="110" r="5" fill="#00f3ff" filter="url(#glow)"/>
+    <circle cx="65" cy="110" r="5" fill="#ff2a85" filter="url(#glow)"/>
+    <line x1="90" y1="102" x2="230" y2="102" stroke="#a829f0" stroke-width="4" stroke-linecap="round"/>
+    <line x1="90" y1="116" x2="190" y2="116" stroke="#00f3ff" stroke-width="3" stroke-linecap="round"/>
+    <text x="250" y="114" fill="#a484d4" font-family="'Segoe UI',Roboto,sans-serif" font-size="10" font-weight="700">CPU 12%</text>
+
+    <!-- Blade 2 -->
+    <rect x="20" y="155" width="280" height="60" rx="8" fill="#130b24" stroke="#5d3294" stroke-width="2"/>
+    <circle cx="45" cy="185" r="5" fill="#00e676" filter="url(#glow)"/>
+    <circle cx="65" cy="185" r="5" fill="#00f3ff" filter="url(#glow)"/>
+    <line x1="90" y1="177" x2="210" y2="177" stroke="#00e676" stroke-width="4" stroke-linecap="round"/>
+    <line x1="90" y1="191" x2="240" y2="191" stroke="#a829f0" stroke-width="3" stroke-linecap="round"/>
+    <text x="250" y="189" fill="#a484d4" font-family="'Segoe UI',Roboto,sans-serif" font-size="10" font-weight="700">RAM 8GB</text>
+
+    <!-- Blade 3 -->
+    <rect x="20" y="230" width="280" height="60" rx="8" fill="#130b24" stroke="#5d3294" stroke-width="2"/>
+    <circle cx="45" cy="260" r="5" fill="#00f3ff" filter="url(#glow)"/>
+    <circle cx="65" cy="260" r="5" fill="#e040fb" filter="url(#glow)"/>
+    <line x1="90" y1="252" x2="240" y2="252" stroke="#00f3ff" stroke-width="4" stroke-linecap="round"/>
+    <line x1="90" y1="266" x2="170" y2="266" stroke="#ff2a85" stroke-width="3" stroke-linecap="round"/>
+    <text x="250" y="264" fill="#a484d4" font-family="'Segoe UI',Roboto,sans-serif" font-size="10" font-weight="700">NVME D1</text>
+
+    <!-- Cable Management Ports -->
+    <g fill="#0b0614" stroke="#00f3ff" stroke-width="1.5">
+      <circle cx="60" cy="320" r="10"/><circle cx="120" cy="320" r="10"/>
+      <circle cx="200" cy="320" r="10"/><circle cx="260" cy="320" r="10"/>
+    </g>
+  </g>
+
+  <!-- Network Connection Beams -->
+  <path d="M120 480 C 220 480, 260 300, 320 270" stroke="url(#cyanLine)" stroke-width="4" fill="none" filter="url(#glow)"/>
+  <path d="M840 480 C 740 480, 700 300, 640 270" stroke="url(#cyanLine)" stroke-width="4" fill="none" filter="url(#glow)"/>
+
+  <!-- Server Hub Badges & Labels -->
+  <text x="480" y="70" fill="#ffffff" font-family="'Segoe UI',Roboto,sans-serif" font-size="24" font-weight="900" letter-spacing="6" text-anchor="middle" filter="url(#glow)">SEMEISTVO TECH</text>
+  <text x="480" y="100" fill="#00f3ff" font-family="'Segoe UI',Roboto,sans-serif" font-size="14" font-weight="800" letter-spacing="4" text-anchor="middle">GTA 5 ROLEPLAY SERVER INFRASTRUCTURE</text>
+
+  <g transform="translate(480, 580)">
+    <rect x="-180" y="0" width="360" height="42" rx="10" fill="#130a21" stroke="#a829f0" stroke-width="1.8"/>
+    <text x="0" y="26" fill="#00f3ff" font-family="'Segoe UI',Roboto,sans-serif" font-size="13" font-weight="800" letter-spacing="3" text-anchor="middle">QBCORE · ESX · CUSTOM SCRIPTS</text>
+  </g>
+</svg>
