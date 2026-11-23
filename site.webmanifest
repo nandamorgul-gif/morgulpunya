@@ -1,0 +1,23 @@
+{
+  "name": "SEMEISTVO TECH — Premium PC Hardware",
+  "short_name": "SEMEISTVO",
+  "description": "Katalog komponen PC 2026, PC Builder, dan konsultasi rakitan.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0B0A10",
+  "theme_color": "#0B0A10",
+  "icons": [
+    {
+      "src": "/images/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/images/logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ]
+}
