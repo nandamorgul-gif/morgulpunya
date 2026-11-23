@@ -22,11 +22,15 @@
     let apiLoading = false;
     let pending = false;
     let playing = false;
-    let muted = true;
+    let muted = false;
     let error = false;
+    let retriedMuted = false;
 
     // Session preference is only a preference: browser policy takes priority.
-    try { muted = sessionStorage.getItem(SESSION_KEY) !== 'false'; } catch (_) {}
+    try {
+      const previous = sessionStorage.getItem(SESSION_KEY);
+      if (previous !== null) muted = previous !== 'false';
+    } catch (_) {}
     const setStatus = (message) => { status.textContent = message; };
     function updateControls() {
       root.classList.toggle('is-playing', playing);
@@ -93,8 +97,14 @@
           },
           onAutoplayBlocked: () => {
             playing = false;
-            try { player?.mute(); player?.playVideo(); } catch (_) {}
-            setStatus('Browser menahan autoplay. Ketuk ikon musik untuk memulai.');
+            if (!retriedMuted) {
+              retriedMuted = true;
+              muted = true;
+              try { player?.mute(); player?.playVideo(); } catch (_) {}
+              setStatus('Autoplay bersuara diblokir; mencoba musik tanpa suara.');
+            } else {
+              setStatus('Browser menahan autoplay. Ketuk ikon musik untuk memulai.');
+            }
             updateControls();
           },
           onError: () => {
@@ -125,9 +135,14 @@
       document.head.appendChild(script);
     }
     toggle.addEventListener('click', () => {
-      collapse(!root.classList.contains('is-collapsed'));
-      if (root.classList.contains('is-collapsed')) return;
-      if (!ready && !apiLoading) loadApi();
+      const wasCollapsed = root.classList.contains('is-collapsed');
+      collapse(!wasCollapsed);
+      if (!wasCollapsed) return;
+      if (ready) {
+        // The icon is an intentional user gesture; a single tap can enable audio.
+        if (muted) applyMute(false);
+        if (!playing) startPlayback();
+      } else if (!apiLoading) loadApi();
     });
     play.addEventListener('click', () => {
       pending = true;
