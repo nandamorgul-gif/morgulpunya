@@ -179,6 +179,49 @@ async function adminRoute(request, env, path) {
   if (path[1] === 'orders') return adminOrders(request, env, path);
   return failure(404, 'Endpoint admin tidak ditemukan.');
 }
+// Live wholesale/catalogue feed — source must be configured by the site owner.
+// No prices are generated, guessed, or scraped from third-party shops.
+// A short edge-isolate cache caps upstream traffic; browsers poll every 2 min.
+let supplierCache = { key: '', expires: 0, data: null };
+async function supplierPrices(env) {
+  if (!env.PRICE_FEED_URL) return { status: 'not_configured', prices: new Map(), updated_at: null };
+  const identity = String(env.PRICE_FEED_URL);
+  if (supplierCache.key === identity && supplierCache.data && Date.now() < supplierCache.expires)
+    return supplierCache.data;
+  const missing = { status: 'unavailable', prices: new Map(), updated_at: null };
+  try {
+    const url = new URL(identity);
+    if (url.protocol !== 'https:' || url.username || url.password ||
+        /^(localhost|127\\.|10\\.|192\\.168\\.|169\\.254\\.|172\\.(1[6-9]|2[0-9]|3[01])\\.)/i.test(url.hostname))
+      return missing;
+    const headers = { Accept: 'application/json' };
+    if (env.PRICE_FEED_TOKEN) headers.Authorization = 'Bearer ' + String(env.PRICE_FEED_TOKEN);
+    const res = await fetch(url.toString(), { headers, redirect: 'error', signal: AbortSignal.timeout(8000) });
+    if (!res.ok || !(res.headers.get('content-type') || '').includes('json')) return missing;
+    const body = await res.text();
+    if (body.length > 250000) return missing;
+    const feed = JSON.parse(body);
+    const stamped = Date.parse(feed?.updated_at);
+    if (!Number.isFinite(stamped) || stamped > Date.now() + 300000 ||
+        Date.now() - stamped > 3600000 || feed?.currency !== 'IDR' ||
+        !Array.isArray(feed.products) || feed.products.length > 500 || !feed.products.length) return missing;
+    const prices = new Map();
+    for (const p of feed.products) {
+      if (typeof p?.id !== 'string' || !/^[a-z0-9-]{2,100}$/.test(p.id) ||
+          !Number.isSafeInteger(p.price) || p.price <= 0 || p.price > 1000000000 ||
+          (p.stock !== undefined && (!Number.isSafeInteger(p.stock) || p.stock < 0 || p.stock > 1000000)) ||
+          prices.has(p.id)) return missing;
+      prices.set(p.id, { price: p.price, stock: p.stock });
+    }
+    const output = { status: 'live', prices, updated_at: new Date(stamped).toISOString() };
+    supplierCache = { key: identity, expires: Date.now() + 60000, data: output };
+    return output;
+  } catch (error) {
+    // A supplier outage does not overwrite D1 prices or invent a new price.
+    return missing;
+  }
+}
+
 export async function onRequest(context) {
   const { request, env } = context;
   try {
@@ -201,11 +244,27 @@ export async function onRequest(context) {
     }
     if (path.length === 1 && path[0] === 'products' && request.method === 'GET') {
       const data = await env.DB.prepare(
-        'SELECT id, category, name, brand, description, image, price, stock FROM products WHERE active = 1 ORDER BY category, name'
+        'SELECT id, category, name, brand, description, image, price, stock, active, updated_at FROM products WHERE active = 1 ORDER BY category, name'
       ).all();
-      return json({ products: data.results || [], shipping_flat_idr: 0, checkout_enabled: false });
+      const feed = await supplierPrices(env);
+      let refreshed = 0;
+      const products = (data.results || []).map(row => {
+        const entry = feed.prices.get(row.id);
+        if (!entry) return { ...row, price_live: false };
+        refreshed++;
+        return { ...row, price: entry.price, stock: entry.stock ?? row.stock,
+          price_live: true, price_updated_at: feed.updated_at };
+      });
+      return json({
+        products,
+        pricing: { status: feed.status, updated_at: feed.updated_at,
+          live_products: refreshed, total_products: products.length,
+          refresh_seconds: 120 },
+        shipping_flat_idr: 0, checkout_enabled: false
+      });
     }
-    if (path[0] === 'admin') return adminRoute(request, env, path);
+    // Public administrator login and its API are removed at the owner's request.
+    if (path[0] === 'admin') return failure(404, 'Endpoint tidak ditemukan.');
     if (path[0] === 'orders' && request.method === 'POST') {
       return failure(503, 'Checkout online belum tersedia. Silakan gunakan permintaan WhatsApp.');
     }
