@@ -338,236 +338,33 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Bank Payment Information Database
-  const PAYMENT_INFO = {
-    'Transfer Bank BCA Direct': {
-      bank: 'Bank Central Asia (BCA)',
-      logoSvg: `<svg width="76" height="44" viewBox="0 0 76 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect width="76" height="44" rx="8" fill="#005caa"/>
-        <text x="38" y="32" text-anchor="middle" font-family="'Arial Black', Arial, sans-serif" font-weight="900" font-style="italic" font-size="24" fill="#ffffff" letter-spacing="2">BCA</text>
-      </svg>`,
-      accountNumber: '7401439823',
-      accountNumberFormatted: '7401-4398-23',
-      accountName: 'NANDA NUGRAHA',
-      color: '#005caa',
-      notes: 'Transfer Langsung BCA / M-BCA'
-    },
-    'Transfer Mandiri Virtual Account': {
-      bank: 'Bank Mandiri',
-      logoSvg: `<svg width="76" height="44" viewBox="0 0 76 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect width="76" height="44" rx="8" fill="#003d79"/>
-        <path d="M 16 32 C 16 10, 30 10, 38 22 C 46 34, 60 34, 60 12" stroke="#ffb703" stroke-width="4.5" stroke-linecap="round" fill="none" opacity="0.85"/>
-        <text x="38" y="27" text-anchor="middle" font-family="Arial, sans-serif" font-weight="900" font-style="italic" font-size="13" fill="#ffffff" letter-spacing="0.5">mandiri</text>
-      </svg>`,
-      accountNumber: '1330030841159',
-      accountNumberFormatted: '133-003-084-1159',
-      accountName: 'NANDA NUGRAHA',
-      color: '#003d79',
-      notes: 'Transfer Livin by Mandiri / ATM Mandiri'
-    },
-    'Transfer SeaBank': {
-      bank: 'SeaBank Indonesia',
-      logoSvg: `<svg width="76" height="44" viewBox="0 0 76 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect width="76" height="44" rx="8" fill="url(#seaGradBanner)"/>
-        <defs>
-          <linearGradient id="seaGradBanner" x1="0" y1="0" x2="76" y2="44" gradientUnits="userSpaceOnUse">
-            <stop stop-color="#ff6b00"/>
-            <stop offset="1" stop-color="#e55a00"/>
-          </linearGradient>
-        </defs>
-        <!-- Stylized S shape inside an orange circle -->
-        <circle cx="20" cy="22" r="10" fill="#ffffff"/>
-        <path d="M 23 18 C 17 18, 17 22, 20 22 C 23 22, 23 26, 17 26" stroke="#ff6b00" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-        <text x="50" y="27" text-anchor="middle" font-family="Arial, sans-serif" font-weight="800" font-size="12" fill="#ffffff" letter-spacing="0">SeaBank</text>
-      </svg>`,
-      accountNumber: '901424567091',
-      accountNumberFormatted: '9014-2456-7091',
-      accountName: 'NANDA NUGRAHA',
-      color: '#ff6b00',
-      notes: 'Transfer Instan SeaBank / Sea Mobile'
-    },
-    'QRIS Instant All Wallet (Gopay/OVO/ShopeePay)': {
-      bank: 'QRIS All Payment (GoPay, OVO, Dana, ShopeePay)',
-      logoSvg: `<svg width="38" height="22" viewBox="0 0 76 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect width="76" height="44" rx="6" fill="#ed1c24"/>
-        <rect x="8" y="6" width="12" height="12" fill="#fff" rx="1"/>
-        <rect x="10" y="8" width="4" height="4" fill="#ed1c24"/>
-        <rect x="22" y="6" width="12" height="12" fill="#fff" rx="1"/>
-        <rect x="24" y="8" width="4" height="4" fill="#ed1c24"/>
-        <rect x="8" y="20" width="12" height="12" fill="#fff" rx="1"/>
-        <rect x="10" y="22" width="4" height="4" fill="#ed1c24"/>
-        <text x="52" y="29" text-anchor="middle" font-family="Arial, sans-serif" font-weight="900" font-size="12" fill="#ffffff">QRIS</text>
-      </svg>`,
-      accountNumber: '088291967659',
-      accountNumberFormatted: 'Scan QR Code (QRIS)',
-      accountName: 'SEMEISTVO TECH',
-      color: '#ed1c24',
-      notes: 'Scan QRIS · GoPay · OVO · Dana · ShopeePay'
-    },
-    'Checkout via Official Tokopedia (Cicilan 0%)': {
-      bank: 'Tokopedia Official Store',
-      logoSvg: `<svg width="38" height="22" viewBox="0 0 76 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect width="76" height="44" rx="6" fill="#03ac0e"/>
-        <text x="38" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-weight="900" font-size="11" fill="#ffffff" letter-spacing="0.3">TOKOPEDIA</text>
-      </svg>`,
-      accountNumber: 'Official Store Tokopedia SEMEISTVO',
-      accountNumberFormatted: 'SEMEISTVO Gaming (Official)',
-      accountName: 'SEMEISTVO TECH',
-      color: '#03ac0e',
-      notes: 'Cicilan 0% s/d 24 Bulan · Kredit & Debit'
-    },
-    'Checkout via Official Shopee (PayLater/ShopeePay)': {
-      bank: 'Shopee Official Store',
-      logoSvg: `<svg width="38" height="22" viewBox="0 0 76 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect width="76" height="44" rx="6" fill="#ee4d2d"/>
-        <text x="38" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-weight="900" font-size="13" fill="#ffffff" letter-spacing="0.5">SHOPEE</text>
-      </svg>`,
-      accountNumber: 'Official Store Shopee SEMEISTVO',
-      accountNumberFormatted: 'SEMEISTVO Gaming (Official)',
-      accountName: 'SEMEISTVO TECH',
-      color: '#ee4d2d',
-      notes: 'SPayLater · ShopeePay · Kredit & Debit'
-    }
-  };
-
-  // Render Dynamic Bank Account Details Card in Order Form
-  function updateBankDetailsCard(paymentMethodKey) {
-    const cardEl = document.getElementById('paymentBankDetailsCard');
-    if (!cardEl) return;
-
-    const info = PAYMENT_INFO[paymentMethodKey] || PAYMENT_INFO['Transfer Bank BCA Direct'];
-
-    cardEl.innerHTML = `
-      <div class="bank-info-banner">
-        <div class="bank-banner-header">
-          <div class="bank-banner-brand">
-            <div class="bank-banner-icon">${info.logoSvg}</div>
-            <div>
-              <h4 style="color: #fff; font-size: 0.95rem; margin: 0; font-weight: 700;">${info.bank}</h4>
-              <span style="font-size: 0.725rem; color: var(--text-muted);">${info.notes}</span>
-            </div>
-          </div>
-          <span class="bank-verified-badge">✓ Terverifikasi Resmi</span>
-        </div>
-
-        <div class="bank-banner-acc-box">
-          <div>
-            <span class="acc-label">NOMOR REKENING / KODE BAYAR:</span>
-            <div class="acc-number" id="bankAccNoDisplay">${info.accountNumberFormatted}</div>
-          </div>
-          <button type="button" class="btn btn-secondary btn-copy-acc" id="copyBankAccBtn" data-copy="${info.accountNumber}">
-            📋 Salin No. Rekening
-          </button>
-        </div>
-
-        <div class="bank-banner-footer">
-          <span>👤 <strong>Atas Nama (A.n.):</strong> <strong class="acc-name">${info.accountName}</strong></span>
-          <span style="color: var(--accent); font-size: 0.75rem;">🔒 Garansi Aman 100%</span>
-        </div>
-      </div>
-    `;
-
-    // Sync visual active bank card item
-    const bankCards = document.querySelectorAll('.bank-card-item');
-    bankCards.forEach(card => {
-      if (card.dataset.payment === paymentMethodKey) {
-        card.classList.add('active');
-      } else {
-        card.classList.remove('active');
-      }
-    });
-
-    // Sync select dropdown value
-    const orderPaymentMethodEl = document.getElementById('orderPaymentMethod');
-    if (orderPaymentMethodEl && orderPaymentMethodEl.value !== paymentMethodKey) {
-      orderPaymentMethodEl.value = paymentMethodKey;
-    }
-
-    const copyBtn = document.getElementById('copyBankAccBtn');
-    if (copyBtn) {
-      copyBtn.addEventListener('click', () => {
-        const textToCopy = copyBtn.getAttribute('data-copy');
-        if (navigator.clipboard) {
-          navigator.clipboard.writeText(textToCopy).then(() => {
-            copyBtn.innerHTML = '✓ Nomor Tersalin!';
-            copyBtn.style.background = 'var(--accent)';
-            copyBtn.style.color = '#000';
-            setTimeout(() => {
-              copyBtn.innerHTML = '📋 Salin No. Rekening';
-              copyBtn.style.background = '';
-              copyBtn.style.color = '';
-            }, 2200);
-          });
-        } else {
-          alert(`Nomor Rekening: ${textToCopy}`);
-        }
-      });
-    }
-  }
-
-  // Render Order Summary Preview with Ongkir & Packing Kayu Calculation
+  // Builder inquiry only; payment details are not shown before verified checkout.
   function renderOrderSummaryPreview() {
-    const orderSummaryPreviewEl = document.getElementById('orderSummaryPreview');
-    if (!orderSummaryPreviewEl) return;
-
-    let count = 0;
-    let totalPrice = 0;
-    let totalWatts = 0;
-    const partsSummary = [];
-
-    PC_DATA.categories.forEach(cat => {
-      const part = state.userBuild[cat.id];
-      if (part) {
-        count++;
-        totalPrice += part.price;
-        if (part.watts) totalWatts += part.watts;
-        partsSummary.push(`<li style="margin-bottom: 0.2rem;"><strong style="color: var(--primary);">${cat.name.split(' ')[0]}:</strong> ${part.name}</li>`);
-      }
-    });
-
-    const deliveryEl = document.getElementById('orderDeliveryOption');
-    const packingCheckEl = document.getElementById('orderPackingKayuCheck');
-
-    let ongkir = 150000;
-    if (deliveryEl) {
-      const opt = deliveryEl.options[deliveryEl.selectedIndex];
-      ongkir = parseInt(opt?.dataset.ongkir || '0', 10);
+    const target = document.getElementById('orderSummaryPreview');
+    if (!target) return;
+    target.replaceChildren();
+    const rows = PC_DATA.categories
+      .map(cat => ({ category: cat.name, item: state.userBuild[cat.id] }))
+      .filter(row => row.item);
+    const sum = rows.reduce((amount, row) => amount + row.item.price, 0);
+    const heading = document.createElement('strong');
+    heading.textContent = 'Ringkasan konfigurasi · ' + rows.length + ' pilihan';
+    target.appendChild(heading);
+    const list = document.createElement('ul');
+    list.style.padding = '1rem 0 0 1.15rem';
+    list.style.margin = '0';
+    for (const row of rows) {
+      const li = document.createElement('li');
+      li.textContent = row.category + ': ' + row.item.name;
+      li.style.marginBottom = '.35rem';
+      list.appendChild(li);
     }
-
-    let packing = 0;
-    if (packingCheckEl && packingCheckEl.checked) {
-      packing = 100000;
-    }
-
-    const grandTotal = totalPrice + ongkir + packing;
-
-    orderSummaryPreviewEl.innerHTML = `
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem; border-bottom: 1px dashed var(--border-color); padding-bottom: 0.4rem;">
-        <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase;">
-          📦 Subtotal (${count} Komponen PC)
-        </span>
-        <span style="font-size: 0.95rem; font-weight: 700; color: #fff;">
-          ${formatIDR(totalPrice)}
-        </span>
-      </div>
-      <ul style="font-size: 0.775rem; color: var(--text-main); list-style: none; max-height: 85px; overflow-y: auto; padding-right: 0.35rem; margin-bottom: 0.4rem;">
-        ${partsSummary.join('')}
-      </ul>
-      <div style="background: rgba(0, 0, 0, 0.4); padding: 0.5rem 0.65rem; border-radius: 6px; font-size: 0.775rem; display: flex; flex-direction: column; gap: 0.25rem; border: 1px stroke rgba(255, 255, 255, 0.08);">
-        <div style="display: flex; justify-content: space-between; color: var(--text-muted);">
-          <span>🚚 Est. Biaya Kirim & Asuransi:</span>
-          <span style="color: #fff; font-weight: 600;">+${formatIDR(ongkir)}</span>
-        </div>
-        <div style="display: flex; justify-content: space-between; color: var(--text-muted);">
-          <span>🪵 Jasa Packing Kayu & Proteksi:</span>
-          <span style="color: #fff; font-weight: 600;">+${formatIDR(packing)}</span>
-        </div>
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.25rem; border-top: 1px dashed rgba(0, 240, 255, 0.3); padding-top: 0.35rem;">
-          <strong style="color: var(--accent); font-size: 0.825rem;">💰 TOTAL KESELURUHAN:</strong>
-          <strong style="color: var(--accent); font-size: 1.15rem; font-family: var(--font-heading); text-shadow: 0 0 10px rgba(0, 255, 157, 0.3);">${formatIDR(grandTotal)}</strong>
-        </div>
-      </div>
-    `;
+    target.appendChild(list);
+    const total = document.createElement('p');
+    total.style.marginTop = '1rem';
+    total.style.fontWeight = '800';
+    total.textContent = 'Total estimasi komponen: ' + formatIDR(sum) + ' (belum termasuk pengiriman)';
+    target.appendChild(total);
   }
 
   // 8. Open Order Form Modal (Form Pemesanan)
@@ -591,11 +388,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     renderOrderSummaryPreview();
 
-    const orderPaymentMethodEl = document.getElementById('orderPaymentMethod');
-    if (orderPaymentMethodEl) {
-      updateBankDetailsCard(orderPaymentMethodEl.value);
-    }
-
     const orderModal = document.getElementById('orderModal');
     if (orderModal) {
       orderModal.classList.add('open');
@@ -607,87 +399,42 @@ document.addEventListener('DOMContentLoaded', () => {
     const name = document.getElementById('orderCustomerName').value.trim();
     const phone = document.getElementById('orderCustomerPhone').value.trim();
     const address = document.getElementById('orderCustomerAddress').value.trim();
-    const payment = document.getElementById('orderPaymentMethod').value;
-    const deliveryEl = document.getElementById('orderDeliveryOption');
-    const packingCheckEl = document.getElementById('orderPackingKayuCheck');
-    const proofFileEl = document.getElementById('orderPaymentProof');
     const notes = document.getElementById('orderNotes').value.trim();
 
-    if (!name || !phone || !address) {
-      alert('Mohon lengkapi Nama Lengkap, Nomor HP/WA, dan Alamat Pengiriman!');
+    if (name.length < 2 || !/^\\+?[0-9 -]{8,20}$/.test(phone) || address.length < 8) {
+      alert('Periksa nama, nomor WhatsApp dan alamat pengiriman.');
       return null;
     }
 
-    const delivery = deliveryEl ? deliveryEl.value : '';
-    let ongkir = 0;
-    if (deliveryEl) {
-      const opt = deliveryEl.options[deliveryEl.selectedIndex];
-      ongkir = parseInt(opt?.dataset.ongkir || '0', 10);
-    }
-
-    let packing = 0;
-    if (packingCheckEl && packingCheckEl.checked) {
-      packing = 100000;
-    }
-
-    let proofFileName = '';
-    if (proofFileEl && proofFileEl.files && proofFileEl.files[0]) {
-      proofFileName = proofFileEl.files[0].name;
-    }
-
-    const payInfo = PAYMENT_INFO[payment] || PAYMENT_INFO['Transfer Bank BCA Direct'];
-
-    let totalPrice = 0;
-    let totalWatts = 0;
-    let count = 0;
-    let partsListMsg = '';
-
-    PC_DATA.categories.forEach(cat => {
-      const part = state.userBuild[cat.id];
-      if (part) {
-        count++;
-        totalPrice += part.price;
-        if (part.watts) totalWatts += part.watts;
-        partsListMsg += `• *${cat.name.split(' ')[0]}*: ${part.name} (${formatIDR(part.price)})\n`;
-      }
-    });
-
-    if (count === 0) {
-      alert('Tidak ada komponen terpilih!');
+    const rows = PC_DATA.categories
+      .map(cat => ({ category: cat.name, item: state.userBuild[cat.id] }))
+      .filter(row => row.item);
+    if (!rows.length) {
+      alert('Pilih komponen rakitan terlebih dahulu.');
       return null;
     }
-
-    const grandTotal = totalPrice + ongkir + packing;
-
-    let msg = `🛒 *FORM PEMESANAN PC RAKITAN - SEMEISTVO GAMING*\n`;
-    msg += `=========================================\n\n`;
-    msg += `👤 *DATA PEMESAN:*\n`;
-    msg += `• *Nama*: ${name}\n`;
-    msg += `• *No. HP/WA*: ${phone}\n`;
-    msg += `• *Alamat & Kota*: ${address}\n`;
-    msg += `• *Metode Pembayaran*: ${payment}\n`;
-    msg += `• *No. Rekening Tujuan*: ${payInfo.accountNumberFormatted}\n`;
-    msg += `• *Atas Nama (A.n.)*: ${payInfo.accountName}\n`;
-    msg += `• *Pengiriman*: ${delivery}\n`;
-    msg += `• *Est. Biaya Kirim & Asuransi*: ${formatIDR(ongkir)}\n`;
-    msg += `• *Jasa Packing Kayu*: ${packing > 0 ? formatIDR(packing) + ' (Heavy-Duty Crate)' : 'Tidak'}\n`;
-    if (proofFileName) {
-      msg += `• *Bukti Pembayaran*: 📄 File Terlampir (${proofFileName})\n`;
-    }
-    if (notes) {
-      msg += `• *Catatan Khusus*: ${notes}\n`;
-    }
-    msg += `\n-----------------------------------------\n`;
-    msg += `💻 *RINCIAN PAKET PC RAKITAN:*\n`;
-    msg += partsListMsg;
-    msg += `\n⚡ *Estimasi Konsumsi Daya*: ${totalWatts} Watts\n`;
-    msg += `🖥️ *SUBTOTAL COMPONENT PC*: ${formatIDR(totalPrice)}\n`;
-    msg += `🚚 *ESTIMASI ONGKIR & PACKING*: ${formatIDR(ongkir + packing)}\n`;
-    msg += `💰 *TOTAL KESELURUHAN*: ${formatIDR(grandTotal)}\n`;
-    msg += `=========================================\n\n`;
-    msg += `Mohon konfirmasi ketersediaan stok komponen di atas dan konfirmasi pembayaran. Terima kasih!`;
-
-    return msg;
+    const total = rows.reduce((sum, row) => sum + row.item.price, 0);
+    const watts = rows.reduce((sum, row) => sum + (row.item.watts || 0), 0);
+    const lines = [
+      'SEMEISTVO TECH / PERMINTAAN PENAWARAN RAKIT PC',
+      '',
+      'Nama: ' + name,
+      'WhatsApp: ' + phone,
+      'Alamat/kota: ' + address,
+      'Catatan: ' + (notes || '-'),
+      '',
+      'KONFIGURASI:'
+    ];
+    rows.forEach(row => lines.push('• ' + row.category + ': ' + row.item.name + ' — ' + formatIDR(row.item.price)));
+    lines.push(
+      '',
+      'Subtotal estimasi komponen: ' + formatIDR(total),
+      'Estimasi daya dasar: ' + watts + 'W',
+      '',
+      'Mohon bantu cek stok, spesifikasi/kompatibilitas final, harga akhir, ongkos kirim, garansi, dan instruksi pembayaran resmi.',
+      'Pesan ini hanya permintaan penawaran dan belum merupakan pesanan berbayar.'
+    );
+    return lines.join('\\n');
   }
 
   // Submit Order Form to WhatsApp
