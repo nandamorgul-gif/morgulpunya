@@ -10,8 +10,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const formatPrice = n => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(n);
   const escapeHTML = value => String(value ?? '').replace(/[&<>"']/g, ch => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[ch]));
-  const products = Object.entries(db.components).flatMap(([category, items]) => items.map(product => ({ ...product, category })));
-  const productMap = new Map(products.map(item => [item.id, item]));
+  let products = Object.entries(db.components).flatMap(([category, items]) => items.map(product => ({ ...product, category })));
+  let productMap = new Map(products.map(item => [item.id, item]));
+  let serverCheckoutEnabled = false;
+  let serverCatalogAvailable = false;
   const els = {
     search: document.getElementById('svoProductSearch'),
     category: document.getElementById('svoProductCategory'),
@@ -73,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <h3 class="svo-product-name">${escapeHTML(p.name)}</h3>
           <p class="svo-product-description">${escapeHTML(p.description)}</p>
           <p class="svo-product-price">${formatPrice(p.price)}</p>
-          <button class="svo-store-btn" type="button" data-svo-add="${escapeHTML(p.id)}">+ Tambah ke Keranjang</button>
+          <button class="svo-store-btn" type="button" data-svo-add="${escapeHTML(p.id)}" ${serverCatalogAvailable && p.stock < 1 ? "disabled" : ""}>${serverCatalogAvailable && p.stock < 1 ? "Stok Habis" : "+ Tambah ke Keranjang"}</button>
         </div>
       </article>`).join('') : '<p class="svo-cart-empty">Tidak ada produk yang sesuai dengan pencarian.</p>';
   };
@@ -133,7 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && layer.classList.contains('is-open')) closeCart(); });
   document.getElementById('svoCheckoutButton').addEventListener('click', () => { if (entries().length) toggleView(true); });
   document.getElementById('svoBackToCart').addEventListener('click', () => toggleView(false));
-  els.checkout.addEventListener('submit', e => {
+  els.checkout.addEventListener('submit', async e => {
     e.preventDefault();
     if (!els.checkout.reportValidity() || !entries().length) return;
     const fields = new FormData(els.checkout);
@@ -141,9 +143,50 @@ document.addEventListener('DOMContentLoaded', () => {
     const phone = String(fields.get('phone') || '').replace(/[\s-]/g, '');
     const address = String(fields.get('address') || '').trim();
     const notes = String(fields.get('notes') || '').trim();
+    const email = String(fields.get('email') || '').trim();
     if (!/^[+0-9]{8,17}$/.test(phone)) {
       document.getElementById('svoCheckoutStatus').textContent = 'Periksa kembali nomor WhatsApp.';
       return;
+    }
+    const status = document.getElementById('svoCheckoutStatus');
+    // When the server and sandbox/provider are configured, submit a real server-side
+    // inventory reservation and create payment using authoritative server prices.
+    if (serverCheckoutEnabled) {
+      if (!email || !/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email)) {
+        status.textContent = 'Masukkan email yang valid untuk pembayaran.';
+        return;
+      }
+      const submit = els.checkout.querySelector('button[type="submit"]');
+      submit.disabled = true;
+      status.textContent = 'Memeriksa stok dan membuat tautan pembayaran resmi...';
+      try {
+        const response = await fetch('/api/orders', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            items: entries().map(({product,qty}) => ({id:product.id,quantity:qty})),
+            customer: { name, phone, email, address, notes }
+          })
+        });
+        const data = await response.json();
+        if (!response.ok) throw Error(data.error || 'Tidak dapat membuat pesanan.');
+        if (!data.order?.id || !data.order?.payment_url || !data.access_token) throw Error('Respons pembayaran tidak lengkap.');
+        try {
+          localStorage.setItem('svo-last-order', JSON.stringify({
+            id: data.order.id, token: data.access_token, createdAt: Date.now()
+          }));
+        } catch (_) {}
+        status.textContent = 'Pesanan ' + data.order.id + ' dibuat. Mengarahkan ke penyedia pembayaran...';
+        // Redirect only to a trusted payment gateway hostname.
+        const url = new URL(data.order.payment_url);
+        if (!['app.midtrans.com','app.sandbox.midtrans.com'].includes(url.hostname) || url.protocol !== 'https:') {
+          throw Error('Alamat pembayaran tidak valid.');
+        }
+        window.location.assign(url.href);
+        return;
+      } catch (err) {
+        status.textContent = 'Checkout belum berhasil: ' + err.message + ' Silakan periksa stok atau hubungi admin.';
+        return;
+      } finally { submit.disabled = false; }
     }
     const rows = entries().map(({ product:p, qty }, i) => `${i+1}. ${p.name} × ${qty} — ${formatPrice(p.price * qty)}`);
     const message = [
@@ -163,7 +206,6 @@ document.addEventListener('DOMContentLoaded', () => {
     ].join('\n');
     const url = 'https://wa.me/6288291967659?text=' + encodeURIComponent(message);
     const newTab = window.open(url, '_blank', 'noopener,noreferrer');
-    const status = document.getElementById('svoCheckoutStatus');
     status.textContent = 'Permintaan siap dikirim. Jika WhatsApp tidak terbuka, gunakan tautan berikut: ';
     const fallback = document.createElement('a');
     fallback.href = url; fallback.target = '_blank'; fallback.rel = 'noopener noreferrer';
@@ -172,4 +214,33 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   renderProducts();
   renderCart();
+  // Load authoritative catalogue when Node API is running; otherwise keep
+  // the pre-existing static demo and WhatsApp inquiry behavior.
+  fetch('/api/products', { cache: 'no-store' }).then(async response => {
+    if (!response.ok) return;
+    const data = await response.json();
+    if (!Array.isArray(data.products)) return;
+    serverCatalogAvailable = true;
+    serverCheckoutEnabled = data.checkout_enabled === true;
+    products = data.products.filter(p => p && p.id && Number.isSafeInteger(p.price) && Number.isInteger(p.stock) && p.stock >= 0);
+    productMap = new Map(products.map(p => [p.id, p]));
+    for (const id of Object.keys(cart)) if (!productMap.has(id)) delete cart[id];
+    persist(); renderProducts(); renderCart();
+    const note = document.querySelector('.svo-store-note');
+    if (note) note.textContent = serverCheckoutEnabled ?
+      'Ketersediaan stok dan harga dihitung ulang saat checkout. Ongkos kirim sementara mengikuti tarif flat yang ditetapkan toko.' :
+      'Katalog terhubung ke server. Pembayaran online belum aktif; checkout saat ini masih permintaan pembelian melalui WhatsApp.';
+    const label = els.checkout.querySelector('label[for="svoCheckoutEmail"]');
+    if (label) { label.hidden = false; document.getElementById('svoCheckoutEmail').required = serverCheckoutEnabled; }
+    const prev = document.getElementById('svoPreviousOrder');
+    let last; try { last = JSON.parse(localStorage.getItem('svo-last-order') || 'null'); } catch (_) {}
+    if (prev && last?.id && last?.token) {
+      prev.hidden = false;
+      prev.textContent = 'Pesanan terakhir ' + last.id + ' — Memeriksa status...';
+      fetch('/api/orders/' + encodeURIComponent(last.id), {headers: {'x-order-access-token': last.token},cache:'no-store'})
+        .then(r => r.ok ? r.json() : Promise.reject(new Error('Tidak ditemukan')))
+        .then(data => { prev.textContent = 'Pesanan ' + last.id + ' — status: ' + data.order.status; })
+        .catch(() => { prev.textContent = 'Status pesanan terakhir belum dapat diperiksa.'; });
+    }
+  }).catch(() => {});
 });
