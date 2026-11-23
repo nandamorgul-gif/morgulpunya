@@ -401,6 +401,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const phone = document.getElementById('orderCustomerPhone').value.trim();
     const address = document.getElementById('orderCustomerAddress').value.trim();
     const notes = document.getElementById('orderNotes').value.trim();
+    const preferredPayment = document.getElementById('orderPreferredPayment')?.value || 'Diskusikan saat penawaran';
 
     if (name.length < 2 || !/^\\+?[0-9 -]{8,20}$/.test(phone) || address.length < 8) {
       alert('Periksa nama, nomor WhatsApp dan alamat pengiriman.');
@@ -423,6 +424,7 @@ document.addEventListener('DOMContentLoaded', () => {
       'WhatsApp: ' + phone,
       'Alamat/kota: ' + address,
       'Catatan: ' + (notes || '-'),
+      'Preferensi pembayaran: ' + preferredPayment + ' (belum ada transaksi)',
       '',
       'KONFIGURASI:'
     ];
@@ -804,6 +806,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const message = document.getElementById('contactMessage').value.trim();
         const budget = document.getElementById('contactBudget')?.value || 'Belum ditentukan';
         const method = document.getElementById('contactMethod')?.value || 'Diskusikan metode';
+        const paymentPreference = document.getElementById('contactPaymentMethod')?.value || 'Diskusikan saat penawaran';
         if (!service || !name || !contact || !subject || !message) return;
         const content = [
           '*SEMEISTVO TECH — KONSULTASI LAYANAN*',
@@ -814,11 +817,14 @@ document.addEventListener('DOMContentLoaded', () => {
           'Topik: ' + subject,
           'Budget: ' + budget,
           'Metode: ' + method,
+          'Preferensi pembayaran: ' + paymentPreference + ' (menunggu konfirmasi admin)',
           '',
           'Detail kebutuhan:',
           message,
           '',
           'Mohon informasi ketersediaan, ruang lingkup, estimasi biaya dan jadwal pengerjaan.',
+          'Website: hosting, domain dan layanan pihak ketiga tidak termasuk kecuali tercantum dalam penawaran.',
+          'Server RP: hosting/VPS serta lisensi/resource premium ditagihkan terpisah sesuai kebutuhan.',
           'Ini adalah permintaan konsultasi, bukan pembayaran atau pesanan resmi.'
         ].join('\n');
         const url = 'https://wa.me/6288291967659?text=' + encodeURIComponent(content);
