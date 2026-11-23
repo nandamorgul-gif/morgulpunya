@@ -255,6 +255,17 @@ app.patch('/api/admin/products/:id', sameOrigin, requireAdmin, (req, res) => {
     if (key === 'active' && value !== 0 && value !== 1) return fail(res, 400, 'Invalid active flag.');
     if (['name', 'brand', 'description', 'image'].includes(key) && !validStr(value, key === 'description' ? 1000 : 500, key === 'name' || key === 'brand' ? 1 : 0)) return fail(res, 400, 'Invalid product field.');
   }
+  if (Object.prototype.hasOwnProperty.call(payload, 'image')) {
+    const image = payload.image.trim();
+    let valid = /^images\/products\/[a-z0-9-]+\.svg$/.test(image);
+    if (!valid) {
+      try {
+        const parsed = new URL(image);
+        valid = parsed.protocol === 'https:' && !!parsed.hostname && !parsed.username && !parsed.password && !/\s/.test(image);
+      } catch (_) { valid = false; }
+    }
+    if (!valid) return fail(res, 400, 'Gambar wajib URL HTTPS atau ilustrasi lokal yang didukung.');
+  }
   const result = store.updateProduct(req.params.id, payload);
   if (!result) return fail(res, 404, 'Product not found.');
   res.json({ product: result });
