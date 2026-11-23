@@ -91,13 +91,17 @@ document.addEventListener('DOMContentLoaded', () => {
   const showImage = p => {
     const matched = window.SVO_PHOTOS?.[p.id];
     const current = typeof p.image === 'string' ? p.image : '';
-    const oldDefault = current.startsWith('images/products/');
+    // Existing SQLite installs may still point to either old category or SKU art.
+    // Upgrade these default visuals to actual reference photographs without
+    // overriding custom images uploaded/selected through the admin dashboard.
+    const oldDefault = !current || current.startsWith('images/products/') || current.startsWith('images/catalog/');
     const modelArt = 'images/catalog/' + p.id + '.svg';
-    const image = oldDefault ? (matched?.url || modelArt) : (current || modelArt);
+    const image = oldDefault ? (matched?.url || modelArt) : current;
     return {
       image,
       credit: matched && image === matched.url ? matched.credit : (image === p.image ? p.imageCreditUrl : null),
       photo: /^https:\/\//i.test(image),
+      servicePhoto: matched?.kind === 'service-photo' && image === matched.url,
       fallback: modelArt,
       finalFallback: 'images/products/' + (db.components[p.category] ? p.category : 'accessories') + '.svg'
     };
@@ -116,9 +120,9 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="svo-product-media ${showImage(p).photo ? 'has-photo' : 'has-illustration'}">
           <img src="${escapeHTML(showImage(p).image)}"
                data-svo-fallback="${escapeHTML(showImage(p).fallback)}" data-svo-final-fallback="${escapeHTML(showImage(p).finalFallback)}"
-               alt="${showImage(p).photo ? 'Foto referensi varian hardware: ' + escapeHTML(p.name) : 'Visual ilustratif model: ' + escapeHTML(p.name)}"
+               alt="${showImage(p).servicePhoto ? 'Foto ilustrasi layanan: ' + escapeHTML(p.name) : (showImage(p).photo ? 'Foto referensi model hardware: ' + escapeHTML(p.name) : 'Visual ilustratif model: ' + escapeHTML(p.name))}"
                class="svo-product-image" loading="lazy" width="600" height="400">
-          <span class="svo-illustration-chip">${showImage(p).photo ? 'Foto referensi model' : 'Ilustrasi model'}</span>
+          <span class="svo-illustration-chip">${showImage(p).servicePhoto ? 'Foto ilustrasi layanan' : (showImage(p).photo ? 'Foto referensi model' : 'Ilustrasi model')}</span>
         </div>
         <div class="svo-product-body">
           <span class="svo-product-brand">${escapeHTML(p.brand)} · ${escapeHTML((db.categories.find(c => c.id === p.category) || {}).name || p.category)}</span>
