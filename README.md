@@ -1,6 +1,37 @@
-# SEMEISTVO TECH — PC Store (Development Branch)
+# SEMEISTVO TECH — PC & Digital Studio (Development Branch)
 
-Professional PC storefront foundation with retained PC Builder.
+Service-first PC and digital studio with retained PC Builder and an optional backend catalogue.
+
+## Services-first transformation (23 November 2026)
+
+**New positioning:** SEMEISTVO TECH is a **technology service studio**, not primarily a retail hardware shop. The main website promotes:
+- Custom PC assembly and build consultations
+- PC / hardware selection, compatibility screening, and upgrade planning
+- OS / driver installation and lawful software setup
+- PC troubleshooting, maintenance, gaming & streaming configuration
+- Responsive website / landing page / business website / custom web application work
+- Additional productivity setup, networking discussions and website maintenance
+
+### Homepage architecture
+1. Service-focused hero and direct consultation CTA
+2. Six service cards with photography and per-service links to inquiry
+3. Four-step process (discovery, estimation, approval, handover)
+4. Dedicated website-development presentation and service CTA
+5. Preserved interactive PC Builder and sample build presets
+6. Additional services, hardware reference catalogue and previous cart
+7. Brand values and consultation form
+
+**Functional consultation**: selecting a service pre-fills the service type in the form. Name, contact, subject, optional budget/method and project details are prepared as a WhatsApp message. The browser opens WhatsApp; submission is **not** claimed as sent, paid, or accepted. Prices and scope are negotiated directly. No user data is sent to the website server by this form.
+
+**Existing systems preserved**: hidden music player (original YouTube reference, browser-restricted autoplay), 2026 component data (46 SKU fallback illustrations), PC Builder with save/load and compatibility screening, local cart, previous Node.js/SQLite admin, stock/order and Midtrans sandbox foundation. **Retail checkout remains secondary and should not be activated without commercial onboarding.**
+
+Images in service cards and the website development feature are illustrative, not examples of completed SEMEISTVO client projects. Permission and licensing of external photographs must be checked before commercial deployment.
+
+### Service-stage acceptance
+- Mobile menu and 360 / 390 / 430 / 768 / 1024 / 1440px browser checks.
+- `npm test` for inventory/media and `npm run test:e2e` for the new service brief flow.
+- Verify WhatsApp message text, mobile image fallback, focus states and unmodified original music media.
+- Manual review: copy, service coverage and actual business availability before launch.
 
 ## Final design implementation (November 2026)
 
