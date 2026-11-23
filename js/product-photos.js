@@ -97,15 +97,21 @@ const SVO_PHOTOS = {
 };
 
 function applySvoReferencePhotos(catalogue) {
-  if (!catalogue || !catalogue.components) return catalogue;
-  for (const products of Object.values(catalogue.components)) {
+  if (!catalogue?.components) return catalogue;
+  for (const [category, products] of Object.entries(catalogue.components)) {
     for (const product of products) {
       const ref = SVO_PHOTOS[product.id];
-      if (!ref) continue;
-      product.fallbackImage = product.image;
-      product.image = ref.url;
-      product.imageCreditUrl = ref.credit;
-      product.imageType = 'reference-photo';
+      const modelArtwork = 'images/catalog/' + product.id + '.svg';
+      product.categoryArtwork = 'images/products/' + category + '.svg';
+      product.fallbackImage = modelArtwork;
+      if (ref) {
+        product.image = ref.url;
+        product.imageCreditUrl = ref.credit;
+        product.imageType = 'reference-photo';
+      } else {
+        product.image = modelArtwork;
+        product.imageType = 'model-illustration';
+      }
     }
   }
   return catalogue;
@@ -116,18 +122,24 @@ if (typeof window !== 'undefined') {
 }
 if (typeof module !== 'undefined' && module.exports) module.exports = applySvoReferencePhotos;
 
-/* Local fallback if external reference photos fail or block hotlinking. */
+/* Never leave a broken thumbnail; try exact-model illustration and then
+   category artwork. The second fallback also covers unexpected missing files. */
 if (typeof document !== 'undefined') {
   document.addEventListener('error', (event) => {
     const img = event.target;
     if (!img || img.tagName !== 'IMG') return;
-    const fallback = img.getAttribute('data-svo-fallback');
-    if (!fallback || img.getAttribute('src') === fallback) return;
-    img.src = fallback;
-    img.alt = 'Ilustrasi kategori (foto referensi tidak tersedia)';
+    const firstFallback = img.getAttribute('data-svo-fallback');
+    if (!firstFallback) return;
+    const secondFallback = img.getAttribute('data-svo-final-fallback') || 'images/products/accessories.svg';
+    const current = img.getAttribute('src') || '';
+    const replacement = current === firstFallback ? secondFallback : firstFallback;
+    if (current === replacement || img.dataset.svoFallbackFailed === 'true') return;
+    if (current === firstFallback) img.dataset.svoFallbackFailed = 'true';
+    img.src = replacement;
+    img.alt = 'Ilustrasi produk — foto referensi tidak tersedia';
     const card = img.closest('.svo-product-media');
     const label = card?.querySelector('.svo-illustration-chip');
-    if (label) label.textContent = 'Ilustrasi hardware';
+    if (label) label.textContent = 'Ilustrasi model produk';
     card?.classList.replace('has-photo', 'has-illustration');
   }, true);
 }
