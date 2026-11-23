@@ -33,6 +33,9 @@ test('Pages public build includes all website assets and excludes server/databas
   assert.ok(read('dist/robots.txt').includes('Sitemap: ' + homepage + 'sitemap.xml'));
   const structuredData = JSON.parse(html.match(/<script type="application\/ld\+json">([^]*?)<\/script>/)[1]);
   assert.ok(structuredData['@graph'].some(item => item['@type'] === 'WebSite' && item.url === homepage));
+  const verificationFile = 'google7f49957bcb00f098.html';
+  assert.equal(read('dist/' + verificationFile).trimEnd(), 'google-site-verification: ' + verificationFile);
+  assert.ok(read('dist/_redirects').includes(`/${verificationFile} /${path.basename(verificationFile, '.html')} 200\n`));
 });
 test('D1 schema and catalogue seed initialize valid SQLite without fictitious stock', () => {
   const db = new Database(':memory:');

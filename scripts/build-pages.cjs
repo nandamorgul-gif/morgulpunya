@@ -9,7 +9,8 @@ const path = require('node:path');
 const root = path.resolve(__dirname, '..');
 const output = path.join(root, 'dist');
 const folders = ['css', 'js', 'images'];
-const files = ['index.html', 'site.webmanifest', 'robots.txt', 'sitemap.xml'];
+const verificationFile = 'google7f49957bcb00f098.html';
+const files = ['index.html', 'site.webmanifest', 'robots.txt', 'sitemap.xml', verificationFile];
 fs.rmSync(output, { recursive: true, force: true });
 fs.mkdirSync(output, { recursive: true });
 for (const folder of folders) {
@@ -18,7 +19,8 @@ for (const folder of folders) {
 for (const file of files) {
   fs.copyFileSync(path.join(root, file), path.join(output, file));
 }
-fs.writeFileSync(path.join(output, '_redirects'), ''); // No admin redirects; removed public admin page gets normal 404.
+// Serve the exact verification URL with 200 instead of redirecting to the extensionless URL.
+fs.writeFileSync(path.join(output, '_redirects'), `/${verificationFile} /${path.basename(verificationFile, '.html')} 200\n`);
 fs.writeFileSync(path.join(output, '_routes.json'), JSON.stringify({version:1,include:['/api/*'],exclude:[]},null,2)+'\n');
 fs.writeFileSync(path.join(output, '_headers'), [
   '/*',
