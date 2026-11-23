@@ -69,13 +69,17 @@ document.addEventListener('DOMContentLoaded', () => {
     els.total.textContent = list.length + ' komponen ditemukan';
     grid.innerHTML = list.length ? list.map(p => `
       <article class="svo-product">
-        <img src="${escapeHTML(p.image)}" alt="${escapeHTML(p.name)}" class="svo-product-image" loading="lazy">
+        <div class="svo-product-media">
+          <img src="${escapeHTML(p.image)}" alt="Ilustrasi kategori ${escapeHTML(p.category)}" class="svo-product-image" loading="lazy" width="600" height="400">
+          <span class="svo-illustration-chip">Ilustrasi hardware</span>
+        </div>
         <div class="svo-product-body">
-          <span class="svo-product-brand">${escapeHTML(p.brand)}</span>
+          <span class="svo-product-brand">${escapeHTML(p.brand)} · ${escapeHTML((db.categories.find(c => c.id === p.category) || {}).name || p.category)}</span>
           <h3 class="svo-product-name">${escapeHTML(p.name)}</h3>
           <p class="svo-product-description">${escapeHTML(p.description)}</p>
-          <p class="svo-product-price">${formatPrice(p.price)}</p>
-          <button class="svo-store-btn" type="button" data-svo-add="${escapeHTML(p.id)}" ${serverCatalogAvailable && p.stock < 1 ? "disabled" : ""}>${serverCatalogAvailable && p.stock < 1 ? "Stok Habis" : "+ Tambah ke Keranjang"}</button>
+          <span class="svo-stock-status">${serverCatalogAvailable ? (p.stock > 0 ? 'Stok tercatat: ' + p.stock : 'Stok belum tersedia') : 'Tanyakan ketersediaan'}</span>
+          <p class="svo-product-price"><span class="svo-price-caption">${serverCatalogAvailable ? 'Harga katalog (konfirmasi admin)' : 'Harga simulasi / estimasi'}</span><br>${formatPrice(p.price)}</p>
+          <button class="svo-store-btn" type="button" data-svo-add="${escapeHTML(p.id)}" ${serverCatalogAvailable && p.stock < 1 ? 'disabled' : ''}>${serverCatalogAvailable && p.stock < 1 ? 'Stok Belum Tersedia' : '+ Tambah ke Keranjang'}</button>
         </div>
       </article>`).join('') : '<p class="svo-cart-empty">Tidak ada produk yang sesuai dengan pencarian.</p>';
   };
@@ -101,6 +105,8 @@ document.addEventListener('DOMContentLoaded', () => {
   };
   const setQty = (id, qty) => {
     if (!productMap.has(id)) return;
+    const product = productMap.get(id);
+    if (serverCatalogAvailable && qty > 0 && product.stock < qty) return;
     const n = Math.max(0, Math.min(20, qty));
     if (!n) delete cart[id]; else cart[id] = n;
     persist();
@@ -224,7 +230,13 @@ document.addEventListener('DOMContentLoaded', () => {
     serverCheckoutEnabled = data.checkout_enabled === true;
     products = data.products.filter(p => p && p.id && Number.isSafeInteger(p.price) && Number.isInteger(p.stock) && p.stock >= 0);
     productMap = new Map(products.map(p => [p.id, p]));
-    for (const id of Object.keys(cart)) if (!productMap.has(id)) delete cart[id];
+    for (const id of Object.keys(cart)) {
+      if (!productMap.has(id)) delete cart[id];
+      else if (cart[id] > productMap.get(id).stock) {
+        if (productMap.get(id).stock === 0) delete cart[id];
+        else cart[id] = productMap.get(id).stock;
+      }
+    }
     persist(); renderProducts(); renderCart();
     const note = document.querySelector('.svo-store-note');
     if (note) note.textContent = serverCheckoutEnabled ?
