@@ -121,7 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const isSelected = selectedPart && selectedPart.id === item.id;
       return `
         <div class="component-card ${isSelected ? 'selected' : ''}">
-          <img src="${item.image}" data-svo-fallback="${item.fallbackImage || ('images/products/' + state.selectedCategory + '.svg')}" alt="Foto referensi atau ilustrasi komponen ${item.name}" class="component-img" loading="lazy">
+          <img src="${item.image}" data-svo-fallback="${item.fallbackImage || ('images/products/' + state.selectedCategory + '.svg')}" data-svo-final-fallback="${item.categoryArtwork || ('images/products/' + state.selectedCategory + '.svg')}" alt="Foto referensi atau ilustrasi komponen ${item.name}" class="component-img" loading="lazy">
           <div class="component-info">
             <h4>${item.name}</h4>
             <p>${item.description}</p>
