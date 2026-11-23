@@ -2,6 +2,16 @@
 
 Professional PC storefront foundation with retained PC Builder.
 
+## Music + product imagery restoration (November 2026)
+- The original music track reference, **"I Miss You Every Brand New Day"** (YouTube video ID `8_y6w1V9PXs`), is back via a floating mini player.
+- Play, pause, minimize, and open-on-YouTube controls; no forced auto-unmute or unsolicited autoplay. Browser/YouTube restrictions can affect playback.
+- 22 researched **model/family-matched reference photos** for key 2026 CPU, GPU, motherboard, RAM, PSU, SSD, chassis and cooler products, defined in `js/product-photos.js`.
+- Four PC build concept images and the homepage hero use actual PC photography. They are labeled **concept/reference** and are **not photographs of the exact preset configuration**.
+- The catalogue displays `Foto referensi model` badges and source links. If a third-party image fails to load, the original local category illustration is displayed instead.
+- These are **temporary external imagery references, not a commercial photo license**. Obtain image-owner/manufacturer/supplier permission or substitute owned, licensed product images before any public commercial deployment.
+- On existing databases, `npm run catalog:sync` is a non-mutating preview; `npm run catalog:sync -- --apply` updates product image URLs and curated catalogue entries, preserving admin-managed matching-product prices and stock.
+- The client can show reference photos even if an existing SQLite database still has the old local category images, while server catalogue remains authoritative for prices and stock.
+
 ## 2026 visual + catalogue refresh (23 November 2026)
 - Curated 2026 sample component catalogue with **46 entries in 10 categories**, including CPUs, GPUs, motherboards, cases, coolers and service packages.
 - 2026 highlights: Ryzen 7 9850X3D, Ryzen 9 9950X3D, Intel Core Ultra 250K/270K Plus, GeForce RTX 5060 Ti 16GB / RTX 5070 Ti / RTX 5080 / RTX 5090, Radeon RX 9060 XT / RX 9070 XT.
