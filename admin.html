@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Admin — SEMEISTVOTECH</title>
+<link rel="icon" href="images/logo.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+<header class="bar"><a href="/" class="brand"><img src="images/logo.svg" width="36" height="36" alt=""> SEMEISTVOTECH <span>ADMIN</span></a><a href="/">Lihat Toko ↗</a></header>
+<main>
+  <section class="signin" id="signin">
+    <p class="eyebrow">AKSES TERBATAS</p><h1>Login Administrator</h1>
+    <p>Kelola harga, stok, dan gambar produk pada Cloudflare D1.</p>
+    <form id="loginForm">
+      <label for="username">Username</label><input id="username" name="username" autocomplete="username" required maxlength="200">
+      <label for="password">Password</label><input id="password" name="password" type="password" autocomplete="current-password" required>
+      <button type="submit" id="loginBtn">Masuk Admin</button>
+    </form>
+    <p class="hint">Kredensial dibuat melalui Secrets di Cloudflare Pages, bukan disimpan di HTML atau GitHub.</p>
+  </section>
+  <section class="dashboard" id="dashboard" hidden>
+    <div class="welcome"><div><p class="eyebrow">KONTROL PRODUK</p><h1>Dashboard Admin</h1><p id="loggedAs"></p></div><button type="button" id="logoutBtn" class="secondary">Keluar</button></div>
+    <div class="summary"><div><b id="totalProducts">0</b><small>Produk dalam katalog</small></div><div><b id="updatedProducts">0</b><small>Harga D1 diperbarui</small></div><div><b id="lastUpdated">—</b><small>Pembaruan terakhir</small></div></div>
+    <div class="notice"><strong>Informasi harga 2026</strong><p>Harga bawaan adalah estimasi, bukan harga pasar live. Simpan perubahan di bawah atau konfigurasi PRICE_FEED_URL dan sinkronisasi terjadwal untuk harga otomatis.</p></div>
+    <div class="filters"><input id="productSearch" type="search" placeholder="Cari komponen, merek, ID..."><button id="refreshBtn" type="button" class="secondary">Muat ulang</button></div>
+    <div id="productList" class="products"></div>
+  </section>
+  <p id="message" role="status" aria-live="polite"></p>
+</main>
+<script src="js/data.js"></script>
+<script src="js/admin.js" defer></script>
+</body></html>
