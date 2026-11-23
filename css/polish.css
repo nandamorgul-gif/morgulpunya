@@ -509,4 +509,4 @@ img.svo-image-unavailable,
 
 /* Access admin without crowding the small-screen header. */
 .header .nav-links .svo-admin-nav {display:none}
-@media(max-width:1150px){.header-actions .svo-admin-entry{display:none}.header .nav-links .svo-admin-nav{display:flex}}
+@media(max-width:1024px){.header-actions .svo-admin-entry{display:none}.header .nav-links .svo-admin-nav{display:flex}}
