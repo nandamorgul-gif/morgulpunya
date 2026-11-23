@@ -742,13 +742,35 @@ document.addEventListener('DOMContentLoaded', () => {
       checkoutOrderForm.addEventListener('submit', handleCheckoutOrderSubmit);
     }
 
-    // Contact Form submission handler
+    // Consultation submissions are prepared for WhatsApp, not falsely marked sent.
     const contactForm = document.getElementById('contactForm');
     if (contactForm) {
-      contactForm.addEventListener('submit', (e) => {
+      contactForm.addEventListener('submit', e => {
         e.preventDefault();
-        alert('Terima kasih! Pesan Anda telah terkirim. Tim konsultasi SEMEISTVO TECH akan menghubungi Anda secepatnya.');
-        contactForm.reset();
+        if (!contactForm.reportValidity()) return;
+        const name = document.getElementById('contactName').value.trim();
+        const contact = document.getElementById('contactEmail').value.trim();
+        const subject = document.getElementById('contactSubject').value.trim();
+        const message = document.getElementById('contactMessage').value.trim();
+        if (!name || !contact || !subject || !message) return;
+        const content = [
+          'Halo SEMEISTVO TECH, saya ingin konsultasi hardware.',
+          'Nama: ' + name, 'Kontak: ' + contact, 'Topik: ' + subject,
+          'Kebutuhan: ' + message, 'Mohon konfirmasi ketersediaan tim.'
+        ].join('\n');
+        const url = 'https://wa.me/6288291967659?text=' + encodeURIComponent(content);
+        window.open(url, '_blank', 'noopener,noreferrer');
+        let note = document.getElementById('svoContactStatus');
+        if (!note) {
+          note = document.createElement('p');
+          note.id = 'svoContactStatus'; note.setAttribute('role', 'status');
+          contactForm.appendChild(note);
+        }
+        note.replaceChildren(document.createTextNode('Permintaan sudah disiapkan. Jika WhatsApp tidak terbuka, '));
+        const link = document.createElement('a');
+        link.href = url; link.target = '_blank'; link.rel = 'noopener noreferrer';
+        link.textContent = 'buka pesan konsultasi di sini';
+        note.appendChild(link);
       });
     }
 
@@ -761,35 +783,28 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
 
-    // Mobile Menu Toggle logic
+    // Accessible responsive menu, closed on Escape, navigation, or outside click.
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-    const navLinks = document.querySelector('.nav-links');
-
+    const navLinks = document.getElementById('svoPrimaryNav');
+    const setMenu = open => {
+      if (!mobileMenuBtn || !navLinks) return;
+      navLinks.classList.toggle('open', open);
+      mobileMenuBtn.setAttribute('aria-expanded', String(open));
+      mobileMenuBtn.setAttribute('aria-label', open ? 'Tutup menu navigasi' : 'Buka menu navigasi');
+      const icon = mobileMenuBtn.querySelector('i');
+      if (icon) {
+        icon.className = open ? 'feather feather-x' : 'feather feather-menu';
+        if (window.feather) feather.replace();
+      }
+    };
     if (mobileMenuBtn && navLinks) {
-      mobileMenuBtn.addEventListener('click', () => {
-        navLinks.classList.toggle('open');
-        const icon = mobileMenuBtn.querySelector('i');
-        if (icon) {
-          if (navLinks.classList.contains('open')) {
-            icon.className = 'feather feather-x';
-          } else {
-            icon.className = 'feather feather-menu';
-          }
-          if (window.feather) feather.replace();
-        }
+      mobileMenuBtn.addEventListener('click', () => setMenu(!navLinks.classList.contains('open')));
+      navLinks.querySelectorAll('a').forEach(link => link.addEventListener('click', () => setMenu(false)));
+      document.addEventListener('keydown', e => { if (e.key === 'Escape') setMenu(false); });
+      document.addEventListener('click', e => {
+        if (!navLinks.contains(e.target) && !mobileMenuBtn.contains(e.target)) setMenu(false);
       });
-
-      // Close mobile menu when clicking any nav link
-      navLinks.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
-          navLinks.classList.remove('open');
-          const icon = mobileMenuBtn.querySelector('i');
-          if (icon) {
-            icon.className = 'feather feather-menu';
-            if (window.feather) feather.replace();
-          }
-        });
-      });
+      window.addEventListener('resize', () => { if (window.innerWidth > 1024) setMenu(false); });
     }
 
     // Header scroll background change
