@@ -80,7 +80,7 @@ const SVO_PHOTOS = {
   },
   "cpu-r7-9700x": {
     "url": "https://i.ebayimg.com/images/g/10kAAeSwIOloDZSt/s-l1600.jpg",
-    "credit": "https://www.amd.com/en/products/processors/desktops/ryzen/9000-series/amd-ryzen-7-9700x.html"
+    "credit": "https://tiendamia.com/ar/e-product?ebay=v1%7C177046434787%7C0"
   },
   "cpu-ultra9-285k": {
     "url": "https://bestcomputers.mn/storage/products/19e741712d84b32.png",
