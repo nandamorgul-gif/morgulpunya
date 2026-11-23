@@ -156,3 +156,19 @@ img[hidden] { display: none !important; }
 @media(max-width:900px){.svo-gta-panel{grid-template-columns:1fr}.svo-gta-visual{max-height:400px}.svo-section-top,.svo-support-head{grid-template-columns:1fr;gap:.8rem}}
 @media(max-width:700px){.svo-support-grid{grid-template-columns:1fr}.svo-gta-visual,.svo-gta-visual img{min-height:240px}.svo-section-top h2,.svo-support-head h2{font-size:1.85rem}.svo-support-card{padding:1.25rem}}
 @media(max-width:640px){.component-card.image-unavailable{grid-template-columns:48px 1fr}.component-card.image-unavailable .component-action{grid-column:span 2}.product-image-fallback{width:48px;min-height:48px}.product-image-fallback svg{width:22px;height:22px}}
+
+/* Fallback visual for hero/preset when external image hosts block hotlinking */
+.hero-preview-card .preview-image[hidden] {display:none!important}
+.hero-preview-card:has(> .preview-image[hidden])::before{
+  content:"PC GAMING";display:grid;place-items:center;height:220px;
+  margin-bottom:1.25rem;border-radius:14px;font:900 clamp(2rem,4vw,3.4rem)/1 var(--font-heading);
+  letter-spacing:.1em;color:#d9c4ff;text-shadow:0 0 28px #7246be;
+  background:radial-gradient(ellipse at 50% 45%,#443071 0%,#181326 70%);
+  border:1px solid #5a427b;
+}
+.preset-card .preset-image[hidden] {display:none!important}
+.preset-card:has(> .preset-image[hidden])::before{
+  content:"FOTO BELUM TERSEDIA";min-height:155px;display:grid;place-items:center;
+  padding:1.25rem;font-size:.8rem;letter-spacing:.08em;color:#b9a2d8;
+  background:linear-gradient(125deg,#1a1831,#352354);border-radius:12px;
+}
