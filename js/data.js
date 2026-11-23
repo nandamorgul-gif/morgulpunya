@@ -711,7 +711,8 @@ const PC_DATA = {
       "totalPrice": 22140000,
       "estimatedWatts": 315,
       "recommendedPsu": "650W (periksa headroom)",
-      "serviceNote": "Paket simulasi bahan diskusi, bukan stok unit siap kirim. Biaya jasa perakitan, instalasi, lisensi dan pengiriman diperkirakan setelah konsultasi."
+      "serviceNote": "Paket simulasi bahan diskusi, bukan stok unit siap kirim. Biaya jasa perakitan, instalasi, lisensi dan pengiriman diperkirakan setelah konsultasi.",
+      "imageCaption": "Foto ilustrasi referensi. Warna dan komponen rakitan akhir dapat berbeda."
     },
     {
       "id": "amd-streamer-1440p",
@@ -732,7 +733,8 @@ const PC_DATA = {
       "totalPrice": 40940000,
       "estimatedWatts": 492,
       "recommendedPsu": "850W (periksa headroom)",
-      "serviceNote": "Paket simulasi bahan diskusi, bukan stok unit siap kirim. Biaya jasa perakitan, instalasi, lisensi dan pengiriman diperkirakan setelah konsultasi."
+      "serviceNote": "Paket simulasi bahan diskusi, bukan stok unit siap kirim. Biaya jasa perakitan, instalasi, lisensi dan pengiriman diperkirakan setelah konsultasi.",
+      "imageCaption": "Foto ilustrasi referensi. Warna dan komponen rakitan akhir dapat berbeda."
     },
     {
       "id": "creator-4k-beast",
@@ -753,7 +755,8 @@ const PC_DATA = {
       "totalPrice": 63600000,
       "estimatedWatts": 614,
       "recommendedPsu": "1000W (periksa headroom)",
-      "serviceNote": "Paket simulasi bahan diskusi, bukan stok unit siap kirim. Biaya jasa perakitan, instalasi, lisensi dan pengiriman diperkirakan setelah konsultasi."
+      "serviceNote": "Paket simulasi bahan diskusi, bukan stok unit siap kirim. Biaya jasa perakitan, instalasi, lisensi dan pengiriman diperkirakan setelah konsultasi.",
+      "imageCaption": "Foto ilustrasi referensi. Warna dan komponen rakitan akhir dapat berbeda."
     },
     {
       "id": "intel-creator-2026",
@@ -774,14 +777,15 @@ const PC_DATA = {
       "totalPrice": 32540000,
       "estimatedWatts": 447,
       "recommendedPsu": "850W (periksa headroom)",
-      "serviceNote": "Paket simulasi bahan diskusi, bukan stok unit siap kirim. Biaya jasa perakitan, instalasi, lisensi dan pengiriman diperkirakan setelah konsultasi."
+      "serviceNote": "Paket simulasi bahan diskusi, bukan stok unit siap kirim. Biaya jasa perakitan, instalasi, lisensi dan pengiriman diperkirakan setelah konsultasi.",
+      "imageCaption": "Foto ilustrasi referensi. Warna dan komponen rakitan akhir dapat berbeda."
     },
     {
       "id": "compact-white-itx",
       "title": "SVO COMPACT WHITE",
       "badge": "Custom Mini-ITX White",
       "tagline": "Ryzen 7 9700X · RTX 5060 Ti 16GB · B850I Mini-ITX · SFX 850W. Referensi rakitan compact, komponen final diverifikasi sebelum jasa perakitan.",
-      "image": "images/catalog/case-ch160-white.svg",
+      "image": "https://cdn.cclonline.com/cdn-cgi/image/width%3D2000/images/shopblocks/CH160-WH-White-01.png",
       "components": {
         "cpu": "cpu-r7-9700x",
         "gpu": "gpu-rtx5060ti16",
@@ -795,7 +799,9 @@ const PC_DATA = {
       "totalPrice": 27440000,
       "estimatedWatts": 306,
       "recommendedPsu": "850W SFX (cek konektor dan dimensi kartu grafis)",
-      "serviceNote": "Paket simulasi bahan diskusi, bukan stok unit siap kirim. Biaya jasa perakitan, instalasi, lisensi dan pengiriman diperkirakan setelah konsultasi."
+      "serviceNote": "Paket simulasi bahan diskusi, bukan stok unit siap kirim. Biaya jasa perakitan, instalasi, lisensi dan pengiriman diperkirakan setelah konsultasi.",
+      "imageCaption": "Foto referensi casing DeepCool CH160 WH (bukan foto PC rakitan akhir).",
+      "imageCreditUrl": "https://www.cclonline.com/r-ch160-whngi0-g-1-deepcool-ch160-wh-itx-case-white-449642/"
     }
   ]
 };
