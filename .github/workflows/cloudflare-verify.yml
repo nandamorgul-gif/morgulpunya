@@ -33,6 +33,10 @@ jobs:
         run: npm run build:pages
       - name: Compile Cloudflare Pages Functions
         run: npx wrangler pages functions build --outdir=./.cloudflare-compiled
+      - name: Install Chromium for responsive smoke tests
+        run: npx playwright install --with-deps chromium
+      - name: Verify images, shopping cart, mobile navigation, and removed admin
+        run: npm run test:e2e
       - name: Deny private file publishing
         run: |
           set -euo pipefail
