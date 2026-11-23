@@ -117,7 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
     els.total.textContent = list.length + ' komponen ditemukan';
     grid.innerHTML = list.length ? list.map(p => `
       <article class="svo-product" data-svo-category="${escapeHTML(p.category)}">
-        <div class="svo-product-media ${showImage(p).photo ? 'has-photo' : 'has-illustration'}">
+        <div class="svo-product-media ${showImage(p).servicePhoto ? 'has-service-photo' : (showImage(p).photo ? 'has-photo' : 'has-illustration')}">
           <img src="${escapeHTML(showImage(p).image)}"
                data-svo-fallback="${escapeHTML(showImage(p).fallback)}" data-svo-final-fallback="${escapeHTML(showImage(p).finalFallback)}"
                alt="${showImage(p).servicePhoto ? 'Foto ilustrasi layanan: ' + escapeHTML(p.name) : (showImage(p).photo ? 'Foto referensi model hardware: ' + escapeHTML(p.name) : 'Visual ilustratif model: ' + escapeHTML(p.name))}"
