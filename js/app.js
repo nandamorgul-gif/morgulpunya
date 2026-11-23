@@ -1,5 +1,5 @@
 /**
- * Morgulzxz Gaming Performance - App Logic & Interactivity
+ * SEMEISTVO TECH - App Logic & Interactivity
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -400,7 +400,7 @@ document.addEventListener('DOMContentLoaded', () => {
       </svg>`,
       accountNumber: '088291967659',
       accountNumberFormatted: 'Scan QR Code (QRIS)',
-      accountName: 'MORGULZXZ GAMING PERFORMANCE',
+      accountName: 'SEMEISTVO TECH',
       color: '#ed1c24',
       notes: 'Scan QRIS · GoPay · OVO · Dana · ShopeePay'
     },
@@ -410,9 +410,9 @@ document.addEventListener('DOMContentLoaded', () => {
         <rect width="76" height="44" rx="6" fill="#03ac0e"/>
         <text x="38" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-weight="900" font-size="11" fill="#ffffff" letter-spacing="0.3">TOKOPEDIA</text>
       </svg>`,
-      accountNumber: 'Official Store Tokopedia Morgulzxz',
-      accountNumberFormatted: 'Morgulzxz Gaming (Official)',
-      accountName: 'Morgulzxz Gaming Performance',
+      accountNumber: 'Official Store Tokopedia SEMEISTVO',
+      accountNumberFormatted: 'SEMEISTVO Gaming (Official)',
+      accountName: 'SEMEISTVO TECH',
       color: '#03ac0e',
       notes: 'Cicilan 0% s/d 24 Bulan · Kredit & Debit'
     },
@@ -422,9 +422,9 @@ document.addEventListener('DOMContentLoaded', () => {
         <rect width="76" height="44" rx="6" fill="#ee4d2d"/>
         <text x="38" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-weight="900" font-size="13" fill="#ffffff" letter-spacing="0.5">SHOPEE</text>
       </svg>`,
-      accountNumber: 'Official Store Shopee Morgulzxz',
-      accountNumberFormatted: 'Morgulzxz Gaming (Official)',
-      accountName: 'Morgulzxz Gaming Performance',
+      accountNumber: 'Official Store Shopee SEMEISTVO',
+      accountNumberFormatted: 'SEMEISTVO Gaming (Official)',
+      accountName: 'SEMEISTVO TECH',
       color: '#ee4d2d',
       notes: 'SPayLater · ShopeePay · Kredit & Debit'
     }
@@ -659,7 +659,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const grandTotal = totalPrice + ongkir + packing;
 
-    let msg = `🛒 *FORM PEMESANAN PC RAKITAN - MORGULZXZ GAMING*\n`;
+    let msg = `🛒 *FORM PEMESANAN PC RAKITAN - SEMEISTVO GAMING*\n`;
     msg += `=========================================\n\n`;
     msg += `👤 *DATA PEMESAN:*\n`;
     msg += `• *Nama*: ${name}\n`;
@@ -999,7 +999,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (contactForm) {
       contactForm.addEventListener('submit', (e) => {
         e.preventDefault();
-        alert('Terima kasih! Pesan Anda telah terkirim. Tim konsultasi Morgulzxz Gaming Performance akan menghubungi Anda secepatnya.');
+        alert('Terima kasih! Pesan Anda telah terkirim. Tim konsultasi SEMEISTVO TECH akan menghubungi Anda secepatnya.');
         contactForm.reset();
       });
     }
