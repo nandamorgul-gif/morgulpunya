@@ -24,6 +24,7 @@
   <!-- Style CSS -->
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/store.css">
+  <link rel="stylesheet" href="css/music.css">
 </head>
 
 <body>
@@ -502,6 +503,27 @@
     <span>Chat WhatsApp</span>
   </a>
 
+  <!-- Music player restored from the original site.
+       Video/audio streamed by YouTube; playback starts only after user clicks Play. -->
+  <aside id="svoMusicPlayer" class="svo-music-player is-collapsed" aria-label="Pemutar musik SEMEISTVO TECH">
+    <div class="svo-music-head">
+      <button type="button" id="svoMusicCollapse" class="svo-music-disc"
+        aria-expanded="false" aria-controls="svoMusicContent" aria-label="Buka pemutar musik" title="Kecilkan atau buka pemutar musik">♫</button>
+      <div class="svo-music-info">
+        <strong class="svo-music-name">I Miss You Every Brand New Day</strong>
+        <span id="svoMusicStatus" class="svo-music-status" role="status">Siap diputar</span>
+      </div>
+      <button type="button" id="svoMusicPlay" class="svo-music-control" aria-label="Putar musik" title="Putar musik">▶</button>
+      <button type="button" id="svoMusicPause" class="svo-music-control" aria-label="Jeda musik" title="Jeda musik" disabled>Ⅱ</button>
+      <a class="svo-music-link" href="https://www.youtube.com/watch?v=8_y6w1V9PXs"
+        target="_blank" rel="noopener noreferrer" aria-label="Buka lagu di YouTube" title="Buka di YouTube">↗</a>
+    </div>
+    <div id="svoMusicContent" class="svo-music-content" hidden>
+      <div id="svoMusicVideoSlot" aria-label="Pemutar video YouTube"></div>
+      <p class="svo-music-note">Diputar melalui YouTube. Jika video tidak tersedia atau browser menahan autoplay, gunakan kontrol video atau buka YouTube.</p>
+    </div>
+  </aside>
+
   <!-- New storefront cart, separate from legacy PC configurator -->
   <div class="svo-cart-layer" id="svoCartLayer" aria-hidden="true">
     <div class="svo-cart-overlay" id="svoCartOverlay"></div>
@@ -541,6 +563,7 @@
   <script src="js/data.js"></script>
   <script src="js/app.js"></script>
   <script src="js/store.js"></script>
+  <script src="js/music.js"></script>
   <script>
     feather.replace();
   </script>
