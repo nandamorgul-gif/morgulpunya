@@ -297,6 +297,16 @@ if (typeof document !== 'undefined') {
       '.component-card, .svo-cart-item, .svo-category-tile'
     );
     if (card) card.classList.add('svo-card-without-photo');
+    // Catalog cards with broken external photos are excluded from the public
+    // product grid. PC Builder cards keep usable text and selection controls.
+    if (card?.classList.contains('svo-product')) {
+      const grid = card.closest('#svoProductGrid');
+      if (grid) {
+        const visible = grid.querySelectorAll('.svo-product:not(.svo-card-without-photo)').length;
+        const count = document.getElementById('svoProductCount');
+        if (count) count.textContent = visible + ' produk bergambar tersedia untuk referensi';
+      }
+    }
     // A source link should not imply the customer is seeing a photo that failed.
     const credit = card?.querySelector('.svo-photo-credit');
     if (credit) credit.hidden = true;
