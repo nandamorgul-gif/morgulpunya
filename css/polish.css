@@ -506,3 +506,7 @@ img.svo-image-unavailable,
 @media(max-width:390px){
  .header-actions .svo-admin-entry{font-size:.65rem;padding:.39rem .43rem}
 }
+
+/* Access admin without crowding the small-screen header. */
+.header .nav-links .svo-admin-nav {display:none}
+@media(max-width:1150px){.header-actions .svo-admin-entry{display:none}.header .nav-links .svo-admin-nav{display:flex}}
