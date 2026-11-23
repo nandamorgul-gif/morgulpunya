@@ -72,6 +72,7 @@ function openStore(dataDir, options = {}) {
 
   if (!options.skipSeed) {
   const seed = require('../js/data.js');
+  require('../js/product-photos.js')(seed);
   const initialStock = Math.max(0, Math.min(3, Number(process.env.SEED_DEMO_STOCK || '0') || 0));
   const insert = db.prepare(`INSERT OR IGNORE INTO products (id, category, name, brand, description, image, price, stock)
     VALUES (@id, @category, @name, @brand, @description, @image, @price, @stock)`);
