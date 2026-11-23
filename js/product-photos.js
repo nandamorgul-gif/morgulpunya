@@ -99,3 +99,19 @@ if (typeof window !== 'undefined') {
   applySvoReferencePhotos(window.PC_DATA);
 }
 if (typeof module !== 'undefined' && module.exports) module.exports = applySvoReferencePhotos;
+
+/* Local fallback if external reference photos fail or block hotlinking. */
+if (typeof document !== 'undefined') {
+  document.addEventListener('error', (event) => {
+    const img = event.target;
+    if (!img || img.tagName !== 'IMG') return;
+    const fallback = img.getAttribute('data-svo-fallback');
+    if (!fallback || img.getAttribute('src') === fallback) return;
+    img.src = fallback;
+    img.alt = 'Ilustrasi kategori (foto referensi tidak tersedia)';
+    const card = img.closest('.svo-product-media');
+    const label = card?.querySelector('.svo-illustration-chip');
+    if (label) label.textContent = 'Ilustrasi hardware';
+    card?.classList.replace('has-photo', 'has-illustration');
+  }, true);
+}
