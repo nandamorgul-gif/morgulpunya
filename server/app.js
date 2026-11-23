@@ -294,6 +294,7 @@ const staticOptions = { dotfiles: 'deny', fallthrough: false, setHeaders(res) {
 for (const dir of ['css', 'js', 'images']) {
   app.use('/' + dir, express.static(path.join(publicRoot, dir), staticOptions));
 }
+app.get('/site.webmanifest', (req, res) => res.type('application/manifest+json').sendFile(path.join(publicRoot, 'site.webmanifest')));
 app.get('/', (req, res) => res.sendFile(path.join(publicRoot, 'index.html')));
 app.get('/index.html', (req, res) => res.sendFile(path.join(publicRoot, 'index.html')));
 app.get('/admin', (req, res) => res.sendFile(path.join(publicRoot, 'admin.html')));
