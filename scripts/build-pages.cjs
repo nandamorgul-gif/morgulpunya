@@ -9,7 +9,7 @@ const path = require('node:path');
 const root = path.resolve(__dirname, '..');
 const output = path.join(root, 'dist');
 const folders = ['css', 'js', 'images'];
-const files = ['index.html', 'admin.html', 'site.webmanifest'];
+const files = ['index.html', 'site.webmanifest'];
 fs.rmSync(output, { recursive: true, force: true });
 fs.mkdirSync(output, { recursive: true });
 for (const folder of folders) {
@@ -18,7 +18,7 @@ for (const folder of folders) {
 for (const file of files) {
   fs.copyFileSync(path.join(root, file), path.join(output, file));
 }
-fs.writeFileSync(path.join(output, '_redirects'), '/admin /admin.html 200\n');
+fs.writeFileSync(path.join(output, '_redirects'), '/admin /404.html 404\n/admin.html /404.html 404\n');
 fs.writeFileSync(path.join(output, '_routes.json'), JSON.stringify({version:1,include:['/api/*'],exclude:[]},null,2)+'\n');
 fs.writeFileSync(path.join(output, '_headers'), [
   '/*',
@@ -26,10 +26,6 @@ fs.writeFileSync(path.join(output, '_headers'), [
   '  Referrer-Policy: strict-origin-when-cross-origin',
   '  X-Frame-Options: DENY',
   '  Permissions-Policy: camera=(), microphone=(), geolocation=()',
-  '/admin.html',
-  '  Cache-Control: no-store',
-  '/admin',
-  '  Cache-Control: no-store',
   ''
 ].join('\n'));
 fs.writeFileSync(path.join(output, '404.html'),
@@ -38,5 +34,7 @@ const all = fs.readdirSync(output);
 if (all.some(entry => ['server', 'runtime-data', '.env', 'package.json', 'node_modules', 'functions', 'db'].includes(entry))) {
   throw Error('Refusing to publish private server assets');
 }
+if (fs.existsSync(path.join(output, 'admin.html'))) throw Error('Public admin login must not be published');
+if (!fs.existsSync(path.join(output, 'images/gta-roleplay-scene.svg'))) throw Error('Missing local GTA Roleplay artwork');
 if (!fs.existsSync(path.join(output, 'images/favicon.svg'))) throw Error('Missing public favicon');
 console.log('Safe Cloudflare Pages bundle created in dist/');
