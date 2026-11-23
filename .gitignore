@@ -11,3 +11,8 @@ runtime-data/
 Thumbs.db
 *.log
 coverage/
+
+# Local browser regression artifacts
+runtime-data-e2e/
+test-results/
+playwright-report/
