@@ -6,12 +6,15 @@ test('missing hardware image disappears but catalogue product and cart remain us
   await page.locator('#svoProductSearch').fill('5060 Ti');
   const card = page.locator('.svo-product').first();
   await expect(card).toBeVisible();
-  const image = card.locator('img.svo-product-image');
-  await image.evaluate(img => { img.src = '/images/missing-product-photo.jpg'; });
-  await expect(card.locator('.svo-product-media')).toBeHidden();
-  await expect(card.locator('.svo-product-name')).toBeVisible();
-  await expect(card.locator('a.svo-photo-credit')).toBeHidden();
   await card.locator('[data-svo-add]').click();
+  await expect(page.locator('#svoShopCartCount')).toHaveText('1');
+  const image = card.locator('img.svo-product-image');
+  await image.evaluate(img => {
+    img.dataset.svoTriedAlternate = 'yes';
+    img.src = '/images/missing-product-photo.jpg';
+  });
+  await expect(card).toHaveClass(/svo-card-without-photo/);
+  await expect(card).toBeHidden();
   await expect(page.locator('#svoShopCartCount')).toHaveText('1');
 });
 
@@ -47,4 +50,14 @@ test('original music and bank logo fallback stay unchanged after media fixes', a
   await expect(page.locator('.svo-payment-logo-fallback')).toHaveCount(5);
   await expect(page.locator('#svoShopCartButton')).toBeVisible();
   await expect(page.locator('#svoPresetTitle')).toBeVisible();
+});
+
+test('admin access and local roleplay artwork are present in the deployed site', async ({page}) => {
+  await page.goto('/', {waitUntil:'domcontentloaded'});
+  await expect(page.locator('.svo-admin-entry')).toHaveAttribute('href','/admin');
+  await expect(page.locator('.svo-roleplay-media img')).toHaveAttribute('src','images/gta-roleplay-scene.svg');
+  await expect(page.locator('.svo-roleplay-media img')).toHaveJSProperty('complete',true);
+  await page.goto('/admin.html', {waitUntil:'domcontentloaded'});
+  await expect(page.locator('#loginForm input[name="email"]')).toBeVisible();
+  await expect(page.locator('#loginForm input[name="password"]')).toBeVisible();
 });
