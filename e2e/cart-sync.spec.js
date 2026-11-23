@@ -13,6 +13,7 @@ test('PC Builder selection and replacement synchronize with the one header cart'
 
   // Swapping one CPU should replace the old CPU, not duplicate it.
   await page.locator('.select-part-btn[data-id="cpu-r7-9700x"]').click();
+  await page.reload({ waitUntil: 'domcontentloaded' });
   await expect(page.locator('#svoShopCartCount')).toHaveText('1');
   await page.locator('#svoShopCartButton').click();
   await expect(page.locator('#svoCartItems')).toContainText('Ryzen 7 9700X');
@@ -20,6 +21,7 @@ test('PC Builder selection and replacement synchronize with the one header cart'
 
   // Removing in the top cart must clear the builder summary as well.
   await page.locator('#svoCartItems [data-svo-remove="cpu-r7-9700x"]').click();
+  await page.reload({ waitUntil: 'domcontentloaded' });
   await expect(page.locator('#svoShopCartCount')).toHaveText('0');
   await expect(page.locator('#summaryParts')).toContainText('Belum ada komponen');
 });
@@ -41,17 +43,24 @@ test('manually added catalogue items remain in cart when PC Builder changes', as
   await expect(page.locator('#svoCartItems')).toContainText('GPU Support Bracket');
 });
 
-test('loading and clearing the Mini-ITX preset updates header cart quantity', async ({ page }) => {
+test('Mini-ITX preset, reset and manual restore persist across reloads', async ({ page }) => {
   await page.goto('/', { waitUntil: 'domcontentloaded' });
   await page.locator('.load-preset-btn[data-preset="compact-white-itx"]').click();
   await expect(page.locator('#svoShopCartCount')).toHaveText('8');
+  await expect(page.locator('#svoBuilderCartCount')).toHaveText('8');
+  await page.locator('#svoSaveBuildBtn').click();
+  await page.reload({ waitUntil: 'domcontentloaded' });
   await expect(page.locator('#svoBuilderCartCount')).toHaveText('8');
   await page.locator('#svoShopCartButton').click();
   await expect(page.locator('#svoCartItems .svo-cart-item')).toHaveCount(8);
   await page.locator('#svoCloseCart').click();
   page.once('dialog', dialog => dialog.accept());
   await page.locator('#resetBuildBtn').click();
+  await page.reload({ waitUntil: 'domcontentloaded' });
   await expect(page.locator('#svoShopCartCount')).toHaveText('0');
+  await page.locator('#svoLoadBuildBtn').click();
+  await page.reload({ waitUntil: 'domcontentloaded' });
+  await expect(page.locator('#svoShopCartCount')).toHaveText('8');
 });
 
 test('all hardware photos load locally even with third-party requests blocked', async ({ page }) => {

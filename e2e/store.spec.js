@@ -13,13 +13,25 @@ for (const width of widths) {
     expect(appWidth.body).toBeLessThanOrEqual(appWidth.viewport + 3);
     // Remote photo hosts may block hotlinks. Product text/cart must remain usable.
     await expect(page.locator('.svo-product-name').first()).toBeVisible();
+    const nav = page.locator('#svoPrimaryNav');
+    const links = nav.getByRole('link', { includeHidden: true });
+    await expect(links).toHaveText(['Beranda', 'Layanan', 'GTA 5 RP', 'Website', 'PC Builder', 'Hubungi Kami']);
     if (width <= 1024) {
-      await page.locator('#mobileMenuBtn').click();
-      await expect(page.locator('#svoPrimaryNav')).toHaveClass(/open/);
-      await page.locator('#svoPrimaryNav a[href="#layanan"]').click();
-      await expect(page.locator('#svoPrimaryNav')).not.toHaveClass(/open/);
+      const toggle = page.locator('#mobileMenuBtn');
+      await toggle.click();
+      await expect(nav).toHaveClass(/open/);
+      await expect(links.first()).toBeFocused();
+      expect((await links.last().boundingBox()).height).toBeGreaterThanOrEqual(44);
+      await page.keyboard.press('Escape');
+      await expect(toggle).toBeFocused();
+      await expect(toggle).toHaveAttribute('aria-expanded', 'false');
+      await toggle.click();
+      await nav.getByRole('link', { name: 'GTA 5 RP' }).click();
+      await expect(nav).not.toHaveClass(/open/);
+      await expect(page).toHaveURL(/#roleplay$/);
+      await expect(nav.locator('[aria-current="location"]')).toHaveText('GTA 5 RP');
     } else {
-      await expect(page.locator('#svoPrimaryNav')).toBeVisible();
+      await expect(nav).toBeVisible();
     }
     await context.close();
   });

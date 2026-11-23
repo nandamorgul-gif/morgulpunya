@@ -39,6 +39,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const closeModalBtn = document.getElementById('closeModalBtn');
   const modalContentEl = document.getElementById('modalContent');
   const presetsContainerEl = document.getElementById('presetsContainer');
+  const saveBuildStatus = document.getElementById('svoBuildSaveStatus');
+  const currentBuildKey = 'svo-tech-current-build-v1';
+  const notifyBuild = message => { if (saveBuildStatus) saveBuildStatus.textContent = message; };
 
   // WhatsApp store number (Bisa diganti sesuai nomor pengguna)
   const WHATSAPP_NUMBER = '6288291967659';
@@ -54,12 +57,41 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Initialize
   function init() {
+    try {
+      const ids = JSON.parse(localStorage.getItem(currentBuildKey));
+      if (ids && typeof ids === 'object' && !Array.isArray(ids)) restoreBuild(ids);
+    } catch (_) { /* The builder still works when browser storage is unavailable. */ }
     renderCategoryTabs();
     renderBrandFilters();
     renderComponents();
     renderPresets();
     updateSummary();
     setupEventListeners();
+  }
+
+  function selectedPartIds() {
+    return Object.fromEntries(Object.entries(state.userBuild)
+      .filter(([, part]) => part)
+      .map(([category, part]) => [category, part.id]));
+  }
+
+  function restoreBuild(ids) {
+    for (const category of Object.keys(state.userBuild)) {
+      state.userBuild[category] = PC_DATA.components[category]?.find(part => part.id === ids[category]) || null;
+    }
+  }
+
+  function updateAndSaveBuild() {
+    const selections = selectedPartIds();
+    try {
+      localStorage.setItem(currentBuildKey, JSON.stringify(selections));
+      notifyBuild('Pilihan komponen tersimpan otomatis di browser ini.');
+    } catch (_) {
+      notifyBuild('Penyimpanan otomatis tidak tersedia di browser ini.');
+    }
+    renderCategoryTabs();
+    renderComponents();
+    updateSummary(selections);
   }
 
   // 1. Render Category Tabs
@@ -219,7 +251,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // 5. Update Summary Panel & Wattage Meter
-  function updateSummary() {
+  function updateSummary(selections = selectedPartIds()) {
     let totalPrice = 0;
     let totalWatts = 0;
     let psuWattsCapacity = 0;
@@ -293,11 +325,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const cartCountEl = document.getElementById('svoBuilderCartCount');
     if (cartCountEl) cartCountEl.textContent = count;
     renderCompatibility();
-    // Shared cart synchronization: all builder mutations (select, remove,
-    // load preset, restore and reset) use updateSummary as a single source.
-    const selections = Object.fromEntries(Object.entries(state.userBuild)
-      .filter(([category, part]) => !!part && !!PC_DATA.components[category])
-      .map(([category, part]) => [category, part.id]));
     window.SVOBuilderSelections = selections;
     document.dispatchEvent(new CustomEvent('svo:builder-change', { detail: { selections } }));
   }
@@ -316,9 +343,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-    renderCategoryTabs();
-    renderComponents();
-    updateSummary();
+    updateAndSaveBuild();
   }
 
   // 7. Load Preset Configuration
@@ -326,20 +351,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const preset = PC_DATA.presets.find(p => p.id === presetId);
     if (!preset) return;
 
-    // Reset user build
-    Object.keys(state.userBuild).forEach(k => state.userBuild[k] = null);
-
-    // Fill components from preset
-    Object.entries(preset.components).forEach(([catId, partId]) => {
-      const part = (PC_DATA.components[catId] || []).find(item => item.id === partId);
-      if (part) {
-        state.userBuild[catId] = part;
-      }
-    });
-
-    renderCategoryTabs();
-    renderComponents();
-    updateSummary();
+    restoreBuild(preset.components);
+    updateAndSaveBuild();
 
     // Scroll to builder section
     const builderSection = document.getElementById('rakit-pc');
@@ -612,9 +625,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const id = event.detail?.id;
       if (!category || !id || state.userBuild[category]?.id !== id) return;
       state.userBuild[category] = null;
-      renderCategoryTabs();
-      renderComponents();
-      updateSummary();
+      updateAndSaveBuild();
     });
 
     // The builder and top cart share one item list.
@@ -639,9 +650,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!removeBtn) return;
         const catId = removeBtn.dataset.category;
         state.userBuild[catId] = null;
-        renderCategoryTabs();
-        renderComponents();
-        updateSummary();
+        updateAndSaveBuild();
       });
     }
 
@@ -660,9 +669,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (softObj) {
           state.userBuild.software = softObj;
           state.selectedCategory = 'software';
-          renderCategoryTabs();
-          renderComponents();
-          updateSummary();
+          updateAndSaveBuild();
           const builderSection = document.getElementById('rakit-pc');
           if (builderSection) {
             builderSection.scrollIntoView({ behavior: 'smooth' });
@@ -675,13 +682,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // restore so the catalogue remains the source of truth for demo pricing.
     const saveBuildBtn = document.getElementById('svoSaveBuildBtn');
     const loadBuildBtn = document.getElementById('svoLoadBuildBtn');
-    const saveBuildStatus = document.getElementById('svoBuildSaveStatus');
     const buildKey = 'svo-tech-saved-build-v1';
-    const notifyBuild = message => { if (saveBuildStatus) saveBuildStatus.textContent = message; };
     if (saveBuildBtn) saveBuildBtn.addEventListener('click', () => {
-      const ids = Object.fromEntries(Object.entries(state.userBuild)
-        .filter(([cat, part]) => !!part && !!PC_DATA.components[cat])
-        .map(([cat, part]) => [cat, part.id]));
+      const ids = selectedPartIds();
       if (!Object.keys(ids).length) { notifyBuild('Pilih komponen sebelum menyimpan rakitan.'); return; }
       try {
         localStorage.setItem(buildKey, JSON.stringify({ version: 1, savedAt: Date.now(), ids }));
@@ -695,17 +698,12 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!record?.ids || typeof record.ids !== 'object') {
         notifyBuild('Belum ada rakitan yang disimpan di browser ini.'); return;
       }
-      for (const cat of Object.keys(state.userBuild)) {
-        const id = record.ids[cat];
-        state.userBuild[cat] = (PC_DATA.components[cat] || []).find(item => item.id === id) || null;
-      }
+      restoreBuild(record.ids);
       state.selectedBrand = 'ALL';
       state.searchQuery = '';
       if (searchInputEl) searchInputEl.value = '';
-      renderCategoryTabs();
       renderBrandFilters();
-      renderComponents();
-      updateSummary();
+      updateAndSaveBuild();
       notifyBuild('Rakitan dimuat. Periksa kembali harga dan kompatibilitas sebelum konsultasi.');
     });
 
@@ -713,10 +711,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (resetBuildBtn) {
       resetBuildBtn.addEventListener('click', () => {
         if (confirm('Apakah Anda yakin ingin mereset seluruh rakitan PC?')) {
-          Object.keys(state.userBuild).forEach(k => state.userBuild[k] = null);
-          renderCategoryTabs();
-          renderComponents();
-          updateSummary();
+          restoreBuild({});
+          updateAndSaveBuild();
         }
       });
     }
@@ -893,9 +889,30 @@ document.addEventListener('DOMContentLoaded', () => {
       // Hamburger glyph is driven by aria-expanded via CSS. No CDN icon required.
     };
     if (mobileMenuBtn && navLinks) {
-      mobileMenuBtn.addEventListener('click', () => setMenu(!navLinks.classList.contains('open')));
-      navLinks.querySelectorAll('a').forEach(link => link.addEventListener('click', () => setMenu(false)));
-      document.addEventListener('keydown', e => { if (e.key === 'Escape') setMenu(false); });
+      const links = navLinks.querySelectorAll('a');
+      const updateActiveLink = () => {
+        const current = window.location.hash || '#home';
+        for (const link of links) {
+          const active = link.hash === current;
+          link.classList.toggle('active', active);
+          if (active) link.setAttribute('aria-current', 'location');
+          else link.removeAttribute('aria-current');
+        }
+      };
+      updateActiveLink();
+      window.addEventListener('hashchange', updateActiveLink);
+      mobileMenuBtn.addEventListener('click', () => {
+        const open = !navLinks.classList.contains('open');
+        setMenu(open);
+        if (open) links[0]?.focus({ preventScroll: true });
+      });
+      links.forEach(link => link.addEventListener('click', () => setMenu(false)));
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Escape' && navLinks.classList.contains('open')) {
+          setMenu(false);
+          mobileMenuBtn.focus();
+        }
+      });
       document.addEventListener('click', e => {
         if (!navLinks.contains(e.target) && !mobileMenuBtn.contains(e.target)) setMenu(false);
       });
