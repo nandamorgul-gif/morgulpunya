@@ -101,6 +101,30 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
       </article>`).join('') : '<p class="svo-cart-empty">Tidak ada produk yang sesuai dengan pencarian.</p>';
   };
+  const renderFeatured = () => {
+    const container = document.getElementById('svoFeaturedGrid');
+    if (!container) return;
+    const picks = ['gpu-rtx5060ti16', 'cpu-r7-9850x3d', 'gpu-rx9060xt16', 'case-ch160-white'];
+    const available = picks.map(id => productMap.get(id)).filter(Boolean);
+    container.innerHTML = available.map(p => {
+      const picture = showImage(p);
+      return `
+        <article class="svo-featured-card">
+          <div class="svo-featured-image">
+            <img src="${escapeHTML(picture.image)}" data-svo-fallback="${escapeHTML(picture.fallback)}"
+              data-svo-final-fallback="${escapeHTML(picture.finalFallback)}" width="640" height="640"
+              loading="lazy" alt="${escapeHTML(p.name)} — foto referensi atau ilustrasi model">
+            <span>${picture.photo ? "Foto referensi" : "Ilustrasi model"}</span>
+          </div>
+          <div class="svo-featured-info">
+            <small>${escapeHTML(p.brand)} / 2026</small>
+            <h3>${escapeHTML(p.name)}</h3>
+            <p>Estimasi ${formatPrice(p.price)}</p>
+            <button type="button" class="svo-featured-link" data-svo-featured-id="${escapeHTML(p.id)}">Lihat di katalog ↗</button>
+          </div>
+        </article>`;
+    }).join('');
+  };
   const renderCart = () => {
     const items = entries();
     els.count.textContent = count();
@@ -135,6 +159,18 @@ document.addEventListener('DOMContentLoaded', () => {
     opt.value = c.id;
     opt.textContent = c.name;
     els.category.appendChild(opt);
+  });
+  const featuredGrid = document.getElementById('svoFeaturedGrid');
+  featuredGrid?.addEventListener('click', event => {
+    const button = event.target.closest('[data-svo-featured-id]');
+    if (!button) return;
+    const item = productMap.get(button.dataset.svoFeaturedId);
+    if (!item) return;
+    els.category.value = item.category;
+    els.search.value = item.name;
+    els.sort.value = 'default';
+    renderProducts();
+    document.getElementById('svo-shop')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
   document.querySelectorAll('[data-svo-category-link]').forEach(link => {
     link.addEventListener('click', () => {
@@ -249,6 +285,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   renderProducts();
   renderCart();
+  renderFeatured();
   // Load authoritative catalogue when Node API is running; otherwise keep
   // the pre-existing static demo and WhatsApp inquiry behavior.
   fetch('/api/products', { cache: 'no-store' }).then(async response => {
@@ -266,7 +303,7 @@ document.addEventListener('DOMContentLoaded', () => {
         else cart[id] = productMap.get(id).stock;
       }
     }
-    persist(); renderProducts(); renderCart();
+    persist(); renderProducts(); renderCart(); renderFeatured();
     const note = document.querySelector('.svo-store-note');
     if (note) note.textContent = serverCheckoutEnabled ?
       'Ketersediaan stok dan harga dihitung ulang saat checkout. Ongkos kirim sementara mengikuti tarif flat yang ditetapkan toko.' :
