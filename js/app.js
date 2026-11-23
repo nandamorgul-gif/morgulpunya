@@ -91,6 +91,10 @@ document.addEventListener('DOMContentLoaded', () => {
   function renderComponents() {
     if (!componentsListEl) return;
     let list = PC_DATA.components[state.selectedCategory] || [];
+    const knownStock = list.some(item => item.stock > 0);
+    // Hide genuinely out-of-stock components when verified stock exists.
+    // Seed rows all start at 0 (unknown), so keep reference options visible.
+    if (knownStock) list = list.filter(item => item.stock > 0);
 
     // Filter by Brand
     if (state.selectedBrand !== 'ALL') {
@@ -912,6 +916,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   }
+
+  // Prices from Cloudflare D1/supplier feed update the builder without
+  // clearing selected parts, category filters or shopping cart.
+  document.addEventListener('svo:catalog-updated', () => {
+    renderComponents();
+    renderPresets();
+    updateSummary();
+  });
 
   // Run initialization
   init();
