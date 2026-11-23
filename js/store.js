@@ -125,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
     els.total.textContent = list.length + ' komponen ditemukan';
     grid.innerHTML = list.length ? list.map(p => `
       <article class="svo-product" data-svo-category="${escapeHTML(p.category)}">
-        <div class="svo-product-media ${showImage(p).servicePhoto ? 'has-service-photo' : (showImage(p).photo ? 'has-photo' : 'has-illustration')}">
+        <div class="svo-product-media ${showImage(p).servicePhoto ? 'has-service-photo' : (showImage(p).photo ? 'has-photo' : 'has-illustration')}" style="background-image:url('${escapeHTML(showImage(p).fallback)}')">
           <img src="${escapeHTML(showImage(p).image)}"
                data-svo-fallback="${escapeHTML(showImage(p).fallback)}" data-svo-final-fallback="${escapeHTML(showImage(p).finalFallback)}"
                alt="${showImage(p).servicePhoto ? 'Foto ilustrasi layanan: ' + escapeHTML(p.name) : (showImage(p).photo ? 'Foto referensi model hardware: ' + escapeHTML(p.name) : 'Visual ilustratif model: ' + escapeHTML(p.name))}"
@@ -152,7 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const picture = showImage(p);
       return `
         <article class="svo-featured-card">
-          <div class="svo-featured-image">
+          <div class="svo-featured-image" style="background-image:url('${escapeHTML(picture.fallback)}')">
             <img src="${escapeHTML(picture.image)}" data-svo-fallback="${escapeHTML(picture.fallback)}"
               data-svo-final-fallback="${escapeHTML(picture.finalFallback)}" width="640" height="640"
               loading="lazy" alt="${escapeHTML(p.name)} — foto referensi atau ilustrasi model">
