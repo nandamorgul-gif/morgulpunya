@@ -221,25 +221,108 @@ if (typeof window !== 'undefined') {
 }
 if (typeof module !== 'undefined' && module.exports) module.exports = applySvoReferencePhotos;
 
-/* Never leave a broken thumbnail; try exact-model illustration and then
-   category artwork. The second fallback also covers unexpected missing files. */
+/* Do not pretend a product has a real photo when the external source fails.
+   Keep the text, price, selections and cart working; simply hide unavailable imagery.
+   The optional per-SKU SVG illustrations remain in the repository as historical
+   artwork, but are never substituted for missing product photography. */
 if (typeof document !== 'undefined') {
-  document.addEventListener('error', (event) => {
-    const img = event.target;
-    if (!img || img.tagName !== 'IMG') return;
-    const firstFallback = img.getAttribute('data-svo-fallback');
-    if (!firstFallback) return;
-    const secondFallback = img.getAttribute('data-svo-final-fallback') || 'images/products/accessories.svg';
-    const current = img.getAttribute('src') || '';
-    const replacement = current === firstFallback ? secondFallback : firstFallback;
-    if (current === replacement || img.dataset.svoFallbackFailed === 'true') return;
-    if (current === firstFallback) img.dataset.svoFallbackFailed = 'true';
-    img.src = replacement;
-    img.alt = 'Ilustrasi produk — foto referensi tidak tersedia';
-    const card = img.closest('.svo-product-media');
-    const label = card?.querySelector('.svo-illustration-chip');
-    if (label) label.textContent = 'Ilustrasi model produk';
-    card?.classList.replace('has-photo', 'has-illustration');
-    card?.classList.replace('has-service-photo', 'has-illustration');
+  const isPaymentLogo = image => !!image.closest('.svo-payment-logo-frame');
+  const hideUnavailableMedia = image => {
+    if (isPaymentLogo(image) || image.dataset.svoMediaHidden === 'true') return;
+    image.dataset.svoMediaHidden = 'true';
+    image.hidden = true;
+    image.classList.add('svo-image-unavailable');
+    image.removeAttribute('srcset');
+    image.removeAttribute('data-svo-fallback');
+    image.removeAttribute('data-svo-final-fallback');
+
+    const media = image.closest(
+      '.svo-product-media, .svo-featured-image, .svo-offer-media, ' +
+      '.svo-studio-hero-media, .svo-roleplay-media, .svo-digital-media'
+    );
+    if (media) {
+      media.hidden = true;
+      media.classList.add('svo-media-unavailable');
+    }
+    const card = image.closest(
+      '.svo-product, .svo-featured-card, .svo-offer, .preset-card, ' +
+      '.component-card, .svo-cart-item, .svo-category-tile'
+    );
+    if (card) card.classList.add('svo-card-without-photo');
+
+    if (card?.classList.contains('preset-card')) {
+      const caption = card.querySelector('.svo-preset-caption');
+      if (caption) caption.hidden = true;
+    }
+    if (media?.classList.contains('svo-studio-hero-media')) {
+      document.getElementById('home')?.classList.add('svo-hero-without-photo');
+    }
+    if (media?.classList.contains('svo-digital-media')) {
+      media.closest('.svo-digital-layout')?.classList.add('svo-layout-without-photo');
+    }
+    if (media?.classList.contains('svo-roleplay-media')) {
+      media.closest('.svo-roleplay-layout')?.classList.add('svo-layout-without-photo');
+    }
+  };
+
+  // Error events from <img> elements don't bubble, so capture them on document.
+  document.addEventListener('error', event => {
+    const image = event.target;
+    if (image?.tagName !== 'IMG' || isPaymentLogo(image)) return;
+    hideUnavailableMedia(image);
   }, true);
+
+  // Hotlinks can stall without producing an error. Once a photo scrolls into
+  // view, allow a short loading window, then remove an unusable empty frame.
+  const tracked = new WeakSet();
+  const timeoutByImage = new WeakMap();
+  const observer = typeof IntersectionObserver !== 'undefined'
+    ? new IntersectionObserver(entries => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        const image = entry.target;
+        observer.unobserve(image);
+        if (image.complete) {
+          if (image.naturalWidth === 0) hideUnavailableMedia(image);
+          continue;
+        }
+        const token = setTimeout(() => {
+          if (!image.complete || image.naturalWidth === 0) hideUnavailableMedia(image);
+          timeoutByImage.delete(image);
+        }, 8000);
+        timeoutByImage.set(image, token);
+      }
+    }, { rootMargin: '240px' }) : null;
+
+  document.addEventListener('load', event => {
+    const image = event.target;
+    if (image?.tagName !== 'IMG') return;
+    const token = timeoutByImage.get(image);
+    if (token) clearTimeout(token);
+    timeoutByImage.delete(image);
+  }, true);
+
+  const observe = node => {
+    const photos = [];
+    if (node.nodeType !== 1) return;
+    if (node.matches?.('img')) photos.push(node);
+    if (node.querySelectorAll) photos.push(...node.querySelectorAll('img'));
+    for (const image of photos) {
+      if (isPaymentLogo(image) || tracked.has(image)) continue;
+      tracked.add(image);
+      if (image.complete && !image.naturalWidth) hideUnavailableMedia(image);
+      else if (observer) observer.observe(image);
+    }
+  };
+  const start = () => {
+    observe(document.body);
+    if (typeof MutationObserver !== 'undefined') {
+      const mutations = new MutationObserver(records => {
+        for (const record of records) for (const node of record.addedNodes) observe(node);
+      });
+      mutations.observe(document.body, { childList: true, subtree: true });
+    }
+  };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start, { once: true });
+  else start();
 }
