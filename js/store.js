@@ -141,7 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <p class="svo-product-description">${escapeHTML(p.description)}</p>
           ${showImage(p).credit ? `<a class="svo-photo-credit" href="${escapeHTML(showImage(p).credit)}" target="_blank" rel="noopener noreferrer">Sumber foto referensi ↗</a>` : ''}
           <span class="svo-stock-status">${serverCatalogAvailable ? (p.stock > 0 ? 'Stok tercatat: ' + p.stock : 'Stok belum tersedia') : 'Tanyakan ketersediaan'}</span>
-          <p class="svo-product-price"><span class="svo-price-caption">${serverCatalogAvailable ? 'Harga katalog (konfirmasi admin)' : 'Harga simulasi / estimasi'}</span><br>${formatPrice(p.price)}</p>
+          <p class="svo-product-price"><span class="svo-price-caption">${p.price_live ? 'Harga pemasok terverifikasi' : 'Harga referensi / estimasi'}</span><br>${formatPrice(p.price)}</p>
           <button class="svo-store-btn" type="button" data-svo-add="${escapeHTML(p.id)}">${serverCatalogAvailable && p.stock < 1 ? '+ Tanya Stok via Keranjang' : '+ Tambah ke Keranjang'}</button>
         </div>
       </article>`).join('') : '<p class="svo-cart-empty">Tidak ada produk yang sesuai dengan pencarian.</p>';
@@ -359,34 +359,86 @@ document.addEventListener('DOMContentLoaded', () => {
   renderProducts();
   renderCart();
   renderFeatured();
-  // Load authoritative catalogue when Node API is running; otherwise keep
-  // the pre-existing static demo and WhatsApp inquiry behavior.
-  fetch('/api/products', { cache: 'no-store' }).then(async response => {
-    if (!response.ok) return;
-    const data = await response.json();
-    if (!Array.isArray(data.products)) return;
-    serverCatalogAvailable = true;
-    serverCheckoutEnabled = data.checkout_enabled === true;
-    products = data.products.filter(p => p && p.id && Number.isSafeInteger(p.price) && Number.isInteger(p.stock) && p.stock >= 0);
-    productMap = new Map(products.map(p => [p.id, p]));
-    // Keep manual + builder quote selections despite unavailable stock;
-    // automatic payment is blocked by canPayOnline() until stock suffices.
-    updateBuilderCart(window.SVOBuilderSelections || {});
-    persist(); renderProducts(); renderCart(); renderFeatured();
-    const note = document.querySelector('.svo-store-note');
-    if (note) note.textContent = serverCheckoutEnabled ?
-      'Ketersediaan stok dan harga dihitung ulang saat checkout. Ongkos kirim sementara mengikuti tarif flat yang ditetapkan toko.' :
-      'Katalog terhubung ke server. Pembayaran online belum aktif; checkout saat ini masih permintaan pembelian melalui WhatsApp.';
-    syncPaymentMode();
-    const prev = document.getElementById('svoPreviousOrder');
-    let last; try { last = JSON.parse(localStorage.getItem('svo-last-order') || 'null'); } catch (_) {}
-    if (prev && last?.id && last?.token) {
-      prev.hidden = false;
-      prev.textContent = 'Pesanan terakhir ' + last.id + ' — Memeriksa status...';
-      fetch('/api/orders/' + encodeURIComponent(last.id), {headers: {'x-order-access-token': last.token},cache:'no-store'})
-        .then(r => r.ok ? r.json() : Promise.reject(new Error('Tidak ditemukan')))
-        .then(data => { prev.textContent = 'Pesanan ' + last.id + ' — status: ' + data.order.status; })
-        .catch(() => { prev.textContent = 'Status pesanan terakhir belum dapat diperiksa.'; });
-    }
-  }).catch(() => {});
+  // Cloudflare D1 is the default catalogue. When an approved supplier feed
+  // is configured, its verified IDR prices are reflected here automatically.
+  // Poll while shoppers are browsing; never pretend an estimate is live.
+  let loading = false;
+  let lastQuoteLookup = false;
+  async function refreshCatalogue() {
+    if (loading || document.visibilityState === 'hidden') return;
+    loading = true;
+    try {
+      const response = await fetch('/api/products', { cache: 'no-store' });
+      if (!response.ok) throw new Error('catalogue unavailable');
+      const data = await response.json();
+      if (!Array.isArray(data.products)) return;
+      const valid = data.products.filter(p => p && p.id &&
+        Number.isSafeInteger(p.price) && p.price >= 0 &&
+        Number.isInteger(p.stock) && p.stock >= 0);
+      serverCatalogAvailable = true;
+      serverCheckoutEnabled = data.checkout_enabled === true;
+      products = valid;
+      productMap = new Map(products.map(p => [p.id, p]));
+
+      // Synchronize PC Builder selected object references to the same price feed.
+      const sku = new Map(valid.map(p => [p.id, p]));
+      for (const items of Object.values(db.components)) {
+        for (const item of items) {
+          const current = sku.get(item.id);
+          if (!current) continue;
+          item.price = current.price;
+          item.stock = current.stock;
+          item.priceLive = current.price_live === true;
+          item.priceUpdatedAt = current.price_updated_at || null;
+        }
+      }
+      for (const preset of db.presets || []) {
+        const parts = Object.entries(preset.components || {}).map(([category,id]) =>
+          (db.components[category] || []).find(p => p.id === id)).filter(Boolean);
+        if (parts.length) preset.totalPrice = parts.reduce((sum,p)=>sum+p.price,0);
+      }
+      updateBuilderCart(window.SVOBuilderSelections || {});
+      persist(); renderProducts(); renderCart(); renderFeatured(); syncPaymentMode();
+
+      const pricing = data.pricing || {};
+      const updated = pricing.updated_at ? new Date(pricing.updated_at).toLocaleString('id-ID') : '';
+      const statusEl = document.getElementById('svoPriceStatus');
+      const live = Number(pricing.live_products) || 0;
+      if (statusEl) {
+        statusEl.textContent = live ?
+          'Harga pemasok tersinkron ' + live + '/' + valid.length + ' produk' +
+            (updated ? ' • terakhir ' + updated : '') +
+            '. Produk lain masih menggunakan harga referensi.' :
+          'Harga masih estimasi referensi: belum ada feed pemasok real-time yang terhubung.';
+        statusEl.dataset.live = live ? 'true' : 'false';
+      }
+      document.dispatchEvent(new CustomEvent('svo:catalog-updated', {
+        detail: { prices: valid.map(p => ({id:p.id,price:p.price,stock:p.stock,live:!!p.price_live})),
+          updated_at: pricing.updated_at, live_products: live }
+      }));
+      const note = document.querySelector('.svo-store-note');
+      if (note) note.textContent = 'Harga dan stok mengikuti data pemasok jika tersedia, selain itu merupakan estimasi. Checkout masih permintaan konsultasi melalui WhatsApp.';
+      if (!lastQuoteLookup) {
+        lastQuoteLookup = true;
+        const prev = document.getElementById('svoPreviousOrder');
+        let last; try { last = JSON.parse(localStorage.getItem('svo-last-order') || 'null'); } catch (_) {}
+        if (prev && last?.id && last?.token) {
+          prev.hidden = false;
+          prev.textContent = 'Pesanan terakhir ' + last.id + ' — Memeriksa status...';
+          fetch('/api/orders/' + encodeURIComponent(last.id),
+            {headers:{'x-order-access-token':last.token},cache:'no-store'})
+            .then(r => r.ok ? r.json() : Promise.reject(new Error('Tidak ditemukan')))
+            .then(data => {prev.textContent='Pesanan '+last.id+' — status: '+data.order.status;})
+            .catch(()=>{prev.textContent='Status pesanan terakhir belum dapat diperiksa.';});
+        }
+      }
+    } catch {
+      const el = document.getElementById('svoPriceStatus');
+      if (el && !serverCatalogAvailable) el.textContent = 'Harga referensi belum terverifikasi secara live. Tanyakan harga terbaru sebelum memesan.';
+    } finally { loading = false; }
+  }
+  refreshCatalogue();
+  const priceTimer = setInterval(refreshCatalogue, 120000);
+  window.addEventListener('pagehide', () => clearInterval(priceTimer), { once: true });
+
 });
