@@ -77,6 +77,22 @@ const SVO_PHOTOS = {
   "ssd-wd-sn850x-1t": {
     "url": "https://pisces.bbystatic.com/image2/BestBuy_US/images/products/943cc337-3c8c-464e-a395-3cdde46519e6.jpg",
     "credit": "https://www.bestbuy.com/site/reviews/wd-black-sn850x-1tb-internal-ssd-pcie-gen-4-x4-nvme/6512131?page=3"
+  },
+  "cpu-r7-9700x": {
+    "url": "https://i.ebayimg.com/images/g/10kAAeSwIOloDZSt/s-l1600.jpg",
+    "credit": "https://www.amd.com/en/products/processors/desktops/ryzen/9000-series/amd-ryzen-7-9700x.html"
+  },
+  "cpu-ultra9-285k": {
+    "url": "https://bestcomputers.mn/storage/products/19e741712d84b32.png",
+    "credit": "https://bestcomputers.mn/products/26129"
+  },
+  "gpu-rtx5070": {
+    "url": "https://media.ldlc.com/r1600/ld/products/00/06/21/66/LD0006216616.jpg",
+    "credit": "https://www.ldlc.com/it-it/scheda/PB00669229.html"
+  },
+  "gpu-rtx5090": {
+    "url": "https://sota.store/image/cache/catalog/IP/nvidia-geforce_900-1g144-2530-000-1600x1600.webp",
+    "credit": "https://sota.store/ua/videokarta-nvidia-geforce-rtx-5090-32gb-founders-edition-900-1g144-2530-000-239744.html"
   }
 };
 
