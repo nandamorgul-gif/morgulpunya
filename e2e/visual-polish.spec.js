@@ -81,6 +81,40 @@ test('desktop service card composition fills balanced rows', async ({ page }) =>
   await expect(builder.locator('#svoBuilderViewCart')).toBeVisible();
 });
 
+test('floating arrows let mobile visitors reach both ends of every public page', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  for (const path of ['/', '/jasa-server-fivem/', '/jasa-rakit-pc/', '/jasa-pembuatan-website/']) {
+    await page.goto(path, { waitUntil: 'domcontentloaded' });
+    const controls = page.getByRole('group', { name: 'Gulir halaman' });
+    const down = controls.getByRole('button', { name: 'Ke bawah halaman' });
+    const up = controls.getByRole('button', { name: 'Ke atas halaman' });
+    await expect(controls.locator('svg')).toHaveCount(2);
+    const target = await down.boundingBox();
+    expect(target.height).toBeGreaterThanOrEqual(44);
+    expect(target.width).toBeGreaterThanOrEqual(44);
+    if (path === '/') {
+      const whatsApp = await page.locator('.floating-whatsapp').boundingBox();
+      expect(target.y + target.height).toBeLessThan(whatsApp.y);
+      const musicToggle = page.locator('#svoMusicCollapse');
+      await musicToggle.click();
+      await expect.poll(async () => {
+        const player = await page.locator('#svoMusicPlayer').boundingBox();
+        const arrows = await controls.boundingBox();
+        return arrows.y + arrows.height < player.y;
+      }).toBe(true);
+      await musicToggle.click();
+    }
+    await down.click();
+    await expect.poll(() => page.evaluate(() => {
+      const root = document.scrollingElement;
+      return root.scrollHeight - root.clientHeight - root.scrollTop;
+    })).toBeLessThanOrEqual(2);
+    await up.click();
+    await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0);
+  }
+});
+
 test('payment logos show readable text when remote image requests fail', async ({ page }) => {
   await page.route('**/commons.wikimedia.org/**', route => route.abort('failed'));
   await page.goto('/', { waitUntil: 'domcontentloaded' });

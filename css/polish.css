@@ -299,6 +299,23 @@ section[id] {scroll-margin-top:90px}
 .svo-cart-panel {background:#18121f}
 .svo-music-player {box-shadow:0 10px 30px rgba(0,0,0,.3)}
 .floating-whatsapp {font-size:.8rem;padding:12px 16px;box-shadow:0 9px 28px rgba(18,105,60,.2)}
+.svo-scroll-controls {
+  --svo-scroll-bottom:calc(22px + env(safe-area-inset-bottom));
+  position:fixed;z-index:950;
+  right:calc(30px + env(safe-area-inset-right));
+  bottom:max(var(--svo-scroll-bottom),var(--svo-scroll-player-clearance,0px));
+  display:grid;gap:7px;
+}
+.floating-whatsapp ~ .svo-scroll-controls {--svo-scroll-bottom:calc(92px + env(safe-area-inset-bottom))}
+.svo-scroll-controls button {
+  display:grid;place-items:center;width:44px;height:44px;padding:0;cursor:pointer;
+  border:1px solid #8165a7;border-radius:11px;color:#f4eaff;background:rgba(38,26,51,.86);
+  box-shadow:0 3px 12px rgba(0,0,0,.24);
+  transition:background-color .18s ease,border-color .18s ease;
+}
+.svo-scroll-controls button:hover,.svo-scroll-controls button:focus-visible {background:#3a2850;border-color:#bc9be4}
+.svo-scroll-controls svg {width:22px;height:22px}
+.svo-scroll-controls [data-svo-scroll="top"] svg {transform:rotate(180deg)}
 /* Responsive reductions, applied after previous layouts. */
 @media(max-width:1260px) {
   .header .btn-simulasi-nav {display:none}
@@ -336,6 +353,8 @@ section[id] {scroll-margin-top:90px}
   .svo-footer-main {gap:28px}
 }
 @media(max-width:760px) {
+  .svo-scroll-controls {--svo-scroll-bottom:calc(16px + env(safe-area-inset-bottom));right:calc(12px + env(safe-area-inset-right))}
+  .floating-whatsapp ~ .svo-scroll-controls {--svo-scroll-bottom:calc(76px + env(safe-area-inset-bottom))}
   .svo-studio-section,.section-padding {padding-block:56px}
   .svo-studio-hero {padding-top:121px;padding-bottom:56px}
   .svo-studio-hero .svo-hero-grid {gap:25px}
@@ -360,6 +379,9 @@ section[id] {scroll-margin-top:90px}
   .svo-footer-main {grid-template-columns:repeat(2,minmax(0,1fr));gap:29px}
   .svo-footer-main>div:first-child {grid-column:1/-1}
   .svo-footer-bottom {margin-top:29px;flex-direction:column;gap:5px}
+}
+@media(max-height:480px) {
+  .svo-scroll-controls {grid-auto-flow:column}
 }
 @media(max-width:560px) {
   .container {width:calc(100% - 32px)}
