@@ -888,11 +888,7 @@ document.addEventListener('DOMContentLoaded', () => {
       navLinks.classList.toggle('open', open);
       mobileMenuBtn.setAttribute('aria-expanded', String(open));
       mobileMenuBtn.setAttribute('aria-label', open ? 'Tutup menu navigasi' : 'Buka menu navigasi');
-      const icon = mobileMenuBtn.querySelector('i');
-      if (icon) {
-        icon.className = open ? 'feather feather-x' : 'feather feather-menu';
-        if (window.feather) feather.replace();
-      }
+      // Hamburger glyph is driven by aria-expanded via CSS. No CDN icon required.
     };
     if (mobileMenuBtn && navLinks) {
       mobileMenuBtn.addEventListener('click', () => setMenu(!navLinks.classList.contains('open')));
