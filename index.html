@@ -427,6 +427,27 @@
 </section>
 
 <!-- Consultation intake: WhatsApp handoff, no fake form submission -->
+  <!-- Payment preferences, NOT bank account instructions or confirmed active channels -->
+  <section id="pembayaran" class="svo-studio-section svo-payments" aria-labelledby="svoPaymentTitle">
+    <div class="container">
+      <div class="svo-studio-heading">
+        <div><span class="svo-kicker">PAYMENT OPTIONS / BY REQUEST</span><h2 id="svoPaymentTitle">Preferensi pembayaran</h2></div>
+        <p>Setelah penawaran dan rincian pekerjaan disetujui, kamu dapat menyampaikan pilihan transfer bank atau dompet digital untuk dikonfirmasi bersama admin.</p>
+      </div>
+      <div class="svo-payment-methods" aria-label="Pilihan metode untuk dikonfirmasi">
+        <div class="svo-payment-method"><span class="svo-payment-symbol">B</span><strong>BCA</strong><small>Transfer bank</small></div>
+        <div class="svo-payment-method"><span class="svo-payment-symbol">M</span><strong>Mandiri</strong><small>Transfer bank</small></div>
+        <div class="svo-payment-method"><span class="svo-payment-symbol">S</span><strong>SeaBank</strong><small>Transfer bank</small></div>
+        <div class="svo-payment-method"><span class="svo-payment-symbol">J</span><strong>Bank Jago</strong><small>Transfer bank</small></div>
+        <div class="svo-payment-method"><span class="svo-payment-symbol">D</span><strong>DANA</strong><small>Dompet digital</small></div>
+      </div>
+      <div class="svo-payment-note" role="note"><i class="feather feather-info"></i>
+        <p><strong>Belum ada instruksi transfer di halaman ini.</strong> Daftar ini adalah pilihan preferensi, bukan jaminan kanal pembayaran telah aktif. Nomor rekening/tujuan DANA serta instruksi resmi hanya diberikan setelah diverifikasi admin. Jangan mentransfer sebelum menerima invoice dan detail tujuan yang sah. Jika checkout melalui payment gateway digunakan, metode yang benar-benar tersedia mengikuti penyedia pembayaran.</p>
+      </div>
+      <a href="#kontak" class="svo-payment-link">Diskusikan penawaran dan pembayaran <span aria-hidden="true">↗</span></a>
+    </div>
+  </section>
+
   <section id="kontak" class="svo-studio-section svo-contact-section svo-studio-contact" aria-labelledby="svoContactTitle">
     <div class="container">
       <div class="svo-studio-heading">
@@ -478,6 +499,15 @@
               <select id="contactMethod" name="method" class="form-control"><option value="Diskusikan metode">Diskusikan metode</option><option value="Remote/online">Remote/online</option><option value="Onsite (jika tersedia)">Onsite (jika tersedia)</option><option value="Kirim perangkat (jika tersedia)">Kirim perangkat (jika tersedia)</option></select>
             </div>
           </div>
+          <div class="form-group"><label for="contactPaymentMethod">Preferensi pembayaran <small>(opsional; setelah penawaran disetujui)</small></label>
+            <select id="contactPaymentMethod" name="paymentPreference" class="form-control"><option value="">Diskusikan saat penawaran</option>
+                  <option value="BCA">BCA</option>
+                  <option value="Mandiri">Mandiri</option>
+                  <option value="SeaBank">SeaBank</option>
+                  <option value="Bank Jago">Bank Jago</option>
+                  <option value="DANA">DANA</option></select>
+            <small class="svo-field-note">Belum ada pembayaran pada tahap konsultasi. Ketersediaan metode dan tujuan transfer harus dikonfirmasi admin.</small>
+          </div>
           <div class="form-group"><label for="contactMessage">Detail kebutuhan <span aria-hidden="true">*</span></label><textarea id="contactMessage" name="details" class="form-control" rows="5" placeholder="Ceritakan PC yang diinginkan, kendala, spesifikasi, halaman website, fitur, atau referensi desain..." maxlength="2000" required></textarea></div>
           <button type="submit" class="btn btn-primary svo-service-submit"><i class="feather feather-send"></i> Lanjutkan Konsultasi via WhatsApp</button>
           <small class="svo-form-privacy">Periksa pesan di WhatsApp sebelum mengirim. Jangan sertakan password, OTP, atau data sensitif.</small>
@@ -492,7 +522,7 @@
       <div><a href="#home" class="svo-footer-brand"><img src="images/logo.svg" width="46" height="46" alt="Logo SEMEISTVO TECH"><span>SEMEISTVO <em>TECH</em></span></a>
       <p>Rakit PC, instalasi, server GTA 5 Roleplay, dan pembuatan website. From Hardware to Digital.</p></div>
       <div class="svo-footer-links"><h4>Jelajahi</h4><a href="#layanan">Layanan</a><a href="#roleplay">Server Roleplay</a><a href="#digital">Pembuatan Website</a><a href="#rakit-pc">PC Builder</a></div>
-      <div class="svo-footer-links"><h4>Bantuan</h4><a href="#software-paket">Layanan Tambahan</a><a href="#kontak">Konsultasi</a><a href="https://wa.me/6288291967659" target="_blank" rel="noopener noreferrer">WhatsApp</a></div>
+      <div class="svo-footer-links"><h4>Bantuan</h4><a href="#software-paket">Layanan Tambahan</a><a href="#pembayaran">Pembayaran</a><a href="#kontak">Konsultasi</a><a href="https://wa.me/6288291967659" target="_blank" rel="noopener noreferrer">WhatsApp</a></div>
     </div>
     <div class="container svo-footer-bottom"><span>© 2026 SEMEISTVO TECH · SVO</span><span>Ruang lingkup, biaya, dan jadwal dikonfirmasi sebelum pengerjaan.</span></div>
   </footer>
@@ -559,6 +589,16 @@
             style="resize: vertical; min-height: 65px;"></textarea>
         </div>
 
+        <div class="form-group" style="margin-bottom: 0.9rem;">
+          <label for="orderPreferredPayment" class="order-label">Preferensi pembayaran (opsional)</label>
+          <select id="orderPreferredPayment" class="order-form-control"><option value="">Diskusikan saat penawaran</option>
+                  <option value="BCA">BCA</option>
+                  <option value="Mandiri">Mandiri</option>
+                  <option value="SeaBank">SeaBank</option>
+                  <option value="Bank Jago">Bank Jago</option>
+                  <option value="DANA">DANA</option></select>
+          <small class="svo-field-note">BCA, Mandiri, SeaBank, Bank Jago dan DANA dapat ditanyakan ke admin. Jangan transfer sebelum detail penawaran diverifikasi.</small>
+        </div>
         <div class="svo-inquiry-notice">
           <strong>Permintaan penawaran · Belum ada pembayaran</strong>
           <p>Harga pada PC Builder adalah estimasi. Stok, ongkir, garansi, dan harga akhir perlu dikonfirmasi melalui admin sebelum pesanan disetujui. Jangan mengirim bukti transfer pada tahap ini.</p>
