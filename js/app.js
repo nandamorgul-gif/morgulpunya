@@ -780,33 +780,61 @@ document.addEventListener('DOMContentLoaded', () => {
       checkoutOrderForm.addEventListener('submit', handleCheckoutOrderSubmit);
     }
 
-    // Consultation submissions are prepared for WhatsApp, not falsely marked sent.
+    // Service-first inquiry: pre-fill chosen service and prepare a WhatsApp brief.
     const contactForm = document.getElementById('contactForm');
+    const serviceChoice = document.getElementById('contactService');
+    document.querySelectorAll('[data-svo-service]').forEach(link => {
+      link.addEventListener('click', () => {
+        const selected = link.getAttribute('data-svo-service');
+        if (serviceChoice && Array.from(serviceChoice.options).some(opt => opt.value === selected)) {
+          serviceChoice.value = selected;
+          const subject = document.getElementById('contactSubject');
+          if (subject && !subject.value.trim()) subject.value = 'Konsultasi ' + selected;
+        }
+      });
+    });
     if (contactForm) {
       contactForm.addEventListener('submit', e => {
         e.preventDefault();
         if (!contactForm.reportValidity()) return;
+        const service = serviceChoice?.value?.trim() || '';
         const name = document.getElementById('contactName').value.trim();
         const contact = document.getElementById('contactEmail').value.trim();
         const subject = document.getElementById('contactSubject').value.trim();
         const message = document.getElementById('contactMessage').value.trim();
-        if (!name || !contact || !subject || !message) return;
+        const budget = document.getElementById('contactBudget')?.value || 'Belum ditentukan';
+        const method = document.getElementById('contactMethod')?.value || 'Diskusikan metode';
+        if (!service || !name || !contact || !subject || !message) return;
         const content = [
-          'Halo SEMEISTVO TECH, saya ingin konsultasi hardware.',
-          'Nama: ' + name, 'Kontak: ' + contact, 'Topik: ' + subject,
-          'Kebutuhan: ' + message, 'Mohon konfirmasi ketersediaan tim.'
+          '*SEMEISTVO TECH — KONSULTASI LAYANAN*',
+          '',
+          'Layanan: ' + service,
+          'Nama: ' + name,
+          'Kontak: ' + contact,
+          'Topik: ' + subject,
+          'Budget: ' + budget,
+          'Metode: ' + method,
+          '',
+          'Detail kebutuhan:',
+          message,
+          '',
+          'Mohon informasi ketersediaan, ruang lingkup, estimasi biaya dan jadwal pengerjaan.',
+          'Ini adalah permintaan konsultasi, bukan pembayaran atau pesanan resmi.'
         ].join('\n');
         const url = 'https://wa.me/6288291967659?text=' + encodeURIComponent(content);
         window.open(url, '_blank', 'noopener,noreferrer');
         let note = document.getElementById('svoContactStatus');
         if (!note) {
           note = document.createElement('p');
-          note.id = 'svoContactStatus'; note.setAttribute('role', 'status');
+          note.id = 'svoContactStatus';
+          note.setAttribute('role', 'status');
           contactForm.appendChild(note);
         }
-        note.replaceChildren(document.createTextNode('Permintaan sudah disiapkan. Jika WhatsApp tidak terbuka, '));
+        note.replaceChildren(document.createTextNode('Brief sudah disiapkan. Jika WhatsApp tidak terbuka, '));
         const link = document.createElement('a');
-        link.href = url; link.target = '_blank'; link.rel = 'noopener noreferrer';
+        link.href = url;
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
         link.textContent = 'buka pesan konsultasi di sini';
         note.appendChild(link);
       });
