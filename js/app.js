@@ -91,10 +91,8 @@ document.addEventListener('DOMContentLoaded', () => {
   function renderComponents() {
     if (!componentsListEl) return;
     let list = PC_DATA.components[state.selectedCategory] || [];
-    const knownStock = list.some(item => item.stock > 0);
-    // Hide genuinely out-of-stock components when verified stock exists.
-    // Seed rows all start at 0 (unknown), so keep reference options visible.
-    if (knownStock) list = list.filter(item => item.stock > 0);
+    // Seed stock=0 is unknown; only a live supplier's explicit zero hides a part.
+    list = list.filter(item => !(item.stockLive === true && item.stock === 0));
 
     // Filter by Brand
     if (state.selectedBrand !== 'ALL') {
