@@ -1,0 +1,24 @@
+name: Daily SEMEISTVOTECH Price Sync
+on:
+  schedule:
+    - cron: '15 0 * * *' # 07:15 WIB daily; GitHub Actions schedules can be delayed
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  sync-catalog:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Sync approved price feed to Cloudflare D1
+        env:
+          SYNC_TOKEN: ${{ secrets.SEMEISTVOTECH_SYNC_TOKEN }}
+        shell: bash
+        run: |
+          if [ -z "$SYNC_TOKEN" ]; then
+            echo "Skipping: set SEMEISTVOTECH_SYNC_TOKEN in GitHub Actions secrets."
+            exit 0
+          fi
+          curl --fail-with-body --max-time 45 --retry 2 --retry-delay 4 \
+            -X POST "https://semeistvotech.pages.dev/api/admin/price-sync" \
+            -H "Authorization: Bearer $SYNC_TOKEN" \
+            -H "Accept: application/json"
