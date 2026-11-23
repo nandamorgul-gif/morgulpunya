@@ -19,6 +19,7 @@ for (const file of files) {
   fs.copyFileSync(path.join(root, file), path.join(output, file));
 }
 fs.writeFileSync(path.join(output, '_redirects'), '/admin /admin.html 200\n');
+fs.writeFileSync(path.join(output, '_routes.json'), JSON.stringify({version:1,include:['/api/*'],exclude:[]},null,2)+'\n');
 fs.writeFileSync(path.join(output, '_headers'), [
   '/*',
   '  X-Content-Type-Options: nosniff',
