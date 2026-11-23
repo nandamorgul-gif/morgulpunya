@@ -481,3 +481,9 @@ const PC_DATA = {
 if (typeof window !== 'undefined') {
   window.PC_DATA = PC_DATA;
 }
+
+// CommonJS export for the server-side first-run product seed.
+// The existing browser PC Builder continues to read window.PC_DATA.
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = PC_DATA;
+}
