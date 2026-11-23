@@ -2,6 +2,16 @@
 
 Service-first PC and digital studio with retained PC Builder and an optional backend catalogue.
 
+## Custom domain and missing-photo behavior (23 November 2026)
+
+- GitHub Pages **supports a custom domain**, but it is **not activated** for this site because the owner has not supplied a specific domain or DNS provider. No placeholder `CNAME` was committed: guessing one could break routing or introduce domain takeover risks.
+- See [domain setup guide](docs/CUSTOM_DOMAIN_GITHUB_PAGES.md) for GitHub Pages settings, CNAME/A records for the `nandamorgul-gif.github.io` account, GitHub TXT verification, and HTTPS. Static GitHub Pages cannot run the Express/SQLite server or payment gateway.
+- Product photos continue to use the traced external reference sources in `js/product-photos.js` (exact manufacturer/store image rights remain to be verified before live commerce). **If a photo fails or takes too long, the image region is removed**, leaving the product text, estimated price, selection controls, and cart functional.
+- We no longer display the generic local SKU/category SVG as a substitute for missing external photos. Six category shortcuts are compact **text/number tiles** rather than model-inaccurate illustrated placeholders.
+- The Mini-ITX White preset now uses a photographed **DeepCool CH160 WH case**, labeled as a casing reference **not** an image of the completed custom build. Source: CCL Computers; confirm commercial-use rights or replace with an authorized image before a public commercial launch.
+- Preset cards, PC Builder and service cards collapse the media region when the photo cannot load. Payment-provider logo fallback remains readable brand text only; music, custom PC selections and header cart remain unchanged.
+- Browser regressions: `e2e/media-cleanup.spec.js` and updated existing media/catalog tests verify that missing photos disappear without breaking price, text, filtering or WhatsApp enquiry.
+
 ## Global visual refinement — 23 November 2026
 
 This branch has a **single, last-loaded visual polish layer** at `css/polish.css`. It reconciles the existing multi-layer styling without rewriting PC Builder, cart, music, admin or gateway code:
