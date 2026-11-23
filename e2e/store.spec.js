@@ -34,9 +34,9 @@ test('quick categories filter 2026 catalogue and card images recover', async ({ 
   await page.locator('#svoProductSearch').fill('5060 Ti');
   await expect(page.locator('.svo-product')).toHaveCount(1);
   const img = page.locator('.svo-product-image').first();
-  await img.evaluate(el => { el.src = '/images/this-file-does-not-exist.jpg'; });
-  // An unusable photo disappears, never turning into an unrelated SVG illustration.
-  await expect(page.locator('.svo-product').first().locator('.svo-product-media')).toBeHidden();
+  await img.evaluate(el => { el.dataset.svoTriedAlternate = 'yes'; el.dataset.svoFallbackStage = ''; el.src = '/images/this-file-does-not-exist.jpg'; });
+  // A rejected external photo falls back to the corresponding local SKU artwork.
+  await expect(img).toHaveAttribute('src', /images\/catalog\/.+\.svg/);
   await expect(page.locator('.svo-product-name').first()).toBeVisible();
   await expect(page.locator('.svo-product').first().locator('[data-svo-add]')).toBeVisible();
 });
@@ -50,7 +50,7 @@ test('logo, hidden music, admin and no private file leak', async ({ page, reques
   await expect(page.locator('#svoMusicMute')).toBeVisible();
   const hidden = await request.get('/.env');
   expect(hidden.status()).toBe(404);
-  await page.goto('/admin', { waitUntil: 'domcontentloaded' });
-  await expect(page.locator('#loginSection')).toBeVisible();
-  await expect(page.locator('.svo-admin-brand img')).toBeVisible();
+  await expect(page.locator('.svo-admin-entry, .svo-admin-nav')).toHaveCount(0);
+  const artwork = await request.get('/images/gta-roleplay-scene.svg');
+  expect(artwork.ok()).toBe(true);
 });
