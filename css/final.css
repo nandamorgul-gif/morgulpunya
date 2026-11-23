@@ -147,3 +147,28 @@ img{max-width:100%;height:auto}
  .svo-build-save-row{grid-template-columns:1fr}
  .svo-build-save-row .btn{font-size:.85rem}
 }
+
+/* 2026 featured hardware — compact cards with genuine product imagery when available */
+.svo-featured-section{padding:3.25rem 0 4rem;background:linear-gradient(165deg,#15101F,#0D0B14);border-top:1px solid #30233D}
+.svo-featured-intro{color:#B5ABBF;font-size:.9rem;max-width:600px;line-height:1.55;margin-top:.45rem}
+.svo-featured-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.svo-featured-card{overflow:hidden;border:1px solid #40314F;border-radius:17px;background:#1A1523}
+.svo-featured-image{position:relative;aspect-ratio:1/1;background:linear-gradient(145deg,#E6DFEF,#D5CBDF)}
+.svo-featured-image img{width:100%;height:100%;object-fit:contain;padding:9px}
+.svo-featured-image span{position:absolute;bottom:10px;right:10px;font-size:.65rem;color:#EDE4F8;background:rgba(25,17,35,.9);padding:5px 8px;border-radius:7px}
+.svo-featured-info{padding:16px;display:flex;flex-direction:column;gap:.45rem}
+.svo-featured-info small{color:#BFA0E7;font-weight:800;font-size:.68rem;letter-spacing:.08em}
+.svo-featured-info h3{font-size:1.03rem;line-height:1.35;min-height:2.9rem;overflow-wrap:anywhere}
+.svo-featured-info p{color:#D7CCDF;font-size:.85rem}
+.svo-featured-link{cursor:pointer;border:0;background:transparent;padding:.4rem 0 0;margin-top:.4rem;text-align:left;color:#D5BAFC;font-size:.84rem;font-weight:800}
+.svo-featured-link:hover{text-decoration:underline;text-underline-offset:3px}
+@media(max-width:1120px){.svo-featured-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){
+ .svo-featured-grid{gap:10px}
+ .svo-featured-section{padding:2.4rem 0 2.8rem}
+ .svo-featured-info{padding:12px}
+ .svo-featured-info h3{font-size:.85rem;min-height:0}
+ .svo-featured-info p{font-size:.77rem}
+ .svo-featured-link{font-size:.75rem}
+}
+@media(max-width:380px){.svo-featured-grid{grid-template-columns:1fr}}
