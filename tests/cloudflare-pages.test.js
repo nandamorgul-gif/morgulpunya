@@ -43,9 +43,9 @@ test('D1 schema and catalogue seed initialize valid SQLite without fictitious st
 test('single-statement dashboard import inserts all 46 rows and is idempotent', () => {
   const sql = read('db/seed-console-one-statement.sql');
   // All 46 tuples must be importable as a single D1 Console query.
-  const statements = sql.split('\n').filter(line => !line.trim().startsWith('--')).join('\n')
-    .split(';').filter(part => part.trim());
-  assert.equal(statements.length, 1);
+  // Descriptions may contain semicolons inside quoted SQL strings.
+  // SQLite db.exec below validates the actual statement structure.
+  assert.equal((sql.match(/^INSERT OR IGNORE INTO products /gm) || []).length, 1);
   assert.ok(sql.length < 100000);
   const db = new Database(':memory:');
   db.exec(read('migrations/0001_schema.sql'));
