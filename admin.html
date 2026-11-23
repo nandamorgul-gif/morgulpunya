@@ -35,9 +35,9 @@ td select{min-width:125px}td button{white-space:nowrap}.toolbar{display:flex;gap
 <button type="button" id="ordersTab" aria-selected="false">Manajemen Pesanan</button></div>
 <section id="productsPanel">
 <h2>Daftar Produk & Persediaan</h2>
-<p class="muted">Harga ditetapkan dalam rupiah; stok dihitung per unit. Perubahan langsung memengaruhi katalog. Jangan ubah produk ketika pembayaran sedang diproses tanpa pengecekan fisik stok.</p>
+<p class="muted">Harga ditetapkan dalam rupiah; stok dihitung per unit. Perubahan langsung memengaruhi katalog. Masukkan URL HTTPS foto produk asli yang penggunaannya diizinkan, atau pakai ilustrasi lokal. Jangan ubah produk ketika pembayaran sedang diproses tanpa pengecekan fisik stok.</p>
 <div class="toolbar"><input type="search" id="productSearch" placeholder="Cari nama, brand, atau ID produk"><button id="refreshProducts">Muat Ulang</button></div>
-<div class="table-scroll"><table><thead><tr><th>Nama produk</th><th>Harga (Rp)</th><th>Stok</th><th>Aktif?</th><th>Simpan</th></tr></thead>
+<div class="table-scroll"><table><thead><tr><th>Nama produk</th><th>Foto/Ilustrasi (URL)</th><th>Harga (Rp)</th><th>Stok</th><th>Aktif?</th><th>Simpan</th></tr></thead>
 <tbody id="productRows"></tbody></table></div>
 </section>
 <section id="ordersPanel" hidden><h2>Daftar Pesanan</h2>
@@ -76,6 +76,7 @@ function renderProducts(){
   const list=products.filter(p=>(p.id+' '+p.name+' '+p.brand).toLowerCase().includes(q));
   $('#productRows').innerHTML=list.map(p=>`<tr data-id="${safe(p.id)}">
   <td><small class="muted">${safe(p.id)} / ${safe(p.brand)}</small><br><input type="text" name="name" aria-label="Nama produk" maxlength="500" value="${safe(p.name)}"></td>
+  <td><input type="text" name="image" aria-label="URL gambar produk" maxlength="500" value="${safe(p.image)}" placeholder="https://..."></td>
   <td><input type="number" name="price" aria-label="Harga" min="0" max="1000000000" step="1" value="${p.price}"></td>
   <td><input type="number" name="stock" aria-label="Stok" min="0" max="1000000000" step="1" value="${p.stock}"></td>
   <td><select name="active" aria-label="Status produk"><option value="1" ${p.active?'selected':''}>Aktif</option><option value="0" ${!p.active?'selected':''}>Nonaktif</option></select></td>
@@ -105,8 +106,10 @@ $('#productRows').addEventListener('click',async e=>{
   const tr=btn.closest('tr'),id=tr.dataset.id;const name=tr.querySelector('[name=name]').value.trim();
   const price=Number(tr.querySelector('[name=price]').value),stock=Number(tr.querySelector('[name=stock]').value);
   const active=Number(tr.querySelector('[name=active]').value);
+  const image=tr.querySelector('[name=image]').value.trim();
+  if(!image || !(image.startsWith('https://') || image.startsWith('images/products/'))){status('Gunakan URL foto HTTPS atau ilustrasi lokal.',true);return}
   if(!name||!Number.isSafeInteger(price)||!Number.isSafeInteger(stock)||price<0||stock<0){status('Nama, harga, atau stok tidak valid.',true);return}
-  btn.disabled=true;try{await api('/api/admin/products/'+encodeURIComponent(id),{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,price,stock,active})});status('Produk '+id+' berhasil disimpan.');await loadProducts()}catch(err){status(err.message,true)}finally{btn.disabled=false}
+  btn.disabled=true;try{await api('/api/admin/products/'+encodeURIComponent(id),{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,price,stock,active,image})});status('Produk '+id+' berhasil disimpan.');await loadProducts()}catch(err){status(err.message,true)}finally{btn.disabled=false}
 });
 $('#orderRows').addEventListener('click',async e=>{
   const btn=e.target.closest('.save-order');if(!btn)return;
