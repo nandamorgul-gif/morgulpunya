@@ -481,3 +481,152 @@ const PC_DATA = {
 if (typeof window !== 'undefined') {
   window.PC_DATA = PC_DATA;
 }
+
+/* SEMEISTVOTECH VERIFIED PRODUCT PHOTOS 2026 */
+/* Foto model sesuai item; sumber eksternal dapat berubah atau membatasi hotlinking. */
+(() => {
+  const photos = {
+  "cpu-1": [
+    "https://bizweb.dktcdn.net/100/492/473/products/thanhphatdesktopremake-cpuintelcore-i5-14400f.jpg?v=1744617993673"
+  ],
+  "cpu-2": [
+    "https://cdn11.bigcommerce.com/s-7g81zn9sor/images/stencil/500x659/products/139/439/1761310-amd-ryzen-5-7000-series-PIB-angle__21045.1677596471.png?c=1"
+  ],
+  "cpu-3": [
+    "https://skymil-informatique.com/38420-large_default/intel-core-i7-14700k-34-ghz-56-ghz.jpg"
+  ],
+  "cpu-4": [
+    "https://www.avxperten.dk/images/product/227812/original/amd-ryzen-7-7800x3d-processor-am5-cpu-42-ghz-8-kerner-96-mb-da-1750007583.jpg"
+  ],
+  "cpu-5": [
+    "https://img.overclockers.co.uk/images/PRO-AMD-02676/a8d93e23fe04aad9922477829187340b.jpg?auto=compress%2Cformat&fill=solid&fill-color=fff&fit=fill&h=2258&q=70&w=2258"
+  ],
+  "cpu-6": [
+    "https://www.dateks.lv/images/pic/1200/1200/367/1518.jpg"
+  ],
+  "gpu-1": [
+    "https://pcmarket.vn/media/product/10517_card_man_hinh_asus_dual_rtx_4060_o8g_1.jpg",
+    "ASUS Dual GeForce RTX 4060 OC 8GB GDDR6",
+    "ASUS"
+  ],
+  "gpu-2": [
+    "https://www.asrock.com/Graphics-Card/photo/Radeon%20RX%207600%20XT%20Steel%20Legend%2016GB%20OC%28M1%29.png",
+    "ASRock Radeon RX 7600 XT Steel Legend 16GB OC",
+    "ASRock"
+  ],
+  "gpu-3": [
+    "https://img.globaldata.pt/products/GV-N407SGAMOC-12G_1.jpg",
+    "GIGABYTE GeForce RTX 4070 SUPER Gaming OC 12GB",
+    "GIGABYTE"
+  ],
+  "gpu-4": [
+    "https://sp-one.vn/Content/uploads/2024/03/26284-geforce-rtx-4080-super-gaming-oc-16g-01.png",
+    "GIGABYTE GeForce RTX 4080 SUPER Gaming OC 16GB",
+    "GIGABYTE"
+  ],
+  "gpu-5": [
+    "https://s3-apw.badencloud.store/49882-cdn/fc59fbaf-7015-446d-933d-38ae070f2908_1_1687858665.jpg",
+    "SAPPHIRE NITRO+ Radeon RX 7900 XTX Vapor-X 24GB",
+    "SAPPHIRE"
+  ],
+  "gpu-6": [
+    "https://product.hstatic.net/1000333506/product/msi-geforce-rtx-4090-suprim-liquid-x-24g-_2__9894a033dae64636bd7a698b2571a3bf.jpg",
+    "MSI GeForce RTX 4090 SUPRIM LIQUID X 24GB",
+    "MSI"
+  ],
+  "mb-1": [
+    "https://product.hstatic.net/1000333506/product/tai_xuong__3__f741500028b942cfa282710b64148475.png"
+  ],
+  "mb-2": [
+    "https://www.caseking.de/on/demandware.static/-/Sites-master-catalog-caseking/default/dw38deb375/images/data/media/image/mbmc-522_mbmc_522_03.jpg"
+  ],
+  "mb-3": [
+    "https://images.kabum.com.br/produtos/fotos/543557/placa-mae-gigabyte-z790-aorus-elite-ax-ice-intel-atx-ddr5-rgb-wi-fi-bluetooth-z790-aorus-elite-ax-ice_1729515508_gg.jpg"
+  ],
+  "mb-4": [
+    "https://files.pccasegear.com/images/X670E-TAICHI-CARRARA-thumb.jpg"
+  ],
+  "ram-1": [
+    "https://i5.walmartimages.com/seo/CORSAIR-Vengeance-RGB-16GB-2-x-8GB-288-Pin-PC-RAM-DDR5-5200-PC5-41600-Desktop-Memory-Model-CMH16GX5M2B5200C40_11f6672e-0e9c-4fad-b925-f44c3019350b.6524cccbb44c050de75eda5f3947a6a0.jpeg",
+    "Corsair Vengeance RGB 16GB (2x8GB) DDR5 5200MHz CL40",
+    "Corsair"
+  ],
+  "ram-2": [
+    "https://ccimg1.canadacomputers.com/Products/800x800/298/183/227127/07698.jpg"
+  ],
+  "ram-3": [
+    "https://c1.neweggimages.com/productimage/nb640/20-331-975-03.jpg",
+    "Team T-Force Delta RGB White 64GB (2x32GB) DDR5 6400MHz CL30",
+    "Team Group"
+  ],
+  "str-1": [
+    "https://proline.pl/pic_exp/snv2s-1000g_1.jpg"
+  ],
+  "str-2": [
+    "https://bizweb.dktcdn.net/100/329/122/products/ssd-samsung-990-pro-2tb-pcie-gen-4-0-x4-nvme-with-heatsink-mz-v9p2t0cw.jpg?v=1696582447337"
+  ],
+  "str-3": [
+    "https://imagecdn.jw.com.au/media/catalog/product/c/t/ct2000t700ssd3_2.jpg?height=514&image-type=image&store=default&width=514"
+  ],
+  "psu-1": [
+    "https://media.cdnws.com/_i/45353/m840-46043/3156/43/materiels-informatique-alimentation-msi-mag-a650bn-80plus-bronze-infinytech-reunion-04.jpeg"
+  ],
+  "psu-2": [
+    "https://cdn.cs.1worldsync.com/be/98/be987bb0-1a8f-46dd-8762-97eae403e5c8.jpg"
+  ],
+  "psu-3": [
+    "https://media.ldlc.com/r1600/ld/products/00/06/07/12/LD0006071214.jpg"
+  ],
+  "psu-4": [
+    "https://media.ldlc.com/r1600/ld/products/00/06/00/89/LD0006008943.jpg"
+  ],
+  "case-1": [
+    "https://p.jarcomputers.com/1000x1000/cc/CASEPMONTECHAIR903MAXBK_1000x1000.jpg"
+  ],
+  "case-2": [
+    "https://cdn.awsli.com.br/800x800/2595/2595093/produto/372356420/01-6jx5ptm63i.png"
+  ],
+  "case-3": [
+    "https://mytechnics.com.ua/image/cache/catalog/products/parced/2024/06/100378519/100378519_1-1000x1000.jpg"
+  ],
+  "clr-1": [
+    "https://www.awd-it.co.uk/media/catalog/product/3/5/3523611-l-c.jpg"
+  ],
+  "clr-2": [
+    "https://media.pichau.com.br/media/catalog/product/cache/74c1057f7991b4edb2bc7bdaa94de933/f/r/frozen-prism-wh-argb5.jpg"
+  ],
+  "clr-3": [
+    "https://images.kabum.com.br/produtos/fotos/651249/water-cooler-nzxt-kraken-elite-aio-v2-360mm-lcd-ips-rgb-intel-e-amd-preto-rl-kr36e-b2_1736776533_original.jpg"
+  ],
+  "acc-1": [
+    "https://www.proshop.at/Images/915x900/3085690_ed3df2808e10.png"
+  ],
+  "acc-2": [
+    "https://computerarenakh.com/image/catalog/SEA%20DARA/1111.SPEAKER/ASDFASFDAF/AFASFSF/1.CABLE%20MODE%20MA/5.JPG",
+    "FormulaMod Sleeved PSU Extension Cable Kit White/Black",
+    "FormulaMod"
+  ],
+  "acc-3": [
+    "https://ru.gecid.com/data/news/202108191105-64394/img/02_deepcool_st500_argb.jpg"
+  ]
+};
+  for (const group of Object.values(PC_DATA.components)) {
+    for (const item of group) {
+      const matched = photos[item.id];
+      if (!matched) continue;
+      item.image = matched[0];
+      if (matched[1]) item.name = matched[1];
+      if (matched[2]) item.brand = matched[2];
+    }
+  }
+  // Foto preset memakai casing produk pada konfigurasi, bukan foto PC lengkap hasil rakitan.
+  const presetCase = {
+    "budget-esports": "case-1",
+    "amd-streamer-1440p": "case-3",
+    "creator-4k-beast": "case-2"
+  };
+  for (const preset of PC_DATA.presets) {
+    const caseItem = PC_DATA.components.case.find(item => item.id === presetCase[preset.id]);
+    if (caseItem) preset.image = caseItem.image;
+  }
+})();
