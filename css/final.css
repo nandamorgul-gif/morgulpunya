@@ -133,3 +133,17 @@ img{max-width:100%;height:auto}
 @media(prefers-reduced-motion:reduce){
  .svo-category-tile,.nav-links,.svo-brand,.svo-product{animation:none!important;transition:none!important}
 }
+
+/* Builder saved-build controls and trusted pricing disclosure. */
+.svo-builder-info{margin-top:1rem;border:1px solid #61497D;border-radius:11px;background:#21182C;padding:12px 14px}
+.svo-builder-info strong{color:#E6D6FF;font-size:.84rem;display:flex;align-items:center;gap:.4rem}
+.svo-builder-info p{font-size:.75rem;color:#BBAECA;line-height:1.65;margin:.35rem 0 0}
+.svo-build-save-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.65rem;margin-top:.8rem}
+.svo-build-save-row .btn{min-width:0;width:100%;font-size:.77rem;padding:.7rem .4rem;display:flex;align-items:center;justify-content:center;gap:.4rem}
+.svo-save-status{display:block;line-height:1.5;color:#CDB1ED;margin-top:.5rem;min-height:1rem}
+#svoContactStatus{margin-top:.5rem;color:#D0B4F1;font-size:.83rem;line-height:1.5}
+#svoContactStatus a{color:#E6D2FF;text-decoration:underline;text-underline-offset:2px}
+@media(max-width:400px){
+ .svo-build-save-row{grid-template-columns:1fr}
+ .svo-build-save-row .btn{font-size:.85rem}
+}
