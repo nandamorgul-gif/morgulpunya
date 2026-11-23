@@ -7,7 +7,7 @@
 const PC_DATA = {
   "catalogEdition": "2026",
   "catalogUpdatedAt": "2026-11-23",
-  "pricingNote": "Harga simulasi / estimasi, bukan harga pasar real-time. Stok 0 sampai dikonfirmasi admin.",
+  "pricingNote": "Harga hanya simulasi komponen. Biaya jasa rakit, instalasi/OS, ongkos kirim, lisensi dan garansi tambahan belum termasuk; stok dan harga akhir dikonfirmasi admin.",
   "categories": [
     {
       "id": "cpu",
@@ -710,7 +710,8 @@ const PC_DATA = {
       },
       "totalPrice": 22140000,
       "estimatedWatts": 315,
-      "recommendedPsu": "650W (periksa headroom)"
+      "recommendedPsu": "650W (periksa headroom)",
+      "serviceNote": "Paket simulasi bahan diskusi, bukan stok unit siap kirim. Biaya jasa perakitan, instalasi, lisensi dan pengiriman diperkirakan setelah konsultasi."
     },
     {
       "id": "amd-streamer-1440p",
@@ -730,7 +731,8 @@ const PC_DATA = {
       },
       "totalPrice": 40940000,
       "estimatedWatts": 492,
-      "recommendedPsu": "850W (periksa headroom)"
+      "recommendedPsu": "850W (periksa headroom)",
+      "serviceNote": "Paket simulasi bahan diskusi, bukan stok unit siap kirim. Biaya jasa perakitan, instalasi, lisensi dan pengiriman diperkirakan setelah konsultasi."
     },
     {
       "id": "creator-4k-beast",
@@ -750,7 +752,8 @@ const PC_DATA = {
       },
       "totalPrice": 63600000,
       "estimatedWatts": 614,
-      "recommendedPsu": "1000W (periksa headroom)"
+      "recommendedPsu": "1000W (periksa headroom)",
+      "serviceNote": "Paket simulasi bahan diskusi, bukan stok unit siap kirim. Biaya jasa perakitan, instalasi, lisensi dan pengiriman diperkirakan setelah konsultasi."
     },
     {
       "id": "intel-creator-2026",
@@ -770,7 +773,29 @@ const PC_DATA = {
       },
       "totalPrice": 32540000,
       "estimatedWatts": 447,
-      "recommendedPsu": "850W (periksa headroom)"
+      "recommendedPsu": "850W (periksa headroom)",
+      "serviceNote": "Paket simulasi bahan diskusi, bukan stok unit siap kirim. Biaya jasa perakitan, instalasi, lisensi dan pengiriman diperkirakan setelah konsultasi."
+    },
+    {
+      "id": "compact-white-itx",
+      "title": "SVO COMPACT WHITE",
+      "badge": "Custom Mini-ITX White",
+      "tagline": "Ryzen 7 9700X · RTX 5060 Ti 16GB · B850I Mini-ITX · SFX 850W. Referensi rakitan compact, komponen final diverifikasi sebelum jasa perakitan.",
+      "image": "images/catalog/case-ch160-white.svg",
+      "components": {
+        "cpu": "cpu-r7-9700x",
+        "gpu": "gpu-rtx5060ti16",
+        "motherboard": "mb-asrock-b850i",
+        "ram": "ram-32-white",
+        "storage": "ssd-samsung-990pro-2t",
+        "psu": "psu-cm-sfx850",
+        "case": "case-ch160-white",
+        "cooler": "cooler-ak400"
+      },
+      "totalPrice": 27440000,
+      "estimatedWatts": 306,
+      "recommendedPsu": "850W SFX (cek konektor dan dimensi kartu grafis)",
+      "serviceNote": "Paket simulasi bahan diskusi, bukan stok unit siap kirim. Biaya jasa perakitan, instalasi, lisensi dan pengiriman diperkirakan setelah konsultasi."
     }
   ]
 };
