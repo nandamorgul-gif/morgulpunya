@@ -17,7 +17,7 @@ if (!fs.existsSync(dbPath)) {
   console.error('Database does not exist yet. Start the server first for initial seeding.');
   process.exitCode = 1;
 } else {
-  const store = openStore(dataDir);
+  const store = openStore(dataDir, { skipSeed: true });
   const db = store.db;
   try {
     const items = Object.entries(catalogue.components)
