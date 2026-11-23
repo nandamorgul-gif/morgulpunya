@@ -2,6 +2,17 @@
 
 Service-first PC and digital studio with retained PC Builder and an optional backend catalogue.
 
+## Roleplay servers, premium logo, and payment preferences (2026-11-23)
+
+- Updated SEMEISTVO TECH **luxury brand symbol** into a flowing silver/violet ribbon icon and matching wordmark/favicon.
+- Added a new **GTA 5 Roleplay (FiveM/Cfx.re) server development service** with a separate page section and inquiry CTA. Supports discussing server setup, RP framework, resources/scripts, admin management, initial testing and documentation. This independent service is **not affiliated with or endorsed by Rockstar, GTA V, FiveM or Cfx.re**. Third-party asset licenses and platform rules apply.
+- **Hosting/VPS, game server hosting, paid scripts/assets, licenses and domain fees are excluded** unless listed explicitly in the approved quote. Website development also **excludes hosting, domain, professional email, premium themes/plugins, paid APIs and renewals** unless explicitly contracted.
+- PC Builder now includes **five compatible concept presets**, including Mini-ITX White (Ryzen 7 9700X, B850I, RTX 5060 Ti 16GB, SFX 850W). Sample prices are component-only estimates; **labor, installation, licenses, shipping and additional warranty are not included**.
+- Added **BCA, Mandiri, SeaBank, Bank Jago and DANA** as optional *customer payment preferences*, shown in a payments section and selectable in the service consultation and PC quote forms. The selected preference is included in the WhatsApp inquiry.
+- **No bank numbers, wallet phone numbers, QR codes, fake payment proof, or automatic payment confirmation have been invented**. Do not transfer funds until the admin verifies the invoice and destination. These preferences are not equivalent to active payment channels. Real provider checkout displays only the methods enabled by the provider account.
+- The original compact hidden YouTube music player and previous PC Builder, cart, SQLite admin and secure gateway foundation remain unchanged.
+- `npm run test:e2e` includes browser smoke checks for the new roleplay, hosting disclaimer, payments and five presets.
+
 ## Services-first transformation (23 November 2026)
 
 **New positioning:** SEMEISTVO TECH is a **technology service studio**, not primarily a retail hardware shop. The main website promotes:
