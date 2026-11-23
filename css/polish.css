@@ -484,29 +484,38 @@ img.svo-image-unavailable,
 }
 @media(prefers-reduced-motion:reduce) {.svo-menu-lines span{transition:none;}}
 
-/* SVO 2026 final storefront photo and admin visibility fixes */
-.svo-admin-entry {
-  display:inline-flex;align-items:center;justify-content:center;
-  color:#e6d4ff;font-size:.8rem;font-weight:750;text-decoration:none;
-  border:1px solid rgba(194,154,242,.48);border-radius:10px;
-  background:rgba(121,75,170,.13);padding:.55rem .75rem;white-space:nowrap;
-  min-height:38px;line-height:1.2;
+/* SVO 2026: image-stable storefront and transparent price feed status. */
+.svo-pricing-status {
+  border:1px solid rgba(170,137,214,.35);background:rgba(32,22,48,.55);
+  color:#d5c5e9;border-radius:12px;padding:12px 15px;font-size:.82rem;
+  line-height:1.55;margin:0 0 15px;
 }
-.svo-admin-entry:hover,.svo-admin-entry:focus-visible{color:#fff;background:rgba(137,90,204,.28);outline-offset:3px}
+.svo-pricing-status[data-live="true"] {color:#e4d8ff;border-color:rgba(177,150,246,.55)}
+.svo-product-media {
+  background-color:#f6f3fa;
+  background-size:contain;
+  background-position:center;
+  background-repeat:no-repeat;
+}
+.svo-product-image {object-fit:contain}
+.svo-featured-image {background-size:contain;background-position:center;background-repeat:no-repeat;background-color:#f7f4fb}
 .svo-product.svo-card-without-photo{display:none!important}
-#svoProductGrid:has(.svo-product):not(:has(.svo-product:not(.svo-card-without-photo))))::after{
- content:"Foto referensi produk belum tersedia. Hubungi admin untuk informasi komponen yang sesuai.";
- display:block;grid-column:1/-1;color:#c4b0d7;padding:1.5rem;text-align:center;
- border:1px solid rgba(183,148,217,.23);border-radius:13px;
+#svoProductGrid:has(.svo-product):not(:has(.svo-product:not(.svo-card-without-photo))))::after {
+  content:"Produk dengan gambar valid belum tersedia. Hubungi SEMEISTVO TECH untuk rekomendasi.";
+  display:block;grid-column:1/-1;text-align:center;color:#d6c3e8;padding:20px;
 }
-.svo-roleplay-media .svo-roleplay-scene-caption {display:block;padding:4px 6px 8px;color:#cbb4df;font-size:.72rem;}
-@media(max-width:760px){
- .header-actions .svo-admin-entry{padding:.45rem .58rem;min-height:40px;font-size:.73rem}
+.svo-roleplay-media,.svo-offer-media:has(img[src*="gta-roleplay-scene.svg"]) {
+  background-color:#1f1532;
+  background-image:url('/images/gta-roleplay-scene.svg');
+  background-size:cover;background-position:center;
 }
-@media(max-width:390px){
- .header-actions .svo-admin-entry{font-size:.65rem;padding:.39rem .43rem}
+.svo-roleplay-media .svo-roleplay-scene-caption {
+  display:block;padding:5px 6px 9px;color:#ddc5ef;font-size:.73rem;line-height:1.5;
 }
-
-/* Access admin without crowding the small-screen header. */
-.header .nav-links .svo-admin-nav {display:none}
-@media(max-width:1024px){.header-actions .svo-admin-entry{display:none}.header .nav-links .svo-admin-nav{display:flex}}
+.svo-roleplay-media>img[src*="gta-roleplay-scene.svg"] {
+  display:block;width:100%;aspect-ratio:16/9;object-fit:cover;min-height:260px;
+}
+@media(max-width:560px){
+  .svo-pricing-status{font-size:.76rem;padding:10px 12px}
+  .svo-roleplay-media>img[src*="gta-roleplay-scene.svg"]{min-height:180px}
+}
