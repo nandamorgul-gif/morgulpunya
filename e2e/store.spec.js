@@ -15,7 +15,7 @@ for (const width of widths) {
     if (width <= 1024) {
       await page.locator('#mobileMenuBtn').click();
       await expect(page.locator('#svoPrimaryNav')).toHaveClass(/open/);
-      await page.locator('#svoPrimaryNav a[href="#svo-shop"]').click();
+      await page.locator('#svoPrimaryNav a[href="#layanan"]').click();
       await expect(page.locator('#svoPrimaryNav')).not.toHaveClass(/open/);
     } else {
       await expect(page.locator('#svoPrimaryNav')).toBeVisible();
