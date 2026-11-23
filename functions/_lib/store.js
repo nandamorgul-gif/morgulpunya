@@ -77,7 +77,7 @@ export function allowedImage(image) {
   if (typeof image !== "string" || image.length > 2048) return false;
   try {
     const u = new URL(image);
-    return u.protocol === "https:" && !u.username && !u.password && !/[<>"'\\s]/.test(image);
+    return u.protocol === "https:" && !u.username && !u.password && !/[<>"'\s]/.test(image);
   }
   catch { return false; }
 }
