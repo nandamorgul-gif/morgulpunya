@@ -405,3 +405,50 @@ section[id] {scroll-margin-top:90px}
 @media(prefers-reduced-motion:reduce) {
   *,*::before,*::after {animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}
 }
+
+
+/* Missing-photo handling: no fake illustration and no empty image frame. */
+img.svo-image-unavailable,
+.svo-media-unavailable,
+.svo-media-unavailable[hidden],
+.svo-card-without-photo .svo-preset-caption,
+.svo-card-without-photo .svo-photo-credit,
+[hidden].svo-preset-caption {display:none!important}
+.svo-product.svo-card-without-photo .svo-product-body {padding-top:21px}
+.svo-product.svo-card-without-photo {border-top:2px solid #755492}
+.svo-featured-card.svo-card-without-photo .svo-featured-info {padding-top:20px}
+.svo-featured-card.svo-card-without-photo {border-top:2px solid #755492}
+.svo-offer.svo-card-without-photo .svo-offer-body {padding-top:23px}
+.svo-offer.svo-card-without-photo {border-top:2px solid #8363a4}
+.svo-preset-section .preset-card.svo-card-without-photo {border-top:2px solid #8363a4;padding-top:21px}
+#rakit-pc .component-card.svo-card-without-photo {grid-template-columns:minmax(0,1fr) minmax(155px,auto)}
+.svo-cart-item.svo-card-without-photo {grid-template-columns:minmax(0,1fr)}
+.svo-hero-without-photo .svo-hero-grid {grid-template-columns:minmax(0,1fr);max-width:880px}
+.svo-layout-without-photo {grid-template-columns:minmax(0,1fr);max-width:880px}
+.svo-studio-hero-media.svo-media-unavailable + * {margin-top:0}
+/* These are navigation tiles, not product photography. */
+.svo-category-tiles {align-items:stretch}
+.svo-category-tile {
+  min-height:132px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;
+  text-align:left;gap:14px;padding:21px 18px;border:1px solid #544162;border-radius:14px;
+  background:linear-gradient(145deg,#251b33,#17121f);
+}
+.svo-category-tile .svo-category-number {
+  display:inline-flex;align-items:center;justify-content:center;
+  width:38px;height:38px;border-radius:10px;background:#3b294e;
+  color:#d8baf5;font-size:.75rem;font-weight:900;letter-spacing:.05em;
+  border:1px solid #6b5186;
+}
+.svo-category-tile span:not(.svo-category-number) {font-size:.94rem;text-align:left;line-height:1.3}
+.svo-category-tile small {font-size:.73rem;line-height:1.5;color:#bcb0c9}
+.svo-category-tile:hover {border-color:#a87cda;background:linear-gradient(145deg,#332441,#1f152a)}
+@media(max-width:1024px) {
+  #rakit-pc .component-card.svo-card-without-photo {grid-template-columns:minmax(0,1fr) minmax(145px,auto)}
+}
+@media(max-width:560px) {
+  .svo-category-tile {min-height:112px;padding:15px 12px;gap:9px}
+  .svo-category-tile .svo-category-number {height:31px;width:31px;border-radius:8px}
+  .svo-category-tile span:not(.svo-category-number) {font-size:.8rem}
+  .svo-category-tile small {font-size:.65rem}
+  #rakit-pc .component-card.svo-card-without-photo {grid-template-columns:minmax(0,1fr)}
+}
