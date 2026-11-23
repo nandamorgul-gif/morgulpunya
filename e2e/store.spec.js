@@ -11,7 +11,8 @@ for (const width of widths) {
     await expect(page.locator('#svoMusicPlayer')).toHaveClass(/is-collapsed/);
     const appWidth = await page.evaluate(() => ({ body: document.body.scrollWidth, viewport: innerWidth }));
     expect(appWidth.body).toBeLessThanOrEqual(appWidth.viewport + 3);
-    await expect(page.locator('img.svo-product-image').first()).toBeVisible();
+    // Remote photo hosts may block hotlinks. Product text/cart must remain usable.
+    await expect(page.locator('.svo-product-name').first()).toBeVisible();
     if (width <= 1024) {
       await page.locator('#mobileMenuBtn').click();
       await expect(page.locator('#svoPrimaryNav')).toHaveClass(/open/);
@@ -34,7 +35,10 @@ test('quick categories filter 2026 catalogue and card images recover', async ({ 
   await expect(page.locator('.svo-product')).toHaveCount(1);
   const img = page.locator('.svo-product-image').first();
   await img.evaluate(el => { el.src = '/images/this-file-does-not-exist.jpg'; });
-  await expect(img).toHaveAttribute('src', /images\/catalog\/gpu-rtx5060ti16\.svg/);
+  // An unusable photo disappears, never turning into an unrelated SVG illustration.
+  await expect(page.locator('.svo-product').first().locator('.svo-product-media')).toBeHidden();
+  await expect(page.locator('.svo-product-name').first()).toBeVisible();
+  await expect(page.locator('.svo-product').first().locator('[data-svo-add]')).toBeVisible();
 });
 
 test('logo, hidden music, admin and no private file leak', async ({ page, request }) => {
