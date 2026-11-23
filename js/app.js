@@ -149,6 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
     presetsContainerEl.innerHTML = PC_DATA.presets.map(preset => `
       <div class="glass-card preset-card">
         <img src="${preset.image}" data-svo-fallback="images/products/pcbuild.svg" alt="Foto konsep rakitan PC, bukan konfigurasi final ${preset.title}" class="preset-image" loading="lazy">
+        <span class="svo-preset-caption">Foto konsep referensi · Komponen dan warna unit bisa berbeda</span>
         <div class="preset-header">
           <span class="badge ${preset.id.includes('beast') ? 'badge-purple' : 'badge'}">${preset.badge}</span>
           <h3 class="preset-title">${preset.title}</h3>
