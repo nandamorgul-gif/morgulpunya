@@ -127,7 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
           ${showImage(p).credit ? `<a class="svo-photo-credit" href="${escapeHTML(showImage(p).credit)}" target="_blank" rel="noopener noreferrer">Sumber foto referensi ↗</a>` : ''}
           <span class="svo-stock-status">${serverCatalogAvailable ? (p.stock > 0 ? 'Stok tercatat: ' + p.stock : 'Stok belum tersedia') : 'Tanyakan ketersediaan'}</span>
           <p class="svo-product-price"><span class="svo-price-caption">${serverCatalogAvailable ? 'Harga katalog (konfirmasi admin)' : 'Harga simulasi / estimasi'}</span><br>${formatPrice(p.price)}</p>
-          <button class="svo-store-btn" type="button" data-svo-add="${escapeHTML(p.id)}" ${serverCatalogAvailable && p.stock < 1 ? 'disabled' : ''}>${serverCatalogAvailable && p.stock < 1 ? 'Stok Belum Tersedia' : '+ Tambah ke Keranjang'}</button>
+          <button class="svo-store-btn" type="button" data-svo-add="${escapeHTML(p.id)}">${serverCatalogAvailable && p.stock < 1 ? '+ Tanya Stok via Keranjang' : '+ Tambah ke Keranjang'}</button>
         </div>
       </article>`).join('') : '<p class="svo-cart-empty">Tidak ada produk yang sesuai dengan pencarian.</p>';
   };
@@ -243,9 +243,18 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   els.cartList.addEventListener('click', e => {
     const remove = e.target.closest('[data-svo-remove]');
-    if (remove) { setQty(remove.dataset.svoRemove, 0); return; }
-    const qtyButton = e.target.closest('[data-svo-delta]');
-    if (qtyButton) setQty(qtyButton.dataset.svoId, (cart[qtyButton.dataset.svoId] || 0) + Number(qtyButton.dataset.svoDelta));
+    if (remove) {
+      const id = remove.dataset.svoRemove;
+      setQty(id, 0);
+      removeBuilderPart(id);
+      return;
+    }
+    const button = e.target.closest('[data-svo-delta]');
+    if (!button) return;
+    const id = button.dataset.svoId;
+    const delta = Number(button.dataset.svoDelta);
+    if (delta === -1 && !(cart[id] > 0)) removeBuilderPart(id);
+    else if (delta === 1 || delta === -1) setQty(id, (cart[id] || 0) + delta);
   });
   [els.search, els.category, els.sort].forEach(el => el.addEventListener(el.tagName === 'INPUT' ? 'input' : 'change', renderProducts));
   document.getElementById('svoShopCartButton').addEventListener('click', openCart);
@@ -271,7 +280,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const status = document.getElementById('svoCheckoutStatus');
     // When the server and sandbox/provider are configured, submit a real server-side
     // inventory reservation and create payment using authoritative server prices.
-    if (serverCheckoutEnabled) {
+    if (canPayOnline()) {
       if (!email || !/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email)) {
         status.textContent = 'Masukkan email yang valid untuk pembayaran.';
         return;
@@ -343,25 +352,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!Array.isArray(data.products)) return;
     serverCatalogAvailable = true;
     serverCheckoutEnabled = data.checkout_enabled === true;
-    const instructions = document.querySelector('#svoCheckoutView > p');
-    const sendButton = els.checkout.querySelector('button[type="submit"]');
-    if (serverCheckoutEnabled) {
-      if (instructions) instructions.textContent = 'Periksa kembali data dan alamat. Pembayaran hanya dilakukan melalui tautan resmi yang diterbitkan server dan diverifikasi oleh penyedia pembayaran.';
-      if (sendButton) sendButton.textContent = 'Lanjutkan ke Pembayaran Resmi';
-    } else {
-      if (instructions) instructions.textContent = 'Checkout online belum aktif. Formulir ini menyiapkan permintaan pembelian melalui WhatsApp; stok dan harga akhir dikonfirmasi admin.';
-      if (sendButton) sendButton.textContent = 'Kirim Permintaan via WhatsApp';
-    }
-
     products = data.products.filter(p => p && p.id && Number.isSafeInteger(p.price) && Number.isInteger(p.stock) && p.stock >= 0);
     productMap = new Map(products.map(p => [p.id, p]));
-    for (const id of Object.keys(cart)) {
-      if (!productMap.has(id)) delete cart[id];
-      else if (cart[id] > productMap.get(id).stock) {
-        if (productMap.get(id).stock === 0) delete cart[id];
-        else cart[id] = productMap.get(id).stock;
-      }
-    }
+    // Keep manual + builder quote selections despite unavailable stock;
+    // automatic payment is blocked by canPayOnline() until stock suffices.
+    updateBuilderCart(window.SVOBuilderSelections || {});
     persist(); renderProducts(); renderCart(); renderFeatured();
     const note = document.querySelector('.svo-store-note');
     if (note) note.textContent = serverCheckoutEnabled ?
