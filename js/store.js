@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (els.sort.value === 'name') list.sort((a, b) => a.name.localeCompare(b.name, 'id'));
     els.total.textContent = list.length + ' komponen ditemukan';
     grid.innerHTML = list.length ? list.map(p => `
-      <article class="svo-product">
+      <article class="svo-product" data-svo-category="${escapeHTML(p.category)}">
         <div class="svo-product-media">
           <img src="${escapeHTML(p.image)}" alt="Ilustrasi kategori ${escapeHTML(p.category)}" class="svo-product-image" loading="lazy" width="600" height="400">
           <span class="svo-illustration-chip">Ilustrasi hardware</span>
@@ -118,6 +118,17 @@ document.addEventListener('DOMContentLoaded', () => {
     opt.textContent = c.name;
     els.category.appendChild(opt);
   });
+  // Manufacturer-provided photo links may expire; show an honest, local illustration instead.
+  grid.addEventListener('error', e => {
+    const img = e.target;
+    if (!img || !img.classList?.contains('svo-product-image')) return;
+    const cat = img.closest('[data-svo-category]')?.dataset.svoCategory;
+    const replacement = 'images/products/' + (db.components[cat] ? cat : 'accessories') + '.svg';
+    if (!img.getAttribute('src')?.endsWith(replacement)) {
+      img.setAttribute('src', replacement);
+      img.alt = 'Ilustrasi kategori ' + cat;
+    }
+  }, true);
   grid.addEventListener('click', e => {
     const add = e.target.closest('[data-svo-add]');
     if (!add) return;
