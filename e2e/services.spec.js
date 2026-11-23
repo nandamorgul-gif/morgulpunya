@@ -123,9 +123,14 @@ test('payment preferences list all requested services without exposing fake bank
   await expect(page.locator('#digital .svo-web-exclusion')).toContainText('hosting');
 });
 
-test('five PC build presets include compatible Compact White Mini-ITX with estimated prices', async ({ page }) => {
+test('five PC build presets use descriptive names', async ({ page }) => {
   await page.goto('/', { waitUntil: 'domcontentloaded' });
-  await expect(page.locator('.preset-card')).toHaveCount(5);
-  await expect(page.locator('#preset')).toContainText('SVO COMPACT WHITE');
+  await expect(page.locator('#preset .preset-title')).toHaveText([
+    'PC Gaming 1080p',
+    'PC Streaming 1440p',
+    'PC Editing 4K',
+    'PC Kerja dan Gaming',
+    'PC Mini-ITX Putih'
+  ]);
   await expect(page.locator('#svoMusicPlayer')).toHaveClass(/is-collapsed/);
 });

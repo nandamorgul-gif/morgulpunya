@@ -694,7 +694,7 @@ const PC_DATA = {
   "presets": [
     {
       "id": "budget-esports",
-      "title": "SVO STARTER 1080p",
+      "title": "PC Gaming 1080p",
       "badge": "Gaming & Entry Creator",
       "tagline": "Ryzen 5 9600X · RTX 5060 Ti 16GB · DDR5 32GB. Basis gaming modern.",
       "image": "https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=1000&auto=format&fit=crop&q=85",
@@ -716,7 +716,7 @@ const PC_DATA = {
     },
     {
       "id": "amd-streamer-1440p",
-      "title": "SVO STREAM PRO",
+      "title": "PC Streaming 1440p",
       "badge": "1440p Streaming",
       "tagline": "Ryzen 7 9850X3D · RTX 5070 Ti 16GB · RAM DDR5 32GB.",
       "image": "https://images.unsplash.com/photo-1555680202-c86f0e12f086?w=1000&auto=format&fit=crop&q=85",
@@ -738,7 +738,7 @@ const PC_DATA = {
     },
     {
       "id": "creator-4k-beast",
-      "title": "SVO CREATOR ULTRA",
+      "title": "PC Editing 4K",
       "badge": "4K / Workstation",
       "tagline": "Ryzen 9 9950X3D · RTX 5080 · DDR5 64GB untuk pekerjaan intensif.",
       "image": "https://mikepc.com.au/cdn/shop/files/a_fcef53a5-14ba-4822-91df-89a3a5179a23_960x.png?v=1745457693",
@@ -760,7 +760,7 @@ const PC_DATA = {
     },
     {
       "id": "intel-creator-2026",
-      "title": "SVO INTEL WORK",
+      "title": "PC Kerja dan Gaming",
       "badge": "Intel 2026",
       "tagline": "Core Ultra 7 270K Plus · RTX 5070 · DDR5 32GB untuk kerja dan gaming.",
       "image": "https://bybcomputers.com.au/cdn/shop/files/AMD-gaming-pc-ryzen7-9700x-rtx5070-12gb-32gb-2tb-antec-c5-white-007.jpg?v=1755493357&width=1000",
@@ -782,7 +782,7 @@ const PC_DATA = {
     },
     {
       "id": "compact-white-itx",
-      "title": "SVO COMPACT WHITE",
+      "title": "PC Mini-ITX Putih",
       "badge": "Custom Mini-ITX White",
       "tagline": "Ryzen 7 9700X · RTX 5060 Ti 16GB · B850I Mini-ITX · SFX 850W. Referensi rakitan compact, komponen final diverifikasi sebelum jasa perakitan.",
       "image": "https://cdn.cclonline.com/cdn-cgi/image/width%3D2000/images/shopblocks/CH160-WH-White-01.png",
