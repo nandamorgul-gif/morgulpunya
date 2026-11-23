@@ -547,8 +547,8 @@ if (typeof window !== 'undefined') {
     "https://files.pccasegear.com/images/X670E-TAICHI-CARRARA-thumb.jpg"
   ],
   "ram-1": [
-    "https://i5.walmartimages.com/seo/CORSAIR-Vengeance-RGB-16GB-2-x-8GB-288-Pin-PC-RAM-DDR5-5200-PC5-41600-Desktop-Memory-Model-CMH16GX5M2B5200C40_11f6672e-0e9c-4fad-b925-f44c3019350b.6524cccbb44c050de75eda5f3947a6a0.jpeg",
-    "Corsair Vengeance RGB 16GB (2x8GB) DDR5 5200MHz CL40",
+    "https://c.cdnmp.net/241860914/p/m/5/corsair-vengeance-16gb-2x8gb-ddr5-5600mhz-cl40-1-25v-rgb-xmp-expo~100730355.jpg",
+    "Corsair Vengeance RGB 16GB (2x8GB) DDR5 5600MHz CL40",
     "Corsair"
   ],
   "ram-2": [
