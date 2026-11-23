@@ -10,7 +10,10 @@ const root = path.resolve(__dirname, '..');
 const output = path.join(root, 'dist');
 const folders = ['css', 'js', 'images'];
 const verificationFile = 'google7f49957bcb00f098.html';
-const files = ['index.html', 'site.webmanifest', 'robots.txt', 'sitemap.xml', verificationFile, 'jasa-server-fivem/index.html'];
+const files = [
+  'index.html', 'site.webmanifest', 'robots.txt', 'sitemap.xml', verificationFile,
+  'jasa-server-fivem/index.html', 'jasa-rakit-pc/index.html', 'jasa-pembuatan-website/index.html'
+];
 fs.rmSync(output, { recursive: true, force: true });
 fs.mkdirSync(output, { recursive: true });
 for (const folder of folders) {

@@ -29,9 +29,16 @@ test('Pages public build includes all website assets and excludes server/databas
   const homepage = 'https://semeistvotech.pages.dev/';
   const html = read('dist/index.html');
   assert.ok(html.includes('<link rel="canonical" href="' + homepage + '">'));
-  const fivemPage = homepage + 'jasa-server-fivem/';
-  assert.deepEqual([...read('dist/sitemap.xml').matchAll(/<loc>([^<]+)<\/loc>/g)].map(match => match[1]), [homepage, fivemPage]);
-  assert.ok(read('dist/jasa-server-fivem/index.html').includes('<link rel="canonical" href="' + fivemPage + '">'));
+  const servicePaths = ['jasa-server-fivem/', 'jasa-rakit-pc/', 'jasa-pembuatan-website/'];
+  const urls = [...read('dist/sitemap.xml').matchAll(/<loc>([^<]+)<\/loc>/g)].map(match => match[1]);
+  assert.deepEqual(urls, [homepage, ...servicePaths.map(service => homepage + service)]);
+  for (const service of servicePaths) {
+    const page = read('dist/' + service + 'index.html');
+    assert.ok(page.includes('<link rel="canonical" href="' + homepage + service + '">'), service);
+    assert.ok(page.includes('href="/css/service-page.css"'), service);
+  }
+  assert.ok(fs.existsSync(path.join(root, 'dist/css/service-page.css')));
+  assert.ok(fs.existsSync(path.join(root, 'dist/images/contoh-halaman-fivem.jpg')));
   assert.ok(read('dist/robots.txt').includes('Sitemap: ' + homepage + 'sitemap.xml'));
   const structuredData = JSON.parse(html.match(/<script type="application\/ld\+json">([^]*?)<\/script>/)[1]);
   assert.ok(structuredData['@graph'].some(item => item['@type'] === 'WebSite' && item.url === homepage));

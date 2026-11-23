@@ -21,7 +21,7 @@ test('mobile GTA 5 RP navigation opens the FiveM service page and its quote link
   await page.locator('#svoPrimaryNav').getByRole('link', { name: 'GTA 5 RP' }).click();
   await expect(page).toHaveURL(/\/jasa-server-fivem\/$/);
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Jasa Pembuatan Server GTA 5 Roleplay');
-  const artwork = page.locator('.fivem-hero-media img');
+  const artwork = page.locator('.service-hero-media img');
   await artwork.evaluate(image => image.decode());
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
 
@@ -33,6 +33,27 @@ test('mobile GTA 5 RP navigation opens the FiveM service page and its quote link
   const quote = new URL(await page.getByRole('link', { name: 'Minta Penawaran via WhatsApp' }).first().getAttribute('href'));
   expect(quote.origin + quote.pathname).toBe('https://wa.me/6288291967659');
   expect(quote.searchParams.get('text')).toContain('server GTA 5 Roleplay (FiveM)');
+});
+
+test('PC and website service links open their pages with separate quote messages', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await page.locator('#layanan').getByRole('link', { name: 'Rakit PC Custom' }).click();
+  await expect(page).toHaveURL(/\/jasa-rakit-pc\/$/);
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Jasa Rakit PC Custom');
+  const pcQuote = new URL(await page.getByRole('link', { name: 'Minta Penawaran via WhatsApp' }).first().getAttribute('href'));
+  expect(pcQuote.searchParams.get('text')).toContain('jasa rakit PC custom');
+  await page.locator('.service-hero').getByRole('link', { name: 'Coba PC Builder' }).click();
+  await expect(page).toHaveURL(/\/#rakit-pc$/);
+
+  await page.getByRole('button', { name: 'Buka menu navigasi' }).click();
+  await page.locator('#svoPrimaryNav').getByRole('link', { name: 'Website', exact: true }).click();
+  await expect(page).toHaveURL(/\/jasa-pembuatan-website\/$/);
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Jasa Pembuatan Website Custom');
+  const webQuote = new URL(await page.getByRole('link', { name: 'Minta Penawaran via WhatsApp' }).first().getAttribute('href'));
+  expect(webQuote.searchParams.get('text')).toContain('jasa pembuatan website custom');
+  await page.getByRole('link', { name: 'Buka Halaman FiveM' }).click();
+  await expect(page).toHaveURL(/\/jasa-server-fivem\/$/);
 });
 
 test('web development CTA creates a service-specific WhatsApp brief, not a paid order', async ({ page }) => {
