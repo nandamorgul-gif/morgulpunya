@@ -642,6 +642,44 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
+    // Save/load user-selected configuration; products are looked up by ID on
+    // restore so the catalogue remains the source of truth for demo pricing.
+    const saveBuildBtn = document.getElementById('svoSaveBuildBtn');
+    const loadBuildBtn = document.getElementById('svoLoadBuildBtn');
+    const saveBuildStatus = document.getElementById('svoBuildSaveStatus');
+    const buildKey = 'svo-tech-saved-build-v1';
+    const notifyBuild = message => { if (saveBuildStatus) saveBuildStatus.textContent = message; };
+    if (saveBuildBtn) saveBuildBtn.addEventListener('click', () => {
+      const ids = Object.fromEntries(Object.entries(state.userBuild)
+        .filter(([cat, part]) => !!part && !!PC_DATA.components[cat])
+        .map(([cat, part]) => [cat, part.id]));
+      if (!Object.keys(ids).length) { notifyBuild('Pilih komponen sebelum menyimpan rakitan.'); return; }
+      try {
+        localStorage.setItem(buildKey, JSON.stringify({ version: 1, savedAt: Date.now(), ids }));
+        notifyBuild('Rakitan berhasil disimpan di browser ini.');
+      } catch (_) { notifyBuild('Penyimpanan browser tidak tersedia.'); }
+    });
+    if (loadBuildBtn) loadBuildBtn.addEventListener('click', () => {
+      let record;
+      try { record = JSON.parse(localStorage.getItem(buildKey) || 'null'); }
+      catch (_) { notifyBuild('Data rakitan yang tersimpan tidak valid.'); return; }
+      if (!record?.ids || typeof record.ids !== 'object') {
+        notifyBuild('Belum ada rakitan yang disimpan di browser ini.'); return;
+      }
+      for (const cat of Object.keys(state.userBuild)) {
+        const id = record.ids[cat];
+        state.userBuild[cat] = (PC_DATA.components[cat] || []).find(item => item.id === id) || null;
+      }
+      state.selectedBrand = 'ALL';
+      state.searchQuery = '';
+      if (searchInputEl) searchInputEl.value = '';
+      renderCategoryTabs();
+      renderBrandFilters();
+      renderComponents();
+      updateSummary();
+      notifyBuild('Rakitan dimuat. Periksa kembali harga dan kompatibilitas sebelum konsultasi.');
+    });
+
     // Reset Build button
     if (resetBuildBtn) {
       resetBuildBtn.addEventListener('click', () => {
