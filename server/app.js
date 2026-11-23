@@ -81,7 +81,7 @@ function sameOrigin(req, res, next) {
 const validStr = (v, max, min = 1) => typeof v === 'string' && v.trim().length >= min && v.trim().length <= max;
 const clean = str => String(str || '').trim();
 const safeToken = t => typeof t === 'string' && /^[0-9a-f]{64}$/.test(t);
-async async function cleanupOrders() {
+async function cleanupOrders() {
   const cutoff = now();
   db.prepare('DELETE FROM admin_sessions WHERE expires_at < ?').run(cutoff);
   if (!gatewayReady) {
