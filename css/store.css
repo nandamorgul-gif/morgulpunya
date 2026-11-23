@@ -305,3 +305,9 @@ body::selection{background:#6a40ab;color:#fff}
   .svo-hero-feature .svo-hero-visual{min-height:0}
   .svo-product-media.has-photo .svo-product-image{padding:6px}
 }
+
+.svo-preset-caption{
+  display:block;margin:-.8rem 0 1.1rem;
+  color:#b5a9c7;font-size:.68rem;letter-spacing:.01em;
+  line-height:1.5;
+}
