@@ -21,6 +21,14 @@ document.addEventListener('DOMContentLoaded', () => {
       img.insertAdjacentElement('afterend',fallback);
     }
   }, true);
+  // Handle images that may have failed before DOMContentLoaded.
+  window.addEventListener('load', () => {
+    document.querySelectorAll('img').forEach(img => {
+      if (img.complete && img.naturalWidth === 0 && !img.dataset.fallback) {
+        img.dispatchEvent(new Event('error'));
+      }
+    });
+  }, { once: true });
 
   // State Application
   const state = {
