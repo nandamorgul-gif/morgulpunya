@@ -1,6 +1,3 @@
--- Cloudflare D1 Console: SATU perintah INSERT untuk 46 produk.
--- Jalankan dengan menempel SELURUH isi file ini di input Console.
--- Aman dijalankan ulang: INSERT OR IGNORE, stok awal 0.
 INSERT OR IGNORE INTO products (id, category, name, brand, description, image, price, stock, active)
 VALUES
 ('cpu-r5-9600x','cpu','AMD Ryzen 5 9600X','AMD','Zen 5 · 6 core/12 thread · AM5, gaming dan produktivitas.','https://ecommerce.datablitz.com.ph/cdn/shop/files/sfgndrfghnmdth_800x.jpg?v=1769673253',3550000,0,1),
