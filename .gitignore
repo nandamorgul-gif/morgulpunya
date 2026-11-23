@@ -1,0 +1,18 @@
+# dependencies and local secrets
+node_modules/
+.env
+.env.*
+!.env.example
+runtime-data/
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+.DS_Store
+Thumbs.db
+*.log
+coverage/
+
+# Local browser regression artifacts
+runtime-data-e2e/
+test-results/
+playwright-report/

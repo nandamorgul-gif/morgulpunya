@@ -1,5 +1,5 @@
 /**
- * Morgulzxz Gaming Performance - App Logic & Interactivity
+ * SEMEISTVO TECH - App Logic & Interactivity
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -121,7 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const isSelected = selectedPart && selectedPart.id === item.id;
       return `
         <div class="component-card ${isSelected ? 'selected' : ''}">
-          <img src="${item.image}" alt="${item.name}" class="component-img" loading="lazy">
+          <img src="${item.image}" data-svo-fallback="${item.fallbackImage || ('images/products/' + state.selectedCategory + '.svg')}" data-svo-final-fallback="${item.categoryArtwork || ('images/products/' + state.selectedCategory + '.svg')}" alt="Foto referensi atau ilustrasi komponen ${item.name}" class="component-img" loading="lazy">
           <div class="component-info">
             <h4>${item.name}</h4>
             <p>${item.description}</p>
@@ -133,7 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
           </div>
           <div class="component-action">
-            <span class="component-price">${formatIDR(item.price)}</span>
+            <span class="component-price"><small>Estimasi</small>${formatIDR(item.price)}</span>
             <button class="btn ${isSelected ? 'btn-emerald' : 'btn-secondary'} select-part-btn" data-id="${item.id}">
               ${isSelected ? '✓ Terpilih' : 'Pilih Komponen'}
             </button>
@@ -148,7 +148,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!presetsContainerEl) return;
     presetsContainerEl.innerHTML = PC_DATA.presets.map(preset => `
       <div class="glass-card preset-card">
-        <img src="${preset.image}" alt="${preset.title}" class="preset-image" loading="lazy">
+        <img src="${preset.image}" data-svo-fallback="images/products/pcbuild.svg" alt="Foto konsep rakitan PC, bukan konfigurasi final ${preset.title}" class="preset-image" loading="lazy">
+        <span class="svo-preset-caption">${preset.imageCaption || "Foto ilustrasi referensi, bukan dokumentasi hasil rakitan pelanggan."}</span>
         <div class="preset-header">
           <span class="badge ${preset.id.includes('beast') ? 'badge-purple' : 'badge'}">${preset.badge}</span>
           <h3 class="preset-title">${preset.title}</h3>
@@ -171,6 +172,48 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
       </div>
     `).join('');
+  }
+
+  // Basic compatibility screening from known catalogue metadata only.
+  // This does not replace motherboard BIOS, PSU connector or physical clearance checks.
+  function getCompatibilityIssues() {
+    const b = state.userBuild;
+    const issues = [];
+    if (b.cpu && b.motherboard && b.cpu.socket && b.motherboard.socket && b.cpu.socket !== b.motherboard.socket) {
+      issues.push('Socket CPU (' + b.cpu.socket + ') tidak cocok dengan motherboard (' + b.motherboard.socket + ').');
+    }
+    if (b.ram && b.motherboard && b.ram.memoryType && b.motherboard.memoryType && b.ram.memoryType !== b.motherboard.memoryType) {
+      issues.push('Tipe RAM ' + b.ram.memoryType + ' tidak cocok dengan slot ' + b.motherboard.memoryType + '.');
+    }
+    if (b.case && b.motherboard && Array.isArray(b.case.supportedFormFactors) &&
+        b.motherboard.formFactor && !b.case.supportedFormFactors.includes(b.motherboard.formFactor)) {
+      issues.push('Ukuran motherboard (' + b.motherboard.formFactor + ') tidak didukung casing ini.');
+    }
+    if (b.case && b.psu && Array.isArray(b.case.supportedPsuTypes) && b.psu.psuFormFactor &&
+        !b.case.supportedPsuTypes.includes(b.psu.psuFormFactor)) {
+      issues.push('PSU tipe ' + b.psu.psuFormFactor + ' tidak didukung casing pilihan.');
+    }
+    const estimated = Object.values(b).reduce((sum, item) => sum + (item?.watts || 0), 0);
+    if (b.psu?.capacityWatts && estimated * 1.25 > b.psu.capacityWatts) {
+      issues.push('PSU ' + b.psu.capacityWatts + 'W belum mencukupi margin 25% dari estimasi ' + estimated + 'W.');
+    }
+    return issues;
+  }
+
+  function renderCompatibility() {
+    const target = document.getElementById('svoCompatibilityIssues');
+    if (!target) return;
+    const issues = getCompatibilityIssues();
+    target.className = 'svo-compatibility ' + (issues.length ? 'svo-compatibility-warning' : 'svo-compatibility-pass');
+    target.replaceChildren();
+    const title = document.createElement('strong');
+    title.textContent = issues.length ? '⚠ Cek kompatibilitas rakitan' : '✓ Pemeriksaan dasar kompatibilitas';
+    target.appendChild(title);
+    const list = document.createElement('p');
+    list.textContent = issues.length
+      ? issues.join(' ')
+      : 'Periksa kembali BIOS, konektor daya, ruang GPU, tinggi cooler dan dukungan radiator sebelum pembelian. Kalkulasi watt adalah perkiraan.';
+    target.appendChild(list);
   }
 
   // 5. Update Summary Panel & Wattage Meter
@@ -245,8 +288,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Update cart badge count in nav
-    const cartCountEl = document.getElementById('cartCount');
+    const cartCountEl = document.getElementById('svoBuilderCartCount');
     if (cartCountEl) cartCountEl.textContent = count;
+    renderCompatibility();
+    // Shared cart synchronization: all builder mutations (select, remove,
+    // load preset, restore and reset) use updateSummary as a single source.
+    const selections = Object.fromEntries(Object.entries(state.userBuild)
+      .filter(([category, part]) => !!part && !!PC_DATA.components[category])
+      .map(([category, part]) => [category, part.id]));
+    window.SVOBuilderSelections = selections;
+    document.dispatchEvent(new CustomEvent('svo:builder-change', { detail: { selections } }));
   }
 
   // 6. Select or Unselect a Component
@@ -295,236 +346,33 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Bank Payment Information Database
-  const PAYMENT_INFO = {
-    'Transfer Bank BCA Direct': {
-      bank: 'Bank Central Asia (BCA)',
-      logoSvg: `<svg width="76" height="44" viewBox="0 0 76 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect width="76" height="44" rx="8" fill="#005caa"/>
-        <text x="38" y="32" text-anchor="middle" font-family="'Arial Black', Arial, sans-serif" font-weight="900" font-style="italic" font-size="24" fill="#ffffff" letter-spacing="2">BCA</text>
-      </svg>`,
-      accountNumber: '7401439823',
-      accountNumberFormatted: '7401-4398-23',
-      accountName: 'NANDA NUGRAHA',
-      color: '#005caa',
-      notes: 'Transfer Langsung BCA / M-BCA'
-    },
-    'Transfer Mandiri Virtual Account': {
-      bank: 'Bank Mandiri',
-      logoSvg: `<svg width="76" height="44" viewBox="0 0 76 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect width="76" height="44" rx="8" fill="#003d79"/>
-        <path d="M 16 32 C 16 10, 30 10, 38 22 C 46 34, 60 34, 60 12" stroke="#ffb703" stroke-width="4.5" stroke-linecap="round" fill="none" opacity="0.85"/>
-        <text x="38" y="27" text-anchor="middle" font-family="Arial, sans-serif" font-weight="900" font-style="italic" font-size="13" fill="#ffffff" letter-spacing="0.5">mandiri</text>
-      </svg>`,
-      accountNumber: '1330030841159',
-      accountNumberFormatted: '133-003-084-1159',
-      accountName: 'NANDA NUGRAHA',
-      color: '#003d79',
-      notes: 'Transfer Livin by Mandiri / ATM Mandiri'
-    },
-    'Transfer SeaBank': {
-      bank: 'SeaBank Indonesia',
-      logoSvg: `<svg width="76" height="44" viewBox="0 0 76 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect width="76" height="44" rx="8" fill="url(#seaGradBanner)"/>
-        <defs>
-          <linearGradient id="seaGradBanner" x1="0" y1="0" x2="76" y2="44" gradientUnits="userSpaceOnUse">
-            <stop stop-color="#ff6b00"/>
-            <stop offset="1" stop-color="#e55a00"/>
-          </linearGradient>
-        </defs>
-        <!-- Stylized S shape inside an orange circle -->
-        <circle cx="20" cy="22" r="10" fill="#ffffff"/>
-        <path d="M 23 18 C 17 18, 17 22, 20 22 C 23 22, 23 26, 17 26" stroke="#ff6b00" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-        <text x="50" y="27" text-anchor="middle" font-family="Arial, sans-serif" font-weight="800" font-size="12" fill="#ffffff" letter-spacing="0">SeaBank</text>
-      </svg>`,
-      accountNumber: '901424567091',
-      accountNumberFormatted: '9014-2456-7091',
-      accountName: 'NANDA NUGRAHA',
-      color: '#ff6b00',
-      notes: 'Transfer Instan SeaBank / Sea Mobile'
-    },
-    'QRIS Instant All Wallet (Gopay/OVO/ShopeePay)': {
-      bank: 'QRIS All Payment (GoPay, OVO, Dana, ShopeePay)',
-      logoSvg: `<svg width="38" height="22" viewBox="0 0 76 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect width="76" height="44" rx="6" fill="#ed1c24"/>
-        <rect x="8" y="6" width="12" height="12" fill="#fff" rx="1"/>
-        <rect x="10" y="8" width="4" height="4" fill="#ed1c24"/>
-        <rect x="22" y="6" width="12" height="12" fill="#fff" rx="1"/>
-        <rect x="24" y="8" width="4" height="4" fill="#ed1c24"/>
-        <rect x="8" y="20" width="12" height="12" fill="#fff" rx="1"/>
-        <rect x="10" y="22" width="4" height="4" fill="#ed1c24"/>
-        <text x="52" y="29" text-anchor="middle" font-family="Arial, sans-serif" font-weight="900" font-size="12" fill="#ffffff">QRIS</text>
-      </svg>`,
-      accountNumber: '088291967659',
-      accountNumberFormatted: 'Scan QR Code (QRIS)',
-      accountName: 'MORGULZXZ GAMING PERFORMANCE',
-      color: '#ed1c24',
-      notes: 'Scan QRIS · GoPay · OVO · Dana · ShopeePay'
-    },
-    'Checkout via Official Tokopedia (Cicilan 0%)': {
-      bank: 'Tokopedia Official Store',
-      logoSvg: `<svg width="38" height="22" viewBox="0 0 76 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect width="76" height="44" rx="6" fill="#03ac0e"/>
-        <text x="38" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-weight="900" font-size="11" fill="#ffffff" letter-spacing="0.3">TOKOPEDIA</text>
-      </svg>`,
-      accountNumber: 'Official Store Tokopedia Morgulzxz',
-      accountNumberFormatted: 'Morgulzxz Gaming (Official)',
-      accountName: 'Morgulzxz Gaming Performance',
-      color: '#03ac0e',
-      notes: 'Cicilan 0% s/d 24 Bulan · Kredit & Debit'
-    },
-    'Checkout via Official Shopee (PayLater/ShopeePay)': {
-      bank: 'Shopee Official Store',
-      logoSvg: `<svg width="38" height="22" viewBox="0 0 76 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect width="76" height="44" rx="6" fill="#ee4d2d"/>
-        <text x="38" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-weight="900" font-size="13" fill="#ffffff" letter-spacing="0.5">SHOPEE</text>
-      </svg>`,
-      accountNumber: 'Official Store Shopee Morgulzxz',
-      accountNumberFormatted: 'Morgulzxz Gaming (Official)',
-      accountName: 'Morgulzxz Gaming Performance',
-      color: '#ee4d2d',
-      notes: 'SPayLater · ShopeePay · Kredit & Debit'
-    }
-  };
-
-  // Render Dynamic Bank Account Details Card in Order Form
-  function updateBankDetailsCard(paymentMethodKey) {
-    const cardEl = document.getElementById('paymentBankDetailsCard');
-    if (!cardEl) return;
-
-    const info = PAYMENT_INFO[paymentMethodKey] || PAYMENT_INFO['Transfer Bank BCA Direct'];
-
-    cardEl.innerHTML = `
-      <div class="bank-info-banner">
-        <div class="bank-banner-header">
-          <div class="bank-banner-brand">
-            <div class="bank-banner-icon">${info.logoSvg}</div>
-            <div>
-              <h4 style="color: #fff; font-size: 0.95rem; margin: 0; font-weight: 700;">${info.bank}</h4>
-              <span style="font-size: 0.725rem; color: var(--text-muted);">${info.notes}</span>
-            </div>
-          </div>
-          <span class="bank-verified-badge">✓ Terverifikasi Resmi</span>
-        </div>
-
-        <div class="bank-banner-acc-box">
-          <div>
-            <span class="acc-label">NOMOR REKENING / KODE BAYAR:</span>
-            <div class="acc-number" id="bankAccNoDisplay">${info.accountNumberFormatted}</div>
-          </div>
-          <button type="button" class="btn btn-secondary btn-copy-acc" id="copyBankAccBtn" data-copy="${info.accountNumber}">
-            📋 Salin No. Rekening
-          </button>
-        </div>
-
-        <div class="bank-banner-footer">
-          <span>👤 <strong>Atas Nama (A.n.):</strong> <strong class="acc-name">${info.accountName}</strong></span>
-          <span style="color: var(--accent); font-size: 0.75rem;">🔒 Garansi Aman 100%</span>
-        </div>
-      </div>
-    `;
-
-    // Sync visual active bank card item
-    const bankCards = document.querySelectorAll('.bank-card-item');
-    bankCards.forEach(card => {
-      if (card.dataset.payment === paymentMethodKey) {
-        card.classList.add('active');
-      } else {
-        card.classList.remove('active');
-      }
-    });
-
-    // Sync select dropdown value
-    const orderPaymentMethodEl = document.getElementById('orderPaymentMethod');
-    if (orderPaymentMethodEl && orderPaymentMethodEl.value !== paymentMethodKey) {
-      orderPaymentMethodEl.value = paymentMethodKey;
-    }
-
-    const copyBtn = document.getElementById('copyBankAccBtn');
-    if (copyBtn) {
-      copyBtn.addEventListener('click', () => {
-        const textToCopy = copyBtn.getAttribute('data-copy');
-        if (navigator.clipboard) {
-          navigator.clipboard.writeText(textToCopy).then(() => {
-            copyBtn.innerHTML = '✓ Nomor Tersalin!';
-            copyBtn.style.background = 'var(--accent)';
-            copyBtn.style.color = '#000';
-            setTimeout(() => {
-              copyBtn.innerHTML = '📋 Salin No. Rekening';
-              copyBtn.style.background = '';
-              copyBtn.style.color = '';
-            }, 2200);
-          });
-        } else {
-          alert(`Nomor Rekening: ${textToCopy}`);
-        }
-      });
-    }
-  }
-
-  // Render Order Summary Preview with Ongkir & Packing Kayu Calculation
+  // Builder inquiry only; payment details are not shown before verified checkout.
   function renderOrderSummaryPreview() {
-    const orderSummaryPreviewEl = document.getElementById('orderSummaryPreview');
-    if (!orderSummaryPreviewEl) return;
-
-    let count = 0;
-    let totalPrice = 0;
-    let totalWatts = 0;
-    const partsSummary = [];
-
-    PC_DATA.categories.forEach(cat => {
-      const part = state.userBuild[cat.id];
-      if (part) {
-        count++;
-        totalPrice += part.price;
-        if (part.watts) totalWatts += part.watts;
-        partsSummary.push(`<li style="margin-bottom: 0.2rem;"><strong style="color: var(--primary);">${cat.name.split(' ')[0]}:</strong> ${part.name}</li>`);
-      }
-    });
-
-    const deliveryEl = document.getElementById('orderDeliveryOption');
-    const packingCheckEl = document.getElementById('orderPackingKayuCheck');
-
-    let ongkir = 150000;
-    if (deliveryEl) {
-      const opt = deliveryEl.options[deliveryEl.selectedIndex];
-      ongkir = parseInt(opt?.dataset.ongkir || '0', 10);
+    const target = document.getElementById('orderSummaryPreview');
+    if (!target) return;
+    target.replaceChildren();
+    const rows = PC_DATA.categories
+      .map(cat => ({ category: cat.name, item: state.userBuild[cat.id] }))
+      .filter(row => row.item);
+    const sum = rows.reduce((amount, row) => amount + row.item.price, 0);
+    const heading = document.createElement('strong');
+    heading.textContent = 'Ringkasan konfigurasi · ' + rows.length + ' pilihan';
+    target.appendChild(heading);
+    const list = document.createElement('ul');
+    list.style.padding = '1rem 0 0 1.15rem';
+    list.style.margin = '0';
+    for (const row of rows) {
+      const li = document.createElement('li');
+      li.textContent = row.category + ': ' + row.item.name;
+      li.style.marginBottom = '.35rem';
+      list.appendChild(li);
     }
-
-    let packing = 0;
-    if (packingCheckEl && packingCheckEl.checked) {
-      packing = 100000;
-    }
-
-    const grandTotal = totalPrice + ongkir + packing;
-
-    orderSummaryPreviewEl.innerHTML = `
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem; border-bottom: 1px dashed var(--border-color); padding-bottom: 0.4rem;">
-        <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase;">
-          📦 Subtotal (${count} Komponen PC)
-        </span>
-        <span style="font-size: 0.95rem; font-weight: 700; color: #fff;">
-          ${formatIDR(totalPrice)}
-        </span>
-      </div>
-      <ul style="font-size: 0.775rem; color: var(--text-main); list-style: none; max-height: 85px; overflow-y: auto; padding-right: 0.35rem; margin-bottom: 0.4rem;">
-        ${partsSummary.join('')}
-      </ul>
-      <div style="background: rgba(0, 0, 0, 0.4); padding: 0.5rem 0.65rem; border-radius: 6px; font-size: 0.775rem; display: flex; flex-direction: column; gap: 0.25rem; border: 1px stroke rgba(255, 255, 255, 0.08);">
-        <div style="display: flex; justify-content: space-between; color: var(--text-muted);">
-          <span>🚚 Est. Biaya Kirim & Asuransi:</span>
-          <span style="color: #fff; font-weight: 600;">+${formatIDR(ongkir)}</span>
-        </div>
-        <div style="display: flex; justify-content: space-between; color: var(--text-muted);">
-          <span>🪵 Jasa Packing Kayu & Proteksi:</span>
-          <span style="color: #fff; font-weight: 600;">+${formatIDR(packing)}</span>
-        </div>
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.25rem; border-top: 1px dashed rgba(0, 240, 255, 0.3); padding-top: 0.35rem;">
-          <strong style="color: var(--accent); font-size: 0.825rem;">💰 TOTAL KESELURUHAN:</strong>
-          <strong style="color: var(--accent); font-size: 1.15rem; font-family: var(--font-heading); text-shadow: 0 0 10px rgba(0, 255, 157, 0.3);">${formatIDR(grandTotal)}</strong>
-        </div>
-      </div>
-    `;
+    target.appendChild(list);
+    const total = document.createElement('p');
+    total.style.marginTop = '1rem';
+    total.style.fontWeight = '800';
+    total.textContent = 'Total estimasi komponen: ' + formatIDR(sum) + ' (belum termasuk pengiriman)';
+    target.appendChild(total);
   }
 
   // 8. Open Order Form Modal (Form Pemesanan)
@@ -539,12 +387,14 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    renderOrderSummaryPreview();
-
-    const orderPaymentMethodEl = document.getElementById('orderPaymentMethod');
-    if (orderPaymentMethodEl) {
-      updateBankDetailsCard(orderPaymentMethodEl.value);
+    const issues = getCompatibilityIssues();
+    if (issues.length) {
+      alert('Periksa kompatibilitas rakitan terlebih dahulu:\\n' + issues.join('\\n'));
+      document.getElementById('svoCompatibilityIssues')?.scrollIntoView({ behavior:'smooth', block:'center' });
+      return;
     }
+
+    renderOrderSummaryPreview();
 
     const orderModal = document.getElementById('orderModal');
     if (orderModal) {
@@ -557,87 +407,44 @@ document.addEventListener('DOMContentLoaded', () => {
     const name = document.getElementById('orderCustomerName').value.trim();
     const phone = document.getElementById('orderCustomerPhone').value.trim();
     const address = document.getElementById('orderCustomerAddress').value.trim();
-    const payment = document.getElementById('orderPaymentMethod').value;
-    const deliveryEl = document.getElementById('orderDeliveryOption');
-    const packingCheckEl = document.getElementById('orderPackingKayuCheck');
-    const proofFileEl = document.getElementById('orderPaymentProof');
     const notes = document.getElementById('orderNotes').value.trim();
+    const preferredPayment = document.getElementById('orderPreferredPayment')?.value || 'Diskusikan saat penawaran';
 
-    if (!name || !phone || !address) {
-      alert('Mohon lengkapi Nama Lengkap, Nomor HP/WA, dan Alamat Pengiriman!');
+    if (name.length < 2 || !/^\\+?[0-9 -]{8,20}$/.test(phone) || address.length < 8) {
+      alert('Periksa nama, nomor WhatsApp dan alamat pengiriman.');
       return null;
     }
 
-    const delivery = deliveryEl ? deliveryEl.value : '';
-    let ongkir = 0;
-    if (deliveryEl) {
-      const opt = deliveryEl.options[deliveryEl.selectedIndex];
-      ongkir = parseInt(opt?.dataset.ongkir || '0', 10);
-    }
-
-    let packing = 0;
-    if (packingCheckEl && packingCheckEl.checked) {
-      packing = 100000;
-    }
-
-    let proofFileName = '';
-    if (proofFileEl && proofFileEl.files && proofFileEl.files[0]) {
-      proofFileName = proofFileEl.files[0].name;
-    }
-
-    const payInfo = PAYMENT_INFO[payment] || PAYMENT_INFO['Transfer Bank BCA Direct'];
-
-    let totalPrice = 0;
-    let totalWatts = 0;
-    let count = 0;
-    let partsListMsg = '';
-
-    PC_DATA.categories.forEach(cat => {
-      const part = state.userBuild[cat.id];
-      if (part) {
-        count++;
-        totalPrice += part.price;
-        if (part.watts) totalWatts += part.watts;
-        partsListMsg += `• *${cat.name.split(' ')[0]}*: ${part.name} (${formatIDR(part.price)})\n`;
-      }
-    });
-
-    if (count === 0) {
-      alert('Tidak ada komponen terpilih!');
+    const rows = PC_DATA.categories
+      .map(cat => ({ category: cat.name, item: state.userBuild[cat.id] }))
+      .filter(row => row.item);
+    if (!rows.length) {
+      alert('Pilih komponen rakitan terlebih dahulu.');
       return null;
     }
-
-    const grandTotal = totalPrice + ongkir + packing;
-
-    let msg = `🛒 *FORM PEMESANAN PC RAKITAN - MORGULZXZ GAMING*\n`;
-    msg += `=========================================\n\n`;
-    msg += `👤 *DATA PEMESAN:*\n`;
-    msg += `• *Nama*: ${name}\n`;
-    msg += `• *No. HP/WA*: ${phone}\n`;
-    msg += `• *Alamat & Kota*: ${address}\n`;
-    msg += `• *Metode Pembayaran*: ${payment}\n`;
-    msg += `• *No. Rekening Tujuan*: ${payInfo.accountNumberFormatted}\n`;
-    msg += `• *Atas Nama (A.n.)*: ${payInfo.accountName}\n`;
-    msg += `• *Pengiriman*: ${delivery}\n`;
-    msg += `• *Est. Biaya Kirim & Asuransi*: ${formatIDR(ongkir)}\n`;
-    msg += `• *Jasa Packing Kayu*: ${packing > 0 ? formatIDR(packing) + ' (Heavy-Duty Crate)' : 'Tidak'}\n`;
-    if (proofFileName) {
-      msg += `• *Bukti Pembayaran*: 📄 File Terlampir (${proofFileName})\n`;
-    }
-    if (notes) {
-      msg += `• *Catatan Khusus*: ${notes}\n`;
-    }
-    msg += `\n-----------------------------------------\n`;
-    msg += `💻 *RINCIAN PAKET PC RAKITAN:*\n`;
-    msg += partsListMsg;
-    msg += `\n⚡ *Estimasi Konsumsi Daya*: ${totalWatts} Watts\n`;
-    msg += `🖥️ *SUBTOTAL COMPONENT PC*: ${formatIDR(totalPrice)}\n`;
-    msg += `🚚 *ESTIMASI ONGKIR & PACKING*: ${formatIDR(ongkir + packing)}\n`;
-    msg += `💰 *TOTAL KESELURUHAN*: ${formatIDR(grandTotal)}\n`;
-    msg += `=========================================\n\n`;
-    msg += `Mohon konfirmasi ketersediaan stok komponen di atas dan konfirmasi pembayaran. Terima kasih!`;
-
-    return msg;
+    const total = rows.reduce((sum, row) => sum + row.item.price, 0);
+    const watts = rows.reduce((sum, row) => sum + (row.item.watts || 0), 0);
+    const lines = [
+      'SEMEISTVO TECH / PERMINTAAN PENAWARAN RAKIT PC',
+      '',
+      'Nama: ' + name,
+      'WhatsApp: ' + phone,
+      'Alamat/kota: ' + address,
+      'Catatan: ' + (notes || '-'),
+      'Preferensi pembayaran: ' + preferredPayment + ' (belum ada transaksi)',
+      '',
+      'KONFIGURASI:'
+    ];
+    rows.forEach(row => lines.push('• ' + row.category + ': ' + row.item.name + ' — ' + formatIDR(row.item.price)));
+    lines.push(
+      '',
+      'Subtotal estimasi komponen: ' + formatIDR(total),
+      'Estimasi daya dasar: ' + watts + 'W',
+      '',
+      'Mohon bantu cek stok, spesifikasi/kompatibilitas final, harga akhir, ongkos kirim, garansi, dan instruksi pembayaran resmi.',
+      'Pesan ini hanya permintaan penawaran dan belum merupakan pesanan berbayar.'
+    );
+    return lines.join('\\n');
   }
 
   // Submit Order Form to WhatsApp
@@ -703,7 +510,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     modalContentEl.innerHTML = `
       <div style="text-align: center; margin-bottom: 1.5rem;">
-        <h3 style="font-size: 1.6rem;" class="text-gradient">MORGULZXZ GAMING PERFORMANCE SPEC</h3>
+        <h3 style="font-size: 1.6rem;" class="text-gradient">SEMEISTVO TECH · CUSTOM BUILD SPEC</h3>
         <p style="color: var(--text-muted); font-size: 0.9rem;">Rincian Konfigurasi & Estimasi Biaya</p>
       </div>
 
@@ -796,6 +603,24 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
+    // If an item is removed from the shared header cart, remove it from
+    // the builder as well, including the local configuration summary.
+    document.addEventListener('svo:builder-remove', event => {
+      const category = event.detail?.category;
+      const id = event.detail?.id;
+      if (!category || !id || state.userBuild[category]?.id !== id) return;
+      state.userBuild[category] = null;
+      renderCategoryTabs();
+      renderComponents();
+      updateSummary();
+    });
+
+    // The builder and top cart share one item list.
+    const showHeaderCartFromBuilder = document.getElementById('svoBuilderViewCart');
+    showHeaderCartFromBuilder?.addEventListener('click', () => {
+      document.getElementById('svoShopCartButton')?.click();
+    });
+
     // Component selection button click
     if (componentsListEl) {
       componentsListEl.addEventListener('click', (e) => {
@@ -842,6 +667,44 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         }
       }
+    });
+
+    // Save/load user-selected configuration; products are looked up by ID on
+    // restore so the catalogue remains the source of truth for demo pricing.
+    const saveBuildBtn = document.getElementById('svoSaveBuildBtn');
+    const loadBuildBtn = document.getElementById('svoLoadBuildBtn');
+    const saveBuildStatus = document.getElementById('svoBuildSaveStatus');
+    const buildKey = 'svo-tech-saved-build-v1';
+    const notifyBuild = message => { if (saveBuildStatus) saveBuildStatus.textContent = message; };
+    if (saveBuildBtn) saveBuildBtn.addEventListener('click', () => {
+      const ids = Object.fromEntries(Object.entries(state.userBuild)
+        .filter(([cat, part]) => !!part && !!PC_DATA.components[cat])
+        .map(([cat, part]) => [cat, part.id]));
+      if (!Object.keys(ids).length) { notifyBuild('Pilih komponen sebelum menyimpan rakitan.'); return; }
+      try {
+        localStorage.setItem(buildKey, JSON.stringify({ version: 1, savedAt: Date.now(), ids }));
+        notifyBuild('Rakitan berhasil disimpan di browser ini.');
+      } catch (_) { notifyBuild('Penyimpanan browser tidak tersedia.'); }
+    });
+    if (loadBuildBtn) loadBuildBtn.addEventListener('click', () => {
+      let record;
+      try { record = JSON.parse(localStorage.getItem(buildKey) || 'null'); }
+      catch (_) { notifyBuild('Data rakitan yang tersimpan tidak valid.'); return; }
+      if (!record?.ids || typeof record.ids !== 'object') {
+        notifyBuild('Belum ada rakitan yang disimpan di browser ini.'); return;
+      }
+      for (const cat of Object.keys(state.userBuild)) {
+        const id = record.ids[cat];
+        state.userBuild[cat] = (PC_DATA.components[cat] || []).find(item => item.id === id) || null;
+      }
+      state.selectedBrand = 'ALL';
+      state.searchQuery = '';
+      if (searchInputEl) searchInputEl.value = '';
+      renderCategoryTabs();
+      renderBrandFilters();
+      renderComponents();
+      updateSummary();
+      notifyBuild('Rakitan dimuat. Periksa kembali harga dan kompatibilitas sebelum konsultasi.');
     });
 
     // Reset Build button
@@ -944,13 +807,67 @@ document.addEventListener('DOMContentLoaded', () => {
       checkoutOrderForm.addEventListener('submit', handleCheckoutOrderSubmit);
     }
 
-    // Contact Form submission handler
+    // Service-first inquiry: pre-fill chosen service and prepare a WhatsApp brief.
     const contactForm = document.getElementById('contactForm');
+    const serviceChoice = document.getElementById('contactService');
+    document.querySelectorAll('[data-svo-service]').forEach(link => {
+      link.addEventListener('click', () => {
+        const selected = link.getAttribute('data-svo-service');
+        if (serviceChoice && Array.from(serviceChoice.options).some(opt => opt.value === selected)) {
+          serviceChoice.value = selected;
+          const subject = document.getElementById('contactSubject');
+          if (subject && !subject.value.trim()) subject.value = 'Konsultasi ' + selected;
+        }
+      });
+    });
     if (contactForm) {
-      contactForm.addEventListener('submit', (e) => {
+      contactForm.addEventListener('submit', e => {
         e.preventDefault();
-        alert('Terima kasih! Pesan Anda telah terkirim. Tim konsultasi Morgulzxz Gaming Performance akan menghubungi Anda secepatnya.');
-        contactForm.reset();
+        if (!contactForm.reportValidity()) return;
+        const service = serviceChoice?.value?.trim() || '';
+        const name = document.getElementById('contactName').value.trim();
+        const contact = document.getElementById('contactEmail').value.trim();
+        const subject = document.getElementById('contactSubject').value.trim();
+        const message = document.getElementById('contactMessage').value.trim();
+        const budget = document.getElementById('contactBudget')?.value || 'Belum ditentukan';
+        const method = document.getElementById('contactMethod')?.value || 'Diskusikan metode';
+        const paymentPreference = document.getElementById('contactPaymentMethod')?.value || 'Diskusikan saat penawaran';
+        if (!service || !name || !contact || !subject || !message) return;
+        const content = [
+          '*SEMEISTVO TECH — KONSULTASI LAYANAN*',
+          '',
+          'Layanan: ' + service,
+          'Nama: ' + name,
+          'Kontak: ' + contact,
+          'Topik: ' + subject,
+          'Budget: ' + budget,
+          'Metode: ' + method,
+          'Preferensi pembayaran: ' + paymentPreference + ' (menunggu konfirmasi admin)',
+          '',
+          'Detail kebutuhan:',
+          message,
+          '',
+          'Mohon informasi ketersediaan, ruang lingkup, estimasi biaya dan jadwal pengerjaan.',
+          'Website: hosting, domain dan layanan pihak ketiga tidak termasuk kecuali tercantum dalam penawaran.',
+          'Server RP: hosting/VPS serta lisensi/resource premium ditagihkan terpisah sesuai kebutuhan.',
+          'Ini adalah permintaan konsultasi, bukan pembayaran atau pesanan resmi.'
+        ].join('\n');
+        const url = 'https://wa.me/6288291967659?text=' + encodeURIComponent(content);
+        window.open(url, '_blank', 'noopener,noreferrer');
+        let note = document.getElementById('svoContactStatus');
+        if (!note) {
+          note = document.createElement('p');
+          note.id = 'svoContactStatus';
+          note.setAttribute('role', 'status');
+          contactForm.appendChild(note);
+        }
+        note.replaceChildren(document.createTextNode('Brief sudah disiapkan. Jika WhatsApp tidak terbuka, '));
+        const link = document.createElement('a');
+        link.href = url;
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+        link.textContent = 'buka pesan konsultasi di sini';
+        note.appendChild(link);
       });
     }
 
@@ -963,35 +880,28 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
 
-    // Mobile Menu Toggle logic
+    // Accessible responsive menu, closed on Escape, navigation, or outside click.
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-    const navLinks = document.querySelector('.nav-links');
-
+    const navLinks = document.getElementById('svoPrimaryNav');
+    const setMenu = open => {
+      if (!mobileMenuBtn || !navLinks) return;
+      navLinks.classList.toggle('open', open);
+      mobileMenuBtn.setAttribute('aria-expanded', String(open));
+      mobileMenuBtn.setAttribute('aria-label', open ? 'Tutup menu navigasi' : 'Buka menu navigasi');
+      const icon = mobileMenuBtn.querySelector('i');
+      if (icon) {
+        icon.className = open ? 'feather feather-x' : 'feather feather-menu';
+        if (window.feather) feather.replace();
+      }
+    };
     if (mobileMenuBtn && navLinks) {
-      mobileMenuBtn.addEventListener('click', () => {
-        navLinks.classList.toggle('open');
-        const icon = mobileMenuBtn.querySelector('i');
-        if (icon) {
-          if (navLinks.classList.contains('open')) {
-            icon.className = 'feather feather-x';
-          } else {
-            icon.className = 'feather feather-menu';
-          }
-          if (window.feather) feather.replace();
-        }
+      mobileMenuBtn.addEventListener('click', () => setMenu(!navLinks.classList.contains('open')));
+      navLinks.querySelectorAll('a').forEach(link => link.addEventListener('click', () => setMenu(false)));
+      document.addEventListener('keydown', e => { if (e.key === 'Escape') setMenu(false); });
+      document.addEventListener('click', e => {
+        if (!navLinks.contains(e.target) && !mobileMenuBtn.contains(e.target)) setMenu(false);
       });
-
-      // Close mobile menu when clicking any nav link
-      navLinks.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
-          navLinks.classList.remove('open');
-          const icon = mobileMenuBtn.querySelector('i');
-          if (icon) {
-            icon.className = 'feather feather-menu';
-            if (window.feather) feather.replace();
-          }
-        });
-      });
+      window.addEventListener('resize', () => { if (window.innerWidth > 1024) setMenu(false); });
     }
 
     // Header scroll background change
@@ -1004,93 +914,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    // Floating Cyber Music Player & YouTube Video Showcase Controller
-    const musicModal = document.getElementById('musicModal');
-    const closeMusicModalBtn = document.getElementById('closeMusicModalBtn');
-    const musicPlayBtn = document.getElementById('musicPlayBtn');
-    const musicInfoBtn = document.getElementById('musicInfoBtn');
 
-    const postYTCmd = (func, args) => {
-      const iframe = document.getElementById('ytPlayer');
-      if (iframe && iframe.contentWindow) {
-        iframe.contentWindow.postMessage(JSON.stringify({
-          'event': 'command',
-          'func': func,
-          'args': args || []
-        }), '*');
-      }
-    };
-
-    function openMusicModal() {
-      if (musicModal) {
-        musicModal.classList.add('active');
-        postYTCmd('pauseVideo'); // Pause background music
-        const modalIframe = document.getElementById('modalYtPlayer');
-        if (modalIframe && !modalIframe.src) {
-          modalIframe.src = "https://www.youtube.com/embed/8_y6w1V9PXs?autoplay=1&list=RD8_y6w1V9PXs";
-        }
-      }
-    }
-
-    function closeMusicModal() {
-      if (musicModal) {
-        musicModal.classList.remove('active');
-        const modalIframe = document.getElementById('modalYtPlayer');
-        if (modalIframe) {
-          modalIframe.src = ""; // Stop modal video
-        }
-        postYTCmd('playVideo'); // Resume background music
-      }
-    }
-
-    if (musicPlayBtn) musicPlayBtn.addEventListener('click', openMusicModal);
-    if (musicInfoBtn) musicInfoBtn.addEventListener('click', openMusicModal);
-    if (closeMusicModalBtn) closeMusicModalBtn.addEventListener('click', closeMusicModal);
-    if (musicModal) {
-      musicModal.addEventListener('click', (e) => {
-        if (e.target === musicModal) closeMusicModal();
-      });
-    }
-
-    // Minimize / Expand Floating Music Player Toggle
-    const musicPlayer = document.getElementById('musicPlayer');
-    const musicToggleBtn = document.getElementById('musicToggleBtn');
-    const musicDisc = document.getElementById('musicDisc');
-
-    if (musicPlayer && musicToggleBtn) {
-      musicToggleBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        musicPlayer.classList.toggle('minimized');
-      });
-
-      if (musicDisc) {
-        musicDisc.addEventListener('click', (e) => {
-          if (musicPlayer.classList.contains('minimized')) {
-            e.stopPropagation();
-            musicPlayer.classList.remove('minimized');
-          }
-        });
-      }
-    }
-
-    // YouTube Autoplay & Instant Unmute Controller
-    // postYTCmd is defined above
-
-    setTimeout(() => {
-      postYTCmd('playVideo');
-    }, 500);
-
-    const unmuteYouTube = () => {
-      postYTCmd('unMute');
-      postYTCmd('setVolume', [100]);
-      postYTCmd('playVideo');
-    };
-
-    const gestures = ['mousemove', 'mouseenter', 'scroll', 'wheel', 'touchstart', 'touchend', 'click', 'keydown'];
-    gestures.forEach(g => {
-      window.addEventListener(g, unmuteYouTube, { passive: true });
-      document.addEventListener(g, unmuteYouTube, { passive: true });
-    });
   }
 
   // Run initialization

@@ -1,483 +1,809 @@
 /**
- * Database Komponen PC Terbaru & Preset Rakitan - Morgulzxz Gaming Performance
+ * SEMEISTVO TECH · 2026 curated PC component demo catalogue
+ * Model/spec references: manufacturer official product pages.
+ * All prices are illustrative estimates. Do not interpret as live retail or stock.
+ * Images are original category illustrations, NOT actual product photographs.
  */
-
 const PC_DATA = {
-  categories: [
-    { id: 'cpu', name: 'Processor (CPU)', icon: 'cpu', required: true },
-    { id: 'gpu', name: 'Kartu Grafis (VGA / GPU)', icon: 'monitor', required: true },
-    { id: 'motherboard', name: 'Motherboard', icon: 'server', required: true },
-    { id: 'ram', name: 'Memori (RAM)', icon: 'hard-drive', required: true },
-    { id: 'storage', name: 'Penyimpanan (SSD / HDD)', icon: 'database', required: true },
-    { id: 'psu', name: 'Power Supply (PSU)', icon: 'zap', required: true },
-    { id: 'case', name: 'Casing PC', icon: 'box', required: true },
-    { id: 'cooler', name: 'Pendingin CPU (Cooler)', icon: 'wind', required: false },
-    { id: 'accessories', name: 'Aksesoris Tambahan', icon: 'grid', required: false },
-    { id: 'software', name: 'Paket Software & OS', icon: 'download', required: false }
+  "catalogEdition": "2026",
+  "catalogUpdatedAt": "2026-11-23",
+  "pricingNote": "Harga hanya simulasi komponen. Biaya jasa rakit, instalasi/OS, ongkos kirim, lisensi dan garansi tambahan belum termasuk; stok dan harga akhir dikonfirmasi admin.",
+  "categories": [
+    {
+      "id": "cpu",
+      "name": "Processor (CPU)",
+      "icon": "cpu",
+      "required": true
+    },
+    {
+      "id": "gpu",
+      "name": "Kartu Grafis (GPU)",
+      "icon": "monitor",
+      "required": true
+    },
+    {
+      "id": "motherboard",
+      "name": "Motherboard",
+      "icon": "server",
+      "required": true
+    },
+    {
+      "id": "ram",
+      "name": "Memori RAM",
+      "icon": "layers",
+      "required": true
+    },
+    {
+      "id": "storage",
+      "name": "SSD & Penyimpanan",
+      "icon": "hard-drive",
+      "required": true
+    },
+    {
+      "id": "psu",
+      "name": "Power Supply (PSU)",
+      "icon": "zap",
+      "required": true
+    },
+    {
+      "id": "case",
+      "name": "Casing",
+      "icon": "box",
+      "required": true
+    },
+    {
+      "id": "cooler",
+      "name": "Pendingin CPU",
+      "icon": "wind",
+      "required": false
+    },
+    {
+      "id": "accessories",
+      "name": "Aksesoris",
+      "icon": "grid",
+      "required": false
+    },
+    {
+      "id": "software",
+      "name": "Instalasi & Setup",
+      "icon": "download",
+      "required": false
+    }
   ],
-
-  components: {
-    cpu: [
+  "components": {
+    "cpu": [
       {
-        id: 'cpu-1',
-        name: 'Intel Core i5-14400F (10-Cores / 16-Threads up to 4.7GHz)',
-        brand: 'Intel',
-        socket: 'LGA1700',
-        price: 3250000,
-        watts: 65,
-        image: 'https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=300&auto=format&fit=crop&q=80',
-        description: 'Processor gaming & produktivitas kelas menengah yang sangat hemat daya dan kencang.'
+        "id": "cpu-r5-9600x",
+        "name": "AMD Ryzen 5 9600X",
+        "brand": "AMD",
+        "price": 3550000,
+        "watts": 65,
+        "description": "Zen 5 · 6 core/12 thread · AM5, gaming dan produktivitas.",
+        "socket": "AM5",
+        "memoryType": "DDR5",
+        "source": "https://www.amd.com/en/products/processors/desktops/ryzen/9000-series/amd-ryzen-5-9600x.html",
+        "image": "images/products/cpu.svg",
+        "imageType": "illustration",
+        "isEstimate": true
       },
       {
-        id: 'cpu-2',
-        name: 'AMD Ryzen 5 7600X (6-Cores / 12-Threads up to 5.3GHz AM5)',
-        brand: 'AMD',
-        socket: 'AM5',
-        price: 3650000,
-        watts: 105,
-        image: 'https://images.unsplash.com/photo-1555680202-c86f0e12f086?w=300&auto=format&fit=crop&q=80',
-        description: 'Processor AM5 terbaik untuk gaming eSports & AAA 1080p/1440p performa tinggi.'
+        "id": "cpu-r7-9700x",
+        "name": "AMD Ryzen 7 9700X",
+        "brand": "AMD",
+        "price": 5250000,
+        "watts": 65,
+        "description": "Zen 5 · 8 core/16 thread · AM5, streaming & editing.",
+        "socket": "AM5",
+        "memoryType": "DDR5",
+        "image": "images/products/cpu.svg",
+        "imageType": "illustration",
+        "isEstimate": true
       },
       {
-        id: 'cpu-3',
-        name: 'Intel Core i7-14700K (20-Cores / 28-Threads up to 5.6GHz)',
-        brand: 'Intel',
-        socket: 'LGA1700',
-        price: 6850000,
-        watts: 125,
-        image: 'https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=300&auto=format&fit=crop&q=80',
-        description: 'Monster produktivitas & gaming high-end untuk live-streaming dan editing 4K.'
+        "id": "cpu-r7-9850x3d",
+        "name": "AMD Ryzen 7 9850X3D (2026)",
+        "brand": "AMD",
+        "price": 9650000,
+        "watts": 120,
+        "description": "Zen 5 + 3D V-Cache · AM5, kelas gaming enthusiast 2026.",
+        "socket": "AM5",
+        "memoryType": "DDR5",
+        "source": "https://www.amd.com/en/products/processors/desktops/ryzen/9000-series/amd-ryzen-7-9850x3d.html",
+        "image": "images/products/cpu.svg",
+        "imageType": "illustration",
+        "isEstimate": true
       },
       {
-        id: 'cpu-4',
-        name: 'AMD Ryzen 7 7800X3D (8-Cores / 16-Threads dengan 3D V-Cache)',
-        brand: 'AMD',
-        socket: 'AM5',
-        price: 6450000,
-        watts: 120,
-        image: 'https://images.unsplash.com/photo-1555680202-c86f0e12f086?w=300&auto=format&fit=crop&q=80',
-        description: 'King of Gaming CPU! Ditenagai teknologi 3D V-Cache untuk FPS maksimal di game AAA.'
+        "id": "cpu-r9-9950x3d",
+        "name": "AMD Ryzen 9 9950X3D",
+        "brand": "AMD",
+        "price": 13250000,
+        "watts": 170,
+        "description": "Zen 5 · 16 core/32 thread · AM5 untuk kreator dan gaming high-end.",
+        "socket": "AM5",
+        "memoryType": "DDR5",
+        "source": "https://www.amd.com/en/products/processors/desktops/ryzen/9000-series/amd-ryzen-9-9950x3d.html",
+        "image": "images/products/cpu.svg",
+        "imageType": "illustration",
+        "isEstimate": true
       },
       {
-        id: 'cpu-5',
-        name: 'AMD Ryzen 7 9700X (8-Cores / 16-Threads Next-Gen Zen 5)',
-        brand: 'AMD',
-        socket: 'AM5',
-        price: 6150000,
-        watts: 65,
-        image: 'https://images.unsplash.com/photo-1555680202-c86f0e12f086?w=300&auto=format&fit=crop&q=80',
-        description: 'Generasi terbaru Zen 5 dengan efisiensi daya luar biasa dan IPC jauh lebih tinggi.'
+        "id": "cpu-ultra5-250kplus",
+        "name": "Intel Core Ultra 5 250K Plus (2026)",
+        "brand": "Intel",
+        "price": 4650000,
+        "watts": 125,
+        "description": "Core Ultra Desktop Series 2 · LGA1851 · DDR5.",
+        "socket": "LGA1851",
+        "memoryType": "DDR5",
+        "source": "https://www.intel.com/content/www/us/en/support/articles/000099656/processors.html",
+        "image": "images/products/cpu.svg",
+        "imageType": "illustration",
+        "isEstimate": true
       },
       {
-        id: 'cpu-6',
-        name: 'Intel Core i9-14900K (24-Cores / 32-Threads up to 6.0GHz)',
-        brand: 'Intel',
-        socket: 'LGA1700',
-        price: 9950000,
-        watts: 253,
-        image: 'https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=300&auto=format&fit=crop&q=80',
-        description: 'Flagship Intel terkencang untuk Workstation berat, 3D Rendering, AI, & Ultimate Gaming.'
+        "id": "cpu-ultra7-270kplus",
+        "name": "Intel Core Ultra 7 270K Plus (2026)",
+        "brand": "Intel",
+        "price": 6750000,
+        "watts": 125,
+        "description": "Core Ultra Desktop Series 2 · LGA1851 · DDR5, kreator dan gaming.",
+        "socket": "LGA1851",
+        "memoryType": "DDR5",
+        "source": "https://www.intel.com/content/www/us/en/support/articles/000099656/processors.html",
+        "image": "images/products/cpu.svg",
+        "imageType": "illustration",
+        "isEstimate": true
+      },
+      {
+        "id": "cpu-ultra9-285k",
+        "name": "Intel Core Ultra 9 285K",
+        "brand": "Intel",
+        "price": 9850000,
+        "watts": 125,
+        "description": "Core Ultra Desktop Series 2 · LGA1851 · DDR5, workstation.",
+        "socket": "LGA1851",
+        "memoryType": "DDR5",
+        "image": "images/products/cpu.svg",
+        "imageType": "illustration",
+        "isEstimate": true
       }
     ],
-
-    gpu: [
+    "gpu": [
       {
-        id: 'gpu-1',
-        name: 'NVIDIA GeForce RTX 4060 8GB GDDR6 (Dual Fan ARGB)',
-        brand: 'NVIDIA',
-        price: 4650000,
-        watts: 115,
-        image: 'https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=300&auto=format&fit=crop&q=80',
-        description: 'Performa DLSS 3 & Frame Generation terbaik untuk gaming 1080p Ultra.'
+        "id": "gpu-rtx5060ti16",
+        "name": "NVIDIA GeForce RTX 5060 Ti 16GB",
+        "brand": "NVIDIA",
+        "price": 8150000,
+        "watts": 180,
+        "description": "Blackwell · GDDR7 16GB · DLSS 4, gaming 1080p/1440p.",
+        "vramGB": 16,
+        "source": "https://www.nvidia.com/id-id/geforce/graphics-cards/50-series/rtx-5060-family/",
+        "image": "images/products/gpu.svg",
+        "imageType": "illustration",
+        "isEstimate": true
       },
       {
-        id: 'gpu-2',
-        name: 'AMD Radeon RX 7600 XT 16GB GDDR6 (Steel Legend)',
-        brand: 'AMD',
-        price: 5450000,
-        watts: 190,
-        image: 'https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=300&auto=format&fit=crop&q=80',
-        description: 'VRAM jumbo 16GB dengan FSR 3 untuk gaming 1440p dan pembuatan konten tekstur tinggi.'
+        "id": "gpu-rtx5070",
+        "name": "NVIDIA GeForce RTX 5070 12GB",
+        "brand": "NVIDIA",
+        "price": 11850000,
+        "watts": 250,
+        "description": "Blackwell · GDDR7 12GB · DLSS 4, gaming 1440p.",
+        "vramGB": 12,
+        "image": "images/products/gpu.svg",
+        "imageType": "illustration",
+        "isEstimate": true
       },
       {
-        id: 'gpu-3',
-        name: 'NVIDIA GeForce RTX 4070 Super 12GB GDDR6X (Triple Fan RGB)',
-        brand: 'NVIDIA',
-        price: 10450000,
-        watts: 220,
-        image: 'https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=300&auto=format&fit=crop&q=80',
-        description: 'Sweet spot gaming 1440p Max Settings & Ray Tracing kencang tanpa kompromi.'
+        "id": "gpu-rtx5070ti",
+        "name": "NVIDIA GeForce RTX 5070 Ti 16GB",
+        "brand": "NVIDIA",
+        "price": 17350000,
+        "watts": 300,
+        "description": "Blackwell · GDDR7 16GB · DLSS 4, gaming 1440p/4K.",
+        "vramGB": 16,
+        "image": "images/products/gpu.svg",
+        "imageType": "illustration",
+        "isEstimate": true
       },
       {
-        id: 'gpu-4',
-        name: 'NVIDIA GeForce RTX 4080 Super 16GB GDDR6X (Gaming OC)',
-        brand: 'NVIDIA',
-        price: 18250000,
-        watts: 320,
-        image: 'https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=300&auto=format&fit=crop&q=80',
-        description: 'Senjata ampuh untuk gaming 4K rata kanan dan akselerasi AI / Machine Learning.'
+        "id": "gpu-rtx5080",
+        "name": "NVIDIA GeForce RTX 5080 16GB",
+        "brand": "NVIDIA",
+        "price": 26150000,
+        "watts": 360,
+        "description": "Blackwell · GDDR7 16GB, gaming 4K dan editing.",
+        "vramGB": 16,
+        "image": "images/products/gpu.svg",
+        "imageType": "illustration",
+        "isEstimate": true
       },
       {
-        id: 'gpu-5',
-        name: 'AMD Radeon RX 7900 XTX 24GB GDDR6 (Nitro+ Vapor Chamber)',
-        brand: 'AMD',
-        price: 17800000,
-        watts: 355,
-        image: 'https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=300&auto=format&fit=crop&q=80',
-        description: 'Flagship RDNA 3 dari AMD dengan VRAM 24GB murni untuk kreasi konten 8K & gaming.'
+        "id": "gpu-rtx5090",
+        "name": "NVIDIA GeForce RTX 5090 32GB",
+        "brand": "NVIDIA",
+        "price": 59500000,
+        "watts": 575,
+        "description": "Blackwell · GDDR7 32GB, kelas flagship AI dan render.",
+        "vramGB": 32,
+        "image": "images/products/gpu.svg",
+        "imageType": "illustration",
+        "isEstimate": true
       },
       {
-        id: 'gpu-6',
-        name: 'NVIDIA GeForce RTX 4090 24GB GDDR6X (Supreme Liquid Cool / Air)',
-        brand: 'NVIDIA',
-        price: 33500000,
-        watts: 450,
-        image: 'https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=300&auto=format&fit=crop&q=80',
-        description: 'VGA konsumen terkuat di dunia saat ini. Tanpa batasan FPS di resolusi 4K / 8K.'
+        "id": "gpu-rx9060xt16",
+        "name": "AMD Radeon RX 9060 XT 16GB",
+        "brand": "AMD Radeon",
+        "price": 7650000,
+        "watts": 160,
+        "description": "RDNA 4 · GDDR6 16GB, gaming 1080p/1440p.",
+        "vramGB": 16,
+        "source": "https://www.amd.com/en/products/graphics/desktops/radeon/9000-series/amd-radeon-rx-9060xt.html",
+        "image": "images/products/gpu.svg",
+        "imageType": "illustration",
+        "isEstimate": true
+      },
+      {
+        "id": "gpu-rx9070",
+        "name": "AMD Radeon RX 9070 16GB",
+        "brand": "AMD Radeon",
+        "price": 11150000,
+        "watts": 220,
+        "description": "RDNA 4 · GDDR6 16GB, gaming 1440p.",
+        "vramGB": 16,
+        "image": "images/products/gpu.svg",
+        "imageType": "illustration",
+        "isEstimate": true
+      },
+      {
+        "id": "gpu-rx9070xt",
+        "name": "AMD Radeon RX 9070 XT 16GB",
+        "brand": "AMD Radeon",
+        "price": 13750000,
+        "watts": 304,
+        "description": "RDNA 4 · GDDR6 16GB, gaming 1440p/4K.",
+        "vramGB": 16,
+        "source": "https://www.amd.com/en/products/graphics/desktops/radeon/9000-series/amd-radeon-rx-9070XT.html",
+        "image": "images/products/gpu.svg",
+        "imageType": "illustration",
+        "isEstimate": true
       }
     ],
-
-    motherboard: [
+    "motherboard": [
       {
-        id: 'mb-1',
-        name: 'ASUS TUF Gaming B760M-Plus WiFi DDR5 (LGA1700)',
-        brand: 'ASUS',
-        socket: 'LGA1700',
-        price: 2950000,
-        watts: 40,
-        image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=300&auto=format&fit=crop&q=80',
-        description: 'Motherboard tahan banting Military Grade dengan WiFi 6E & PCIe 5.0 M.2.'
+        "id": "mb-asus-b850",
+        "name": "ASUS TUF GAMING B850-PLUS WIFI",
+        "brand": "ASUS",
+        "price": 3950000,
+        "watts": 45,
+        "description": "Socket AM5 · chipset B850 · DDR5 · form factor ATX.",
+        "socket": "AM5",
+        "memoryType": "DDR5",
+        "formFactor": "ATX",
+        "source": "https://www.asus.com/id/motherboards-components/motherboards/all-series/tuf-gaming-b850-plus-wifi/",
+        "image": "images/products/motherboard.svg",
+        "imageType": "illustration",
+        "isEstimate": true
       },
       {
-        id: 'mb-2',
-        name: 'MSI MAG B650 Tomahawk WiFi AM5 DDR5',
-        brand: 'MSI',
-        socket: 'AM5',
-        price: 3650000,
-        watts: 45,
-        image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=300&auto=format&fit=crop&q=80',
-        description: 'Solusi VRM kuat untuk Ryzen 7000/9000 dengan sistem pendinginan Heatsink tebal.'
+        "id": "mb-msi-b850",
+        "name": "MSI B850 GAMING PLUS WIFI",
+        "brand": "MSI",
+        "price": 3650000,
+        "watts": 45,
+        "description": "Socket AM5 · B850 · DDR5 · ATX.",
+        "socket": "AM5",
+        "memoryType": "DDR5",
+        "formFactor": "ATX",
+        "source": "https://www.msi.com/Motherboard/B850-GAMING-PLUS-WIFI/Specification",
+        "image": "images/products/motherboard.svg",
+        "imageType": "illustration",
+        "isEstimate": true
       },
       {
-        id: 'mb-3',
-        name: 'GIGABYTE Z790 AORUS Elite AX Ice DDR5 (LGA1700 White)',
-        brand: 'GIGABYTE',
-        socket: 'LGA1700',
-        price: 4950000,
-        watts: 55,
-        image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=300&auto=format&fit=crop&q=80',
-        description: 'Motherboard bertema serba putih dengan VRM 16+1+2 Phase untuk Overclocking.'
+        "id": "mb-asrock-b850i",
+        "name": "ASRock B850I Lightning WiFi",
+        "brand": "ASRock",
+        "price": 4250000,
+        "watts": 35,
+        "description": "Socket AM5 · B850 · DDR5 · Mini-ITX untuk build compact.",
+        "socket": "AM5",
+        "memoryType": "DDR5",
+        "formFactor": "Mini-ITX",
+        "source": "https://pg.asrock.com/MB/AMD/B850I%20Lightning%20WiFi/index.asp",
+        "image": "images/products/motherboard.svg",
+        "imageType": "illustration",
+        "isEstimate": true
       },
       {
-        id: 'mb-4',
-        name: 'ASRock X670E Taichi Carrara AM5 Flagship',
-        brand: 'ASRock',
-        socket: 'AM5',
-        price: 8450000,
-        watts: 60,
-        image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=300&auto=format&fit=crop&q=80',
-        description: 'Motherboard kustom marmer estetis dengan PCIe Gen 5 penuh dan audio DAC ESS SABRE.'
+        "id": "mb-msi-b860",
+        "name": "MSI MAG B860 TOMAHAWK WIFI",
+        "brand": "MSI",
+        "price": 3950000,
+        "watts": 45,
+        "description": "Socket LGA1851 · chipset B860 · DDR5 · ATX.",
+        "socket": "LGA1851",
+        "memoryType": "DDR5",
+        "formFactor": "ATX",
+        "source": "https://www.msi.com/Motherboard/MAG-B860-TOMAHAWK-WIFI/Specification",
+        "image": "images/products/motherboard.svg",
+        "imageType": "illustration",
+        "isEstimate": true
+      },
+      {
+        "id": "mb-gigabyte-z890",
+        "name": "GIGABYTE Z890 AORUS ELITE WIFI7 ICE",
+        "brand": "GIGABYTE",
+        "price": 5750000,
+        "watts": 50,
+        "description": "Socket LGA1851 · Z890 · DDR5 · ATX putih.",
+        "socket": "LGA1851",
+        "memoryType": "DDR5",
+        "formFactor": "ATX",
+        "source": "https://www.gigabyte.com/Motherboard/Z890-AORUS-ELITE-WIFI7-ICE",
+        "image": "images/products/motherboard.svg",
+        "imageType": "illustration",
+        "isEstimate": true
       }
     ],
-
-    ram: [
+    "ram": [
       {
-        id: 'ram-1',
-        name: 'Corsair Vengeance RGB 16GB (2x8GB) DDR5 5600MHz CL36',
-        brand: 'Corsair',
-        price: 1150000,
-        watts: 10,
-        image: 'https://images.unsplash.com/photo-1562976540-1502c2145186?w=300&auto=format&fit=crop&q=80',
-        description: 'RAM DDR5 entry gaming cepat dengan pencahayaan RGB dinamis Icue.'
+        "id": "ram-16-ddr5",
+        "name": "Kingston FURY Beast 16GB (2×8GB) DDR5-5600",
+        "brand": "Kingston",
+        "price": 1250000,
+        "watts": 10,
+        "description": "RAM DDR5 dual-channel · 16GB, untuk PC kelas entry.",
+        "memoryType": "DDR5",
+        "image": "images/products/ram.svg",
+        "imageType": "illustration",
+        "isEstimate": true
       },
       {
-        id: 'ram-2',
-        name: 'G.Skill Trident Z5 Neo RGB 32GB (2x16GB) DDR5 6000MHz CL30 (AMD EXPO / XMP)',
-        brand: 'G.Skill',
-        price: 2150000,
-        watts: 15,
-        image: 'https://images.unsplash.com/photo-1562976540-1502c2145186?w=300&auto=format&fit=crop&q=80',
-        description: 'Timing CL30 terketat & tercepat untuk performa optimal di Ryzen 7000/9000 & Intel.'
+        "id": "ram-32-ddr5",
+        "name": "G.Skill Flare X5 32GB (2×16GB) DDR5-6000",
+        "brand": "G.Skill",
+        "price": 2450000,
+        "watts": 12,
+        "description": "RAM DDR5 32GB · profil EXPO, gaming dan editing.",
+        "memoryType": "DDR5",
+        "image": "images/products/ram.svg",
+        "imageType": "illustration",
+        "isEstimate": true
       },
       {
-        id: 'ram-3',
-        name: 'Team T-Force Delta RGB White 64GB (2x32GB) DDR5 6400MHz CL32',
-        brand: 'TeamGroup',
-        price: 3950000,
-        watts: 20,
-        image: 'https://images.unsplash.com/photo-1562976540-1502c2145186?w=300&auto=format&fit=crop&q=80',
-        description: 'Kapasitas raksasa 64GB untuk Multitasking ekstrem, Virtualization, & 3D Render.'
+        "id": "ram-32-white",
+        "name": "TEAMGROUP T-Force Delta RGB 32GB DDR5-6000 White",
+        "brand": "TEAMGROUP",
+        "price": 2650000,
+        "watts": 12,
+        "description": "RAM DDR5 32GB dual-channel dengan RGB bertema putih.",
+        "memoryType": "DDR5",
+        "image": "images/products/ram.svg",
+        "imageType": "illustration",
+        "isEstimate": true
+      },
+      {
+        "id": "ram-64-ddr5",
+        "name": "Corsair Vengeance 64GB (2×32GB) DDR5-6000",
+        "brand": "Corsair",
+        "price": 5050000,
+        "watts": 16,
+        "description": "RAM DDR5 64GB untuk editing 4K, virtualisasi dan workstation.",
+        "memoryType": "DDR5",
+        "image": "images/products/ram.svg",
+        "imageType": "illustration",
+        "isEstimate": true
       }
     ],
-
-    storage: [
+    "storage": [
       {
-        id: 'str-1',
-        name: 'Kingston NV2 1TB NVMe M.2 PCIe 4.0 SSD (Up to 3500MB/s)',
-        brand: 'Kingston',
-        price: 980000,
-        watts: 5,
-        image: 'https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?w=300&auto=format&fit=crop&q=80',
-        description: 'SSD NVMe hemat anggaran yang cepat untuk OS Windows & pustaka game.'
+        "id": "ssd-wd-sn850x-1t",
+        "name": "WD_BLACK SN850X 1TB NVMe PCIe 4.0",
+        "brand": "WD_BLACK",
+        "price": 1550000,
+        "watts": 7,
+        "description": "SSD M.2 2280, kapasitas 1TB untuk OS dan game.",
+        "image": "images/products/storage.svg",
+        "imageType": "illustration",
+        "isEstimate": true
       },
       {
-        id: 'str-2',
-        name: 'Samsung 990 PRO 2TB NVMe M.2 PCIe 4.0 SSD (Up to 7450MB/s Heatsink)',
-        brand: 'Samsung',
-        price: 2850000,
-        watts: 8,
-        image: 'https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?w=300&auto=format&fit=crop&q=80',
-        description: 'SSD PCIe 4.0 terkencang dengan Heatsink bawaan untuk loading game kilat & video 4K.'
+        "id": "ssd-samsung-990pro-2t",
+        "name": "Samsung 990 PRO 2TB NVMe PCIe 4.0",
+        "brand": "Samsung",
+        "price": 2850000,
+        "watts": 8,
+        "description": "SSD M.2 2280 2TB untuk kreator dan gaming.",
+        "image": "images/products/storage.svg",
+        "imageType": "illustration",
+        "isEstimate": true
       },
       {
-        id: 'str-3',
-        name: 'Crucial T700 2TB NVMe Gen5 SSD (Up to 12,400 MB/s Extreme Speed)',
-        brand: 'Crucial',
-        price: 4950000,
-        watts: 12,
-        image: 'https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?w=300&auto=format&fit=crop&q=80',
-        description: 'Kecepatan Next-Gen PCIe 5.0 hingga 12.400 MB/detik untuk produktivitas tanpa kompromi.'
+        "id": "ssd-crucial-t705-2t",
+        "name": "Crucial T705 2TB NVMe PCIe 5.0",
+        "brand": "Crucial",
+        "price": 4950000,
+        "watts": 11,
+        "description": "SSD Gen5 2TB; membutuhkan pendinginan M.2 yang memadai.",
+        "image": "images/products/storage.svg",
+        "imageType": "illustration",
+        "isEstimate": true
+      },
+      {
+        "id": "ssd-kingston-kc3000-2t",
+        "name": "Kingston KC3000 2TB NVMe PCIe 4.0",
+        "brand": "Kingston",
+        "price": 2550000,
+        "watts": 9,
+        "description": "SSD performa tinggi 2TB untuk produksi konten.",
+        "image": "images/products/storage.svg",
+        "imageType": "illustration",
+        "isEstimate": true
       }
     ],
-
-    psu: [
+    "psu": [
       {
-        id: 'psu-1',
-        name: 'MSI MAG A650BN 650W 80+ Bronze Certified Power Supply',
-        brand: 'MSI',
-        capacityWatts: 650,
-        price: 780000,
-        watts: 0,
-        image: 'https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=300&auto=format&fit=crop&q=80',
-        description: 'PSU Andal 650W 80+ Bronze cocok untuk racikan kelas mid-range RTX 4060 / RX 7600.'
+        "id": "psu-msi-650",
+        "name": "MSI MAG A650BN 650W 80+ Bronze",
+        "brand": "MSI",
+        "price": 1050000,
+        "watts": 0,
+        "description": "PSU ATX 650W untuk kelas menengah.",
+        "capacityWatts": 650,
+        "psuFormFactor": "ATX",
+        "image": "images/products/psu.svg",
+        "imageType": "illustration",
+        "isEstimate": true
       },
       {
-        id: 'psu-2',
-        name: 'Corsair RM750e 750W 80+ Gold Fully Modular ATX 3.0 & PCIe 5.0',
-        brand: 'Corsair',
-        capacityWatts: 750,
-        price: 1750000,
-        watts: 0,
-        image: 'https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=300&auto=format&fit=crop&q=80',
-        description: 'PSU Modular 80+ Gold efisien tinggi dengan standar ATX 3.0 & kabel 12VHPWR.'
+        "id": "psu-corsair-850",
+        "name": "Corsair RM850e 850W 80+ Gold",
+        "brand": "Corsair",
+        "price": 2250000,
+        "watts": 0,
+        "description": "PSU ATX modular, cek konektor GPU sesuai varian.",
+        "capacityWatts": 850,
+        "psuFormFactor": "ATX",
+        "image": "images/products/psu.svg",
+        "imageType": "illustration",
+        "isEstimate": true
       },
       {
-        id: 'psu-3',
-        name: 'Seasonic Focus GX-850 850W 80+ Gold Fully Modular ATX 3.0',
-        brand: 'Seasonic',
-        capacityWatts: 850,
-        price: 2350000,
-        watts: 0,
-        image: 'https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=300&auto=format&fit=crop&q=80',
-        description: 'Jaminan Garansi 10 Tahun Seasonic untuk menyuplai RTX 4070 Super / RTX 4080.'
+        "id": "psu-cm-sfx850",
+        "name": "Cooler Master V SFX Gold 850W White",
+        "brand": "Cooler Master",
+        "price": 2650000,
+        "watts": 0,
+        "description": "PSU SFX 850W modular, cocok casing Mini-ITX dengan dukungan SFX.",
+        "capacityWatts": 850,
+        "psuFormFactor": "SFX",
+        "image": "images/products/psu.svg",
+        "imageType": "illustration",
+        "isEstimate": true
       },
       {
-        id: 'psu-4',
-        name: 'be quiet! Dark Power 13 1000W 80+ Titanium Fully Modular ATX 3.0',
-        brand: 'be quiet!',
-        capacityWatts: 1000,
-        price: 4650000,
-        watts: 0,
-        image: 'https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=300&auto=format&fit=crop&q=80',
-        description: 'PSU Titanium ultra-senyap dan efisiensi puncak 95%+ untuk sistem rakitan kelas berat.'
+        "id": "psu-seasonic-1000",
+        "name": "Seasonic FOCUS GX-1000 1000W Gold",
+        "brand": "Seasonic",
+        "price": 3150000,
+        "watts": 0,
+        "description": "PSU ATX 1000W untuk rakitan kelas high-end.",
+        "capacityWatts": 1000,
+        "psuFormFactor": "ATX",
+        "image": "images/products/psu.svg",
+        "imageType": "illustration",
+        "isEstimate": true
       }
     ],
-
-    case: [
+    "case": [
       {
-        id: 'case-1',
-        name: 'Montech AIR 903 MAX Black (4x 140mm ARGB Fans Included)',
-        brand: 'Montech',
-        price: 1150000,
-        watts: 15,
-        image: 'https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=300&auto=format&fit=crop&q=80',
-        description: 'Case Mesh High Airflow dengan 4 kipas bawaan 140mm ARGB super adem.'
+        "id": "case-ch160-white",
+        "name": "DeepCool CH160 WH Mini-ITX White",
+        "brand": "DeepCool",
+        "price": 1150000,
+        "watts": 0,
+        "description": "Casing Mini-ITX ringkas, batas GPU bergantung PSU dan konfigurasi.",
+        "supportedFormFactors": [
+          "Mini-ITX"
+        ],
+        "supportedPsuTypes": [
+          "SFX",
+          "ATX"
+        ],
+        "image": "images/products/case.svg",
+        "imageType": "illustration",
+        "isEstimate": true
       },
       {
-        id: 'case-2',
-        name: 'HYTE Y60 Panoramic Tempered Glass Dual Chamber Red/Black',
-        brand: 'HYTE',
-        price: 3250000,
-        watts: 10,
-        image: 'https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=300&auto=format&fit=crop&q=80',
-        description: 'Casing akuarium ikonik dengan dudukan VGA vertikal PCIe 4.0 Riser bawaan.'
+        "id": "case-air903",
+        "name": "Montech AIR 903 MAX Black",
+        "brand": "Montech",
+        "price": 1250000,
+        "watts": 0,
+        "description": "Casing airflow ATX tower dengan ruang rakitan lega.",
+        "supportedFormFactors": [
+          "ATX",
+          "Micro-ATX",
+          "Mini-ITX"
+        ],
+        "supportedPsuTypes": [
+          "ATX"
+        ],
+        "image": "images/products/case.svg",
+        "imageType": "illustration",
+        "isEstimate": true
       },
       {
-        id: 'case-3',
-        name: 'Lian Li O11 Dynamic EVO RGB Snow White Edition',
-        brand: 'Lian Li',
-        price: 2750000,
-        watts: 10,
-        image: 'https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=300&auto=format&fit=crop&q=80',
-        description: 'Desain dual-chamber mewah dengan strip RGB ambient dan ruang manajemen kabel luas.'
+        "id": "case-o11",
+        "name": "Lian Li O11D EVO RGB White",
+        "brand": "Lian Li",
+        "price": 2950000,
+        "watts": 0,
+        "description": "Casing dual-chamber ATX premium untuk build putih.",
+        "supportedFormFactors": [
+          "ATX",
+          "Micro-ATX",
+          "Mini-ITX"
+        ],
+        "supportedPsuTypes": [
+          "ATX"
+        ],
+        "image": "images/products/case.svg",
+        "imageType": "illustration",
+        "isEstimate": true
+      },
+      {
+        "id": "case-nr200p",
+        "name": "Cooler Master NR200P White Mini-ITX",
+        "brand": "Cooler Master",
+        "price": 1950000,
+        "watts": 0,
+        "description": "Casing Mini-ITX compact dengan dukungan PSU SFX.",
+        "supportedFormFactors": [
+          "Mini-ITX"
+        ],
+        "supportedPsuTypes": [
+          "SFX"
+        ],
+        "image": "images/products/case.svg",
+        "imageType": "illustration",
+        "isEstimate": true
       }
     ],
-
-    cooler: [
+    "cooler": [
       {
-        id: 'clr-1',
-        name: 'Deepcool AK400 Digital ARGB Air Cooler (Display Temp Real-Time)',
-        brand: 'Deepcool',
-        price: 580000,
-        watts: 5,
-        image: 'https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=300&auto=format&fit=crop&q=80',
-        description: 'Cooler Tower stylish dilengkapi layar LCD digital yang menampilkan temperatur CPU secara live.'
+        "id": "cooler-ak400",
+        "name": "DeepCool AK400 Air Cooler",
+        "brand": "DeepCool",
+        "price": 490000,
+        "watts": 6,
+        "description": "Air cooler tower untuk CPU dengan beban panas moderat.",
+        "image": "images/products/cooler.svg",
+        "imageType": "illustration",
+        "isEstimate": true
       },
       {
-        id: 'clr-2',
-        name: 'Thermalright Frozen Prism 240 ARGB Liquid Cooler White',
-        brand: 'Thermalright',
-        price: 950000,
-        watts: 15,
-        image: 'https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=300&auto=format&fit=crop&q=80',
-        description: 'Liquid AIO 240mm dengan efisiensi pendinginan tinggi untuk processor Mid to High end.'
+        "id": "cooler-ak620",
+        "name": "DeepCool AK620 Dual Tower Air Cooler",
+        "brand": "DeepCool",
+        "price": 1190000,
+        "watts": 7,
+        "description": "Air cooler dual-tower untuk gaming enthusiast.",
+        "image": "images/products/cooler.svg",
+        "imageType": "illustration",
+        "isEstimate": true
       },
       {
-        id: 'clr-3',
-        name: 'NZXT Kraken Elite 360 RGB Liquid Cooler dengan Customizable LCD Screen',
-        brand: 'NZXT',
-        price: 4450000,
-        watts: 25,
-        image: 'https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=300&auto=format&fit=crop&q=80',
-        description: 'AIO 360mm premium dengan layar LCD 2.36 inci tajam yang bisa menampilkan GIF & data suhu.'
+        "id": "cooler-arctic-240",
+        "name": "ARCTIC Liquid Freezer III 240 AIO",
+        "brand": "ARCTIC",
+        "price": 1950000,
+        "watts": 10,
+        "description": "AIO liquid cooler 240 mm; cek dukungan radiator casing.",
+        "radiatorSizeMm": 240,
+        "image": "images/products/cooler.svg",
+        "imageType": "illustration",
+        "isEstimate": true
+      },
+      {
+        "id": "cooler-nzxt-360",
+        "name": "NZXT Kraken Elite 360 RGB AIO",
+        "brand": "NZXT",
+        "price": 4150000,
+        "watts": 12,
+        "description": "AIO 360 mm untuk high-end; cek dudukan dan ruang casing.",
+        "radiatorSizeMm": 360,
+        "image": "images/products/cooler.svg",
+        "imageType": "illustration",
+        "isEstimate": true
       }
     ],
-
-    accessories: [
+    "accessories": [
       {
-        id: 'acc-1',
-        name: 'Lian Li Uni Fan SL-Infinity 120 ARGB Triple Pack Black',
-        brand: 'Lian Li',
-        price: 1350000,
-        watts: 12,
-        image: 'https://images.unsplash.com/photo-1562976540-1502c2145186?w=300&auto=format&fit=crop&q=80',
-        description: 'Fan cermin tak terhingga (Infinity Mirror) dengan kabel daisy-chain yang sangat rapi.'
+        "id": "acc-arctic-p12",
+        "name": "ARCTIC P12 PWM PST Fan 120mm",
+        "brand": "ARCTIC",
+        "price": 185000,
+        "watts": 3,
+        "description": "Kipas casing 120 mm PWM.",
+        "image": "images/products/accessories.svg",
+        "imageType": "illustration",
+        "isEstimate": true
       },
       {
-        id: 'acc-2',
-        name: 'Kabel Extension Custom Sleeved Power Supply Full Set (White/Black)',
-        brand: 'Morgulzxz Custom',
-        price: 350000,
-        watts: 0,
-        image: 'https://images.unsplash.com/photo-1562976540-1502c2145186?w=300&auto=format&fit=crop&q=80',
-        description: 'Set kabel jalinan estetik anti-kusut untuk mempercantik tampilan interior PC.'
+        "id": "acc-sleeves",
+        "name": "Custom Sleeved Cable Extension Set",
+        "brand": "SEMEISTVO",
+        "price": 385000,
+        "watts": 0,
+        "description": "Kabel ekstensi tampilan; pastikan sesuai standar konektor PSU.",
+        "image": "images/products/accessories.svg",
+        "imageType": "illustration",
+        "isEstimate": true
       },
       {
-        id: 'acc-3',
-        name: 'Deepcool ST500 ARGB GPU Support Bracket Holder',
-        brand: 'Deepcool',
-        price: 220000,
-        watts: 2,
-        image: 'https://images.unsplash.com/photo-1562976540-1502c2145186?w=300&auto=format&fit=crop&q=80',
-        description: 'Penyangga VGA berbahan baja kuat dengan aksen ARGB untuk mengamankan slot PCIe.'
+        "id": "acc-bracket",
+        "name": "GPU Support Bracket Adjustable",
+        "brand": "SEMEISTVO",
+        "price": 195000,
+        "watts": 0,
+        "description": "Penyangga GPU untuk mengurangi sag.",
+        "image": "images/products/accessories.svg",
+        "imageType": "illustration",
+        "isEstimate": true
       }
     ],
-
-    software: [
+    "software": [
       {
-        id: 'soft-1',
-        name: 'Paket Basic OS & Office Ready (Gratis / Included)',
-        brand: 'Morgulzxz Software',
-        price: 0,
-        watts: 0,
-        image: 'https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?w=300&auto=format&fit=crop&q=80',
-        description: 'Windows 11 Pro Original (Activated), MS Office 2021, PDF Reader, Chrome, WinRAR, & Driver Hardware Terbaru.'
+        "id": "soft-drivers",
+        "name": "Paket Setup Driver & Optimasi Dasar",
+        "brand": "SEMEISTVO Services",
+        "price": 150000,
+        "watts": 0,
+        "description": "Instalasi driver, update OS dan pemeriksaan sistem. Lisensi OS belum termasuk.",
+        "image": "images/products/software.svg",
+        "imageType": "illustration",
+        "isEstimate": true
       },
       {
-        id: 'soft-2',
-        name: 'Paket Pro Gamer & FPS Tuning Optimization',
-        brand: 'Morgulzxz Software',
-        price: 150000,
-        watts: 0,
-        image: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=300&auto=format&fit=crop&q=80',
-        description: 'Optimasi Latency Windows, Tuning XMP/EXPO RAM, MSI Afterburner, Discord, Steam, Epic Games, & Benchmark Tools.'
+        "id": "soft-gamer",
+        "name": "Paket Game & Streaming Setup",
+        "brand": "SEMEISTVO Services",
+        "price": 250000,
+        "watts": 0,
+        "description": "Konfigurasi OBS, aplikasi game resmi dan software diagnostik.",
+        "image": "images/products/software.svg",
+        "imageType": "illustration",
+        "isEstimate": true
       },
       {
-        id: 'soft-3',
-        name: 'Paket Creator Workstation & 3D Render Suite',
-        brand: 'Morgulzxz Software',
-        price: 250000,
-        watts: 0,
-        image: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=300&auto=format&fit=crop&q=80',
-        description: 'Setup Adobe Master Collection (Photoshop, Premiere, After Effects), Blender 4.0, DaVinci Resolve, AutoCAD, & CUDA Drivers.'
-      },
-      {
-        id: 'soft-4',
-        name: 'Paket Developer Dual-Boot Windows 11 + Linux Ubuntu',
-        brand: 'Morgulzxz Software',
-        price: 300000,
-        watts: 0,
-        image: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?w=300&auto=format&fit=crop&q=80',
-        description: 'Konfigurasi Dual-Boot OS Windows 11 Pro + Linux Ubuntu 24.04 LTS, Docker Desktop, VS Code, Git, & Python Dev Stack.'
+        "id": "soft-creator",
+        "name": "Paket Creator & Developer Setup",
+        "brand": "SEMEISTVO Services",
+        "price": 325000,
+        "watts": 0,
+        "description": "Konfigurasi aplikasi resmi dan tools produktivitas; lisensi komersial terpisah.",
+        "image": "images/products/software.svg",
+        "imageType": "illustration",
+        "isEstimate": true
       }
     ]
   },
-
-  presets: [
+  "presets": [
     {
-      id: 'budget-esports',
-      title: 'Budget eSports Gaming',
-      badge: 'Terpopuler 1080p',
-      tagline: 'Performa Cepat untuk Valorant, CS2, Dota 2 & GTA V pada 1080p High FPS.',
-      totalPrice: 15490000,
-      estimatedWatts: 300,
-      recommendedPsu: '650W 80+ Bronze',
-      image: 'https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=600&auto=format&fit=crop&q=80',
-      components: {
-        cpu: 'cpu-1', // Intel i5-14400F
-        gpu: 'gpu-1', // RTX 4060 8GB
-        motherboard: 'mb-1', // TUF B760M
-        ram: 'ram-1', // 16GB DDR5
-        storage: 'str-1', // NV2 1TB
-        psu: 'psu-1', // MSI 650W
-        case: 'case-1', // Montech AIR 903
-        cooler: 'clr-1' // Deepcool AK400 Digital
-      }
+      "id": "budget-esports",
+      "title": "SVO STARTER 1080p",
+      "badge": "Gaming & Entry Creator",
+      "tagline": "Ryzen 5 9600X · RTX 5060 Ti 16GB · DDR5 32GB. Basis gaming modern.",
+      "image": "https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=1000&auto=format&fit=crop&q=85",
+      "components": {
+        "cpu": "cpu-r5-9600x",
+        "gpu": "gpu-rtx5060ti16",
+        "motherboard": "mb-msi-b850",
+        "ram": "ram-32-ddr5",
+        "storage": "ssd-wd-sn850x-1t",
+        "psu": "psu-msi-650",
+        "case": "case-air903",
+        "cooler": "cooler-ak400"
+      },
+      "totalPrice": 22140000,
+      "estimatedWatts": 315,
+      "recommendedPsu": "650W (periksa headroom)",
+      "serviceNote": "Paket simulasi bahan diskusi, bukan stok unit siap kirim. Biaya jasa perakitan, instalasi, lisensi dan pengiriman diperkirakan setelah konsultasi.",
+      "imageCaption": "Foto ilustrasi referensi. Warna dan komponen rakitan akhir dapat berbeda."
     },
     {
-      id: 'amd-streamer-1440p',
-      title: 'Ultra 1440p & Streaming Beast',
-      badge: 'King of Gaming',
-      tagline: 'Ditenagai Ryzen 7 7800X3D + RTX 4070 Super untuk Ray Tracing & Live Streaming 1440p Smooth.',
-      totalPrice: 28450000,
-      estimatedWatts: 450,
-      recommendedPsu: '750W / 850W Gold',
-      image: 'https://images.unsplash.com/photo-1555680202-c86f0e12f086?w=600&auto=format&fit=crop&q=80',
-      components: {
-        cpu: 'cpu-4', // Ryzen 7 7800X3D
-        gpu: 'gpu-3', // RTX 4070 Super
-        motherboard: 'mb-2', // MSI B650 Tomahawk
-        ram: 'ram-2', // Trident Z5 32GB
-        storage: 'str-2', // 990 Pro 2TB
-        psu: 'psu-2', // Corsair RM750e
-        case: 'case-3', // Lian Li O11 EVO
-        cooler: 'clr-2' // Thermalright 240 AIO
-      }
+      "id": "amd-streamer-1440p",
+      "title": "SVO STREAM PRO",
+      "badge": "1440p Streaming",
+      "tagline": "Ryzen 7 9850X3D · RTX 5070 Ti 16GB · RAM DDR5 32GB.",
+      "image": "https://images.unsplash.com/photo-1555680202-c86f0e12f086?w=1000&auto=format&fit=crop&q=85",
+      "components": {
+        "cpu": "cpu-r7-9850x3d",
+        "gpu": "gpu-rtx5070ti",
+        "motherboard": "mb-asus-b850",
+        "ram": "ram-32-ddr5",
+        "storage": "ssd-samsung-990pro-2t",
+        "psu": "psu-corsair-850",
+        "case": "case-air903",
+        "cooler": "cooler-ak620"
+      },
+      "totalPrice": 40940000,
+      "estimatedWatts": 492,
+      "recommendedPsu": "850W (periksa headroom)",
+      "serviceNote": "Paket simulasi bahan diskusi, bukan stok unit siap kirim. Biaya jasa perakitan, instalasi, lisensi dan pengiriman diperkirakan setelah konsultasi.",
+      "imageCaption": "Foto ilustrasi referensi. Warna dan komponen rakitan akhir dapat berbeda."
     },
     {
-      id: 'creator-4k-beast',
-      title: 'Pro Creator & 4K Monster',
-      badge: 'Workstation & 4K',
-      tagline: 'Kombinasi i9-14900K + RTX 4090 24GB + RAM 64GB DDR5 untuk Render 3D, AI, Blender, & 4K Gaming.',
-      totalPrice: 65450000,
-      estimatedWatts: 790,
-      recommendedPsu: '1000W 80+ Titanium',
-      image: 'https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=600&auto=format&fit=crop&q=80',
-      components: {
-        cpu: 'cpu-6', // i9-14900K
-        gpu: 'gpu-6', // RTX 4090 24GB
-        motherboard: 'mb-3', // Z790 AORUS Elite
-        ram: 'ram-3', // 64GB DDR5 6400MHz
-        storage: 'str-3', // Crucial T700 2TB Gen5
-        psu: 'psu-4', // be quiet 1000W Titanium
-        case: 'case-2', // HYTE Y60
-        cooler: 'clr-3', // NZXT Kraken 360 LCD
-        accessories: 'acc-1' // Lian Li Fans
-      }
+      "id": "creator-4k-beast",
+      "title": "SVO CREATOR ULTRA",
+      "badge": "4K / Workstation",
+      "tagline": "Ryzen 9 9950X3D · RTX 5080 · DDR5 64GB untuk pekerjaan intensif.",
+      "image": "https://mikepc.com.au/cdn/shop/files/a_fcef53a5-14ba-4822-91df-89a3a5179a23_960x.png?v=1745457693",
+      "components": {
+        "cpu": "cpu-r9-9950x3d",
+        "gpu": "gpu-rtx5080",
+        "motherboard": "mb-asus-b850",
+        "ram": "ram-64-ddr5",
+        "storage": "ssd-crucial-t705-2t",
+        "psu": "psu-seasonic-1000",
+        "case": "case-o11",
+        "cooler": "cooler-nzxt-360"
+      },
+      "totalPrice": 63600000,
+      "estimatedWatts": 614,
+      "recommendedPsu": "1000W (periksa headroom)",
+      "serviceNote": "Paket simulasi bahan diskusi, bukan stok unit siap kirim. Biaya jasa perakitan, instalasi, lisensi dan pengiriman diperkirakan setelah konsultasi.",
+      "imageCaption": "Foto ilustrasi referensi. Warna dan komponen rakitan akhir dapat berbeda."
+    },
+    {
+      "id": "intel-creator-2026",
+      "title": "SVO INTEL WORK",
+      "badge": "Intel 2026",
+      "tagline": "Core Ultra 7 270K Plus · RTX 5070 · DDR5 32GB untuk kerja dan gaming.",
+      "image": "https://bybcomputers.com.au/cdn/shop/files/AMD-gaming-pc-ryzen7-9700x-rtx5070-12gb-32gb-2tb-antec-c5-white-007.jpg?v=1755493357&width=1000",
+      "components": {
+        "cpu": "cpu-ultra7-270kplus",
+        "gpu": "gpu-rtx5070",
+        "motherboard": "mb-msi-b860",
+        "ram": "ram-32-ddr5",
+        "storage": "ssd-samsung-990pro-2t",
+        "psu": "psu-corsair-850",
+        "case": "case-air903",
+        "cooler": "cooler-ak620"
+      },
+      "totalPrice": 32540000,
+      "estimatedWatts": 447,
+      "recommendedPsu": "850W (periksa headroom)",
+      "serviceNote": "Paket simulasi bahan diskusi, bukan stok unit siap kirim. Biaya jasa perakitan, instalasi, lisensi dan pengiriman diperkirakan setelah konsultasi.",
+      "imageCaption": "Foto ilustrasi referensi. Warna dan komponen rakitan akhir dapat berbeda."
+    },
+    {
+      "id": "compact-white-itx",
+      "title": "SVO COMPACT WHITE",
+      "badge": "Custom Mini-ITX White",
+      "tagline": "Ryzen 7 9700X · RTX 5060 Ti 16GB · B850I Mini-ITX · SFX 850W. Referensi rakitan compact, komponen final diverifikasi sebelum jasa perakitan.",
+      "image": "https://cdn.cclonline.com/cdn-cgi/image/width%3D2000/images/shopblocks/CH160-WH-White-01.png",
+      "components": {
+        "cpu": "cpu-r7-9700x",
+        "gpu": "gpu-rtx5060ti16",
+        "motherboard": "mb-asrock-b850i",
+        "ram": "ram-32-white",
+        "storage": "ssd-samsung-990pro-2t",
+        "psu": "psu-cm-sfx850",
+        "case": "case-ch160-white",
+        "cooler": "cooler-ak400"
+      },
+      "totalPrice": 27440000,
+      "estimatedWatts": 306,
+      "recommendedPsu": "850W SFX (cek konektor dan dimensi kartu grafis)",
+      "serviceNote": "Paket simulasi bahan diskusi, bukan stok unit siap kirim. Biaya jasa perakitan, instalasi, lisensi dan pengiriman diperkirakan setelah konsultasi.",
+      "imageCaption": "Foto referensi casing DeepCool CH160 WH (bukan foto PC rakitan akhir).",
+      "imageCreditUrl": "https://www.cclonline.com/r-ch160-whngi0-g-1-deepcool-ch160-wh-itx-case-white-449642/"
     }
   ]
 };
-
-if (typeof window !== 'undefined') {
-  window.PC_DATA = PC_DATA;
-}
+if (typeof window !== 'undefined') window.PC_DATA = PC_DATA;
+if (typeof module !== 'undefined' && module.exports) module.exports = PC_DATA;

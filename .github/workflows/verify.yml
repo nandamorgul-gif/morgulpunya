@@ -1,0 +1,79 @@
+name: Verify SEMEISTVO TECH
+
+on:
+  push:
+    branches:
+      - feature/semeistvo-store-foundation
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: semeistvo-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Node.js tests and storefront smoke check
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install dependencies
+        run: npm install --no-fund --no-audit
+      - name: Unit regression tests
+        run: npm test
+      - name: Check JavaScript syntax
+        run: |
+          for file in js/*.js server/*.js scripts/*.js tests/*.test.js; do
+            node --check "$file"
+          done
+      - name: Install Chromium for viewport smoke tests
+        run: npx playwright install --with-deps chromium
+      - name: Responsive browser checks (360–1440px)
+        run: npm run test:e2e
+      - name: Upload visual debug artifacts on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-test-results
+          path: |
+            test-results/
+            playwright-report/
+          retention-days: 5
+          if-no-files-found: ignore
+      - name: Smoke test secure web routes and assets
+        env:
+          ADMIN_EMAIL: testadmin@example.com
+          ADMIN_PASSWORD: 'testing-only-admin-password-12345'
+          NODE_ENV: development
+          SEED_DEMO_STOCK: '0'
+          MIDTRANS_SERVER_KEY: ''
+          PORT: '3000'
+        run: |
+          set -euo pipefail
+          node server/app.js > /tmp/svo-app.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
+          for i in $(seq 1 25); do
+            if curl -fsS http://localhost:3000/api/health > /tmp/svo-health.json; then break; fi
+            sleep 1
+          done
+          grep -q '"ok":true' /tmp/svo-health.json
+          curl -fsS http://localhost:3000/ > /tmp/svo-homepage.html
+          grep -q 'SEMEISTVO' /tmp/svo-homepage.html
+          curl -fsS http://localhost:3000/site.webmanifest > /tmp/svo-manifest.json
+          curl -fsS http://localhost:3000/images/favicon.svg > /dev/null
+          curl -fsS http://localhost:3000/images/catalog/gpu-rtx5060ti16.svg > /dev/null
+          curl -fsS http://localhost:3000/api/products > /tmp/svo-products.json
+          if curl -fsS http://localhost:3000/.env >/dev/null 2>&1; then
+            echo 'ERROR: .env is publicly accessible'
+            exit 1
+          fi
+          echo 'Static files, API and private-file denylist OK'

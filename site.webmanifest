@@ -1,0 +1,23 @@
+{
+  "name": "SEMEISTVO TECH — PC & Digital Studio",
+  "short_name": "SEMEISTVO",
+  "description": "Jasa rakit PC, konsultasi hardware, instalasi komputer, setup gaming/streaming, dan pembuatan website.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0B0A10",
+  "theme_color": "#0B0A10",
+  "icons": [
+    {
+      "src": "/images/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/images/logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ]
+}

@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SEMEISTVO TECH · Admin</title>
+<link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+<style>
+:root{color-scheme:dark;font-family:Inter,system-ui,sans-serif;background:#0d0b14;color:#f1ebfa}
+*{box-sizing:border-box}body{margin:0;padding:22px}main{max-width:1350px;margin:auto}h1{margin:0;font-size:clamp(1.3rem,3vw,2.4rem)}.svo-admin-brand{display:flex;align-items:center;gap:12px}.svo-admin-brand img{width:52px;height:52px;object-fit:contain}
+h2{font-size:1.2rem}header{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:16px 0 28px;border-bottom:1px solid #413454;flex-wrap:wrap}
+a{color:#c7a6ff}button,input,select{font:inherit;border-radius:8px;padding:10px;border:1px solid #604b7f}
+button{background:#7138ca;color:white;font-weight:700;cursor:pointer}button:disabled{opacity:.45;cursor:not-allowed}input,select{background:#20182d;color:white;max-width:100%}
+section{padding:24px 0}#loginSection{max-width:440px;margin:12vh auto}#loginForm{display:grid;gap:15px}
+label{display:grid;gap:7px}.muted{color:#c7bed1}.error{color:#ffb8cb}.success{color:#a9e7bf}
+summary{cursor:pointer}.stats{display:flex;gap:16px;flex-wrap:wrap}.stat{border:1px solid #504060;background:#1e172a;border-radius:12px;padding:15px;flex:1;min-width:170px}
+.tabbar{display:flex;gap:10px;margin:25px 0;flex-wrap:wrap}.tabbar button[aria-selected="true"]{background:#b79ad9;color:#130d1d}
+.table-scroll{overflow:auto;border:1px solid #473759;border-radius:12px}
+table{width:100%;border-collapse:collapse;font-size:.89rem}th,td{padding:10px;text-align:left;border-bottom:1px solid #3b304a;vertical-align:middle}
+th{background:#23182f;white-space:nowrap}tr:hover{background:#1f1729}
+td input{width:125px}td input[type="text"]{width:270px}td input[type="number"]{width:95px}
+td select{min-width:125px}td button{white-space:nowrap}.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:15px 0}.toolbar input{flex:1;min-width:210px}
+#status{position:sticky;top:0;z-index:20;padding:6px 0;background:#0d0b14}#productsPanel[hidden],#ordersPanel[hidden],#dashboard[hidden],#loginSection[hidden]{display:none}
+@media(max-width:650px){body{padding:12px}td{padding:7px}}
+</style></head>
+<body><main>
+<header><div class="svo-admin-brand"><img src="images/logo.svg" alt="Logo SVO" width="52" height="52"><div><h1>SEMEISTVO <span style="color:#b590f2">TECH</span></h1><p class="muted">Dashboard administrasi toko</p></div></div>
+<div><a href="/">← Lihat Toko</a> <button id="logout" type="button" hidden>Keluar</button></div></header>
+<p id="status" role="status"></p>
+<section id="loginSection"><h2>Login Admin</h2>
+<p class="muted">Gunakan akun admin yang dibuat saat konfigurasi server.</p>
+<form id="loginForm"><label>Email admin<input type="email" name="email" autocomplete="username" required></label>
+<label>Password<input type="password" name="password" autocomplete="current-password" required minlength="16"></label>
+<button>Masuk Dashboard</button></form></section>
+<div id="dashboard" hidden>
+<div class="stats"><div class="stat"><b>Produk</b><h2 id="statProducts">—</h2></div><div class="stat"><b>Stok tersimpan</b><h2 id="statStock">—</h2></div><div class="stat"><b>Pesanan terbaru</b><h2 id="statOrders">—</h2></div></div>
+<div class="tabbar" role="tablist"><button type="button" id="productsTab" aria-selected="true">Produk & Stok</button>
+<button type="button" id="ordersTab" aria-selected="false">Manajemen Pesanan</button></div>
+<section id="productsPanel">
+<h2>Daftar Produk & Persediaan</h2>
+<p class="muted">Harga ditetapkan dalam rupiah; stok dihitung per unit. Perubahan langsung memengaruhi katalog. Masukkan URL HTTPS foto produk asli yang penggunaannya diizinkan, atau pakai ilustrasi lokal. Jangan ubah produk ketika pembayaran sedang diproses tanpa pengecekan fisik stok.</p>
+<div class="toolbar"><input type="search" id="productSearch" placeholder="Cari nama, brand, atau ID produk"><button id="refreshProducts">Muat Ulang</button></div>
+<div class="table-scroll"><table><thead><tr><th>Nama produk</th><th>Foto/Ilustrasi (URL)</th><th>Harga (Rp)</th><th>Stok</th><th>Aktif?</th><th>Simpan</th></tr></thead>
+<tbody id="productRows"></tbody></table></div>
+</section>
+<section id="ordersPanel" hidden><h2>Daftar Pesanan</h2>
+<p class="muted">Status pembayaran diverifikasi server. Penandaan refunded hanya bersifat administratif; refund sungguhan perlu dilakukan melalui penyedia pembayaran.</p>
+<button id="refreshOrders">Muat Ulang Pesanan</button>
+<div class="table-scroll" style="margin-top:15px"><table><thead><tr><th>Pesanan</th><th>Pelanggan</th><th>Alamat</th><th>Subtotal + Ongkir</th><th>Item</th><th>Status</th><th>Tindakan</th></tr></thead>
+<tbody id="orderRows"></tbody></table></div></section>
+</div></main>
+<script>
+'use strict';
+const $ = s => document.querySelector(s);
+const format = v => new Intl.NumberFormat('id-ID',{style:'currency',currency:'IDR',maximumFractionDigits:0}).format(v);
+const safe = s => String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let products=[],orders=[];
+function status(message,error=false){$('#status').textContent=message;$('#status').className=error?'error':'success'}
+async function api(url,options={}){
+  const res=await fetch(url,{credentials:'same-origin',cache:'no-store',...options});
+  let data;try{data=await res.json()}catch{throw Error('Respons server tidak dapat dibaca.')}
+  if(!res.ok)throw Error(data.error||'Permintaan gagal.');
+  return data;
+}
+function showLogin(logged){
+  $('#dashboard').hidden=!logged;$('#loginSection').hidden=logged;$('#logout').hidden=!logged;
+}
+$('#loginForm').addEventListener('submit',async e=>{
+  e.preventDefault();const body=Object.fromEntries(new FormData(e.target).entries());
+  try{await api('/api/admin/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+    e.target.reset();showLogin(true);status('Login berhasil.');await loadAll();
+  }catch(err){status(err.message,true)}
+});
+$('#logout').addEventListener('click',async()=>{try{await api('/api/admin/logout',{method:'POST'});showLogin(false);status('Sesi berakhir.')}catch(err){status(err.message,true)}});
+function tab(which){const product=which==='products';$('#productsPanel').hidden=!product;$('#ordersPanel').hidden=product;$('#productsTab').setAttribute('aria-selected',String(product));$('#ordersTab').setAttribute('aria-selected',String(!product));}
+$('#productsTab').onclick=()=>tab('products');$('#ordersTab').onclick=()=>tab('orders');
+function renderProducts(){
+  const q=$('#productSearch').value.trim().toLowerCase();
+  const list=products.filter(p=>(p.id+' '+p.name+' '+p.brand).toLowerCase().includes(q));
+  $('#productRows').innerHTML=list.map(p=>`<tr data-id="${safe(p.id)}">
+  <td><small class="muted">${safe(p.id)} / ${safe(p.brand)}</small><br><input type="text" name="name" aria-label="Nama produk" maxlength="500" value="${safe(p.name)}"></td>
+  <td><input type="text" name="image" aria-label="URL gambar produk" maxlength="500" value="${safe(p.image)}" placeholder="https://..."></td>
+  <td><input type="number" name="price" aria-label="Harga" min="0" max="1000000000" step="1" value="${p.price}"></td>
+  <td><input type="number" name="stock" aria-label="Stok" min="0" max="1000000000" step="1" value="${p.stock}"></td>
+  <td><select name="active" aria-label="Status produk"><option value="1" ${p.active?'selected':''}>Aktif</option><option value="0" ${!p.active?'selected':''}>Nonaktif</option></select></td>
+  <td><button class="save-product">Simpan</button></td></tr>`).join('')||'<tr><td colspan="5">Tidak ada hasil.</td></tr>';
+  $('#statProducts').textContent=products.length;
+  $('#statStock').textContent=products.reduce((sum,p)=>sum+p.stock,0);
+}
+function renderOrders(){
+  const allowed={paid:['processing','refunded'],processing:['shipped','refunded'],shipped:['completed','refunded']};
+  $('#orderRows').innerHTML=orders.map(o=>`<tr data-id="${safe(o.id)}"><td><b>${safe(o.id)}</b><br><small class="muted">${new Date(o.created_at).toLocaleString('id-ID')}</small></td>
+  <td>${safe(o.customer_name)}<br>${safe(o.customer_phone)}<br>${safe(o.customer_email)}</td>
+  <td>${safe(o.shipping_address)}<br><small>${safe(o.customer_notes)}</small></td>
+  <td>${format(o.total)}<br><small class="muted">Ongkir ${format(o.shipping)}</small></td>
+  <td>${o.items.map(i=>safe(i.product_name)+' × '+i.quantity).join('<hr>')}</td>
+  <td>${safe(o.status)}</td>
+  <td>${allowed[o.status]?`<select aria-label="Status berikutnya" class="next-status"><option value="">Pilih status</option>${allowed[o.status].map(s=>`<option value="${s}">${s}</option>`).join('')}</select><button class="save-order">Update</button>`:'—'}</td></tr>`).join('')||'<tr><td colspan="7">Belum ada pesanan.</td></tr>';
+  $('#statOrders').textContent=orders.length;
+}
+async function loadProducts(){const data=await api('/api/admin/products');products=data.products;renderProducts()}
+async function loadOrders(){const data=await api('/api/admin/orders');orders=data.orders;renderOrders()}
+async function loadAll(){await Promise.all([loadProducts(),loadOrders()])}
+$('#refreshProducts').onclick=()=>loadProducts().then(()=>status('Produk dimuat ulang.')).catch(e=>status(e.message,true));
+$('#refreshOrders').onclick=()=>loadOrders().then(()=>status('Pesanan dimuat ulang.')).catch(e=>status(e.message,true));
+$('#productSearch').oninput=renderProducts;
+$('#productRows').addEventListener('click',async e=>{
+  const btn=e.target.closest('.save-product');if(!btn)return;
+  const tr=btn.closest('tr'),id=tr.dataset.id;const name=tr.querySelector('[name=name]').value.trim();
+  const price=Number(tr.querySelector('[name=price]').value),stock=Number(tr.querySelector('[name=stock]').value);
+  const active=Number(tr.querySelector('[name=active]').value);
+  const image=tr.querySelector('[name=image]').value.trim();
+  if(!image || !(image.startsWith('https://') || image.startsWith('images/products/'))){status('Gunakan URL foto HTTPS atau ilustrasi lokal.',true);return}
+  if(!name||!Number.isSafeInteger(price)||!Number.isSafeInteger(stock)||price<0||stock<0){status('Nama, harga, atau stok tidak valid.',true);return}
+  btn.disabled=true;try{await api('/api/admin/products/'+encodeURIComponent(id),{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,price,stock,active,image})});status('Produk '+id+' berhasil disimpan.');await loadProducts()}catch(err){status(err.message,true)}finally{btn.disabled=false}
+});
+$('#orderRows').addEventListener('click',async e=>{
+  const btn=e.target.closest('.save-order');if(!btn)return;
+  const tr=btn.closest('tr'),id=tr.dataset.id,selection=tr.querySelector('.next-status').value;
+  if(!selection){status('Pilih status terlebih dahulu.',true);return}
+  if(!confirm('Ubah status '+id+' menjadi '+selection+'?'))return;
+  btn.disabled=true;try{await api('/api/admin/orders/'+encodeURIComponent(id),{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({status:selection})});status('Status berhasil diperbarui.');await loadOrders()}catch(err){status(err.message,true)}finally{btn.disabled=false}
+});
+api('/api/admin/me').then(()=>{showLogin(true);loadAll().catch(e=>status(e.message,true))}).catch(()=>showLogin(false));
+</script></body></html>

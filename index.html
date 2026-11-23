@@ -4,15 +4,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description"
-    content="Morgulzxz Gaming Performance - Platform simulasi rakit PC interaktif dan kalkulator harga terlengkap di Indonesia. Rakit PC gaming dan workstation impianmu dengan komponen resmi dan garansi 3 tahun.">
-  <meta name="keywords"
-    content="rakit pc, simulasi rakit pc, harga pc gaming, builder pc indonesia, rtx 4090, ryzen 7800x3d, pc workstation, morgulzxz gaming performance">
-  <title>Morgulzxz Gaming Performance - Rakitan PC Custom Modern & Simulasi Harga</title>
+  <meta name="description" content="SEMEISTVO TECH — jasa rakit PC, instalasi dan konsultasi, pembuatan server GTA 5 Roleplay berbasis FiveM, serta website custom. Hosting dan domain dijelaskan terpisah.">
+  <meta name="keywords" content="jasa rakit PC custom, konsultasi PC, instal ulang PC, instalasi software resmi, upgrade komputer, jasa pembuatan website, website bisnis, SEMEISTVO TECH">
+  <title>SEMEISTVO TECH — Jasa Rakit PC, Konsultasi, Instalasi & Pembuatan Website</title>
 
   <!-- Favicon -->
-  <link rel="icon" type="image/svg+xml" href="images/logo.svg">
-  <link rel="alternate icon" href="images/logo.svg" type="image/x-icon">
+  <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+  <meta name="theme-color" content="#0B0A10">
+  <link rel="manifest" href="site.webmanifest">
   <link rel="apple-touch-icon" href="images/logo.svg">
 
   <!-- Google Fonts & Feather Icons -->
@@ -25,144 +24,197 @@
 
   <!-- Style CSS -->
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/store.css">
+  <link rel="stylesheet" href="css/music.css">
+  <link rel="stylesheet" href="css/final.css">
+  <link rel="stylesheet" href="css/studio.css">
+  <link rel="stylesheet" href="css/services-expansion.css">
+  <link rel="stylesheet" href="css/polish.css">
 </head>
 
 <body>
+  <a class="svo-skip-link" href="#layanan">Langsung ke layanan</a>
 
   <!-- Header & Navigasi -->
   <header class="header">
     <div class="container nav-container">
-      <a href="#home" class="logo">
-        <div class="logo-icon" style="background: transparent; border: none; width: 36px; height: 36px; padding: 0;">
-          <img src="images/logo.svg" alt="Morgulzxz Gaming Logo"
-            style="width: 100%; height: 100%; object-fit: contain;">
-        </div>
-        <span>MORGULZXZ <span class="text-gradient">GAMING</span></span>
+      <a href="#home" class="logo svo-brand" aria-label="SEMEISTVO TECH — Beranda">
+        <img src="images/logo-horizontal.svg" alt="SEMEISTVO TECH" class="svo-logo-horizontal" width="250" height="55">
+        <img src="images/logo.svg" alt="" class="svo-logo-mark" width="42" height="40">
+        <span class="svo-logo-mobile">SEMEISTVO <em>TECH</em></span>
       </a>
 
-      <nav class="nav-links">
-        <a href="#home" class="nav-link active"><i class="feather feather-home"></i> Home</a>
-        <a href="#preset" class="nav-link"><i class="feather feather-grid"></i> Preset Builds</a>
-        <a href="#rakit-pc" class="nav-link"><i class="feather feather-sliders"></i> Rakit PC (Harga)</a>
-        <a href="#software-paket" class="nav-link"><i class="feather feather-download"></i> Paket Software</a>
-        <a href="#tentang" class="nav-link"><i class="feather feather-info"></i> Tentang Kami</a>
-        <a href="#kontak" class="nav-link"><i class="feather feather-phone-call"></i> Kontak & FAQ</a>
+      <nav class="nav-links" id="svoPrimaryNav" aria-label="Navigasi utama">
+        <a href="#home" class="nav-link active"><i class="feather feather-home"></i> Beranda</a>
+        <a href="#layanan" class="nav-link"><i class="feather feather-grid"></i> Layanan</a>
+        <a href="#digital" class="nav-link"><i class="feather feather-code"></i> Website</a>
+        <a href="#rakit-pc" class="nav-link"><i class="feather feather-cpu"></i> PC Builder</a>
+        <a href="#roleplay" class="nav-link"><i class="feather feather-server"></i> GTA 5 RP</a>
+        <a href="#kontak" class="nav-link"><i class="feather feather-message-circle"></i> Hubungi Kami</a>
       </nav>
 
       <div class="header-actions">
-        <a href="#rakit-pc" class="cart-badge" id="cartBadgeBtn" title="Ringkasan Keranjang Belanja">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-            stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="9" cy="21" r="1"></circle>
-            <circle cx="20" cy="21" r="1"></circle>
-            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-          </svg>
-          <span class="cart-count" id="cartCount">0</span>
-        </a>
+        <button type="button" id="svoShopCartButton" class="svo-store-btn svo-header-cart" aria-label="Buka keranjang PC Builder dan katalog">Keranjang <span class="svo-header-count" id="svoShopCartCount">0</span></button>
         <a href="#rakit-pc" class="btn btn-primary btn-simulasi-nav">
           <i class="feather feather-sliders"></i> Simulasi Rakit
         </a>
-        <button class="mobile-toggle" id="mobileMenuBtn">
+        <button type="button" class="mobile-toggle" id="mobileMenuBtn" aria-label="Buka menu navigasi" aria-expanded="false" aria-controls="svoPrimaryNav">
           <i class="feather feather-menu"></i>
         </button>
       </div>
     </div>
   </header>
 
-  <!-- Hero Section -->
-  <section id="home" class="hero">
-    <div class="container hero-grid">
+  <!-- Service-focused hero: preserve identity and music, not a hardware webshop -->
+  <section id="home" class="hero svo-hero svo-studio-hero">
+    <div class="container hero-grid svo-hero-grid">
       <div class="hero-content">
-        <span class="badge badge-purple">
-          <i class="feather feather-zap"></i> PC Builder Simulator v3.0 Live
-        </span>
-        <h1>Rakit PC Impian Sesuai <span class="text-gradient">Budget & Performa</span> Terbaik</h1>
-        <p>Simulasi rakitan PC interaktif terlengkap dengan perhitungan harga <i>real-time</i>, kompatibilitas daya
-          (wattage), serta jaminan garansi resmi 3 tahun dan gratis perakitan.</p>
-
+        <p class="svo-eyebrow"><span class="svo-live-dot"></span> SEMEISTVO TECH / PC & DIGITAL STUDIO</p>
+        <h1>Teknologi yang kamu butuhkan.<br><span class="text-gradient">Kami bantu wujudkan.</span></h1>
+        <p class="svo-hero-desc">Rakit PC custom, instalasi dan konsultasi, pengembangan server GTA 5 Roleplay, hingga website untuk bisnis dan personal. Solusi teknis dalam satu studio.</p>
+        <div class="svo-hero-tags" aria-label="Jenis layanan"><span>Custom PC Build</span><span>Setup & Instalasi</span><span>GTA 5 Roleplay Server</span><span>Website &amp; Konsultasi</span></div>
         <div class="hero-cta">
-          <a href="#rakit-pc" class="btn btn-primary btn-simulasi-hero">
-            <i class="feather feather-sliders"></i> Mulai Rakit PC Sekarang
-          </a>
-          <a href="#preset" class="btn btn-secondary">
-            <i class="feather feather-grid"></i> Lihat Preset Rekomendasi
-          </a>
+          <a href="#layanan" class="btn btn-primary"><i class="feather feather-layers"></i> Jelajahi Layanan</a>
+          <a href="#kontak" class="btn btn-secondary"><i class="feather feather-message-square"></i> Konsultasi Proyek</a>
         </div>
-
-        <div style="margin-top: 1.5rem; margin-bottom: 0.5rem; animation: pulse 3s infinite;">
-          <a href="https://wa.me/6288291967659?text=Halo%20Morgulzxz,%20saya%20ingin%20konsultasi%20mengenai%20Jasa%20Pembuatan%20Server%20GTA%20Roleplay." target="_blank" style="display: inline-flex; align-items: center; gap: 0.75rem; background: linear-gradient(135deg, rgba(20, 24, 34, 0.8), rgba(112, 0, 255, 0.2)); border: 1px solid rgba(0, 240, 255, 0.3); padding: 0.65rem 1.25rem; border-radius: 100px; text-decoration: none; box-shadow: 0 4px 15px rgba(0, 240, 255, 0.1);" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(0, 240, 255, 0.25)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(0, 240, 255, 0.1)';">
-            <div style="background: rgba(0, 240, 255, 0.15); padding: 0.35rem 0.65rem; border-radius: 12px; display: flex; align-items: center; gap: 0.4rem; border: 1px solid rgba(0, 240, 255, 0.2);">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="2" y="6" width="20" height="12" rx="6"></rect>
-                <line x1="6" y1="12" x2="10" y2="12"></line>
-                <line x1="8" y1="10" x2="8" y2="14"></line>
-                <line x1="15" y1="13" x2="15.01" y2="13"></line>
-                <line x1="18" y1="11" x2="18.01" y2="11"></line>
-              </svg>
-              <svg width="45" height="18" viewBox="0 0 60 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <text x="2" y="20" font-family="'Arial Black', Impact, sans-serif" font-weight="900" font-size="22" fill="#ffffff" letter-spacing="-1">GTA</text>
-                <text x="44" y="22" font-family="'Times New Roman', serif" font-weight="bold" font-size="26" fill="#4fae50" stroke="#ffffff" stroke-width="0.75">V</text>
-              </svg>
-            </div>
-            <span style="font-size: 0.95rem; font-weight: 500; color: var(--text-light);">Menyediakan Jasa Pembuatan <strong style="color: #fff; text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);">Server Roleplay</strong></span>
-            <span style="background: var(--primary); color: #000; padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.75rem; font-weight: 800; margin-left: 0.25rem;">PROMO</span>
-          </a>
-        </div>
-
-        <div class="hero-stats">
-          <div class="stat-item">
-            <h3><i class="feather feather-package"
-                style="font-size: 1.2rem; color: var(--primary); margin-right: 0.3rem;"></i>10.000+</h3>
-            <p>Unit PC Terrakit</p>
-          </div>
-          <div class="stat-item">
-            <h3><i class="feather feather-shield"
-                style="font-size: 1.2rem; color: var(--accent); margin-right: 0.3rem;"></i>100%</h3>
-            <p>Garansi Resmi Distributor</p>
-          </div>
-          <div class="stat-item">
-            <h3><i class="feather feather-clock"
-                style="font-size: 1.2rem; color: var(--warning); margin-right: 0.3rem;"></i>24 Jam</h3>
-            <p>Stress & Burn-in Test</p>
-          </div>
-        </div>
+        <p class="svo-hero-disclaimer">Diskusikan kebutuhan lebih dulu. Ruang lingkup, biaya, jadwal, serta ketersediaan layanan disepakati sebelum pekerjaan dimulai.</p>
       </div>
-
-      <!-- Preview Floating Card -->
-      <div class="hero-preview-card">
-        <img src="https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=700&auto=format&fit=crop&q=80"
-          alt="Flagship Gaming PC Build" class="preview-image">
-        <div class="preview-details">
-          <div class="preview-header">
-            <h4>Morgulzxz CyberBeast RTX 4090</h4>
-            <span class="badge badge-emerald">Flagship Ready</span>
-          </div>
-          <p style="font-size: 0.85rem; color: var(--text-muted);">Intel i9-14900K + RTX 4090 24GB + 64GB DDR5 RGB + AIO
-            Liquid 360mm LCD</p>
-          <div class="preview-specs-pills">
-            <span class="spec-pill"><i class="feather feather-activity"></i> 4K Ultra 144+ FPS</span>
-            <span class="spec-pill"><i class="feather feather-film"></i> 8K Video Editing</span>
-            <span class="spec-pill"><i class="feather feather-cpu"></i> AI Workstation</span>
-          </div>
+      <div class="svo-studio-hero-media">
+        <div class="svo-hero-topline"><span>YOUR IDEA. OUR FOCUS.</span><span class="svo-edition">SVO / STUDIO</span></div>
+        <img src="https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=1100&amp;auto=format&amp;fit=crop&amp;q=85"
+             data-svo-fallback="images/products/pcbuild.svg" alt="Foto konsep PC desktop custom untuk ilustrasi layanan rakit komputer"
+             class="svo-hero-visual" width="660" height="500" fetchpriority="high">
+        <div class="svo-hero-service-strip">
+          <div><span class="svo-service-index">01 / HARDWARE</span><strong>PC Build & Upgrade</strong></div>
+          <div><span class="svo-service-index">02 / SOFTWARE</span><strong>Install & Setup</strong></div>
+          <div><span class="svo-service-index">03 / DIGITAL</span><strong>RP Server & Website</strong></div>
         </div>
+        <small class="svo-photo-disclaimer">Foto ilustrasi konsep, bukan dokumentasi proyek pelanggan.</small>
       </div>
     </div>
   </section>
 
-  <!-- Preset Builds Section -->
-  <section id="preset" class="section-padding" style="background: rgba(0, 0, 0, 0.2);">
+<!-- Signature services: no invented prices, claims or customer portfolio -->
+  <section id="layanan" class="svo-studio-section svo-services" aria-labelledby="svoServicesTitle">
+    <div class="container">
+      <div class="svo-studio-heading"><div><span class="svo-kicker">WHAT WE DO / 2026</span><h2 id="svoServicesTitle">Jasa teknologi, dari awal sampai siap digunakan.</h2></div>
+        <p>Butuh rakitan PC sesuai budget atau website yang mewakili bisnismu? Pilih layanan untuk menyiapkan brief konsultasi yang tepat.</p>
+      </div>
+      <div class="svo-services-grid">
+        <article class="svo-offer svo-offer-featured">
+          <div class="svo-offer-media"><img src="https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=900&amp;auto=format&amp;fit=crop&amp;q=82" data-svo-fallback="images/products/pcbuild.svg" loading="lazy" alt="Contoh komputer rakitan gaming dengan pencahayaan kabinet"><span>01 / HARDWARE</span></div>
+          <div class="svo-offer-body"><h3>Rakit PC Custom</h3><p>Perencanaan spesifikasi, rekomendasi komponen, perakitan, manajemen kabel, dan pengujian awal sesuai kebutuhan gaming, streaming, editing, atau workstation.</p><div class="svo-offer-tags"><span>Gaming & Creator</span><span>Budget Planning</span></div><a href="#kontak" data-svo-service="Rakit PC Custom" class="svo-offer-link">Konsultasikan rakitan <span aria-hidden="true">↗</span></a></div>
+        </article>
+        <article class="svo-offer">
+          <div class="svo-offer-media"><img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=900&amp;auto=format&amp;fit=crop&amp;q=82" data-svo-fallback="images/products/motherboard.svg" loading="lazy" alt="Area kerja komputer sebagai visual layanan konsultasi PC"><span>02 / ADVISORY</span></div>
+          <div class="svo-offer-body"><h3>Konsultasi PC & Hardware</h3><p>Bantu pilih CPU, GPU, motherboard, RAM, PSU, dan casing, cek kompatibilitas dasar, serta membandingkan opsi upgrade.</p><div class="svo-offer-tags"><span>Part Selection</span><span>Compatibility</span></div><a href="#kontak" data-svo-service="Konsultasi PC & Hardware" class="svo-offer-link">Mulai konsultasi ↗</a></div>
+        </article>
+        <article class="svo-offer">
+          <div class="svo-offer-media"><img src="https://images.unsplash.com/photo-1547082299-de196ea013d6?w=900&amp;auto=format&amp;fit=crop&amp;q=82" data-svo-fallback="images/products/software.svg" loading="lazy" alt="Komputer desktop untuk ilustrasi layanan instalasi dan setup"><span>03 / SETUP</span></div>
+          <div class="svo-offer-body"><h3>Instalasi & Optimasi PC</h3><p>Instalasi OS berlisensi sah, driver, software pendukung, setup OBS, serta konfigurasi dasar untuk produktivitas dan gaming.</p><div class="svo-offer-tags"><span>OS & Drivers</span><span>Streaming</span></div><a href="#kontak" data-svo-service="Instalasi & Optimasi PC" class="svo-offer-link">Diskusikan setup ↗</a></div>
+        </article>
+        <article class="svo-offer svo-offer-featured">
+          <div class="svo-offer-media"><img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=900&amp;auto=format&amp;fit=crop&amp;q=82" data-svo-fallback="images/products/software.svg" loading="lazy" alt="Layar kode pemrograman sebagai ilustrasi jasa pembuatan website"><span>04 / WEB DEVELOPMENT</span></div>
+          <div class="svo-offer-body"><h3>Pembuatan Website</h3><p>Landing page profesional, profil bisnis, portofolio personal, katalog online, dan web app sesuai ruang lingkup yang dibahas bersama.</p><div class="svo-offer-tags"><span>Responsive Web</span><span>Custom Design</span></div><a href="#kontak" data-svo-service="Pembuatan Website" class="svo-offer-link">Bahas proyek website ↗</a></div>
+        </article>
+        <article class="svo-offer">
+          <div class="svo-offer-media"><img src="https://images.unsplash.com/photo-1707921645785-5fb1fbc49489?w=900&amp;auto=format&amp;fit=crop&amp;q=82" data-svo-fallback="images/products/cooler.svg" loading="lazy" alt="Interior komponen PC sebagai ilustrasi layanan upgrade perangkat"><span>06 / MAINTENANCE</span></div>
+          <div class="svo-offer-body"><h3>Upgrade & Troubleshooting</h3><p>Diskusi kendala performa, upgrade storage atau RAM, pemeriksaan dasar komponen, dan rencana perawatan perangkat.</p><div class="svo-offer-tags"><span>Hardware Check</span><span>Upgrade Plan</span></div><a href="#kontak" data-svo-service="Upgrade & Troubleshooting" class="svo-offer-link">Ceritakan kendala ↗</a></div>
+        </article>
+        <article class="svo-offer">
+          <div class="svo-offer-media"><img src="https://images.unsplash.com/photo-1555680202-c86f0e12f086?w=900&amp;auto=format&amp;fit=crop&amp;q=82" data-svo-fallback="images/products/case.svg" loading="lazy" alt="Setup komputer gaming untuk ilustrasi layanan setup streaming"><span>07 / CREATOR</span></div>
+          <div class="svo-offer-body"><h3>Setup Gaming & Streaming</h3><p>Panduan pengaturan monitor, periferal, aplikasi streaming, audio, dan workflow dasar untuk kebutuhan content creator.</p><div class="svo-offer-tags"><span>OBS & Audio</span><span>Creator Desk</span></div><a href="#kontak" data-svo-service="Setup Gaming & Streaming" class="svo-offer-link">Rencanakan setup ↗</a></div>
+        </article>
+        <article class="svo-offer svo-offer-featured">
+          <div class="svo-offer-media"><img src="images/roleplay-server.svg" loading="lazy" width="960" height="650" alt="Ilustrasi original kota virtual dan server untuk jasa GTA 5 Roleplay"><span>05 / ROLEPLAY SERVER</span></div>
+          <div class="svo-offer-body"><h3>Jasa Server GTA 5 Roleplay</h3><p>Perencanaan dan konfigurasi server FiveM, framework roleplay, instalasi resource yang sah, penyesuaian fitur, serta pengujian dasar sesuai kebutuhan komunitas.</p>
+          <div class="svo-offer-tags"><span>FiveM / Cfx.re</span><span>Custom RP Setup</span></div><a href="#kontak" data-svo-service="Pembuatan Server GTA 5 Roleplay" class="svo-offer-link">Konsultasi server RP ↗</a></div>
+        </article>
+      </div>
+      <p class="svo-service-note">Ketersediaan layanan, pengerjaan onsite/remote, estimasi waktu, dan biaya menyesuaikan hasil konsultasi. Tidak ada transaksi atau pemesanan otomatis hanya dengan memilih layanan.</p>
+    </div>
+  </section>
+
+  <section id="alur" class="svo-studio-section svo-process" aria-labelledby="svoProcessTitle">
+    <div class="container">
+      <div class="svo-studio-heading"><div><span class="svo-kicker">OUR PROCESS</span><h2 id="svoProcessTitle">Proses yang jelas, tanpa tebakan.</h2></div>
+        <p>Mulai dari ide hingga kebutuhan teknisnya terpetakan. Setiap proyek disesuaikan, bukan satu paket untuk semua.</p>
+      </div>
+      <div class="svo-process-steps">
+        <div class="svo-process-step"><span>01</span><h3>Ceritakan kebutuhanmu</h3><p>Jelaskan tujuan, budget, kendala, dan hasil yang kamu inginkan.</p></div>
+        <div class="svo-process-step"><span>02</span><h3>Konsultasi & estimasi</h3><p>Diskusikan solusi, ruang lingkup, komponen atau fitur, jadwal, dan estimasi biaya.</p></div>
+        <div class="svo-process-step"><span>03</span><h3>Persetujuan pekerjaan</h3><p>Pelaksanaan dilakukan setelah detail layanan dan biaya disepakati.</p></div>
+        <div class="svo-process-step"><span>04</span><h3>Uji & serah terima</h3><p>Hasil diperiksa bersama berdasarkan ruang lingkup yang telah disetujui.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Custom roleplay server development: separate service; game/brand affiliation disclaimed -->
+  <section id="roleplay" class="svo-studio-section svo-roleplay" aria-labelledby="svoRoleplayTitle">
+    <div class="container svo-roleplay-layout">
+      <div class="svo-roleplay-copy">
+        <span class="svo-kicker">GAME SERVER DEVELOPMENT / FIVEM</span>
+        <h2 id="svoRoleplayTitle">Bangun komunitas <span class="text-gradient">GTA 5 Roleplay</span> versimu.</h2>
+        <p>Pengembangan dan penyiapan server GTA V Roleplay berbasis FiveM, dari konsep komunitas hingga konfigurasi awal resource. Alur pengerjaan disesuaikan dengan framework, fitur, dan akses server yang disepakati.</p>
+        <div class="svo-rp-features">
+          <div><span>01</span><div><strong>Setup FiveM & framework</strong><small>Konfigurasi dasar server, struktur resource, database, dan izin admin sesuai kebutuhan.</small></div></div>
+          <div><span>02</span><div><strong>Job, sistem ekonomi & roleplay</strong><small>Penyesuaian fitur, script/resource berlisensi sah, dan integrasi sesuai ruang lingkup.</small></div></div>
+          <div><span>03</span><div><strong>Pengujian & dokumentasi</strong><small>Pemeriksaan instalasi, fungsi dasar, panduan penggunaan, dan opsi bantuan lanjutan.</small></div></div>
+        </div>
+        <div class="svo-rp-exclusion"><strong>Belum termasuk hosting/VPS.</strong> Biaya hosting, domain, lisensi pihak ketiga, script premium, dan aset berbayar ditanggung terpisah berdasarkan penawaran. Client harus memiliki akses dan izin penggunaan platform/game yang diperlukan.</div>
+        <a href="#kontak" data-svo-service="Pembuatan Server GTA 5 Roleplay" class="btn btn-primary"><i class="feather feather-server"></i> Konsultasi Server Roleplay</a>
+        <p class="svo-rp-disclaimer">Jasa independen, tidak berafiliasi atau disponsori oleh Rockstar Games, GTA V, FiveM, maupun Cfx.re. Pembuatan server mengikuti persyaratan dan lisensi platform terkait.</p>
+      </div>
+      <div class="svo-roleplay-media">
+        <img src="images/roleplay-server.svg" alt="Ilustrasi original skyline virtual dan server jaringan untuk layanan roleplay" loading="lazy" width="960" height="650">
+        <div class="svo-roleplay-caption"><span>SVO / ROLEPLAY SERVER</span><span>COMMUNITY · CONFIGURATION · DEVELOPMENT</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="digital" class="svo-studio-section svo-digital" aria-labelledby="svoDigitalTitle">
+    <div class="container svo-digital-layout">
+      <div class="svo-digital-copy">
+        <span class="svo-kicker">DIGITAL SERVICES / BY SEMEISTVO</span>
+        <h2 id="svoDigitalTitle">Butuh website yang <span class="text-gradient">berkarakter?</span></h2>
+        <p>Mulai dari satu halaman promosi hingga aplikasi web dengan fitur khusus. Fokus kami adalah kebutuhan pengguna, tampilan yang nyaman, performa, dan struktur yang mudah dikembangkan.</p>
+        <div class="svo-digital-list">
+          <div><span>01</span><strong>Landing page & website profil</strong><small>Presentasi bisnis, jasa, produk, dan identitas brand.</small></div>
+          <div><span>02</span><strong>Katalog dan website usaha</strong><small>Halaman produk, informasi layanan, dan kontak pelanggan.</small></div>
+          <div><span>03</span><strong>Dashboard & web app custom</strong><small>Fitur khusus sesuai kebutuhan, setelah analisis ruang lingkup.</small></div>
+        </div>
+        <div class="svo-web-exclusion"><strong>Penting — belum termasuk:</strong> hosting, domain, layanan email, lisensi plugin/tema, API berbayar, serta layanan pihak ketiga lainnya kecuali secara tertulis masuk dalam penawaran. Biaya operasional dan perpanjangan dibahas terpisah.</div>
+        <div class="svo-digital-actions">
+          <a href="#kontak" data-svo-service="Pembuatan Website" class="btn btn-primary">Konsultasi Website <span aria-hidden="true">↗</span></a>
+          <span>Penawaran berdasarkan kompleksitas fitur dan kebutuhan proyek.</span>
+        </div>
+      </div>
+      <div class="svo-digital-media">
+        <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=1100&amp;auto=format&amp;fit=crop&amp;q=85" data-svo-fallback="images/products/software.svg" loading="lazy" width="780" height="680" alt="Ilustrasi layar pemrograman untuk layanan pengembangan website">
+        <div class="svo-digital-media-footer"><span>WEB / DIGITAL EXPERIENCE</span><span>DESIGN · DEVELOPMENT · SUPPORT</span></div>
+        <small>Foto suasana kerja bersifat ilustratif, bukan contoh proyek pelanggan.</small>
+      </div>
+    </div>
+  </section>
+
+<!-- Rekomendasi rakitan: pilihan preset tampil SEBELUM PC Builder -->
+  <section id="preset" class="section-padding svo-preset-section" aria-labelledby="svoPresetTitle">
     <div class="container">
       <div class="section-title">
-        <span class="badge">Siap Pakai</span>
-        <h2>Preset Rakitan PC Terpopuler</h2>
-        <p>Pilihan racikan PC siap kirim hasil kurasi teknisi Morgulzxz Gaming Performance untuk berbagai kebutuhan dari
-          eSports hingga
-          Workstation 4K.</p>
+        <span class="badge badge-purple">CUSTOM PC / BUILD GUIDE</span>
+        <h2 id="svoPresetTitle">Rekomendasi Rakitan PC 2026</h2>
+        <p>Pilih salah satu dari lima konfigurasi referensi untuk gaming, streaming, editing, workstation, atau Mini-ITX White. Komponen dan harga bisa disesuaikan dengan kebutuhan, budget, serta ketersediaan aktual.</p>
       </div>
-
-      <div class="presets-grid" id="presetsContainer">
-        <!-- Hydrated dynamically from data.js via app.js -->
+      <!-- Diproses otomatis oleh js/app.js; ID ini harus tetap unik. -->
+      <div class="presets-grid" id="presetsContainer"></div>
+      <div class="svo-preset-next">
+        <div>
+          <strong>Belum menemukan rakitan yang cocok?</strong>
+          <span>Atur CPU, GPU, RAM, casing, dan komponen lain lewat PC Builder.</span>
+        </div>
+        <a href="#rakit-pc" class="btn btn-primary">Sesuaikan di PC Builder ↗</a>
       </div>
+      <p class="svo-preset-fineprint">Harga yang tampil adalah estimasi komponen, belum termasuk jasa rakit, instalasi/lisensi perangkat lunak, pengiriman, serta biaya tambahan lainnya. Pemilihan akhir perlu konfirmasi kompatibilitas dan stok.</p>
     </div>
   </section>
 
@@ -175,6 +227,7 @@
         <p>Pilih komponen favoritmu. Sistem akan menghitung estimasi daya (wattage) dan total harga secara otomatis.</p>
       </div>
 
+      <div class="svo-compatibility svo-compatibility-pass" id="svoCompatibilityIssues" role="status" aria-live="polite"><strong>Pemeriksaan kompatibilitas</strong><p>Pilih komponen untuk memulai pengecekan socket dan ukuran hardware.</p></div>
       <div class="builder-layout">
         <!-- Main Component Selection Area -->
         <div class="builder-selection-area">
@@ -265,74 +318,22 @@
                   </svg>
                   Pesan
                 </button>
+                <button type="button" class="btn btn-primary svo-builder-open-cart" id="svoBuilderViewCart">
+                  <i class="feather feather-shopping-bag"></i> Lihat di Keranjang Atas <span id="svoBuilderCartCount" aria-live="polite">0</span>
+                </button>
                 <button class="btn btn-secondary" id="exportSpecBtn" style="width: 100%;">
                   <i class="feather feather-file-text"></i> Lihat / Simpan Rincian Spec
                 </button>
+                <div class="svo-build-save-row">
+                  <button type="button" id="svoSaveBuildBtn" class="btn btn-secondary"><i class="feather feather-save"></i> Simpan Rakitan</button>
+                  <button type="button" id="svoLoadBuildBtn" class="btn btn-secondary"><i class="feather feather-folder"></i> Muat Rakitan</button>
+                </div>
+                <small id="svoBuildSaveStatus" class="svo-save-status" role="status"></small>
               </div>
 
-              <!-- Accepted Payment Methods Bar -->
-              <div class="summary-payment-bar">
-                <div class="summary-payment-title">
-                  <i class="feather feather-credit-card"></i> Metode Pembayaran Diterima:
-                </div>
-                <div class="payment-logos-grid" style="gap: 0.35rem;">
-                  <!-- BCA -->
-                  <svg class="bank-card-logo-pill" viewBox="0 0 76 44" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-bottom: 0; width: 54px; height: 31px; cursor: help;" title="BCA">
-                    <rect width="76" height="44" rx="8" fill="#005caa"/>
-                    <text x="38" y="32" text-anchor="middle" font-family="'Arial Black', Arial, sans-serif" font-weight="900" font-style="italic" font-size="24" fill="#ffffff" letter-spacing="2">BCA</text>
-                  </svg>
-                  
-                  <!-- Mandiri -->
-                  <svg class="bank-card-logo-pill" viewBox="0 0 76 44" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-bottom: 0; width: 54px; height: 31px; cursor: help;" title="Mandiri">
-                    <rect width="76" height="44" rx="8" fill="#003d79"/>
-                    <path d="M 16 32 C 16 10, 30 10, 38 22 C 46 34, 60 34, 60 12" stroke="#ffb703" stroke-width="4.5" stroke-linecap="round" fill="none" opacity="0.85"/>
-                    <text x="38" y="27" text-anchor="middle" font-family="Arial, sans-serif" font-weight="900" font-style="italic" font-size="13" fill="#ffffff" letter-spacing="0.5">mandiri</text>
-                  </svg>
-                  
-                  <!-- SeaBank -->
-                  <svg class="bank-card-logo-pill" viewBox="0 0 76 44" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-bottom: 0; width: 54px; height: 31px; cursor: help;" title="SeaBank">
-                    <rect width="76" height="44" rx="8" fill="url(#seaGradEstimator)"/>
-                    <defs>
-                      <linearGradient id="seaGradEstimator" x1="0" y1="0" x2="76" y2="44" gradientUnits="userSpaceOnUse">
-                        <stop stop-color="#ff6b00"/>
-                        <stop offset="1" stop-color="#e55a00"/>
-                      </linearGradient>
-                    </defs>
-                    <circle cx="20" cy="22" r="10" fill="#ffffff"/>
-                    <path d="M 23 18 C 17 18, 17 22, 20 22 C 23 22, 23 26, 17 26" stroke="#ff6b00" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-                    <text x="50" y="27" text-anchor="middle" font-family="Arial, sans-serif" font-weight="800" font-size="12" fill="#ffffff" letter-spacing="0">SeaBank</text>
-                  </svg>
-                  <span class="payment-chip" title="QRIS Instant" style="padding: 0.25rem 0.5rem; font-size: 0.725rem;">
-                    <svg viewBox="0 0 24 24" fill="none">
-                      <rect width="24" height="24" rx="4" fill="#ed1c24" />
-                      <rect x="4.5" y="4.5" width="6" height="6" fill="#fff" />
-                      <rect x="13.5" y="4.5" width="6" height="6" fill="#fff" />
-                      <rect x="4.5" y="13.5" width="6" height="6" fill="#fff" />
-                      <rect x="13.5" y="13.5" width="3" height="3" fill="#fff" />
-                      <rect x="16.5" y="16.5" width="3" height="3" fill="#fff" />
-                    </svg> QRIS
-                  </span>
-                  <span class="payment-chip" title="GoPay" style="padding: 0.25rem 0.5rem; font-size: 0.725rem;">
-                    <svg viewBox="0 0 24 24" fill="none">
-                      <rect width="24" height="24" rx="4" fill="#00a5cf" />
-                      <circle cx="12" cy="12" r="6" stroke="#fff" stroke-width="2.5" />
-                      <circle cx="12" cy="12" r="2.5" fill="#fff" />
-                    </svg> GoPay
-                  </span>
-                  <span class="payment-chip" title="Tokopedia" style="padding: 0.25rem 0.5rem; font-size: 0.725rem;">
-                    <svg viewBox="0 0 24 24" fill="none">
-                      <rect width="24" height="24" rx="4" fill="#03ac0e" />
-                      <circle cx="9" cy="10" r="1.5" fill="#fff" />
-                      <circle cx="15" cy="10" r="1.5" fill="#fff" />
-                    </svg> Tokopedia
-                  </span>
-                  <span class="payment-chip" title="ShopeePay" style="padding: 0.25rem 0.5rem; font-size: 0.725rem;">
-                    <svg viewBox="0 0 24 24" fill="none">
-                      <rect width="24" height="24" rx="4" fill="#ee4d2d" />
-                      <path d="M7 10.5h10v7.5H7z" stroke="#fff" stroke-width="1.6" />
-                    </svg> Shopee
-                  </span>
-                </div>
+              <div class="svo-builder-info">
+                <strong><i class="feather feather-info"></i> Estimasi, bukan tagihan pembayaran</strong>
+                <p>Kompatibilitas, harga final, ongkir, serta pilihan pembayaran resmi akan dikonfirmasi melalui admin. Pembayaran online hanya diproses melalui checkout toko yang terhubung ke penyedia pembayaran.</p>
               </div>
             </div>
           </div>
@@ -341,714 +342,235 @@
     </div>
   </section>
 
-  <!-- Paket Instalasi Software & Layanan Ekstra Section -->
-  <section id="software-paket" class="section-padding" style="background: rgba(0, 0, 0, 0.35);">
+  <!-- Additional support services -->
+<section id="software-paket" class="svo-studio-section svo-addons" aria-labelledby="svoAddonsTitle">
+  <div class="container">
+    <div class="svo-studio-heading"><div><span class="svo-kicker">ADDITIONAL SUPPORT</span><h2 id="svoAddonsTitle">Butuh bantuan lain? Bisa didiskusikan.</h2></div>
+      <p>Selain layanan utama, konsultasi tersedia untuk berbagai kebutuhan setup dan digital. Ruang lingkup dan biaya menyesuaikan proyek.</p></div>
+    <div class="svo-addons-grid">
+      <article class="svo-addon"><div class="svo-addon-icon"><i class="feather feather-monitor"></i></div><h3>Setup Produktivitas</h3><p>Konfigurasi aplikasi resmi, periferal, file kerja, dan setup perangkat.</p><a href="#kontak" data-svo-service="Setup Kerja & Produktivitas">Ajukan konsultasi ↗</a></article>
+      <article class="svo-addon"><div class="svo-addon-icon"><i class="feather feather-server"></i></div><h3>Jaringan Dasar</h3><p>Konsultasi koneksi dan perangkat jaringan rumah atau kantor kecil.</p><a href="#kontak" data-svo-service="Konfigurasi Jaringan Dasar">Bahas kebutuhan ↗</a></article>
+      <article class="svo-addon"><div class="svo-addon-icon"><i class="feather feather-layout"></i></div><h3>Perawatan Website</h3><p>Perubahan konten, perbaikan tampilan, dan pengembangan fitur.</p><a href="#kontak" data-svo-service="Perawatan Website">Diskusikan website ↗</a></article>
+    </div>
+  </div>
+</section>
+
+<!-- Visual categories with live catalogue filtering -->
+  <section class="svo-category-section" aria-labelledby="svoCategoryTitle">
     <div class="container">
-      <div class="section-title">
-        <span class="badge badge-emerald"><i class="feather feather-download"></i> Ready to Use Software</span>
-        <h2>Paket Instalasi Software & Layanan Ekstra</h2>
-        <p>Pilih paket instalasi software dan optimasi agar PC rakitan barumu langsung siap digunakan tanpa repot setup
-          dari nol.</p>
+      <div class="svo-category-heading">
+        <div><span class="svo-kicker">EXPLORE / HARDWARE</span><h2 id="svoCategoryTitle">Eksplorasi Komponen PC</h2></div>
+        <a href="#svo-shop" class="svo-category-all">Lihat referensi komponen <span aria-hidden="true">↗</span></a>
       </div>
-
-      <div class="presets-grid" style="margin-bottom: 3.5rem;">
-        <!-- Paket 1 -->
-        <div class="glass-card preset-card">
-          <div class="preset-header">
-            <span class="badge">Termasuk Perakitan</span>
-            <h3 class="preset-title">Basic OS & Office Ready</h3>
-          </div>
-          <p class="preset-tagline">Paket instalasi standar gratis untuk kebutuhan harian, sekolah, kuliah & kerja
-            kantoran.</p>
-
-          <div class="preset-specs-list">
-            <div class="preset-spec-item"><i class="feather feather-check"></i> Windows 11 Pro Original (Activated)
-            </div>
-            <div class="preset-spec-item"><i class="feather feather-check"></i> Microsoft Office 2021 Full Suite</div>
-            <div class="preset-spec-item"><i class="feather feather-check"></i> Chrome, WinRAR, PDF Reader, VLC</div>
-            <div class="preset-spec-item"><i class="feather feather-check"></i> Driver Hardware & BIOS Update Terbaru
-            </div>
-          </div>
-
-          <div class="preset-footer">
-            <div class="preset-price">
-              <span>Biaya Instalasi</span>
-              <strong style="color: var(--accent);">GRATIS</strong>
-            </div>
-            <button class="btn btn-emerald select-software-btn" data-id="soft-1">
-              <i class="feather feather-check-circle"></i> Pilih Paket Ini
-            </button>
-          </div>
-        </div>
-
-        <!-- Paket 2 -->
-        <div class="glass-card preset-card">
-          <div class="preset-header">
-            <span class="badge badge-purple">Rekomendasi Gamers</span>
-            <h3 class="preset-title">Pro Gamer & FPS Optimization</h3>
-          </div>
-          <p class="preset-tagline">Tuning performa ekstra untuk max FPS, latency rendah, dan siap turnamen eSports.</p>
-
-          <div class="preset-specs-list">
-            <div class="preset-spec-item"><i class="feather feather-zap"></i> Stripped OS (Bypass Bloatware & Telemetry)
-            </div>
-            <div class="preset-spec-item"><i class="feather feather-zap"></i> Optimasi Latency GPU & Network Driver
-            </div>
-            <div class="preset-spec-item"><i class="feather feather-zap"></i> Tuning RAM XMP / EXPO Overclocking</div>
-            <div class="preset-spec-item"><i class="feather feather-zap"></i> Steam, Epic Games, Discord, Afterburner
-            </div>
-          </div>
-
-          <div class="preset-footer">
-            <div class="preset-price">
-              <span>Biaya Tambahan</span>
-              <strong>Rp 150.000</strong>
-            </div>
-            <button class="btn btn-primary select-software-btn" data-id="soft-2">
-              <i class="feather feather-plus"></i> Pilih Paket Ini
-            </button>
-          </div>
-        </div>
-
-        <!-- Paket 3 -->
-        <div class="glass-card preset-card">
-          <div class="preset-header">
-            <span class="badge badge-emerald">Creator Workstation</span>
-            <h3 class="preset-title">Creator & 3D Render Suite</h3>
-          </div>
-          <p class="preset-tagline">Konfigurasi lengkap software rendering 3D, editing video 4K, dan desain grafis
-            profesional.</p>
-
-          <div class="preset-specs-list">
-            <div class="preset-spec-item"><i class="feather feather-layers"></i> Adobe CC (Photoshop, Premiere, After
-              Effects)</div>
-            <div class="preset-spec-item"><i class="feather feather-layers"></i> Blender 4.0 + DaVinci Resolve Studio
-            </div>
-            <div class="preset-spec-item"><i class="feather feather-layers"></i> AutoCAD 2024 + SketchUp Pro</div>
-            <div class="preset-spec-item"><i class="feather feather-layers"></i> NVIDIA Studio Drivers & CUDA Tuning
-            </div>
-          </div>
-
-          <div class="preset-footer">
-            <div class="preset-price">
-              <span>Biaya Tambahan</span>
-              <strong>Rp 250.000</strong>
-            </div>
-            <button class="btn btn-primary select-software-btn" data-id="soft-3">
-              <i class="feather feather-plus"></i> Pilih Paket Ini
-            </button>
-          </div>
-        </div>
-
-        <!-- Paket 4 -->
-        <div class="glass-card preset-card">
-          <div class="preset-header">
-            <span class="badge badge-purple">Developer Special</span>
-            <h3 class="preset-title">Developer Dual Boot OS</h3>
-          </div>
-          <p class="preset-tagline">Sistem Dual Boot Windows 11 + Linux Ubuntu dengan tools pemograman & virtualization
-            lengkap.</p>
-
-          <div class="preset-specs-list">
-            <div class="preset-spec-item"><i class="feather feather-terminal"></i> Dual Boot Windows 11 Pro + Ubuntu
-              24.04</div>
-            <div class="preset-spec-item"><i class="feather feather-terminal"></i> Docker Desktop, WSL2, & Kubernetes
-            </div>
-            <div class="preset-spec-item"><i class="feather feather-terminal"></i> VS Code, Git, Python, Node.js
-              Environment</div>
-            <div class="preset-spec-item"><i class="feather feather-terminal"></i> Partisi SSD Terpisah Aman & Kilat
-            </div>
-          </div>
-
-          <div class="preset-footer">
-            <div class="preset-price">
-              <span>Biaya Tambahan</span>
-              <strong>Rp 300.000</strong>
-            </div>
-            <button class="btn btn-primary select-software-btn" data-id="soft-4">
-              <i class="feather feather-plus"></i> Pilih Paket Ini
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Extra Services Highlight Grid -->
-      <div class="section-title" style="margin-bottom: 2rem;">
-        <span class="badge">Layanan Tambahan</span>
-        <h2>Layanan Modifikasi & Ekstra Protection</h2>
-      </div>
-
-      <div class="about-features" style="margin-bottom: 0;">
-        <div class="glass-card feature-card" style="padding: 1.5rem;">
-          <div class="feature-icon" style="width: 54px; height: 54px;">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-              stroke-linecap="round" stroke-linejoin="round">
-              <path d="M4 4c4 4 4 12 8 16" stroke="var(--primary)" stroke-width="2.5" />
-              <path d="M12 4c-4 4-4 12 8 16" stroke="var(--danger)" stroke-width="2.5" />
-              <path d="M20 4c-4 4-4 12-8 16" stroke="var(--accent)" stroke-width="2.5" />
-              <rect x="3" y="2" width="18" height="3" rx="1" fill="rgba(0, 240, 255, 0.2)" stroke="var(--primary)" />
-              <rect x="3" y="19" width="18" height="3" rx="1" fill="rgba(0, 255, 157, 0.2)" stroke="var(--accent)" />
-            </svg>
-          </div>
-          <h4 style="font-size: 1.1rem; margin-bottom: 0.5rem;">Custom Sleeve Cables</h4>
-          <p style="font-size: 0.85rem;">Pilihan warna kabel extension jalinan estetik (White, Black/Red, Cyberpunk
-            Cyan) untuk tampilan interior memukau.</p>
-        </div>
-
-        <div class="glass-card feature-card" style="padding: 1.5rem;">
-          <div class="feature-icon" style="width: 54px; height: 54px;">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-              stroke-linecap="round" stroke-linejoin="round">
-              <rect x="4" y="4" width="16" height="16" rx="3" fill="rgba(112, 0, 255, 0.25)" stroke="#c084fc"
-                stroke-width="2" />
-              <circle cx="12" cy="12" r="4" stroke="var(--primary)" stroke-width="2" />
-              <circle cx="12" cy="12" r="1.5" fill="var(--accent)" />
-              <path d="M12 2v2M12 20v2M2 12h2M20 12h2" stroke="var(--primary)" />
-              <path d="M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"
-                stroke="#c084fc" />
-            </svg>
-          </div>
-          <h4 style="font-size: 1.1rem; margin-bottom: 0.5rem;">ARGB Hub & Controller</h4>
-          <p style="font-size: 0.85rem;">Pemasangan Hub Kontroler RGB terpusat yang dapat diatur via remote wireless
-            maupun software motherboard.</p>
-        </div>
-
-        <div class="glass-card feature-card" style="padding: 1.5rem;">
-          <div class="feature-icon" style="width: 54px; height: 54px;">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-              stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 8L12 3 3 8v8l9 5 9-5V8z" fill="rgba(255, 183, 3, 0.15)" stroke="var(--warning)"
-                stroke-width="2" />
-              <path d="M3 8l9 5 9-5" stroke="var(--warning)" />
-              <path d="M12 13v10" stroke="var(--warning)" />
-              <circle cx="12" cy="12" r="3.5" fill="var(--bg-dark)" stroke="var(--accent)" stroke-width="2" />
-              <path d="M10.8 12l1 1 1.7-1.7" stroke="var(--accent)" stroke-width="2" />
-            </svg>
-          </div>
-          <h4 style="font-size: 1.1rem; margin-bottom: 0.5rem;">Packing Kayu & Asuransi</h4>
-          <p style="font-size: 0.85rem;">Perlindungan ekstra peti kayu berlapis bubble wrap tebal + garansi asuransi
-            100% aman sampai tujuan luar kota.</p>
-        </div>
-
-        <div class="glass-card feature-card" style="padding: 1.5rem;">
-          <div class="feature-icon" style="width: 54px; height: 54px;">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-              stroke-linecap="round" stroke-linejoin="round">
-              <path
-                d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"
-                fill="rgba(0, 240, 255, 0.15)" stroke="var(--primary)" stroke-width="2" />
-              <path d="M18 13l3 3M19 19l2 2" stroke="var(--accent)" stroke-width="2" />
-              <path d="M5 3l1 2 2 1-2 1-1 2-1-2-2-1 2-1 1-2z" fill="var(--warning)" stroke="none" />
-            </svg>
-          </div>
-          <h4 style="font-size: 1.1rem; margin-bottom: 0.5rem;">Maintenance & Clean Up</h4>
-          <p style="font-size: 0.85rem;">Layanan pembersihan debu gratis dan penggantian thermal paste premium (Thermal
-            Grizzly) selama masa garansi.</p>
-        </div>
+      <div class="svo-category-tiles">
+        <a href="#svo-shop" class="svo-category-tile" data-svo-category-link="cpu"><span class="svo-category-number" aria-hidden="true">01</span><span>Processor <small>AMD &amp; Intel</small></span></a>
+        <a href="#svo-shop" class="svo-category-tile" data-svo-category-link="gpu"><span class="svo-category-number" aria-hidden="true">02</span><span>Graphics Card <small>RTX &amp; Radeon</small></span></a>
+        <a href="#svo-shop" class="svo-category-tile" data-svo-category-link="motherboard"><span class="svo-category-number" aria-hidden="true">03</span><span>Motherboard <small>AM5 &amp; Intel</small></span></a>
+        <a href="#svo-shop" class="svo-category-tile" data-svo-category-link="ram"><span class="svo-category-number" aria-hidden="true">04</span><span>Memory <small>DDR5</small></span></a>
+        <a href="#svo-shop" class="svo-category-tile" data-svo-category-link="storage"><span class="svo-category-number" aria-hidden="true">05</span><span>Storage <small>NVMe SSD</small></span></a>
+        <a href="#svo-shop" class="svo-category-tile" data-svo-category-link="case"><span class="svo-category-number" aria-hidden="true">06</span><span>PC Case <small>ATX &amp; Mini-ITX</small></span></a>
       </div>
     </div>
   </section>
 
-  <!-- Tentang Kami Section -->
-  <section id="tentang" class="section-padding" style="background: rgba(0, 0, 0, 0.25);">
+  <section class="svo-featured-section" aria-labelledby="svoFeaturedTitle">
     <div class="container">
-      <div class="section-title">
-        <span class="badge badge-emerald">Jaminan Kualitas</span>
-        <h2>Mengapa Memilih Morgulzxz Gaming Performance?</h2>
-        <p>Kami tidak hanya menjual sparepart PC, tetapi merakit dengan dedikasi presisi tinggi dan pengujian
-          menyeluruh.</p>
+      <div class="svo-category-heading">
+        <div><span class="svo-kicker">EDITOR'S PICKS / 2026</span><h2 id="svoFeaturedTitle">Referensi hardware 2026</h2>
+          <p class="svo-featured-intro">Model pilihan untuk membantu konsultasi spesifikasi. Harga masih berupa simulasi.</p>
+        </div>
+        <a href="#svo-shop" class="svo-category-all">Buka katalog lengkap <span aria-hidden="true">↗</span></a>
       </div>
-
-      <div class="about-features">
-        <div class="glass-card feature-card">
-          <div class="feature-icon">
-            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-              stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" fill="rgba(0, 255, 157, 0.15)"
-                stroke="var(--accent)" stroke-width="2" />
-              <path d="M9 12l2 2 4-4" stroke="var(--accent)" stroke-width="2.5" />
-            </svg>
-          </div>
-          <h3>100% Garansi Resmi 3 Tahun</h3>
-          <p>Seluruh unit komponen yang kami rakit dijamin original dengan garansi distributor resmi Indonesia hingga 3
-            tahun swap baru.</p>
-        </div>
-
-        <div class="glass-card feature-card">
-          <div class="feature-icon">
-            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-              stroke-linecap="round" stroke-linejoin="round">
-              <path d="M6 3v6a3 3 0 0 0 6 0V3" stroke="var(--primary)" stroke-width="2" />
-              <path d="M18 3v6a3 3 0 0 1-6 0V3" stroke="var(--primary)" stroke-width="2" />
-              <rect x="4" y="14" width="16" height="7" rx="2" fill="rgba(0, 240, 255, 0.15)" stroke="var(--accent)"
-                stroke-width="2" />
-              <circle cx="9" cy="17.5" r="1.2" fill="var(--accent)" />
-              <circle cx="15" cy="17.5" r="1.2" fill="var(--accent)" />
-            </svg>
-          </div>
-          <h3>Cable Management Profesional</h3>
-          <p>Kabel dirapi rapi menggunakan zip-ties & custom sleeve cable untuk kenyamanan visual serta aliran udara
-            (airflow) maksimal.</p>
-        </div>
-
-        <div class="glass-card feature-card">
-          <div class="feature-icon">
-            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-              stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="9" stroke="var(--warning)" stroke-width="2" fill="rgba(255, 183, 3, 0.1)" />
-              <polyline points="12 7 12 12 15 15" stroke="var(--warning)" stroke-width="2.2" />
-              <path d="M18 7.5A7 7 0 0 0 6 7.5" stroke="var(--danger)" stroke-width="2.2" />
-            </svg>
-          </div>
-          <h3>24 Jam Stress & Temperature Test</h3>
-          <p>Sebelum dikirim, setiap PC melewati pengujian FurMark, Prime95, dan Cinebench untuk memastikan stabilitas
-            suhu dan performa.</p>
-        </div>
-
-        <div class="glass-card feature-card">
-          <div class="feature-icon">
-            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-              stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 2v6M9 2v4M15 2v4" stroke="var(--accent)" stroke-width="2" />
-              <path d="M6 8h12v4a6 6 0 0 1-12 0V8z" fill="rgba(0, 255, 157, 0.15)" stroke="var(--accent)"
-                stroke-width="2" />
-              <path d="M12 18v4" stroke="var(--accent)" stroke-width="2.5" />
-              <polygon points="10,11 15,13 10,15" fill="var(--primary)" stroke="none" />
-            </svg>
-          </div>
-          <h3>Plug & Play (Free OS & Apps)</h3>
-          <p>Sudah terinstall Windows 11 Original aktivasi, driver terbaru, BIOS ter-update, dan aplikasi standar siap
-            dipakai langsung.</p>
-        </div>
-      </div>
-
-      <!-- Testimonials Grid -->
-      <div class="section-title" style="margin-top: 5rem; margin-bottom: 2.5rem;">
-        <span class="badge">Ulasan Pelanggan</span>
-        <h2>Apa Kata Gamers & Creators?</h2>
-      </div>
-
-      <div class="testimonials-grid">
-        <div class="glass-card testimonial-card">
-          <div class="testimonial-stars">★★★★★</div>
-          <p class="testimonial-text">"Proses perakitannya sangat cepat dan cable management di casing akuarium Lian Li
-            saya beneran rapi banget! Suhu idle cuma 35°C."</p>
-          <div class="testimonial-user">
-            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80"
-              alt="Customer Avatar" class="user-avatar">
-            <div class="user-info">
-              <h5>Rian Prasetya</h5>
-              <span>Content Creator / Streamer</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="glass-card testimonial-card">
-          <div class="testimonial-stars">★★★★★</div>
-          <p class="testimonial-text">"Kalkulator harga di websitenya akurat banget. Langsung pesan via WhatsApp dan
-            dikirim pakai packing kayu aman sampai Surabaya!"</p>
-          <div class="testimonial-user">
-            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80"
-              alt="Customer Avatar" class="user-avatar">
-            <div class="user-info">
-              <h5>Budi Santoso</h5>
-              <span>Architect & 3D Artist</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="glass-card testimonial-card">
-          <div class="testimonial-stars">★★★★★</div>
-          <p class="testimonial-text">"Pilih racikan preset Budget eSports untuk Valorant dapet 300+ FPS rata kanan di
-            1080p. Mantap Morgulzxz Gaming Performance!"</p>
-          <div class="testimonial-user">
-            <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&auto=format&fit=crop&q=80"
-              alt="Customer Avatar" class="user-avatar">
-            <div class="user-info">
-              <h5>Jessica Amanda</h5>
-              <span>Pro Gamer eSports</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
+      <div class="svo-featured-grid" id="svoFeaturedGrid" aria-live="polite"></div>
     </div>
   </section>
 
-  <!-- Kontak & FAQ Section -->
-  <section id="kontak" class="section-padding">
+  <!-- SEMEISTVO TECH store catalogue: existing product data, estimates only -->
+  <section id="svo-shop" class="section-padding svo-store-section" aria-labelledby="svoShopTitle">
     <div class="container">
       <div class="section-title">
-        <span class="badge">Hubungi Kami</span>
-        <h2>Kontak & FAQ Perakitan</h2>
-        <p>Konsultasikan spesifikasi PC rakitanmu langsung dengan tim spesialis hardware kami.</p>
+        <span class="badge badge-purple">HARDWARE / REFERENCE CATALOG</span>
+        <h2 id="svoShopTitle">Komponen untuk Rencana Rakitanmu</h2>
+        <p class="svo-store-subtitle">Gunakan katalog sebagai referensi pemilihan part. Keranjang komponen dan fondasi checkout yang lama tetap tersedia sebagai fitur tambahan, bukan fokus utama layanan.</p>
       </div>
+      <div class="svo-store-toolbar" role="search" aria-label="Cari komponen toko">
+        <input type="search" id="svoProductSearch" placeholder="Cari CPU, GPU, RAM, casing..." aria-label="Cari produk">
+        <select id="svoProductCategory" aria-label="Filter kategori"><option value="all">Semua kategori</option></select>
+        <select id="svoProductSort" aria-label="Urutkan produk">
+          <option value="default">Urutan katalog</option>
+          <option value="low">Harga terendah</option>
+          <option value="high">Harga tertinggi</option>
+          <option value="name">Nama A–Z</option>
+        </select>
+      </div>
+      <div class="svo-store-meta" id="svoProductCount" role="status"></div>
+      <div class="svo-store-grid" id="svoProductGrid"></div>
+      <p class="svo-store-note">Harga adalah estimasi katalog dan belum menunjukkan stok real-time. Konfirmasi stok, harga akhir, ongkir, dan pembayaran dilakukan melalui admin.</p>
+      <div style="margin-top:1.4rem;text-align:center">
+        <button type="button" class="svo-store-btn" id="svoOpenCartFromShop">Lihat Pilihan Komponen</button>
+      </div>
+    </div>
+  </section>
 
-      <div class="contact-grid">
-        <!-- Contact Info Side -->
+  <!-- Service studio positioning -->
+<section id="tentang" class="svo-studio-section svo-about" aria-labelledby="svoAboutTitle">
+  <div class="container svo-about-layout">
+    <div class="svo-about-label"><span class="svo-kicker">ABOUT / SEMEISTVO TECH</span><img src="images/logo.svg" width="200" height="170" loading="lazy" alt="Logo monogram SEMEISTVO TECH"><p>HARDWARE × SOFTWARE × DIGITAL</p></div>
+    <div class="svo-about-copy">
+      <h2 id="svoAboutTitle">Bukan sekadar jual komponen. <span class="text-gradient">Kami bantu mencari solusi.</span></h2>
+      <p>SEMEISTVO TECH adalah konsep studio teknologi yang menggabungkan kebutuhan perangkat dengan solusi digital. Setiap rakitan, setup, maupun website dimulai dari tujuan penggunanya, bukan sekadar spesifikasi atau tren.</p>
+      <div class="svo-about-principles">
+        <div><strong>Diskusi lebih dulu</strong><small>Kebutuhan dan anggaran dipahami sebelum menyusun rekomendasi.</small></div>
+        <div><strong>Ruang lingkup jelas</strong><small>Fitur, revisi, lisensi, biaya, serta jadwal ditentukan berdasarkan kebutuhan.</small></div>
+        <div><strong>Transparan</strong><small>Simulasi harga, stok, dan foto referensi ditandai dengan jelas.</small></div>
+      </div>
+      <a class="svo-about-cta" href="#kontak">Ceritakan proyekmu ↗</a>
+    </div>
+  </div>
+</section>
+
+<!-- Consultation intake: WhatsApp handoff, no fake form submission -->
+  <!-- Logo bank merek asli dari Wikimedia Commons; metode merupakan preferensi, bukan pembayaran otomatis -->
+  <section id="pembayaran" class="svo-studio-section svo-payments" aria-labelledby="svoPaymentTitle">
+    <div class="container">
+      <div class="svo-studio-heading">
         <div>
-          <h3 style="font-size: 1.6rem; margin-bottom: 1.5rem;">Informasi Toko & Workshop</h3>
-          <div class="contact-info-list">
-            <!-- Logo GMaps -->
-            <div class="contact-info-item">
-              <div class="contact-info-icon gmaps" title="Google Maps Location">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ea4335" stroke-width="2"
-                  stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                  <circle cx="12" cy="10" r="3" fill="#ea4335"></circle>
-                </svg>
-              </div>
-              <div class="contact-info-text">
-                <h4>Alamat Store & Showroom (Google Maps)</h4>
-                <p>Perumahan Citra indah City, Kabupaten bogor, Jonggol</p>
-                <a href="https://maps.google.com/?q=Perumahan+Citra+indah+City+Jonggol+Bogor" target="_blank"
-                  style="color: var(--primary); font-size: 0.825rem; font-weight: 600; text-decoration: underline; margin-top: 0.25rem; display: inline-block;">
-                  📍 Buka di Google Maps &rarr;
-                </a>
-              </div>
-            </div>
-
-            <!-- Logo WhatsApp -->
-            <div class="contact-info-item">
-              <div class="contact-info-icon whatsapp" title="WhatsApp Fast Response">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="#25D366">
-                  <path
-                    d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-0.999 3.648 3.742-.981z" />
-                </svg>
-              </div>
-              <div class="contact-info-text">
-                <h4>WhatsApp Fast Response</h4>
-                <p>+62 882-9196-7659 (Konsultasi Spesifikasi & Live Order)</p>
-              </div>
-            </div>
-
-            <!-- Logo Telegram Direct @nandamorgul -->
-            <div class="contact-info-item">
-              <div class="contact-info-icon telegram" title="Telegram Direct @nandamorgul"
-                style="background: rgba(0, 136, 204, 0.15); border: 1px solid rgba(0, 136, 204, 0.3);">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="#0088cc">
-                  <path
-                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.12.02-1.96 1.25-5.54 3.69-.52.36-1 .53-1.42.52-.47-.01-1.37-.26-2.05-.48-.83-.27-1.49-.42-1.43-.88.03-.24.37-.49 1.02-.74 3.99-1.74 6.66-2.89 8.01-3.46 3.81-1.6 4.6-1.88 5.12-1.89.11 0 .37.03.54.17.14.12.18.28.2.45-.02.07-.02.24-.04.42z" />
-                </svg>
-              </div>
-              <div class="contact-info-text">
-                <h4>Telegram Direct Consultation</h4>
-                <p><a href="https://t.me/nandamorgul" target="_blank"
-                    style="color: #0088cc; font-weight: 700; text-decoration: underline;">@nandamorgul</a> (Chat
-                  Langsung via Telegram)</p>
-              </div>
-            </div>
-
-            <!-- Logo Jam Operasional -->
-            <div class="contact-info-item">
-              <div class="contact-info-icon jam" title="Jam Operasional Toko">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffb703" stroke-width="2"
-                  stroke-linecap="round" stroke-linejoin="round">
-                  <circle cx="12" cy="12" r="10"></circle>
-                  <polyline points="12 6 12 12 16 14"></polyline>
-                </svg>
-              </div>
-              <div class="contact-info-text">
-                <h4>Jam Operasional Toko</h4>
-                <p>Senin - Sabtu: 10:00 - 19:00 WIB (Minggu & Tanggal Merah Tutup)</p>
-              </div>
-            </div>
-
-            <!-- Logo Email Support -->
-            <div class="contact-info-item">
-              <div class="contact-info-icon email" title="Email Support">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#00f0ff" stroke-width="2"
-                  stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                  <polyline points="22,6 12,13 2,6"></polyline>
-                </svg>
-              </div>
-              <div class="contact-info-text">
-                <h4>Email Support & Quotation</h4>
-                <p>nandamorgul@gmail.com</p>
-              </div>
-            </div>
-          </div>
+          <span class="svo-kicker">PAYMENT PREFERENCES</span>
+          <h2 id="svoPaymentTitle">Metode Pembayaran</h2>
         </div>
+        <p>Sampaikan bank atau dompet digital yang ingin digunakan setelah rincian jasa, barang, dan harga akhir dikonfirmasi admin.</p>
+      </div>
+      <div class="svo-payment-methods svo-payment-logos" aria-label="Pilihan metode pembayaran">
+        <div class="svo-payment-method">
+          <div class="svo-payment-logo-frame">
+            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Bank_Central_Asia.svg" alt="Logo BCA" width="180" height="70" loading="lazy" decoding="async">
+            <span class="svo-payment-logo-fallback" aria-hidden="true">BCA</span>
+          </div>
+          <strong>BCA</strong>
+          <small>Transfer bank</small>
+        </div>
+        <div class="svo-payment-method">
+          <div class="svo-payment-logo-frame">
+            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Bank_Mandiri_logo_2016.svg" alt="Logo Mandiri" width="180" height="70" loading="lazy" decoding="async">
+            <span class="svo-payment-logo-fallback" aria-hidden="true">Mandiri</span>
+          </div>
+          <strong>Mandiri</strong>
+          <small>Transfer bank</small>
+        </div>
+        <div class="svo-payment-method">
+          <div class="svo-payment-logo-frame">
+            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/SeaBank.svg" alt="Logo SeaBank" width="180" height="70" loading="lazy" decoding="async">
+            <span class="svo-payment-logo-fallback" aria-hidden="true">SeaBank</span>
+          </div>
+          <strong>SeaBank</strong>
+          <small>Transfer bank</small>
+        </div>
+        <div class="svo-payment-method">
+          <div class="svo-payment-logo-frame">
+            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Bank_Jago_2026.svg" alt="Logo Bank Jago" width="180" height="70" loading="lazy" decoding="async">
+            <span class="svo-payment-logo-fallback" aria-hidden="true">Bank Jago</span>
+          </div>
+          <strong>Bank Jago</strong>
+          <small>Transfer bank</small>
+        </div>
+        <div class="svo-payment-method">
+          <div class="svo-payment-logo-frame">
+            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Logo_dana_blue.svg" alt="Logo DANA" width="180" height="70" loading="lazy" decoding="async">
+            <span class="svo-payment-logo-fallback" aria-hidden="true">DANA</span>
+          </div>
+          <strong>DANA</strong>
+          <small>Dompet digital</small>
+        </div>
+      </div>
+      <div class="svo-payment-note" role="note">
+        <p><strong>Belum ada instruksi transfer di halaman ini.</strong>
+          Logo menunjukkan preferensi pembayaran yang dapat ditanyakan kepada admin, bukan bukti seluruh kanal telah aktif atau kerja sama resmi dengan pemilik merek.
+          Jangan mengirim uang sebelum mendapat invoice dan tujuan pembayaran terverifikasi.</p>
+      </div>
+      <a href="#kontak" class="svo-payment-link">Konfirmasi metode pembayaran bersama admin ↗</a>
+    </div>
+  </section>
 
-        <!-- Contact Form Side -->
-        <form class="glass-card contact-form" id="contactForm">
-          <h3 style="font-size: 1.3rem;">Kirim Pesan Consultation</h3>
-          <div class="form-group">
-            <label for="contactName">Nama Lengkap</label>
-            <input type="text" id="contactName" class="form-control" placeholder="Masukkan nama Anda" required>
+  <section id="kontak" class="svo-studio-section svo-contact-section svo-studio-contact" aria-labelledby="svoContactTitle">
+    <div class="container">
+      <div class="svo-studio-heading">
+        <div><span class="svo-kicker">START YOUR PROJECT</span><h2 id="svoContactTitle">Ceritakan kebutuhanmu, mulai dari sini.</h2></div>
+        <p>Rakit PC, instalasi, server GTA 5 Roleplay, upgrade, atau website baru? Isi brief singkat untuk menyiapkan pesan konsultasi melalui WhatsApp. Belum ada tagihan atau komitmen pekerjaan.</p>
+      </div>
+      <div class="svo-contact-layout svo-studio-contact-layout">
+        <div class="svo-contact-info svo-studio-contact-info">
+          <span class="svo-contact-mark">SVO / LET'S CREATE</span>
+          <h3>Satu pesan untuk memulai ide besarmu.</h3>
+          <p>Detail seperti anggaran, aplikasi yang dipakai, atau contoh website membantu diskusi kebutuhan menjadi lebih tepat.</p>
+          <div class="svo-contact-facts">
+            <div><i class="feather feather-check-circle"></i><span>Pilih layanan yang sesuai kebutuhan</span></div>
+            <div><i class="feather feather-check-circle"></i><span>Uraikan spesifikasi, kendala, atau fitur</span></div>
+            <div><i class="feather feather-check-circle"></i><span>Diskusikan biaya dan pelaksanaan sebelum mulai</span></div>
           </div>
-          <div class="form-group">
-            <label for="contactEmail">Email / Nomor WhatsApp</label>
-            <input type="text" id="contactEmail" class="form-control" placeholder="Email atau 08xxx" required>
+          <a class="btn btn-secondary" href="https://wa.me/6288291967659?text=Halo%20SEMEISTVO%20TECH%2C%20saya%20ingin%20konsultasi%20jasa%20teknologi" target="_blank" rel="noopener noreferrer"><i class="feather feather-message-circle"></i> WhatsApp Langsung</a>
+          <a class="svo-contact-alt" href="https://t.me/nandamorgul" target="_blank" rel="noopener noreferrer">Alternatif: Telegram @nandamorgul ↗</a>
+          <small>Respons, lokasi layanan, estimasi, dan jadwal bergantung pada konfirmasi langsung.</small>
+        </div>
+        <form class="glass-card contact-form svo-service-form" id="contactForm">
+          <div class="svo-form-heading"><span>PROJECT INQUIRY</span><h3>Form Konsultasi</h3><p>Form ini menyiapkan pesan WhatsApp. Data tidak dikirim ke server SEMEISTVO TECH melalui formulir ini.</p></div>
+          <div class="form-group"><label for="contactService">Pilih layanan <span aria-hidden="true">*</span></label>
+            <select id="contactService" name="service" class="form-control" required>
+              <option value="">Pilih jenis layanan...</option>
+              <option value="Rakit PC Custom">Rakit PC Custom</option>
+              <option value="Konsultasi PC & Hardware">Konsultasi PC & Hardware</option>
+              <option value="Instalasi & Optimasi PC">Instalasi & Optimasi PC</option>
+              <option value="Pembuatan Website">Pembuatan Website</option>
+              <option value="Pembuatan Server GTA 5 Roleplay">Pembuatan Server GTA 5 Roleplay</option>
+              <option value="Upgrade & Troubleshooting">Upgrade & Troubleshooting</option>
+              <option value="Setup Gaming & Streaming">Setup Gaming & Streaming</option>
+              <option value="Setup Kerja & Produktivitas">Setup Kerja & Produktivitas</option>
+              <option value="Konfigurasi Jaringan Dasar">Konfigurasi Jaringan Dasar</option>
+              <option value="Perawatan Website">Perawatan Website</option>
+              <option value="Layanan Lainnya">Layanan Lainnya</option>
+            </select>
           </div>
-          <div class="form-group">
-            <label for="contactSubject">Topik Pertanyaan</label>
-            <input type="text" id="contactSubject" class="form-control"
-              placeholder="Contoh: Rekomendasi PC Render 20 Juta" required>
+          <div class="svo-form-row">
+            <div class="form-group"><label for="contactName">Nama <span aria-hidden="true">*</span></label><input type="text" id="contactName" name="name" class="form-control" placeholder="Nama panggilan" autocomplete="name" maxlength="100" required></div>
+            <div class="form-group"><label for="contactEmail">Kontak (WA/email) <span aria-hidden="true">*</span></label><input type="text" id="contactEmail" name="contact" class="form-control" placeholder="Nomor WA atau email" maxlength="100" required></div>
           </div>
-          <div class="form-group">
-            <label for="contactMessage">Pesan atau Kebutuhan Spesifik</label>
-            <textarea id="contactMessage" class="form-control"
-              placeholder="Tuliskan budget dan kebutuhan software/game yang ingin dijalankan..." required></textarea>
+          <div class="form-group"><label for="contactSubject">Judul kebutuhan <span aria-hidden="true">*</span></label><input type="text" id="contactSubject" name="subject" class="form-control" placeholder="Mis. PC streaming 25 juta / website bisnis" maxlength="150" required></div>
+          <div class="svo-form-row">
+            <div class="form-group"><label for="contactBudget">Perkiraan budget <small>(opsional)</small></label>
+              <select id="contactBudget" name="budget" class="form-control"><option value="">Belum ditentukan</option><option value="Di bawah Rp1 juta">Di bawah Rp1 juta</option><option value="Rp1–5 juta">Rp1–5 juta</option><option value="Rp5–15 juta">Rp5–15 juta</option><option value="Rp15–30 juta">Rp15–30 juta</option><option value="Di atas Rp30 juta">Di atas Rp30 juta</option><option value="Perlu diskusi">Perlu diskusi</option></select>
+            </div>
+            <div class="form-group"><label for="contactMethod">Metode <small>(opsional)</small></label>
+              <select id="contactMethod" name="method" class="form-control"><option value="Diskusikan metode">Diskusikan metode</option><option value="Remote/online">Remote/online</option><option value="Onsite (jika tersedia)">Onsite (jika tersedia)</option><option value="Kirim perangkat (jika tersedia)">Kirim perangkat (jika tersedia)</option></select>
+            </div>
           </div>
-          <button type="submit" class="btn btn-primary" style="margin-top: 0.5rem;">
-            <i class="feather feather-send"></i> Kirim Pesan
-          </button>
+          <div class="form-group"><label for="contactPaymentMethod">Preferensi pembayaran <small>(opsional; setelah penawaran disetujui)</small></label>
+            <select id="contactPaymentMethod" name="paymentPreference" class="form-control"><option value="">Diskusikan saat penawaran</option>
+                  <option value="BCA">BCA</option>
+                  <option value="Mandiri">Mandiri</option>
+                  <option value="SeaBank">SeaBank</option>
+                  <option value="Bank Jago">Bank Jago</option>
+                  <option value="DANA">DANA</option></select>
+            <small class="svo-field-note">Belum ada pembayaran pada tahap konsultasi. Ketersediaan metode dan tujuan transfer harus dikonfirmasi admin.</small>
+          </div>
+          <div class="form-group"><label for="contactMessage">Detail kebutuhan <span aria-hidden="true">*</span></label><textarea id="contactMessage" name="details" class="form-control" rows="5" placeholder="Ceritakan PC yang diinginkan, kendala, spesifikasi, halaman website, fitur, atau referensi desain..." maxlength="2000" required></textarea></div>
+          <button type="submit" class="btn btn-primary svo-service-submit"><i class="feather feather-send"></i> Lanjutkan Konsultasi via WhatsApp</button>
+          <small class="svo-form-privacy">Periksa pesan di WhatsApp sebelum mengirim. Jangan sertakan password, OTP, atau data sensitif.</small>
         </form>
       </div>
-
-      <!-- FAQ Accordion -->
-      <div class="faq-section">
-        <div class="section-title">
-          <span class="badge badge-purple">FAQ</span>
-          <h2>Pertanyaan Sering Diajukan</h2>
-        </div>
-
-        <div class="accordion">
-          <div class="accordion-item active">
-            <div class="accordion-header">
-              <span>Apakah semua komponen yang digunakan garansi resmi Indonesia?</span>
-              <i class="feather feather-chevron-down"></i>
-            </div>
-            <div class="accordion-body">
-              Ya, 100% komponen yang kami sediakan dipasok oleh distributor resmi di Indonesia (ASUS, MSI, Gigabyte,
-              Corsair, Deepcool, dll) dengan garansi resmi 1 hingga 3 tahun.
-            </div>
-          </div>
-
-          <div class="accordion-item">
-            <div class="accordion-header">
-              <span>Berapa lama estimasi proses rakit dan kirim?</span>
-              <i class="feather feather-chevron-down"></i>
-            </div>
-            <div class="accordion-body">
-              Proses perakitan, instalasi OS, dan stress testing membutuhkan waktu 1-2 hari kerja. Untuk pengiriman luar
-              kota/pulau menggunakan packing kayu + asuransi kurir aman 100%.
-            </div>
-          </div>
-
-          <div class="accordion-item">
-            <div class="accordion-header">
-              <span>Bagaimana jika saya bingung memilih komponen yang cocok?</span>
-              <i class="feather feather-chevron-down"></i>
-            </div>
-            <div class="accordion-body">
-              Anda bisa menggunakan opsi <strong>Preset Builds</strong> yang sudah dikurasi, atau klik tombol
-              <strong>Pesan via WhatsApp</strong> untuk berdiskusi gratis dengan konsultan hardware kami.
-            </div>
-          </div>
-
-          <div class="accordion-item">
-            <div class="accordion-header">
-              <span>Apakah menerima pembayaran cicilan / Tokopedia / Shopee?</span>
-              <i class="feather feather-chevron-down"></i>
-            </div>
-            <div class="accordion-body">
-              Tentu! Selain Transfer Bank Direct & QRIS, kami melayani transaksi checkout via official store Tokopedia /
-              Shopee Morgulzxz Gaming Performance untuk opsi cicilan 0% kartu kredit maupun paylater.
-            </div>
-          </div>
-        </div>
-      </div>
-
     </div>
   </section>
 
   <!-- Footer -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-brand">
-          <a href="#home" class="logo">
-            <div class="logo-icon"
-              style="background: transparent; border: none; width: 36px; height: 36px; padding: 0;">
-              <img src="images/logo.svg" alt="Morgulzxz Gaming Logo"
-                style="width: 100%; height: 100%; object-fit: contain;">
-            </div>
-            <span>MORGULZXZ <span class="text-gradient">GAMING</span></span>
-          </a>
-          <p>Platform simulasi rakit PC interaktif dan penyedia hardware custom terpercaya di Indonesia. Ditenagai oleh
-            teknologi perakitan presisi tinggi.</p>
-          <div class="social-links">
-            <a href="https://instagram.com" target="_blank" class="social-icon instagram"
-              title="Instagram @morgulzxz.id">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round">
-                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-              </svg>
-            </a>
-            <a href="https://youtube.com" target="_blank" class="social-icon youtube"
-              title="YouTube Channel Morgulzxz Gaming Performance">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round">
-                <path
-                  d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z">
-                </path>
-                <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon>
-              </svg>
-            </a>
-            <a href="https://tiktok.com" target="_blank" class="social-icon tiktok" title="TikTok @morgulzxz.official">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                <path
-                  d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 1 1-5.2-1.74 2.89 2.89 0 0 1 2.31-1.39V8.9a6.34 6.34 0 1 0 6.34 6.34V9.6a8.27 8.27 0 0 0 4.77 1.52V7.67a4.85 4.85 0 0 1-1-.98z" />
-              </svg>
-            </a>
-            <a href="https://discord.gg" target="_blank" class="social-icon discord"
-              title="Komunitas Discord Gamers Morgulzxz">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                <path
-                  d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z" />
-              </svg>
-            </a>
-            <a href="https://wa.me/6288291967659" target="_blank" class="social-icon whatsapp"
-              title="WhatsApp Customer Care (+62-882-9196-7659)">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                <path
-                  d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-0.999 3.648 3.742-.981z" />
-              </svg>
-            </a>
-            <a href="https://x.com" target="_blank" class="social-icon x-twitter" title="X / Twitter @morgulzxz">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                <path
-                  d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-              </svg>
-            </a>
-            <a href="https://facebook.com" target="_blank" class="social-icon facebook"
-              title="Facebook Official Morgulzxz Gaming Performance">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                <path
-                  d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
-              </svg>
-            </a>
-          </div>
-        </div>
-
-        <div>
-          <h4 class="footer-title">Navigasi Cepat</h4>
-          <div class="footer-links">
-            <a href="#home">Home</a>
-            <a href="#preset">Preset Builds</a>
-            <a href="#rakit-pc">Simulasi Rakit PC</a>
-            <a href="#tentang">Tentang Kami</a>
-            <a href="#kontak">Kontak Store</a>
-          </div>
-        </div>
-
-        <div>
-          <h4 class="footer-title">Layanan & Komponen</h4>
-          <div class="footer-links">
-            <a href="https://wa.me/6288291967659?text=Halo%20Morgulzxz,%20saya%20ingin%20tanya%20Jasa%20Pembuatan%20Server%20GTA%20Roleplay." target="_blank" style="color: var(--primary); font-weight: 600;">Jasa Server GTA Roleplay</a>
-            <a href="#rakit-pc">Processor Intel & AMD</a>
-            <a href="#rakit-pc">VGA RTX 40 & RX 7000</a>
-            <a href="#rakit-pc">Motherboard DDR5</a>
-            <a href="#rakit-pc">RAM High Speed RGB</a>
-            <a href="#rakit-pc">Power Supply Gold</a>
-          </div>
-        </div>
-
-        <div>
-          <h4 class="footer-title"><i class="feather feather-credit-card"
-              style="margin-right: 0.35rem; color: var(--primary);"></i>Metode Pembayaran</h4>
-          <p style="font-size: 0.825rem; color: var(--text-muted); margin-bottom: 0.75rem; line-height: 1.4;">
-            Pembayaran mudah & aman melalui Bank Transfer (Virtual Account), Instant QRIS, E-Wallet, serta Cicilan 0%
-            Tokopedia & Shopee.
-          </p>
-          <div class="payment-logos-grid">
-            <span class="payment-chip" title="Bank BCA (Transfer & VA)">
-              <svg viewBox="0 0 24 24" fill="none">
-                <rect width="24" height="24" rx="4" fill="#005caa" />
-                <path
-                  d="M6 7h4c1.5 0 2.5.5 2.5 1.5s-.8 1.3-1.8 1.5c1.2.2 2.3.8 2.3 2 0 1.3-1.2 2-3 2H6V7zm2.2 2.3v1.2h1.5c.6 0 1-.2 1-.6s-.4-.6-1-.6H8.2zm0 2.5v1.4h1.8c.7 0 1.1-.2 1.1-.7s-.4-.7-1.1-.7H8.2z"
-                  fill="#fff" />
-              </svg> BCA
-            </span>
-            <span class="payment-chip" title="Bank Mandiri">
-              <svg viewBox="0 0 24 24" fill="none">
-                <rect width="24" height="24" rx="4" fill="#003d79" />
-                <path d="M5 14.5c3.5-3 8 2 14-2.5" stroke="#ffb703" stroke-width="2.5" />
-                <path d="M7 9.5c2.5-2 6 1.5 10-1.5" stroke="#fff" stroke-width="1.8" />
-              </svg> Mandiri
-            </span>
-            <span class="payment-chip" title="Bank BNI">
-              <svg viewBox="0 0 24 24" fill="none">
-                <rect width="24" height="24" rx="4" fill="#006666" />
-                <path d="M5 8h4.5c1.2 0 2 .5 2 1.5 0 .8-.5 1.2-1.2 1.4v.1c1 .2 1.7.7 1.7 1.7 0 1.2-1 1.8-2.5 1.8H5V8z"
-                  fill="#fff" />
-                <circle cx="17.5" cy="12" r="2.5" fill="#f26522" />
-              </svg> BNI
-            </span>
-            <span class="payment-chip" title="Bank BRI">
-              <svg viewBox="0 0 24 24" fill="none">
-                <rect width="24" height="24" rx="4" fill="#00529c" />
-                <path
-                  d="M6 7.5h5.5c1.4 0 2.2.7 2.2 1.7 0 .8-.5 1.4-1.3 1.6v.1c1 .2 1.6.8 1.6 1.8 0 1.2-1 1.8-2.5 1.8H6V7.5z"
-                  fill="#fff" />
-                <rect x="15.5" y="7.5" width="2.5" height="7" rx="1.2" fill="#00a3e0" />
-              </svg> BRI
-            </span>
-            <span class="payment-chip" title="QRIS Instant All E-Wallet">
-              <svg viewBox="0 0 24 24" fill="none">
-                <rect width="24" height="24" rx="4" fill="#ed1c24" />
-                <rect x="4.5" y="4.5" width="6" height="6" fill="#fff" />
-                <rect x="13.5" y="4.5" width="6" height="6" fill="#fff" />
-                <rect x="4.5" y="13.5" width="6" height="6" fill="#fff" />
-                <rect x="13.5" y="13.5" width="3" height="3" fill="#fff" />
-                <rect x="16.5" y="16.5" width="3" height="3" fill="#fff" />
-                <rect x="6" y="6" width="3" height="3" fill="#ed1c24" />
-                <rect x="15" y="6" width="3" height="3" fill="#ed1c24" />
-                <rect x="6" y="15" width="3" height="3" fill="#ed1c24" />
-              </svg> QRIS
-            </span>
-            <span class="payment-chip" title="GoPay">
-              <svg viewBox="0 0 24 24" fill="none">
-                <rect width="24" height="24" rx="4" fill="#00a5cf" />
-                <circle cx="12" cy="12" r="6" stroke="#fff" stroke-width="2.5" />
-                <circle cx="12" cy="12" r="2.5" fill="#fff" />
-              </svg> GoPay
-            </span>
-            <span class="payment-chip" title="OVO Cash">
-              <svg viewBox="0 0 24 24" fill="none">
-                <rect width="24" height="24" rx="4" fill="#4c2a86" />
-                <circle cx="12" cy="12" r="5.5" stroke="#fff" stroke-width="2" />
-                <circle cx="12" cy="12" r="2.5" stroke="#fff" stroke-width="1.5" />
-              </svg> OVO
-            </span>
-            <span class="payment-chip" title="ShopeePay & PayLater">
-              <svg viewBox="0 0 24 24" fill="none">
-                <rect width="24" height="24" rx="4" fill="#ee4d2d" />
-                <path d="M7 10.5h10v7.5H7z" stroke="#fff" stroke-width="1.6" />
-                <path d="M9.5 10.5V8a2.5 2.5 0 0 1 5 0v2.5" stroke="#fff" stroke-width="1.6" />
-              </svg> ShopeePay
-            </span>
-            <span class="payment-chip" title="Tokopedia Official Store">
-              <svg viewBox="0 0 24 24" fill="none">
-                <rect width="24" height="24" rx="4" fill="#03ac0e" />
-                <circle cx="9" cy="10" r="1.5" fill="#fff" />
-                <circle cx="15" cy="10" r="1.5" fill="#fff" />
-                <path d="M7.5 14.5c1.5 2 7.5 2 9 0" stroke="#fff" stroke-width="1.6" />
-              </svg> Tokopedia
-            </span>
-            <span class="payment-chip" title="Kartu Kredit Visa / Mastercard">
-              <svg viewBox="0 0 24 24" fill="none">
-                <rect width="24" height="24" rx="4" fill="#1a1f71" />
-                <circle cx="9.5" cy="12" r="4.5" fill="#eb001b" />
-                <circle cx="14.5" cy="12" r="4.5" fill="#f79e1b" fill-opacity="0.85" />
-              </svg> Visa/MC
-            </span>
-          </div>
-        </div>
-      </div>
-
-      <div class="footer-bottom">
-        <p>&copy; 2026 Morgulzxz Gaming Performance Indonesia. All rights reserved. Designed for High Performance Gaming
-          &
-          Workstations.</p>
-      </div>
+  <footer class="footer svo-footer">
+    <div class="container svo-footer-main">
+      <div><a href="#home" class="svo-footer-brand"><img src="images/logo.svg" width="46" height="46" alt="Logo SEMEISTVO TECH"><span>SEMEISTVO <em>TECH</em></span></a>
+      <p>Studio layanan rakit PC, instalasi, pengembangan server roleplay, dan website. Solusi teknologi dari ide hingga siap digunakan.</p></div>
+      <nav class="svo-footer-links" aria-label="Jelajahi SEMEISTVO TECH"><h4>Jelajahi</h4><a href="#layanan">Layanan</a><a href="#roleplay">Server Roleplay</a><a href="#digital">Pembuatan Website</a><a href="#preset">Rekomendasi PC</a><a href="#rakit-pc">PC Builder</a></nav>
+      <nav class="svo-footer-links" aria-label="Bantuan dan informasi"><h4>Informasi</h4><a href="#software-paket">Layanan Tambahan</a><a href="#pembayaran">Pembayaran</a><a href="#kontak">Konsultasi</a><a href="https://wa.me/6288291967659" target="_blank" rel="noopener noreferrer">WhatsApp</a></nav>
     </div>
+    <div class="container svo-footer-bottom"><span>© 2026 SEMEISTVO TECH · SVO</span><span>Hosting, domain, dan biaya pihak ketiga dikonfirmasi terpisah dalam penawaran.</span></div>
   </footer>
+
+  
 
   <!-- Modal View Detail Specification -->
   <div class="modal-overlay" id="specModal">
@@ -1073,11 +595,11 @@
             <circle cx="20" cy="21" r="1"></circle>
             <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
           </svg>
-          Formulir Pemesanan Resmi
+          Konsultasi Rakitan PC
         </span>
-        <h3 class="text-gradient" style="font-size: 1.5rem;">Form Pemesanan PC Rakitan</h3>
+        <h3 class="text-gradient" style="font-size: 1.5rem;">Permintaan Penawaran PC Rakitan</h3>
         <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.25rem;">Isi data pemesan di bawah ini.
-          Pesanan Anda akan langsung terformat rapi dan terhubung ke WhatsApp customer service kami.</p>
+          Detail rakitan akan disiapkan untuk konsultasi via WhatsApp. Ini bukan pembayaran atau pesanan yang sudah disetujui.</p>
       </div>
 
       <form id="checkoutOrderForm">
@@ -1110,149 +632,19 @@
             style="resize: vertical; min-height: 65px;"></textarea>
         </div>
 
-        <div style="margin-bottom: 0.85rem;">
-          <label class="order-label" style="display: flex; justify-content: space-between; align-items: center;">
-            <span>Pilihan Metode Pembayaran & Rekening Resmi</span>
-            <span style="font-size: 0.725rem; color: var(--accent);">✓ Klik logo bank untuk memilih</span>
-          </label>
-
-          <!-- Visual Bank Card Selector Grid -->
-          <div class="bank-cards-grid" id="bankCardsGrid" style="grid-template-columns: repeat(3, 1fr);">
-
-            <!-- BCA -->
-            <div class="bank-card-item active" data-payment="Transfer Bank BCA Direct" title="Bank BCA - 7401-4398-23">
-              <svg class="bank-card-logo-pill" viewBox="0 0 76 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="76" height="44" rx="8" fill="#005caa"/>
-                <text x="38" y="32" text-anchor="middle" font-family="'Arial Black', Arial, sans-serif" font-weight="900" font-style="italic" font-size="24" fill="#ffffff" letter-spacing="2">BCA</text>
-              </svg>
-              <span>BCA</span>
-              <span class="bank-card-accno">7401-4398-23</span>
-            </div>
-
-            <!-- Mandiri -->
-            <div class="bank-card-item" data-payment="Transfer Mandiri Virtual Account" title="Bank Mandiri - 133-003-084-1159">
-              <svg class="bank-card-logo-pill" viewBox="0 0 76 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="76" height="44" rx="8" fill="#003d79"/>
-                <path d="M 16 32 C 16 10, 30 10, 38 22 C 46 34, 60 34, 60 12" stroke="#ffb703" stroke-width="4.5" stroke-linecap="round" fill="none" opacity="0.85"/>
-                <text x="38" y="27" text-anchor="middle" font-family="Arial, sans-serif" font-weight="900" font-style="italic" font-size="13" fill="#ffffff" letter-spacing="0.5">mandiri</text>
-              </svg>
-              <span>Mandiri</span>
-              <span class="bank-card-accno">133-003-084-1159</span>
-            </div>
-
-            <!-- SeaBank -->
-            <div class="bank-card-item" data-payment="Transfer SeaBank" title="SeaBank - 9014-2456-7091">
-              <svg class="bank-card-logo-pill" viewBox="0 0 76 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="76" height="44" rx="8" fill="url(#seaGrad)"/>
-                <defs>
-                  <linearGradient id="seaGrad" x1="0" y1="0" x2="76" y2="44" gradientUnits="userSpaceOnUse">
-                    <stop stop-color="#ff6b00"/>
-                    <stop offset="1" stop-color="#e55a00"/>
-                  </linearGradient>
-                </defs>
-                <!-- Stylized S shape inside an orange circle -->
-                <circle cx="20" cy="22" r="10" fill="#ffffff"/>
-                <path d="M 23 18 C 17 18, 17 22, 20 22 C 23 22, 23 26, 17 26" stroke="#ff6b00" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-                <text x="50" y="27" text-anchor="middle" font-family="Arial, sans-serif" font-weight="800" font-size="12" fill="#ffffff" letter-spacing="0">SeaBank</text>
-              </svg>
-              <span>SeaBank</span>
-              <span class="bank-card-accno">9014-2456-7091</span>
-            </div>
-
-            <!-- QRIS -->
-            <div class="bank-card-item" data-payment="QRIS Instant All Wallet (Gopay/OVO/ShopeePay)" title="QRIS All Wallet">
-              <div class="bank-card-logo-pill" style="background: #ed1c24;">
-                <span style="color: #fff; font-weight: 900; font-size: 0.75rem;">QRIS</span>
-              </div>
-              <span>QRIS</span>
-              <span class="bank-card-accno">Scan QR</span>
-            </div>
-
-            <!-- Tokopedia -->
-            <div class="bank-card-item" data-payment="Checkout via Official Tokopedia (Cicilan 0%)" title="Tokopedia Official">
-              <div class="bank-card-logo-pill" style="background: #03ac0e;">
-                <span style="color: #fff; font-weight: 900; font-size: 0.6rem;">TOKOPEDIA</span>
-              </div>
-              <span>Tokopedia</span>
-              <span class="bank-card-accno">Cicilan 0%</span>
-            </div>
-
-            <!-- Shopee -->
-            <div class="bank-card-item" data-payment="Checkout via Official Shopee (PayLater/ShopeePay)" title="Shopee Official">
-              <div class="bank-card-logo-pill" style="background: #ee4d2d;">
-                <span style="color: #fff; font-weight: 900; font-size: 0.7rem; letter-spacing: 0.3px;">SHOPEE</span>
-              </div>
-              <span>Shopee</span>
-              <span class="bank-card-accno">SPayLater</span>
-            </div>
-
-          </div>
-
-          <!-- Synced Dropdown -->
-          <select id="orderPaymentMethod" class="order-form-control order-form-select" style="margin-top: 0.35rem;">
-            <option value="Transfer Bank BCA Direct">🏦 BCA — 7401-4398-23 (a.n NANDA NUGRAHA)</option>
-            <option value="Transfer Mandiri Virtual Account">🏦 Mandiri — 133-003-084-1159 (a.n NANDA NUGRAHA)</option>
-            <option value="Transfer SeaBank">🟠 SeaBank — 9014-2456-7091 (a.n NANDA NUGRAHA)</option>
-            <option value="QRIS Instant All Wallet (Gopay/OVO/ShopeePay)">📱 QRIS All Wallet (GoPay, OVO, Dana, ShopeePay)</option>
-            <option value="Checkout via Official Tokopedia (Cicilan 0%)">🛍️ Official Tokopedia Store (Cicilan 0%)</option>
-            <option value="Checkout via Official Shopee (PayLater/ShopeePay)">🛒 Official Shopee Store (SPayLater)</option>
-          </select>
+        <div class="form-group" style="margin-bottom: 0.9rem;">
+          <label for="orderPreferredPayment" class="order-label">Preferensi pembayaran (opsional)</label>
+          <select id="orderPreferredPayment" class="order-form-control"><option value="">Diskusikan saat penawaran</option>
+                  <option value="BCA">BCA</option>
+                  <option value="Mandiri">Mandiri</option>
+                  <option value="SeaBank">SeaBank</option>
+                  <option value="Bank Jago">Bank Jago</option>
+                  <option value="DANA">DANA</option></select>
+          <small class="svo-field-note">BCA, Mandiri, SeaBank, Bank Jago dan DANA dapat ditanyakan ke admin. Jangan transfer sebelum detail penawaran diverifikasi.</small>
         </div>
-
-        <!-- Dynamic Bank Account & Payment Details Banner Card -->
-        <div id="paymentBankDetailsCard" class="payment-bank-details-card" style="margin-bottom: 0.85rem;">
-          <!-- Hydrated dynamically by app.js -->
-        </div>
-
-        <div class="form-group" style="margin-bottom: 0.85rem;">
-          <label for="orderDeliveryOption" class="order-label">Metode Pengiriman & Estimasi Ongkir</label>
-          <select id="orderDeliveryOption" class="order-form-control order-form-select">
-            <option value="Packing Kayu + Asuransi 100% Aman (Luar Kota / Pulau)" data-ongkir="150000"
-              data-packing="100000">📦 Packing Kayu + Asuransi 100% Aman (Luar Kota / Pulau) — Est. Ongkir & Asuransi Rp
-              150rb</option>
-            <option value="Kurir Instant (Gojek / GrabExpress Jabodetabek)" data-ongkir="75000" data-packing="0">🚀
-              Kurir Instant Gojek / GrabExpress (Jabodetabek) — Est. Ongkir Rp 75rb</option>
-            <option value="Ambil Langsung di Workshop Store (Jonggol Bogor)" data-ongkir="0" data-packing="0">🏬 Ambil
-              Langsung di Workshop Store (Jonggol Bogor) — Rp 0 (Free Pick Up)</option>
-          </select>
-        </div>
-
-        <!-- Jasa Packing Kayu Extra Option -->
-        <div id="packingKayuOptionBox"
-          style="margin-bottom: 0.85rem; background: rgba(255, 183, 3, 0.08); border: 1px solid rgba(255, 183, 3, 0.25); padding: 0.65rem 0.85rem; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: space-between;">
-          <label
-            style="font-size: 0.8rem; color: #fff; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; margin: 0;">
-            <input type="checkbox" id="orderPackingKayuCheck" checked
-              style="accent-color: var(--primary); width: 16px; height: 16px;">
-            <span>🪵 <strong>Jasa Heavy-Duty Wooden Crate & Extra Foam</strong> (+Rp 100.000)</span>
-          </label>
-          <span style="font-size: 0.725rem; color: var(--warning); font-weight: 600;">Proteksi Maksimal</span>
-        </div>
-
-        <!-- Upload Bukti Pembayaran Section -->
-        <div class="form-group" style="margin-bottom: 0.85rem;">
-          <label class="order-label" style="display: flex; justify-content: space-between; align-items: center;">
-            <span>Upload Bukti Pembayaran / Struk Transfer (Opsional)</span>
-            <span style="font-size: 0.725rem; color: var(--accent);">Foto / Screenshot Transfer</span>
-          </label>
-          <div class="payment-proof-upload-box" id="paymentProofDropArea">
-            <input type="file" id="orderPaymentProof" accept="image/*,.pdf" class="payment-proof-file-input">
-            <div class="payment-proof-content" id="paymentProofContent">
-              <div class="upload-icon-circle">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"
-                  stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                  <polyline points="17 8 12 3 7 8"></polyline>
-                  <line x1="12" y1="3" x2="12" y2="15"></line>
-                </svg>
-              </div>
-              <div class="upload-text-group">
-                <span class="upload-title" id="paymentProofFileName">Klik atau Seret Foto Struk Transfer ke Sini</span>
-                <span class="upload-subtitle" id="paymentProofSubtext">Bisa di-upload sekarang atau dikirim langsung via
-                  chat WA / Telegram</span>
-              </div>
-            </div>
-          </div>
+        <div class="svo-inquiry-notice">
+          <strong>Permintaan penawaran · Belum ada pembayaran</strong>
+          <p>Harga pada PC Builder adalah estimasi. Stok, ongkir, garansi, dan harga akhir perlu dikonfirmasi melalui admin sebelum pesanan disetujui. Jangan mengirim bukti transfer pada tahap ini.</p>
         </div>
 
         <div class="form-group" style="margin-bottom: 1.25rem;">
@@ -1276,7 +668,7 @@
               <path
                 d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-0.999 3.648 3.742-.981z" />
             </svg>
-            Kirim WhatsApp
+            Minta Penawaran via WhatsApp
           </button>
         </div>
       </form>
@@ -1284,71 +676,79 @@
   </div>
 
   <!-- Floating WhatsApp Quick Chat Button -->
-  <a href="https://wa.me/6288291967659?text=Halo%20Morgulzxz%20Gaming%20Performance!%20Saya%20ingin%20bertanya%20seputar%20rakitan%20PC"
-    target="_blank" class="floating-whatsapp" title="Chat Konsultasi WhatsApp">
+  <a href="https://wa.me/6288291967659?text=Halo%20SEMEISTVO%20TECH%2C%20saya%20ingin%20konsultasi%20jasa%20rakit%20PC%20atau%20pembuatan%20website"
+    target="_blank" class="floating-whatsapp" title="Konsultasi Layanan via WhatsApp">
     <svg width="22" height="22" viewBox="0 0 24 24" fill="#fff">
       <path
         d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-0.999 3.648 3.742-.981z" />
     </svg>
-    <span>Chat WhatsApp</span>
+    <span>Konsultasi</span>
   </a>
 
-  <!-- Floating Cyber Background Music Player & YouTube Video Showcase -->
-  <div class="floating-music-player" id="musicPlayer">
-    <div class="music-disc playing" id="musicDisc" title="Klik untuk Kecilkan / Buka Pemutar Musik">
-      <i class="feather feather-music"></i>
-      <div class="equalizer-bars">
-        <span></span><span></span><span></span>
+  <!-- Minimal music badge. Browsers may block autoplay with sound. -->
+  <aside id="svoMusicPlayer" class="svo-music-player is-collapsed" aria-label="Musik SEMEISTVO TECH">
+    <div class="svo-music-head">
+      <button type="button" id="svoMusicCollapse" class="svo-music-disc"
+        aria-expanded="false" aria-controls="svoMusicContent" aria-label="Buka kontrol musik"
+        title="Tampilkan atau sembunyikan kontrol musik">♫</button>
+      <div class="svo-music-info">
+        <strong class="svo-music-name">I Miss You Every Brand New Day</strong>
+        <span id="svoMusicStatus" class="svo-music-status" role="status">Menyiapkan musik...</span>
       </div>
+      <button type="button" id="svoMusicPlay" class="svo-music-control" aria-label="Putar musik" title="Putar musik">▶</button>
+      <button type="button" id="svoMusicPause" class="svo-music-control" aria-label="Jeda musik" title="Jeda musik" disabled>Ⅱ</button>
+      <a class="svo-music-link" href="https://www.youtube.com/watch?v=8_y6w1V9PXs"
+        target="_blank" rel="noopener noreferrer" title="Buka lagu di YouTube" aria-label="Buka musik di YouTube">↗</a>
     </div>
-    <div class="music-info" id="musicInfoBtn" style="cursor: pointer;" title="Nonton Official Music Video">
-      <div class="music-title">I Miss You Every Brand New Day</div>
-      <div class="music-status" id="musicStatus" style="color: var(--accent);">Spider-Man: Brand New Day OST 🎬</div>
+    <div id="svoMusicContent" class="svo-music-content" hidden>
+      <button type="button" id="svoMusicMute" class="svo-music-unmute" aria-pressed="false">Aktifkan suara</button>
+      <p class="svo-music-note">Autoplay dengan suara mungkin dibatasi browser. Gunakan tombol di atas untuk mengaktifkan suara.</p>
     </div>
-    <button class="music-play-btn" id="musicPlayBtn" title="Nonton Video Klip YouTube"
-      style="background: #ff0000; color: #fff;">
-      <i class="feather feather-youtube" id="musicPlayIcon"></i>
-    </button>
-    <button class="music-toggle-btn" id="musicToggleBtn" title="Kecilkan / Sembunyikan Widget">
-      <i class="feather feather-minus" id="musicToggleIcon"></i>
-    </button>
+    <div class="svo-music-embed" aria-hidden="true"><div id="svoMusicVideoSlot"></div></div>
+  </aside>
 
-    <!-- Hidden Audio/Video Stream Iframe for Autoplay -->
-    <iframe id="ytPlayer" width="1" height="1"
-      src="https://www.youtube.com/embed/8_y6w1V9PXs?enablejsapi=1&autoplay=1&mute=1&loop=1&playlist=8_y6w1V9PXs&controls=0"
-      title="I Miss You Every Brand New Day (From &quot;Spider-Man: Brand New Day&quot; Movie) (Official Music Video)"
-      frameborder="0"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-      referrerpolicy="strict-origin-when-cross-origin" allowfullscreen
-      style="position: absolute; opacity: 0; pointer-events: none;">
-    </iframe>
-  </div>
-
-  <!-- Music Video Showcase Modal -->
-  <div class="modal-overlay" id="musicModal">
-    <div class="modal-container" style="max-width: 900px; width: 92%;">
-      <button class="modal-close" id="closeMusicModalBtn">&times;</button>
-      <div style="text-align: center; margin-bottom: 1rem;">
-        <h3 class="text-gradient" style="font-size: 1.25rem;">🎵 I Miss You Every Brand New Day</h3>
-        <p style="font-size: 0.85rem; color: var(--text-muted);">From "Spider-Man: Brand New Day" Movie (Official Music
-          Video)</p>
+  <!-- Shared cart for PC Builder and catalogue selection -->
+  <div class="svo-cart-layer" id="svoCartLayer" aria-hidden="true">
+    <div class="svo-cart-overlay" id="svoCartOverlay"></div>
+    <aside class="svo-cart-panel" role="dialog" aria-modal="true" aria-labelledby="svoCartTitle">
+      <div class="svo-cart-head">
+        <h2 id="svoCartTitle">Keranjang Komponen</h2>
+        <button type="button" class="svo-icon-btn" id="svoCloseCart" aria-label="Tutup keranjang">×</button>
       </div>
-      <div
-        style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
-        <iframe id="modalYtPlayer" width="100%" height="100%" src=""
-          title="I Miss You Every Brand New Day (From &quot;Spider-Man: Brand New Day&quot; Movie) (Official Music Video)"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerpolicy="strict-origin-when-cross-origin" allowfullscreen
-          style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
-        </iframe>
+      <div class="svo-cart-content">
+        <p id="svoPreviousOrder" class="svo-cart-muted" hidden></p>
+        <div id="svoCartView" class="svo-cart-view">
+          <div id="svoCartItems"></div>
+        </div>
+        <div id="svoCheckoutView" class="svo-checkout-view" hidden>
+          <p class="svo-cart-muted" style="margin-bottom:1rem">Isi data untuk mengirim permintaan pesanan ke admin melalui WhatsApp. Belum ada pembayaran atau reservasi stok.</p>
+          <form class="svo-checkout-form" id="svoCheckoutForm">
+            <label>Nama lengkap<input name="name" autocomplete="name" maxlength="100" required></label>
+            <label>Nomor WhatsApp<input name="phone" autocomplete="tel" inputmode="tel" maxlength="20" required></label>
+            <label for="svoCheckoutEmail" hidden>Email untuk pembayaran<input type="email" id="svoCheckoutEmail" name="email" autocomplete="email" maxlength="150"></label>
+            <label>Alamat pengiriman<textarea name="address" autocomplete="street-address" maxlength="450" required></textarea></label>
+            <label>Catatan (opsional)<textarea name="notes" maxlength="350"></textarea></label>
+            <button type="submit" class="svo-store-btn">Kirim Permintaan via WhatsApp</button>
+            <button type="button" class="svo-store-btn svo-store-btn-secondary" id="svoBackToCart">Kembali ke Keranjang</button>
+            <small id="svoCheckoutStatus" role="status"></small>
+          </form>
+        </div>
       </div>
-    </div>
+      <div class="svo-cart-foot">
+        <div class="svo-cart-total"><span>Subtotal estimasi</span><strong id="svoCartTotal">Rp0</strong></div>
+        <p class="svo-cart-muted">Harga hanya estimasi. Stok, harga akhir, biaya jasa, dan ongkir dikonfirmasi admin sebelum transaksi.</p>
+        <button type="button" class="svo-store-btn" id="svoCheckoutButton">Lanjutkan Permintaan</button>
+      </div>
+    </aside>
   </div>
 
   <!-- Scripts -->
   <script src="js/data.js"></script>
+  <script src="js/product-photos.js"></script>
   <script src="js/app.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/music.js"></script>
+  <script src="js/ui-polish.js"></script>
   <script>
     feather.replace();
   </script>

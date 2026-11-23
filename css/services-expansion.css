@@ -1,0 +1,129 @@
+/* SEMEISTVO TECH · Service expansion: Roleplay, Web and payment preferences.
+   Loaded after studio.css; preserves music and original PC configurator. */
+.svo-brand .svo-logo-horizontal{width:clamp(162px,16.3vw,235px);object-fit:contain}
+.svo-brand .svo-logo-mark{object-fit:contain}
+.svo-roleplay{background:radial-gradient(ellipse 47% 63% at 83% 42%,rgba(106,45,173,.17),transparent),#100c19;border-top:1px solid #382847;border-bottom:1px solid #332241}
+.svo-roleplay-layout{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);align-items:center;gap:clamp(1.8rem,5vw,5.5rem)}
+.svo-roleplay-copy h2{font-family:Outfit,system-ui,sans-serif;font-size:clamp(2rem,4vw,3.55rem);line-height:1.13;letter-spacing:-.055em;margin:.5rem 0 1.25rem}
+.svo-roleplay-copy>p{color:#C1B4CE;line-height:1.78;font-size:.96rem}
+.svo-rp-features{display:grid;gap:13px;margin:1.65rem 0}
+.svo-rp-features>div{display:grid;grid-template-columns:33px minmax(0,1fr);gap:13px;align-items:start;padding:0 0 14px;border-bottom:1px solid #392A4C}
+.svo-rp-features>div>span{font-size:.8rem;font-weight:900;color:#BD99E8}
+.svo-rp-features strong{display:block;color:#F0EAF7;font-size:.95rem;margin-bottom:.3rem}
+.svo-rp-features small{font-size:.82rem;line-height:1.68;color:#B5A8C3}
+.svo-rp-exclusion,.svo-web-exclusion{background:#21172D;border:1px solid #78559D;border-radius:12px;padding:14px 16px;font-size:.81rem;line-height:1.75;color:#CCBCDA;margin:0 0 1.4rem}
+.svo-rp-exclusion strong,.svo-web-exclusion strong{color:#F0DDFC}
+.svo-rp-disclaimer{color:#8D819A!important;line-height:1.55!important;font-size:.72rem!important;margin-top:1.05rem}
+.svo-roleplay-media{border:1px solid #604377;border-radius:21px;padding:14px;background:linear-gradient(145deg,#23152F,#0F0B18);overflow:hidden;box-shadow:0 23px 55px rgba(0,0,0,.28)}
+.svo-roleplay-media img{width:100%;height:auto;display:block;aspect-ratio:4/3;object-fit:cover;border-radius:12px;background:#110A1B}
+.svo-roleplay-caption{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;padding:15px 5px 5px;color:#C9A6ED;font-weight:800;letter-spacing:.09em;font-size:.65rem}
+.svo-roleplay-caption>span:last-child{color:#9184A1}
+.svo-payments{background:linear-gradient(155deg,#13101C,#0B0A10);border-top:1px solid #39284A;border-bottom:1px solid #342443}
+.svo-payment-methods{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+.svo-payment-method{display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;min-width:0;padding:24px 12px 20px;border:1px solid #4B385F;background:#1C1626;border-radius:17px}
+.svo-payment-symbol{width:50px;height:50px;display:grid;place-items:center;border-radius:14px;background:linear-gradient(145deg,#583576,#2A1A43);border:1px solid #9265C4;color:#EDDCF9;font-weight:900;font-size:1.27rem;letter-spacing:.015em}
+.svo-payment-method strong{color:#F5EEF9;font-size:1.05rem}
+.svo-payment-method small{color:#A89AB7;font-size:.76rem}
+.svo-payment-note{display:flex;align-items:flex-start;gap:13px;padding:16px 18px;margin:22px 0 15px;border:1px solid #57416B;border-radius:12px;background:#20172C;color:#BFAECF}
+.svo-payment-note svg{flex-shrink:0;width:21px;height:21px;color:#C7A3F1}
+.svo-payment-note p{font-size:.83rem;line-height:1.72;margin:0}
+.svo-payment-note strong{color:#F0E5F9}
+.svo-payment-link{display:inline-flex;color:#D9B9FF;font-weight:800;font-size:.88rem;text-decoration:underline;text-underline-offset:4px}
+.svo-field-note{display:block;margin:.4rem 0 .1rem;font-size:.72rem;color:#B0A1C0;line-height:1.55}
+#orderPreferredPayment{width:100%;min-height:44px;background:#191121;color:#E9E1F1;border:1px solid #62497D;border-radius:9px;padding:10px 12px}
+#contactPaymentMethod{min-height:44px}
+.svo-studio-section:target{scroll-margin-top:82px}
+@media(max-width:1100px){
+ .svo-payment-methods{grid-template-columns:repeat(3,minmax(0,1fr))}
+ .svo-roleplay-layout{grid-template-columns:1fr}
+ .svo-roleplay-media{max-width:720px}
+}
+@media(max-width:740px){.svo-payment-methods{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+ .svo-payment-method{padding:19px 9px}
+ .svo-roleplay-copy h2{font-size:clamp(2.0rem,7vw,3rem)}
+ .svo-payment-note{padding:13px;gap:9px}
+ .svo-payment-note p{font-size:.78rem}
+ .svo-roleplay-media{padding:9px}
+}
+@media(max-width:380px){.svo-payment-symbol{height:42px;width:42px;font-size:1.05rem}
+ .svo-payment-method strong{font-size:.93rem}
+ .svo-roleplay-caption{font-size:.56rem}
+}
+@media(prefers-reduced-motion:reduce){.svo-roleplay,.svo-payment-method{animation:none!important}}
+
+/* One synchronized header cart, shared by catalogue and interactive builder. */
+.svo-builder-open-cart{display:flex;align-items:center;justify-content:center;gap:.6rem;width:100%;min-height:44px}
+#svoBuilderCartCount{min-width:27px;height:25px;display:inline-grid;place-items:center;padding:1px 6px;border-radius:10px;border:1px solid #cdb5ed;background:#2f1c50;color:#fff;font-weight:850;font-size:.75rem}
+.svo-builder-cart-tag,.svo-manual-cart-tag{display:inline-flex;width:max-content;max-width:100%;border-radius:7px;border:1px solid #7353a6;background:#312041;color:#e1c6fc;font-size:.68rem;padding:4px 7px;margin:5px 5px 1px 0}
+.svo-manual-cart-tag{background:#201c29;border-color:#514359;color:#b6a9c4}
+.svo-header-cart{white-space:nowrap;display:inline-flex;align-items:center;justify-content:center;gap:.45rem}
+.svo-header-count{min-width:23px;height:23px;display:inline-grid;place-items:center;padding:2px 5px;border-radius:99px;background:#7442ad;color:#fff;font-size:.75rem;font-weight:900}
+@media(max-width:450px){.svo-header-cart{padding:.45rem .55rem;font-size:.78rem}.svo-builder-open-cart{font-size:.79rem}}
+
+/* Reality-first catalog imagery: hardware uses isolated photos, software service cards use photographic scenes. */
+.svo-product-media.has-service-photo{background:#16121e}
+.svo-product-media.has-service-photo .svo-product-image{display:block;width:100%;height:100%;object-fit:cover;object-position:center;padding:0;background:none;mix-blend-mode:normal}
+.svo-product-media.has-service-photo .svo-illustration-chip{background:rgba(20,15,31,.85);color:#f0e9fa}
+.svo-product-media.has-photo .svo-product-image{max-width:100%;max-height:100%}
+.svo-product-media img{color:transparent}
+
+/* SEMEISTVO TECH — FINAL PRESET + AUTHENTIC BANK LOGOS */
+/* Preset rekomendasi sebelum PC Builder. */
+.svo-preset-section {
+  padding: clamp(3.5rem,6vw,5.5rem) 0;
+  background: linear-gradient(150deg,#16101f,#0e0b15);
+  border-top: 1px solid #45325c;
+  border-bottom: 1px solid #322640;
+  scroll-margin-top: 85px;
+}
+.svo-preset-section .section-title {max-width:790px;margin:0 auto 2.5rem}
+.svo-preset-section .presets-grid {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.svo-preset-section .preset-card {min-width:0}
+.svo-preset-section .preset-image {display:block;width:100%;aspect-ratio:4/3;object-fit:cover}
+.svo-preset-next {
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;
+  gap:20px;margin-top:24px;padding:20px 24px;background:#22182f;
+  border:1px solid #6b4a93;border-radius:15px;
+}
+.svo-preset-next>div {display:grid;gap:5px}
+.svo-preset-next strong {color:#f4eafb;font-size:1rem}
+.svo-preset-next span {color:#bcb1c9;font-size:.84rem;line-height:1.6}
+.svo-preset-next .btn {white-space:normal;text-align:center}
+.svo-preset-fineprint {margin:13px 0 0;color:#a99eb6;font-size:.75rem;line-height:1.7}
+
+/* Logo pembayaran asli: warna logo tetap dan bingkai kontras untuk keterbacaan. */
+.svo-payment-logos {display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px}
+.svo-payment-logos .svo-payment-method {
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;
+  min-width:0;padding:15px;background:linear-gradient(155deg,#23182e,#17111f);
+  border:1px solid #57406e;border-radius:16px;text-align:center;
+  transition:transform .2s ease,border-color .2s ease;
+}
+.svo-payment-logos .svo-payment-method:hover {transform:translateY(-3px);border-color:#b48ae5}
+.svo-payment-logo-frame {
+  display:grid;place-items:center;width:100%;min-height:96px;padding:16px 10px;
+  border-radius:11px;background:#fff;
+}
+.svo-payment-logo-frame img {
+  display:block;width:100%;max-width:164px;height:64px;object-fit:contain;object-position:center;
+}
+.svo-payment-logos .svo-payment-method strong {color:#f7f2fa;font-size:.98rem;font-weight:750}
+.svo-payment-logos .svo-payment-method small {color:#bdb1ca;font-size:.75rem}
+.svo-payment-logos + .svo-payment-note {margin-top:24px}
+@media(max-width:1100px) {
+  .svo-payment-logos {grid-template-columns:repeat(3,minmax(0,1fr))}
+  .svo-preset-section .presets-grid {grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:650px) {
+  .svo-payment-logos {grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .svo-payment-logos .svo-payment-method {padding:10px}
+  .svo-payment-logo-frame {min-height:74px;padding:10px 7px}
+  .svo-payment-logo-frame img {height:51px}
+  .svo-preset-section .presets-grid {grid-template-columns:1fr}
+  .svo-preset-next {padding:17px;align-items:stretch}
+  .svo-preset-next .btn {width:100%}
+}
+@media(prefers-reduced-motion:reduce) {
+  .svo-payment-logos .svo-payment-method {transition:none}
+  .svo-payment-logos .svo-payment-method:hover {transform:none}
+}

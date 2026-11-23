@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 380" role="img" aria-labelledby="title desc"><title id="title">SEMEISTVO TECH</title><desc id="desc">Elegant silver ribbon monogram enclosed in an open violet orbit.</desc><defs>
+<linearGradient id="silver" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffffff"/><stop offset=".4" stop-color="#e7e6ee"/><stop offset=".75" stop-color="#bcb9ca"/><stop offset="1" stop-color="#f1ecf8"/></linearGradient>
+<linearGradient id="violet" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#e2bdff"/><stop offset=".46" stop-color="#9b4cf4"/><stop offset="1" stop-color="#46207d"/></linearGradient></defs><g transform="translate(-3 -1)"><g aria-hidden="true">
+<path d="M345 91 C315 54 260 57 222 75 C176 97 148 139 153 196" stroke="#fff" stroke-width="7" fill="none" stroke-linecap="round"/>
+<path d="M161 226 C176 288 234 315 294 300 C326 292 347 273 361 248" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round" opacity=".9"/>
+<path d="M350 105 C315 94 273 98 250 120 C233 136 239 151 264 164 L309 186 C355 213 346 246 320 268 C291 294 241 293 204 278 C240 303 310 309 346 275 C378 246 380 208 337 182 L281 151 C254 136 281 111 350 105Z" fill="#fff"/>
+<path d="M111 253 C150 207 190 207 241 215 C204 217 176 248 139 292 C152 254 151 234 111 253Z" fill="#fff" opacity=".95"/>
+<path d="M365 85 L254 317 L269 288 L389 76Z" fill="#fff"/>
+</g></g></svg>
