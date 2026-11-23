@@ -112,13 +112,10 @@ document.addEventListener('DOMContentLoaded', () => {
     };
   };
   const renderProducts = () => {
-    // Keep unverified zero-stock seed rows visible as references until real
-    // positive stock is entered. Once stocked items exist, hide unavailable
-    // zero-stock products. Admin-inactivated and image-less items never show.
-    const trackedAvailability = serverCatalogAvailable &&
-      products.some(p => p.stock > 0 && p.active !== 0 && p.active !== false);
+    // Only a supplier-confirmed stock=0 hides a product. Seeded stock=0
+    // means availability is unverified, not necessarily unavailable.
     let list = products.filter(p => p.active !== 0 && p.active !== false &&
-      !!showImage(p).image && (!trackedAvailability || p.stock > 0));
+      !!showImage(p).image && !(p.stock_live === true && p.stock === 0));
     const query = els.search.value.trim().toLowerCase();
     if (query) list = list.filter(p => (p.name + ' ' + p.brand + ' ' + p.description).toLowerCase().includes(query));
     if (els.category.value !== 'all') list = list.filter(p => p.category === els.category.value);
@@ -388,6 +385,7 @@ document.addEventListener('DOMContentLoaded', () => {
           if (!current) continue;
           item.price = current.price;
           item.stock = current.stock;
+          item.stockLive = current.stock_live === true;
           item.priceLive = current.price_live === true;
           item.priceUpdatedAt = current.price_updated_at || null;
         }
