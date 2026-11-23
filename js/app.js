@@ -288,7 +288,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Update cart badge count in nav
-    const cartCountEl = document.getElementById('cartCount');
+    const cartCountEl = document.getElementById('svoBuilderCartCount');
     if (cartCountEl) cartCountEl.textContent = count;
     renderCompatibility();
     // Shared cart synchronization: all builder mutations (select, remove,
@@ -613,6 +613,12 @@ document.addEventListener('DOMContentLoaded', () => {
       renderCategoryTabs();
       renderComponents();
       updateSummary();
+    });
+
+    // The builder and top cart share one item list.
+    const showHeaderCartFromBuilder = document.getElementById('svoBuilderViewCart');
+    showHeaderCartFromBuilder?.addEventListener('click', () => {
+      document.getElementById('svoShopCartButton')?.click();
     });
 
     // Component selection button click
