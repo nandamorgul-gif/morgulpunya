@@ -50,3 +50,12 @@
  .svo-roleplay-caption{font-size:.56rem}
 }
 @media(prefers-reduced-motion:reduce){.svo-roleplay,.svo-payment-method{animation:none!important}}
+
+/* One synchronized header cart, shared by catalogue and interactive builder. */
+.svo-builder-open-cart{display:flex;align-items:center;justify-content:center;gap:.6rem;width:100%;min-height:44px}
+#svoBuilderCartCount{min-width:27px;height:25px;display:inline-grid;place-items:center;padding:1px 6px;border-radius:10px;border:1px solid #cdb5ed;background:#2f1c50;color:#fff;font-weight:850;font-size:.75rem}
+.svo-builder-cart-tag,.svo-manual-cart-tag{display:inline-flex;width:max-content;max-width:100%;border-radius:7px;border:1px solid #7353a6;background:#312041;color:#e1c6fc;font-size:.68rem;padding:4px 7px;margin:5px 5px 1px 0}
+.svo-manual-cart-tag{background:#201c29;border-color:#514359;color:#b6a9c4}
+.svo-header-cart{white-space:nowrap;display:inline-flex;align-items:center;justify-content:center;gap:.45rem}
+.svo-header-count{min-width:23px;height:23px;display:inline-grid;place-items:center;padding:2px 5px;border-radius:99px;background:#7442ad;color:#fff;font-size:.75rem;font-weight:900}
+@media(max-width:450px){.svo-header-cart{padding:.45rem .55rem;font-size:.78rem}.svo-builder-open-cart{font-size:.79rem}}
