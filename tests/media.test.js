@@ -22,7 +22,7 @@ test('music player restored with original video, controls and autoplay fallback'
   assert.doesNotMatch(music, /document\.addEventListener\('mousemove'/);
 });
 
-test('catalogue has traceable reference images and local fallbacks', () => {
+test('catalogue maintains traceable photographic references and legacy media assets', () => {
   const data = require('../js/product-photos.js')(require('../js/data.js'));
   const products = Object.values(data.components).flat();
   const photoProducts = products.filter(p => p.imageType === 'reference-photo');
@@ -40,9 +40,13 @@ test('catalogue has traceable reference images and local fallbacks', () => {
   }
 });
 
-test('product renderers and original PC Builder support photo fallback', () => {
+test('product renderers hide unavailable photos without injecting generic artwork', () => {
   assert.match(source('js/store.js'), /Sumber foto referensi/);
   assert.match(source('js/store.js'), /showImage\(p\)/);
   assert.match(source('js/app.js'), /data-svo-fallback/);
-  assert.match(source('js/product-photos.js'), /data-svo-fallback/);
+  const media = source('js/product-photos.js');
+  assert.match(media, /hideUnavailableMedia/);
+  assert.match(media, /svo-card-without-photo/);
+  assert.match(media, /image.hidden = true/);
+  assert.match(source('css/polish.css'), /svo-media-unavailable/);
 });
