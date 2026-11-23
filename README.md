@@ -2,6 +2,25 @@
 
 Service-first PC and digital studio with retained PC Builder and an optional backend catalogue.
 
+## Global visual refinement — 23 November 2026
+
+This branch has a **single, last-loaded visual polish layer** at `css/polish.css`. It reconciles the existing multi-layer styling without rewriting PC Builder, cart, music, admin or gateway code:
+
+- **Header**: slimmer, calmer glass navigation; more consistent responsive spacing and a single header cart.
+- **Hero**: restrained gradient, clearer title/description hierarchy, compact service tags and balanced concept visual.
+- **Services**: seven cards flow into a balanced four-column composition on wide screens, then two/one columns on smaller screens; matching card radii, photo ratios and action labels.
+- **Process / GTA RP / Website**: consistent title sizes, text measure, callout borders and photo frames.
+- **PC builds**: five reference builds in a balanced 3+2 layout, with a direct link into the interactive PC Builder, and clear estimate notes.
+- **PC Builder**: larger product previews, less cramped selection controls, clearer search/brand chips, readable wattage/summary and stronger selection states.
+- **Catalogue**: uniform category cards, reference photography, filters, product card spacing and shopping-cart buttons.
+- **Payments / Contact**: genuine bank logos on quiet white backgrounds with an accessible bank-name fallback if remote Wikimedia images are blocked, cohesive lead form and transfer-information notice.
+- **Footer**: simpler navigational groups, brand typography and small print, using semantic `nav` sections.
+- **Accessibility and mobile**: a skip-to-services link, focus-visible controls, reduced-motion handling and sizing for 360, 390, 430, 768, 1024, 1280, 1440 and 1920px.
+
+All previous service offerings, the original YouTube music component, 46 reference-photo/fallback product entries, SVO logo, 5 payment preferences, PC builds and integrated cart remain in place. No new payment functionality or unverified claims are introduced.
+
+The new `e2e/visual-polish.spec.js` checks responsive overflow, 7 service cards, 5 build presets, payment logo fallback, correct sections and cart/music continuity.
+
 ## Ready-to-paste layout and payment logo revision — 23 November 2026
 
 - Repositioned `#preset` (five 2026 configuration suggestions) **before** `#rakit-pc` in `index.html`, preserving the single `#presetsContainer` so the existing `js/app.js` preset cards keep working.
