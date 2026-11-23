@@ -5,7 +5,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const source = file => fs.readFileSync(path.join(__dirname, '..', file), 'utf8');
 
-test('music player restored with original video, controls and opt-in playback', () => {
+test('music player restored with original video, controls and autoplay fallback', () => {
   const html = source('index.html');
   const music = source('js/music.js');
   for (const id of ['svoMusicPlayer', 'svoMusicCollapse', 'svoMusicPlay',
@@ -18,7 +18,7 @@ test('music player restored with original video, controls and opt-in playback', 
   assert.match(music, /autoplay: 1/);
   assert.match(music, /mute: 1/);
   assert.match(music, /svoMusicMute/);
-  assert.match(music, /player\.pauseVideo\(\)/);
+  assert.match(music, /pauseVideo\(\)/);
   assert.doesNotMatch(music, /document\.addEventListener\('mousemove'/);
 });
 
