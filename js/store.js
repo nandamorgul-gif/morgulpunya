@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // overriding custom images uploaded/selected through the admin dashboard.
     const oldDefault = !current || current.startsWith('images/products/') || current.startsWith('images/catalog/');
     const modelArt = 'images/catalog/' + p.id + '.svg';
-    const image = oldDefault ? (matched?.url || modelArt) : current;
+    const image = oldDefault ? (matched?.url || '') : current; // hide media when no trusted reference exists
     return {
       image,
       credit: matched && image === matched.url ? matched.credit : (image === p.image ? p.imageCreditUrl : null),
