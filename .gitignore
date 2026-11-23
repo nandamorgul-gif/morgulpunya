@@ -16,3 +16,12 @@ coverage/
 runtime-data-e2e/
 test-results/
 playwright-report/
+
+# Cloudflare Pages public build output, generated bundles, local D1 and secrets
+dist/
+.cloudflare-compiled/
+.wrangler/
+.dev.vars
+.dev.vars.*
+!.dev.vars.example
+wrangler.jsonc
