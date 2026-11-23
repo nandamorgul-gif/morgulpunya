@@ -18,11 +18,13 @@ test('missing hardware image disappears but catalogue product and cart remain us
 test('missing builder and preset pictures leave configuration controls visible', async ({ page }) => {
   await page.goto('/', { waitUntil: 'domcontentloaded' });
   const component = page.locator('.component-card').first();
+  await component.scrollIntoViewIfNeeded(); // loading=lazy starts only near the viewport
   await component.locator('img.component-img').evaluate(img => { img.src = '/images/missing-builder-photo.jpg'; });
   await expect(component).toHaveClass(/svo-card-without-photo/);
   await expect(component.locator('.select-part-btn')).toBeVisible();
 
   const preset = page.locator('.preset-card').last();
+  await preset.scrollIntoViewIfNeeded();
   await preset.locator('img.preset-image').evaluate(img => { img.src = '/images/missing-preset-photo.jpg'; });
   await expect(preset).toHaveClass(/svo-card-without-photo/);
   await expect(preset.locator('.svo-preset-caption')).toBeHidden();
