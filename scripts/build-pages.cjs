@@ -18,7 +18,7 @@ for (const folder of folders) {
 for (const file of files) {
   fs.copyFileSync(path.join(root, file), path.join(output, file));
 }
-fs.writeFileSync(path.join(output, '_redirects'), '/admin /404.html 404\n/admin.html /404.html 404\n');
+fs.writeFileSync(path.join(output, '_redirects'), ''); // No admin redirects; removed public admin page gets normal 404.
 fs.writeFileSync(path.join(output, '_routes.json'), JSON.stringify({version:1,include:['/api/*'],exclude:[]},null,2)+'\n');
 fs.writeFileSync(path.join(output, '_headers'), [
   '/*',
