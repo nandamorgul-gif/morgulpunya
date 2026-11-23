@@ -52,16 +52,7 @@
       </nav>
 
       <div class="header-actions">
-        <button type="button" id="svoShopCartButton" class="svo-store-btn svo-header-cart" aria-label="Buka keranjang komponen">Keranjang <span class="svo-header-count" id="svoShopCartCount">0</span></button>
-        <a href="#rakit-pc" class="cart-badge" id="cartBadgeBtn" title="Ringkasan Keranjang Belanja">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-            stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="9" cy="21" r="1"></circle>
-            <circle cx="20" cy="21" r="1"></circle>
-            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-          </svg>
-          <span class="cart-count" id="cartCount">0</span>
-        </a>
+        <button type="button" id="svoShopCartButton" class="svo-store-btn svo-header-cart" aria-label="Buka keranjang PC Builder dan katalog">Keranjang <span class="svo-header-count" id="svoShopCartCount">0</span></button>
         <a href="#rakit-pc" class="btn btn-primary btn-simulasi-nav">
           <i class="feather feather-sliders"></i> Simulasi Rakit
         </a>
@@ -303,6 +294,9 @@
                     <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
                   </svg>
                   Pesan
+                </button>
+                <button type="button" class="btn btn-primary svo-builder-open-cart" id="svoBuilderViewCart">
+                  <i class="feather feather-shopping-bag"></i> Lihat di Keranjang Atas <span id="svoBuilderCartCount" aria-live="polite">0</span>
                 </button>
                 <button class="btn btn-secondary" id="exportSpecBtn" style="width: 100%;">
                   <i class="feather feather-file-text"></i> Lihat / Simpan Rincian Spec
@@ -665,12 +659,12 @@
     <div class="svo-music-embed" aria-hidden="true"><div id="svoMusicVideoSlot"></div></div>
   </aside>
 
-  <!-- New storefront cart, separate from legacy PC configurator -->
+  <!-- Shared cart for PC Builder and catalogue selection -->
   <div class="svo-cart-layer" id="svoCartLayer" aria-hidden="true">
     <div class="svo-cart-overlay" id="svoCartOverlay"></div>
     <aside class="svo-cart-panel" role="dialog" aria-modal="true" aria-labelledby="svoCartTitle">
       <div class="svo-cart-head">
-        <h2 id="svoCartTitle">Keranjang Belanja</h2>
+        <h2 id="svoCartTitle">Keranjang Komponen</h2>
         <button type="button" class="svo-icon-btn" id="svoCloseCart" aria-label="Tutup keranjang">×</button>
       </div>
       <div class="svo-cart-content">
@@ -694,7 +688,7 @@
       </div>
       <div class="svo-cart-foot">
         <div class="svo-cart-total"><span>Subtotal estimasi</span><strong id="svoCartTotal">Rp0</strong></div>
-        <p class="svo-cart-muted">Belum termasuk ongkir; transaksi dilakukan setelah admin mengonfirmasi total akhir.</p>
+        <p class="svo-cart-muted">Harga hanya estimasi. Stok, harga akhir, biaya jasa, dan ongkir dikonfirmasi admin sebelum transaksi.</p>
         <button type="button" class="svo-store-btn" id="svoCheckoutButton">Lanjutkan Permintaan</button>
       </div>
     </aside>
