@@ -93,6 +93,105 @@ const SVO_PHOTOS = {
   "gpu-rtx5090": {
     "url": "https://sota.store/image/cache/catalog/IP/nvidia-geforce_900-1g144-2530-000-1600x1600.webp",
     "credit": "https://sota.store/ua/videokarta-nvidia-geforce-rtx-5090-32gb-founders-edition-900-1g144-2530-000-239744.html"
+  },
+  "mb-asrock-b850i": {
+    "url": "https://www.caseking.de/on/demandware.static/-/Sites-master-catalog-caseking/default/dw9b4fb2ce/images/data/product/MBAR/MBAR-513/MBAR-513_96e1e46b0f77811a36a6ac2cbbed85454c572d8b.png",
+    "credit": "https://www.caseking.de/en/asrock-b850i-lightning-wifi-motherboard-socket-am5-amd-b850-mini-itx-ddr5/MBAR-513.html"
+  },
+  "mb-msi-b860": {
+    "url": "https://es-store.msi.com/cdn/shop/files/placa-base-msi-b860-tomahawk-wifi.png?crop=center&height=1200&v=1738152751&width=1200",
+    "credit": "https://es-store.msi.com/products/mag-b860-tomahawk-wifi-placas-base"
+  },
+  "mb-gigabyte-z890": {
+    "url": "https://static.gigabyte.com/StaticFile/Image/Global/dab9605308bc1828dea7c525571905bc/Product/42076",
+    "credit": "https://www.aorus.com/motherboards/Z890-AORUS-ELITE-WIFI7-ICE"
+  },
+  "ram-32-ddr5": {
+    "url": "https://redgaming.it/245036-large_default/ram-gskill-flare-x5-ddr5-6000-2x16-32gb-nero-expo-cl30.jpg",
+    "credit": "https://redgaming.it/ddr5/26070-ram-gskill-flare-x5-ddr5-6000-2x16-32gb-nero-expo-cl30-4713294236814.html"
+  },
+  "ram-32-white": {
+    "url": "https://media.memoryexpress.com/Images/Products/Large/MX00129873-0.jpg",
+    "credit": "https://www.memoryexpress.com/Products/MX00129873"
+  },
+  "ram-64-ddr5": {
+    "url": "https://i.ebayimg.com/images/g/8zUAAeSwb6donlzT/s-l1200.jpg",
+    "credit": "https://www.ebay.com/itm/226921032505"
+  },
+  "ssd-samsung-990pro-2t": {
+    "url": "https://img.pzrmcdn.com/mnresize/1180/1182/asset/TYB6KSLBHXNMH2CB68/images/samsung990promzv9p2t0bw2tb74506900mbsm2ssdsabitdisk-1.jpg",
+    "credit": "https://www.samsung.com/sg/memory-storage/nvme-ssd/990-pro-2tb-nvme-pcie-gen-4-mz-v9p2t0bw/"
+  },
+  "ssd-crucial-t705-2t": {
+    "url": "https://content.crucial.com/content/dam/crucial/ssd-products/t705/photography/isolated/crucial-ssd-t705-topview.psd.transform/small-png/image.png",
+    "credit": "https://www.crucial.com/ssd/t705/ct2000t705ssd3"
+  },
+  "ssd-kingston-kc3000-2t": {
+    "url": "https://computerlounge.co.nz/cdn/shop/files/6d878d0bc5c0bb37be1695c0caabc605738fb98d_44992_1.jpg?v=1721007509&width=1200",
+    "credit": "https://computerlounge.co.nz/products/kingston-kc3000-2tb-m-2-nvme-ssd"
+  },
+  "psu-msi-650": {
+    "url": "https://notebookspec.com/storage/pc-psu/713-1.png",
+    "credit": "https://www.msi.com/Power-Supply/MAG-A650BN"
+  },
+  "psu-cm-sfx850": {
+    "url": "https://www.coolermaster.com/on/demandware.static/-/Sites-cooler-master-main/default/dw6705bc78/Assets/v-sfx-gold-850-atx-3-1-white-edition/large/07.png",
+    "credit": "https://www.coolermaster.com/en-global/products/v-sfx-gold-850-atx-3-1-white-edition.html"
+  },
+  "psu-seasonic-1000": {
+    "url": "https://www.dateks.lv/images/pic/1200/1200/753/1861.jpg",
+    "credit": "https://www.dateks.lv/en/cenas/psu-barosanas-bloki/1150293-seasonic-focus-gx-2024-1000w-80plus-gold-atx-3-1-pcie-5-1"
+  },
+  "case-air903": {
+    "url": "https://pc-builder.io/images/case/1692876521_51208.jpg",
+    "credit": "https://www.montechpc.com/air-903-max"
+  },
+  "case-o11": {
+    "url": "https://level-up.gg/cdn/shop/files/3c2230a521a8b75ea9d56100813e53a2.jpg?v=1746013564&width=1214",
+    "credit": "https://level-up.gg/products/lian-li-o11-dynamic-evo-rgb-e-atx-mid-tower-gaming-pc-case-white-fans-not-included"
+  },
+  "case-nr200p": {
+    "url": "https://www.memoryc.com/images/products/bb/image_8372609.jpg",
+    "credit": "https://www.memoryc.com/36907-cooler-master-masterbox-nr200p-desktop-white-computer-case.html"
+  },
+  "cooler-ak400": {
+    "url": "https://cdn.shoppub.io/cdn-cgi/image/w%3D1000%2Ch%3D1000%2Cq%3D80%2Cf%3Dauto/oficinadosbits/media/uploads/produtos/foto/xxxupcvp/file.png",
+    "credit": "https://www.oficinadosbits.com.br/produto/cooler-deepcool-ak400-amd-intel-preto-r-ak400-bknnmn-g-1/"
+  },
+  "cooler-ak620": {
+    "url": "https://cdn.multitronic.fi/images/prod/7/B/R-AK620-BKNNMT-G-1.webp",
+    "credit": "https://www.multitronic.fi/en/products/3035890/deepcool-ak620--2x120-mm-cpu-cooler--black"
+  },
+  "cooler-arctic-240": {
+    "url": "https://www.bohemiapc.cz/imagegen.php?autoimage=i54-201064209",
+    "credit": "https://www.bohemiapc.cz/arctic-liquid-freezer-iii-240-all-in-one-cpu-water-cooler-with-240mm-radiator-and-2x-p12-pwm-pst/"
+  },
+  "acc-arctic-p12": {
+    "url": "https://www.static-src.com/wcsstore/Indraprastha/images/catalog/full/100/MTA-38169217/arctic_fan_casing_arctic_p12_pwm_pst_single_pack_black-black_full01_gmppta4t.jpg",
+    "credit": "https://www.arctic.de/en/P12-PWM-PST/ACFAN00120A"
+  },
+  "acc-sleeves": {
+    "url": "https://www.antec.com/product/psu/images/gallery-sleeved-extension-cable-kit-purple-white-04.jpg",
+    "credit": "https://www.antec.com/product/psu/psu-sleeved-extension-cable-kit-purple-white"
+  },
+  "acc-bracket": {
+    "url": "https://upload.jaknot.com/2026/05/images/products/44c213/original/argb-holder-gpu-vga-graphic-card-anti-sag-bracket-adjustable-gx80.png",
+    "credit": "https://www.jakartanotebook.com/p/argb-holder-gpu-vga-graphic-card-anti-sag-bracket-adjustable-gx80-black"
+  },
+  "soft-drivers": {
+    "url": "https://images.unsplash.com/photo-1547082299-de196ea013d6?w=800&auto=format&fit=crop&q=85",
+    "credit": "https://unsplash.com/",
+    "kind": "service-photo"
+  },
+  "soft-gamer": {
+    "url": "https://images.unsplash.com/photo-1555680202-c86f0e12f086?w=800&auto=format&fit=crop&q=85",
+    "credit": "https://unsplash.com/",
+    "kind": "service-photo"
+  },
+  "soft-creator": {
+    "url": "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800&auto=format&fit=crop&q=85",
+    "credit": "https://unsplash.com/",
+    "kind": "service-photo"
   }
 };
 
@@ -107,7 +206,7 @@ function applySvoReferencePhotos(catalogue) {
       if (ref) {
         product.image = ref.url;
         product.imageCreditUrl = ref.credit;
-        product.imageType = 'reference-photo';
+        product.imageType = ref.kind === 'service-photo' ? 'service-photo' : 'reference-photo';
       } else {
         product.image = modelArtwork;
         product.imageType = 'model-illustration';
