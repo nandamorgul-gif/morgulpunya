@@ -452,3 +452,34 @@ img.svo-image-unavailable,
   .svo-category-tile small {font-size:.65rem}
   #rakit-pc .component-card.svo-card-without-photo {grid-template-columns:minmax(0,1fr)}
 }
+
+/* SVO 2026 photo & navigation transfer: functional local SVG icon layer. */
+.icon-svg { display:inline-block;width:1.12em;height:1.12em;vertical-align:-.18em;flex-shrink:0;overflow:visible; }
+.nav-link .icon-svg {margin-right:.25rem;}
+.svo-addon-icon {display:flex;align-items:center;justify-content:center;}
+.svo-addon-icon .icon-svg {display:block;width:28px;height:28px;color:#dec4ff;stroke:currentColor;stroke-width:2;}
+.svo-menu-lines {display:flex;flex-direction:column;align-items:center;justify-content:center;width:23px;height:22px;gap:5px;color:currentColor;}
+.svo-menu-lines span {width:22px;height:2px;border-radius:8px;background:currentColor;display:block;transition:transform .2s ease,opacity .2s ease;}
+.mobile-toggle[aria-expanded="true"] .svo-menu-lines span:nth-child(1) {transform:translateY(7px) rotate(45deg);}
+.mobile-toggle[aria-expanded="true"] .svo-menu-lines span:nth-child(2) {opacity:0;}
+.mobile-toggle[aria-expanded="true"] .svo-menu-lines span:nth-child(3) {transform:translateY(-7px) rotate(-45deg);}
+.mobile-toggle {position:relative;align-items:center;justify-content:center;z-index:1100;}
+.mobile-toggle:focus-visible,.svo-addon a:focus-visible {outline:2px solid #c9a6ff;outline-offset:3px;}
+.svo-roleplay-media .svo-roleplay-source {
+  display:inline-block;margin:7px 6px 0;color:#dfc6ff;text-decoration:underline;
+  font-size:.73rem;line-height:1.5;font-weight:600;
+}
+.svo-roleplay-media .svo-roleplay-source[hidden] {display:none!important;}
+.svo-roleplay-media > img[data-svo-roleplay-reference="yes"] {
+  display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;
+  background:#120b22;max-height:450px;
+}
+@media(max-width:1024px){
+  .header .mobile-toggle {display:flex!important;min-width:44px;min-height:44px;}
+  .header .svo-menu-lines {flex-shrink:0;}
+}
+@media(max-width:560px){
+  .header .mobile-toggle {min-width:42px;min-height:42px;padding:8px;}
+  .svo-roleplay-media > img[data-svo-roleplay-reference="yes"] {aspect-ratio:16/10;}
+}
+@media(prefers-reduced-motion:reduce) {.svo-menu-lines span{transition:none;}}
