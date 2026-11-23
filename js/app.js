@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!product || !Number.isSafeInteger(price.price) || price.price < 0) continue;
         product.price = price.price;
         product.stock = price.stock;
-        if (price.image && /^https:\/\//.test(price.image) && !/[<>"'\\s]/.test(price.image)) product.image = price.image;
+        if (price.image && /^https:\/\//.test(price.image) && !/[<>"'\s]/.test(price.image)) product.image = price.image;
         product.priceSource = price.source_label || 'admin';
         product.updatedAt = price.updated_at;
       }
