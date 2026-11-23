@@ -59,16 +59,17 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.classList.remove('svo-cart-open');
   };
   const showImage = p => {
-    const photo = window.SVO_PHOTOS?.[p.id];
+    const matched = window.SVO_PHOTOS?.[p.id];
     const current = typeof p.image === 'string' ? p.image : '';
-    const image = photo && (!current || current.startsWith('images/products/'))
-      ? photo.url : current;
-    const credit = photo && image === photo.url ? photo.credit : null;
+    const oldDefault = current.startsWith('images/products/');
+    const modelArt = 'images/catalog/' + p.id + '.svg';
+    const image = oldDefault ? (matched?.url || modelArt) : (current || modelArt);
     return {
       image,
-      credit,
+      credit: matched && image === matched.url ? matched.credit : (image === p.image ? p.imageCreditUrl : null),
       photo: /^https:\/\//i.test(image),
-      fallback: 'images/products/' + ((db.components[p.category]) ? p.category : 'accessories') + '.svg'
+      fallback: modelArt,
+      finalFallback: 'images/products/' + (db.components[p.category] ? p.category : 'accessories') + '.svg'
     };
   };
   const renderProducts = () => {
@@ -84,10 +85,10 @@ document.addEventListener('DOMContentLoaded', () => {
       <article class="svo-product" data-svo-category="${escapeHTML(p.category)}">
         <div class="svo-product-media ${showImage(p).photo ? 'has-photo' : 'has-illustration'}">
           <img src="${escapeHTML(showImage(p).image)}"
-               data-svo-fallback="${escapeHTML(showImage(p).fallback)}"
-               alt="${showImage(p).photo ? 'Foto referensi varian hardware: ' + escapeHTML(p.name) : 'Ilustrasi kategori ' + escapeHTML(p.category)}"
+               data-svo-fallback="${escapeHTML(showImage(p).fallback)}" data-svo-final-fallback="${escapeHTML(showImage(p).finalFallback)}"
+               alt="${showImage(p).photo ? 'Foto referensi varian hardware: ' + escapeHTML(p.name) : 'Visual ilustratif model: ' + escapeHTML(p.name)}"
                class="svo-product-image" loading="lazy" width="600" height="400">
-          <span class="svo-illustration-chip">${showImage(p).photo ? 'Foto referensi model' : 'Ilustrasi hardware'}</span>
+          <span class="svo-illustration-chip">${showImage(p).photo ? 'Foto referensi model' : 'Ilustrasi model'}</span>
         </div>
         <div class="svo-product-body">
           <span class="svo-product-brand">${escapeHTML(p.brand)} · ${escapeHTML((db.categories.find(c => c.id === p.category) || {}).name || p.category)}</span>
@@ -106,7 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
     els.cartTotal.textContent = formatPrice(subtotal());
     els.cartList.innerHTML = items.length ? items.map(({product:p, qty}) => `
       <div class="svo-cart-item">
-        <img src="${escapeHTML(showImage(p).image)}" data-svo-fallback="${escapeHTML(showImage(p).fallback)}" alt="" loading="lazy">
+        <img src="${escapeHTML(showImage(p).image)}" data-svo-fallback="${escapeHTML(showImage(p).fallback)}" data-svo-final-fallback="${escapeHTML(showImage(p).finalFallback)}" alt="" loading="lazy">
         <div class="svo-cart-item-main">
           <strong>${escapeHTML(p.name)}</strong>
           <p class="svo-cart-item-price">${formatPrice(p.price)} × ${qty}</p>
@@ -135,7 +136,17 @@ document.addEventListener('DOMContentLoaded', () => {
     opt.textContent = c.name;
     els.category.appendChild(opt);
   });
-  // Manufacturer-provided photo links may expire; show an honest, local illustration instead.
+  document.querySelectorAll('[data-svo-category-link]').forEach(link => {
+    link.addEventListener('click', () => {
+      const category = link.dataset.svoCategoryLink;
+      if (!db.categories.some(c => c.id === category)) return;
+      els.category.value = category;
+      els.search.value = '';
+      els.sort.value = 'default';
+      renderProducts();
+    });
+  });
+
   grid.addEventListener('click', e => {
     const add = e.target.closest('[data-svo-add]');
     if (!add) return;
