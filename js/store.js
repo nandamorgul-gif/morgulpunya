@@ -140,7 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <p class="svo-product-description">${escapeHTML(p.description)}</p>
           ${picture.credit ? `<a class="svo-photo-credit" href="${escapeHTML(picture.credit)}" target="_blank" rel="noopener noreferrer">Sumber foto referensi ↗</a>` : ''}
           <span class="svo-stock-status">${serverCatalogAvailable ? (p.stock > 0 ? 'Stok tercatat: ' + p.stock : 'Stok belum tersedia') : 'Tanyakan ketersediaan'}</span>
-          <p class="svo-product-price"><span class="svo-price-caption">${p.price_live ? 'Harga pemasok terverifikasi' : p.price_source === 'dprice' ? 'Estimasi pasar DPrice (maks. 7 hari)' : p.price_source === 'serpapi' ? 'Estimasi pasar Google Shopping' : 'Harga referensi / estimasi'}</span><br>${formatPrice(p.price)}</p>
+          <p class="svo-product-price"><span class="svo-price-caption">${p.price_live ? 'Harga pemasok terverifikasi' : p.price_source === 'dprice' ? 'Estimasi pasar DPrice (maks. 7 hari)' : p.price_source === 'serpapi' ? (p.price_method === 'google_search' ? 'Estimasi Google Search — 1 toko' + (p.price_variant === 'box' ? ' (Box)' : p.price_variant === 'tray' ? ' (Tray)' : '') : 'Estimasi pasar Google Shopping') : 'Harga referensi / estimasi'}</span><br>${formatPrice(p.price)}</p>
           <button class="svo-store-btn" type="button" data-svo-add="${escapeHTML(p.id)}">${serverCatalogAvailable && p.stock < 1 ? '+ Tanya Stok via Keranjang' : '+ Tambah ke Keranjang'}</button>
         </div>
       </article>`;
@@ -411,7 +411,7 @@ document.addEventListener('DOMContentLoaded', () => {
           new Date(pricing.market_updated_at).toLocaleString('id-ID', {timeZone:'Asia/Jakarta'}) + ' WIB' : '';
         const info = [];
         if (live) info.push('Harga pemasok: ' + live + '/' + valid.length + ' produk' + (updated ? ' • terakhir ' + updated : ''));
-        if (market) info.push('Estimasi pasar: ' + market + '/' + valid.length + ' produk (DPrice: ' + (Number(pricing.dprice_products)||0) + ', Google Shopping: ' + (Number(pricing.serpapi_products)||0) + ')' + (marketDate ? ' • data terbaru ' + marketDate : ''));
+        if (market) info.push('Estimasi pasar: ' + market + '/' + valid.length + ' produk (DPrice: ' + (Number(pricing.dprice_products)||0) + ', Google / SerpApi: ' + (Number(pricing.serpapi_products)||0) + ')' + (marketDate ? ' • data terbaru ' + marketDate : ''));
         statusEl.textContent = info.length ? info.join(' | ') +
           '. Produk lain memakai estimasi referensi.' :
           'Harga masih estimasi referensi; belum ada harga pemasok atau marketplace yang memenuhi validasi.';
@@ -422,7 +422,7 @@ document.addEventListener('DOMContentLoaded', () => {
           updated_at: pricing.updated_at, live_products: live }
       }));
       const note = document.querySelector('.svo-store-note');
-      if (note) note.textContent = 'Harga pemasok diprioritaskan; estimasi pasar DPrice dan Google Shopping hanya memakai data yang lolos validasi. Harga lainnya merupakan estimasi. Stok dan harga akhir dikonfirmasi via WhatsApp.';
+      if (note) note.textContent = 'Harga pemasok diprioritaskan; estimasi pasar DPrice dan Google (Shopping/Search) hanya memakai data yang lolos validasi. Harga lainnya merupakan estimasi. Stok dan harga akhir dikonfirmasi via WhatsApp.';
       if (!lastQuoteLookup) {
         lastQuoteLookup = true;
         const prev = document.getElementById('svoPreviousOrder');
