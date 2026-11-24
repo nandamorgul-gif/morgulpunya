@@ -275,6 +275,9 @@ function organicPrice(item) {
     const explicit = [...s.matchAll(/\bRp\.?\s*(\d{1,3}(?:\.\d{3})+)(?![\d.,])/gi)].map(m=>Number(m[1].replace(/\./g,'')));
     if (explicit.length === 1 && priceOK(explicit[0]) && !/\b(?:hemat|diskon|mulai|hingga|sampai|cicilan|angsuran|deposit|ongkir)\b/i.test(s)) amounts.push(explicit[0]);
   }
+  // The new store exposes an explicit price in its search-result title.
+  const titlePrice = String(item?.title || '').match(/\|\s*Harga\s+Rp\.?\s*(\d{1,3}(?:\.\d{3})+)(?![\d.,])/i);
+  if (titlePrice) { const p = Number(titlePrice[1].replace(/\./g,'')); if (priceOK(p)) amounts.push(p); }
   const unique = [...new Set(amounts)];
   return unique.length === 1 ? unique[0] : null;
 }
@@ -327,7 +330,7 @@ async function serpFallback(env, product, now) {
   const blocked = await reserveSerp(env,product,now);
   if (blocked.reason) return {reason:blocked.reason};
   const engine = blocked.engine;
-  const params = new URLSearchParams({engine,q:searchTerm(product)+(engine==='google'?' harga Indonesia':''),location:'Jakarta, Indonesia',google_domain:'google.co.id',gl:'id',hl:'id',api_key:env.SERPAPI_KEY.trim(),no_cache:'true'});
+  const params = new URLSearchParams({engine,q:searchTerm(product)+(engine==='google'?' harga site:enterkomputer.com':''),location:'Jakarta, Indonesia',google_domain:'google.co.id',gl:'id',hl:'id',api_key:env.SERPAPI_KEY.trim(),no_cache:'true'});
   let body;
   try {
     const response = await fetch('https://serpapi.com/search.json?' + params, {
