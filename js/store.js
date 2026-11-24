@@ -140,7 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <p class="svo-product-description">${escapeHTML(p.description)}</p>
           ${picture.credit ? `<a class="svo-photo-credit" href="${escapeHTML(picture.credit)}" target="_blank" rel="noopener noreferrer">Sumber foto referensi ↗</a>` : ''}
           <span class="svo-stock-status">${serverCatalogAvailable ? (p.stock > 0 ? 'Stok tercatat: ' + p.stock : 'Stok belum tersedia') : 'Tanyakan ketersediaan'}</span>
-          <p class="svo-product-price"><span class="svo-price-caption">${p.price_live ? 'Harga pemasok terverifikasi' : p.price_source === 'dprice' ? 'Estimasi pasar DPrice (maks. 7 hari)' : p.price_source === 'serpapi' ? (p.price_method === 'google_search' ? 'Estimasi Google Search — 1 toko' + (p.price_variant === 'box' ? ' (Box)' : p.price_variant === 'tray' ? ' (Tray)' : '') : 'Estimasi pasar Google Shopping') : 'Harga referensi / estimasi'}</span><br>${formatPrice(p.price)}</p>
+          <p class="svo-product-price"><span class="svo-price-caption">${p.price_live ? 'Harga pemasok terverifikasi' : p.price_source === 'dprice' ? 'Estimasi pasar DPrice (maks. 7 hari)' : p.price_source === 'serpapi' ? (p.price_method === 'google_search' ? 'Estimasi Google Search — 1 toko' + (p.price_variant === 'box' ? ' (Box)' : p.price_variant === 'tray' ? ' (Tray)' : '') : (p.price_merchant_count === 1 ? 'Estimasi Google Shopping — 1 sumber' : 'Estimasi pasar Google Shopping')) : 'Harga referensi / estimasi'}</span><br>${formatPrice(p.price)}</p>
           <button class="svo-store-btn" type="button" data-svo-add="${escapeHTML(p.id)}">${serverCatalogAvailable && p.stock < 1 ? '+ Tanya Stok via Keranjang' : '+ Tambah ke Keranjang'}</button>
         </div>
       </article>`;
