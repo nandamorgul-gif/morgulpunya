@@ -13,8 +13,10 @@ function fresh(date, now) {
 async function get(path, env) {
   const r = await fetch('https://dprice.id/api/v1/' + path, {
     headers: { Authorization: 'Bearer ' + env.DPRICE_API_KEY.trim(), Accept:'application/json' },
-    redirect:'error', signal:AbortSignal.timeout(10000)
+    redirect:'manual', signal:AbortSignal.timeout(10000)
   });
+  // Workers supports manual/follow. Reject redirects without forwarding the secret.
+  if (r.status >= 300 && r.status < 400) throw Error('DPrice unexpected redirect HTTP ' + r.status);
   if (!r.ok) throw Error('DPrice HTTP ' + r.status);
   return r.json();
 }
@@ -65,9 +67,15 @@ async function sync(env, now) {
 export default {
   async fetch() {
     // Public health only. No unauthenticated sync endpoint or secrets.
-    return Response.json({service:'SEMEISTVO TECH Price Engine',version:'2.0.0',status:'online'});
+    return Response.json({service:'SEMEISTVO TECH Price Engine',version:'2.0.1',status:'online'});
   },
   async scheduled(controller, env) {
-    await sync(env, controller.scheduledTime || Date.now());
+    console.log('PRICE_SYNC_START', '2.0.1');
+    try {
+      await sync(env, controller.scheduledTime || Date.now());
+    } catch (err) {
+      console.error('PRICE_SYNC_FAILED', err.message);
+      throw err;
+    }
   }
 };
