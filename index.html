@@ -202,6 +202,9 @@
     .svo-playlist-volume input{flex:1;min-width:0;accent-color:#b18ae3}
     .svo-playlist-external{color:#c8aaf3;font-size:.77rem;text-decoration:underline;text-underline-offset:3px}
     .svo-playlist .svo-music-note{margin:0}
+    .svo-playlist .svo-playlist-sound{width:100%;min-height:30px;padding:5px 8px;font-size:.70rem}
+    .svo-playlist .svo-playlist-sound[hidden]{display:none!important}
+    #svoMusicPlayer.svo-playlist.is-mini .svo-playlist-sound:not([hidden]){margin-top:5px}
     @media(max-width:760px){#svoMusicPlayer.svo-playlist:not(.is-collapsed):not(.is-mini){width:min(280px,calc(100vw - 76px));min-width:218px}}
     @media(max-height:520px) and (max-width:760px){body:has(#svoMusicPlayer.is-mini) #svoSupport[open] .svo-support-panel{bottom:calc(100% + 12px);max-height:calc(100dvh - 90px)}}
   </style>
@@ -1208,7 +1211,7 @@
     </section>
   </details>
 
-  <!-- SVO Music Player: visible, user-initiated official YouTube embed -->
+  <!-- SVO Music Player: visible official YouTube embed with policy-aware autoplay -->
   <aside id="svoMusicPlayer" class="svo-music-player svo-playlist is-collapsed" aria-label="Musik SEMEISTVO TECH">
     <div class="svo-music-head">
       <button type="button" id="svoMusicCollapse" class="svo-music-disc" aria-expanded="false" aria-controls="svoMusicContent" aria-label="Buka pemutar musik" title="Buka atau tutup pemutar musik">♫</button>
@@ -1227,6 +1230,7 @@
         <option value="2">Museum Duka — for Revenge feat. YB &amp; Tepe</option>
       </select>
       <div id="svoMusicVideoSlot" class="svo-playlist-video"></div>
+      <button type="button" id="svoPlaylistSound" class="svo-music-unmute svo-playlist-sound" hidden disabled>Aktifkan suara</button>
       <div class="svo-playlist-controls svo-playlist-extra" aria-label="Kontrol playlist">
         <button type="button" id="svoPlaylistPrev" class="svo-music-control" aria-label="Lagu sebelumnya" title="Lagu sebelumnya" disabled>⏮</button>
         <button type="button" id="svoPlaylistPlay" class="svo-music-control" aria-label="Putar" title="Putar" disabled>▶</button>
@@ -1298,11 +1302,19 @@
       const tracks=['KQFnVqsWqF4','8_y6w1V9PXs','9oItuvvo8H0'];
       const controls=['Prev','Play','Pause','Next','Shuffle','Loop','Volume'].map($);
       let player=null, ready=false, loading=false, shuffled=false, loop=true, generation=0;
+      let autoStart=false, mutedRetry=false;
+      const sound=$('Sound');
+      function showSound(show){sound.hidden=!show;sound.disabled=!ready;}
+      function updatePlayingStatus(){
+        const silent=player?.isMuted() || player?.getVolume()===0;
+        showSound(Boolean(silent));
+        status.textContent=silent?'Musik diputar tanpa suara':'Sedang diputar';
+      }
       const expanded=()=>!root.classList.contains('is-collapsed');
       function enable(value){controls.forEach(el=>el.disabled=!value);}
       function resetSlot(){const old=document.getElementById('svoMusicVideoSlot');if(old)old.remove();const slot=document.createElement('div');slot.id='svoMusicVideoSlot';slot.className='svo-playlist-video';select.after(slot);}
       function close(){
-        generation++;ready=false;
+        generation++;ready=false;autoStart=false;mutedRetry=false;showSound(false);
         if(player){try{player.destroy();}catch(_){}player=null;}
         resetSlot();enable(false);root.classList.add('is-collapsed');root.classList.remove('is-playing','is-mini');
         content.hidden=true;toggle.setAttribute('aria-expanded','false');toggle.setAttribute('aria-label','Buka pemutar musik');status.textContent='YouTube Playlist Edition';
@@ -1318,20 +1330,32 @@
             onReady:e=>{
               if(token!==generation||!expanded())return;
               ready=true;enable(true);
-              e.target.cuePlaylist({list:tracks.slice(),index:idx});
-              e.target.setVolume(Number($('Volume').value));e.target.setLoop(loop);e.target.setShuffle(shuffled);
-              status.textContent='Siap diputar — tekan Play';
+              e.target.setVolume(Number($('Volume').value));e.target.setLoop(loop);
+              if(autoStart){
+                status.textContent='Memulai musik otomatis...';
+                e.target.loadPlaylist({list:tracks.slice(),index:idx});
+              }else{
+                e.target.cuePlaylist({list:tracks.slice(),index:idx});
+                status.textContent='Siap diputar — tekan Play';
+              }
+              e.target.setShuffle(shuffled);
             },
             onStateChange:e=>{
               if(token!==generation||!expanded())return;
               const playing=e.data===window.YT.PlayerState.PLAYING;
               root.classList.toggle('is-playing',playing);
-              if(playing){const id=e.target.getVideoData().video_id;const i=tracks.indexOf(id);if(i>=0)select.value=String(i);status.textContent='Sedang diputar';}
+              if(playing){const id=e.target.getVideoData().video_id;const i=tracks.indexOf(id);if(i>=0)select.value=String(i);updatePlayingStatus();}
               else if(e.data===window.YT.PlayerState.PAUSED)status.textContent='Musik dijeda';
               else if(e.data===window.YT.PlayerState.ENDED)status.textContent='Lagu selesai';
             },
             onError:()=>{if(token===generation)status.textContent='Video tidak tersedia di embed — buka YouTube.';},
-            onAutoplayBlocked:()=>{if(token===generation)status.textContent='Tekan Play pada video untuk memulai.';}
+            onAutoplayBlocked:()=>{
+              if(token!==generation||!expanded()||!ready)return;
+              if(autoStart&&!mutedRetry){
+                mutedRetry=true;player.mute();showSound(true);
+                status.textContent='Autoplay bersuara diblokir';player.playVideo();
+              }else{showSound(true);status.textContent='Tekan Aktifkan suara untuk memulai';}
+            }
           }
         });
       }
@@ -1355,8 +1379,9 @@
         root.classList.remove('is-mini');
         toggle.setAttribute('aria-expanded','true');toggle.setAttribute('aria-label','Perkecil pemutar musik');
       }
-      function open(){
+      function open(startAutomatically=false){
         if(support?.open)support.open=false;
+        autoStart=startAutomatically;mutedRetry=false;showSound(false);
         root.classList.remove('is-mini');
         root.classList.remove('is-collapsed');content.hidden=false;toggle.setAttribute('aria-expanded','true');toggle.setAttribute('aria-label','Perkecil pemutar musik');
         status.textContent='Memuat YouTube...';api();
@@ -1369,8 +1394,9 @@
         else minimize();
       }});
       document.addEventListener('keydown',e=>{if(e.key==='Escape'&&expanded()&&!root.classList.contains('is-mini')&&!support?.open){minimize();toggle.focus();}});
-      $('Play').addEventListener('click',()=>{if(ready)player.playVideo();});
-      $('Pause').addEventListener('click',()=>{if(ready)player.pauseVideo();});
+      sound.addEventListener('click',()=>{if(!ready)return;autoStart=false;player.unMute();if(player.getVolume()===0){player.setVolume(30);$('Volume').value='30';}showSound(false);player.playVideo();});
+      $('Play').addEventListener('click',()=>{if(ready){autoStart=false;player.playVideo();}});
+      $('Pause').addEventListener('click',()=>{if(ready){autoStart=false;player.pauseVideo();}});
       $('Prev').addEventListener('click',()=>{if(ready)player.previousVideo();});
       $('Next').addEventListener('click',()=>{if(ready)player.nextVideo();});
       $('Shuffle').addEventListener('click',()=>{shuffled=!shuffled;$('Shuffle').setAttribute('aria-pressed',String(shuffled));if(ready)player.setShuffle(shuffled);});
@@ -1378,6 +1404,9 @@
       $('Volume').addEventListener('input',()=>{if(ready)player.setVolume(Number($('Volume').value));});
       select.addEventListener('change',()=>{if(!ready)return;const playlist=player.getPlaylist()||tracks;const index=playlist.indexOf(tracks[Number(select.value)]);if(index>=0)player.playVideoAt(index);});
       enable(false);
+      // Start once on arrival, keeping the official video visible in Mini Mode.
+      // Very small/short viewports retain the launcher to avoid blocking page controls.
+      if(!window.matchMedia('(max-width:300px), (max-height:360px)').matches){open(true);minimize();}
     })();
   </script>
   <script src="js/ui-polish.js"></script>
