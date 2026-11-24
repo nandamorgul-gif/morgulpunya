@@ -138,6 +138,43 @@
     @media(max-width:760px){.svo-support{right:calc(11px + env(safe-area-inset-right,0px));bottom:calc(14px + env(safe-area-inset-bottom,0px))}.svo-support-trigger{width:52px;padding:0;border-radius:16px}.svo-support-trigger span{display:none}.svo-support-panel{max-height:calc(100dvh - 90px - env(safe-area-inset-bottom,0px))}.svo-support ~ .svo-scroll-controls{--svo-scroll-bottom:calc(78px + env(safe-area-inset-bottom,0px))}}
     @media(prefers-reduced-motion:reduce){.svo-support *{transition:none!important}}
   </style>
+  <!-- Home hero: cinematic city background, using the existing local GTA artwork. -->
+  <style id="svoHomeCityBackground">
+    body > #home.svo-studio-hero {
+      background-color:#100b18;
+      background-image:
+        linear-gradient(180deg,rgba(11,8,18,.46) 0%,rgba(11,8,18,.04) 28%,rgba(11,8,18,.12) 63%,#100b18 100%),
+        linear-gradient(90deg,rgba(12,8,19,.91) 0%,rgba(13,9,22,.76) 30%,rgba(16,10,26,.39) 58%,rgba(16,10,26,.15) 100%),
+        url("images/gta-roleplay-night.jpg");
+      background-size:cover,cover,cover;
+      background-position:center,center,center 47%;
+      background-repeat:no-repeat;
+      background-attachment:scroll;
+    }
+    #home.svo-studio-hero .hero-content h1 {
+      text-shadow:0 3px 22px rgba(0,0,0,.48);
+    }
+    #home.svo-studio-hero .svo-hero-desc {color:#eee5f6}
+    #home.svo-studio-hero .svo-hero-disclaimer {color:#cec0dc}
+    #home.svo-studio-hero .svo-studio-hero-media {
+      background:linear-gradient(155deg,rgba(36,25,51,.94),rgba(16,12,24,.91));
+      border-color:#8b6aaa;
+      box-shadow:0 24px 65px rgba(0,0,0,.50);
+    }
+    @media(max-width:960px) {
+      body > #home.svo-studio-hero {
+        background-image:
+          linear-gradient(180deg,rgba(12,8,20,.72) 0%,rgba(12,8,20,.79) 38%,rgba(12,8,20,.54) 68%,#100b18 100%),
+          url("images/gta-roleplay-night.jpg");
+        background-size:cover,cover;
+        background-position:center,61% center;
+      }
+    }
+    @media(forced-colors:active) {
+      body > #home.svo-studio-hero {background-image:none;background-color:Canvas}
+      #home.svo-studio-hero .hero-content h1 {text-shadow:none}
+    }
+  </style>
 </head>
 
 <body class="svo-luxury-background">
