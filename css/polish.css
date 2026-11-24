@@ -564,3 +564,21 @@ img.svo-image-unavailable,
 @media(max-width:560px){
   .svo-pricing-status{font-size:.76rem;padding:10px 12px}
 }
+
+/* Preset benchmark guide and service price breakdown */
+.svo-fps-guide,.svo-preset-costs{margin:0 7px 15px;padding:13px;border:1px solid #46374f;border-radius:11px;background:#201829;min-width:0}
+.svo-fps-heading{display:flex;align-items:baseline;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-bottom:10px;color:#eee1fa;font-size:.84rem}
+.svo-fps-heading span,.svo-fps-row small,.svo-fps-note,.svo-fps-sources{color:#c0b3ce;font-size:.7rem;line-height:1.5}
+.svo-fps-row{display:flex;align-items:center;justify-content:space-between;gap:10px;border-top:1px solid #46374f;padding:8px 0}
+.svo-fps-row>div{min-width:0}
+.svo-fps-row>div strong{display:block;color:#e9def4;font-size:.77rem;overflow-wrap:anywhere}
+.svo-fps-row>div small{display:block}
+.svo-fps-value{white-space:nowrap;color:#dbbaff;font-size:1.05rem;font-weight:800;font-variant-numeric:tabular-nums}
+.svo-fps-value small{font-weight:500}
+.svo-fps-note{margin:6px 0}
+.svo-fps-sources a{color:#dac0ff;text-decoration:underline}
+.svo-preset-costs>div{display:flex;justify-content:space-between;gap:10px;padding:5px 0;font-size:.76rem;line-height:1.45;color:#cfc2dc}
+.svo-preset-costs strong{white-space:nowrap;color:#f2e8fc;font-variant-numeric:tabular-nums}
+.svo-preset-costs .svo-preset-total{border-top:1px solid #5e4774;margin-top:6px;padding-top:9px;font-weight:700}
+.svo-preset-costs .svo-preset-total strong{color:#dbbaff}
+@media(max-width:480px){.svo-fps-guide,.svo-preset-costs{margin-inline:0;padding:11px}.svo-preset-costs>div{flex-wrap:wrap;gap:3px 10px}}
