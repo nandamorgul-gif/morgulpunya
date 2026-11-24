@@ -196,7 +196,7 @@ async function supplierPrices(env) {
       return missing;
     const headers = { Accept: 'application/json' };
     if (env.PRICE_FEED_TOKEN) headers.Authorization = 'Bearer ' + String(env.PRICE_FEED_TOKEN);
-    const res = await fetch(url.toString(), { headers, redirect: 'error', signal: AbortSignal.timeout(8000) });
+    const res = await fetch(url.toString(), { headers, redirect: 'manual', signal: AbortSignal.timeout(8000) });
     if (!res.ok || !(res.headers.get('content-type') || '').includes('json')) return missing;
     const body = await res.text();
     if (body.length > 250000) return missing;
@@ -225,22 +225,27 @@ async function supplierPrices(env) {
 
 /** DPrice snapshots are reference-market estimates, never confirmed inventory.
  * Missing table, unavailable offers and expired observations fall back to D1. */
-async function dpriceReferences(env) {
+async function marketReferences(env) {
   const prices = new Map();
   try {
     const result = await env.DB.prepare(
-      "SELECT product_query, response_json FROM market_price_snapshots WHERE product_query LIKE 'dprice:%'"
+      "SELECT product_query, response_json FROM market_price_snapshots WHERE product_query LIKE 'dprice:%' OR product_query LIKE 'serpapi:%'"
     ).all();
     const now = Date.now();
     for (const row of result.results || []) {
       try {
         const p = JSON.parse(row.response_json);
-        const stamp = Date.parse(p.observed_at);
-        if (p.source !== 'dprice' || typeof p.sku !== 'string' ||
-            row.product_query !== 'dprice:' + p.sku ||
+        const source = p.source;
+        const timestamp = source === 'dprice' ? p.observed_at : p.retrieved_at;
+        const stamp = Date.parse(timestamp);
+        if (!['dprice','serpapi'].includes(source) || typeof p.sku !== 'string' ||
+            row.product_query !== source + ':' + p.sku ||
+            (source === 'serpapi' && (!Number.isSafeInteger(p.merchant_count) || p.merchant_count < 2)) ||
             !Number.isSafeInteger(p.price) || p.price <= 0 || p.price > 1000000000 ||
             !Number.isFinite(stamp) || stamp > now || now - stamp > 7 * 86400000) continue;
-        prices.set(p.sku, p);
+        const entries = prices.get(p.sku) || [];
+        entries.push({...p, timestamp});
+        prices.set(p.sku, entries);
       } catch (_) { /* Ignore malformed snapshots individually. */ }
     }
   } catch (_) { /* Existing installations may not have the snapshot table yet. */ }
@@ -272,8 +277,8 @@ export async function onRequest(context) {
         'SELECT id, category, name, brand, description, image, price, stock, active, updated_at FROM products WHERE active = 1 ORDER BY category, name'
       ).all();
       const feed = await supplierPrices(env);
-      const market = await dpriceReferences(env);
-      let refreshed = 0, marketCount = 0;
+      const market = await marketReferences(env);
+      let refreshed = 0, marketCount = 0, dpriceCount = 0, serpCount = 0;
       let latestMarket = null;
       const products = (data.results || []).map(row => {
         const entry = feed.prices.get(row.id);
@@ -283,20 +288,23 @@ export async function onRequest(context) {
             stock_live: entry.stock !== undefined, price_source: 'supplier',
             price_live: true, price_updated_at: feed.updated_at };
         }
-        const estimate = market.get(row.id);
-        if (estimate && estimate.name === row.name && row.price > 0 &&
-            Math.abs(estimate.price / row.price - 1) <= 0.2) {
+        const eligible = (market.get(row.id) || []).filter(p => row.category !== 'software' && p.name === row.name && row.price > 0 && Math.abs(p.price / row.price - 1) <= 0.2);
+        const estimate = eligible.find(p => p.source === 'dprice') || eligible.find(p => p.source === 'serpapi');
+        if (estimate) {
           marketCount++;
-          if (!latestMarket || estimate.observed_at > latestMarket) latestMarket = estimate.observed_at;
+          if (estimate.source === 'dprice') dpriceCount++; else serpCount++;
+          if (!latestMarket || estimate.timestamp > latestMarket) latestMarket = estimate.timestamp;
           return { ...row, price: estimate.price, price_live: false,
-            price_source: 'dprice', price_updated_at: estimate.observed_at };
+            price_source: estimate.source, price_updated_at: estimate.timestamp,
+            price_timestamp_type: estimate.source === 'dprice' ? 'observed' : 'retrieved',
+            price_merchant_count: estimate.merchant_count || null };
         }
         return { ...row, price_live: false, price_source: 'reference' };
       });
       return json({
         products,
         pricing: { status: feed.status, updated_at: feed.updated_at,
-          live_products: refreshed, market_products: marketCount, market_updated_at: latestMarket, total_products: products.length,
+          live_products: refreshed, market_products: marketCount, dprice_products: dpriceCount, serpapi_products: serpCount, market_updated_at: latestMarket, total_products: products.length,
           refresh_seconds: 120 },
         shipping_flat_idr: 0, checkout_enabled: false
       });
