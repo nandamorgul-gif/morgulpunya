@@ -34,12 +34,11 @@
       "name": "SEMEISTVO TECH",
       "alternateName": [
         "Semeistvo Tech",
-        "semeistvo tech",
         "SemeistvoTech",
-        "semeistvotech",
         "SVO Tech"
       ],
-      "inLanguage": "id",
+      "description": "Website resmi SEMEISTVO TECH, penyedia layanan perakitan komputer, server GTA 5 Roleplay, dan pengembangan website.",
+      "inLanguage": "id-ID",
       "publisher": {
         "@id": "https://semeistvotech.pages.dev/#organization"
       }
@@ -47,19 +46,28 @@
     {
       "@type": "Organization",
       "@id": "https://semeistvotech.pages.dev/#organization",
-      "url": "https://semeistvotech.pages.dev/",
       "name": "SEMEISTVO TECH",
       "alternateName": [
         "Semeistvo Tech",
         "SemeistvoTech",
         "SVO Tech"
       ],
-      "logo": "https://semeistvotech.pages.dev/images/favicon.svg"
+      "url": "https://semeistvotech.pages.dev/",
+      "logo": "https://semeistvotech.pages.dev/images/favicon.svg",
+      "description": "SEMEISTVO TECH adalah penyedia layanan teknologi yang melayani rakit PC custom, instalasi dan upgrade komputer, pengembangan server GTA 5 Roleplay (FiveM), serta pembuatan website.",
+      "knowsAbout": [
+        "Custom PC Building",
+        "Computer Hardware",
+        "Gaming PC",
+        "Computer Upgrade",
+        "GTA 5 Roleplay",
+        "FiveM Server Development",
+        "Website Development"
+      ]
     }
   ]
 }
 </script>
-
 
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
@@ -185,6 +193,10 @@
             <h3><a href="/jasa-rakit-pc/">Rakit PC Custom</a></h3>
             <p>Perencanaan spesifikasi, rekomendasi komponen, perakitan, manajemen kabel, dan pengujian awal sesuai
               kebutuhan gaming, streaming, editing, atau workstation.</p>
+            <div class="svo-service-price">
+              <p class="svo-service-price-amount">Biaya jasa perakitan <strong>Rp400.000</strong></p>
+              <p class="svo-service-price-note">Komponen, instalasi software, dan layanan tambahan dihitung terpisah.</p>
+            </div>
             <div class="svo-offer-tags"><span>Gaming & Creator</span><span>Budget Planning</span></div><a href="#kontak"
               data-svo-service="Rakit PC Custom" class="svo-offer-link">Konsultasikan rakitan <span
                 aria-hidden="true">↗</span></a>
@@ -269,8 +281,8 @@
           </div>
         </article>
       </div>
-      <p class="svo-service-note">Ketersediaan layanan, pengerjaan onsite/remote, estimasi waktu, dan biaya menyesuaikan
-        hasil konsultasi. Tidak ada transaksi atau pemesanan otomatis hanya dengan memilih layanan.</p>
+      <p class="svo-service-note">Ketersediaan layanan, pengerjaan onsite/remote, estimasi waktu, serta biaya jasa lain
+        dibahas saat konsultasi. Tidak ada transaksi atau pemesanan otomatis hanya dengan memilih layanan.</p>
     </div>
   </section>
 
@@ -455,9 +467,10 @@
               </svg>
               Keranjang Rakitan & Price Estimator
             </h3>
-            <button class="btn btn-secondary btn-icon" id="resetBuildBtn" title="Reset Seluruh Komponen"
-              style="font-size: 0.8rem; gap: 0.4rem; padding: 0.45rem 0.85rem;">
-              <i class="feather feather-rotate-ccw"></i> Reset Rakitan
+            <button type="button" class="btn btn-secondary summary-reset" id="resetBuildBtn"
+              title="Reset Seluruh Komponen">
+              <i class="feather feather-rotate-ccw" aria-hidden="true"></i>
+              <span>Reset Rakitan</span>
             </button>
           </div>
 
@@ -648,19 +661,22 @@
     </div>
   </section>
 
-  <!-- Service studio positioning -->
+  <!-- Tentang SEMEISTVO TECH -->
   <section id="tentang" class="svo-studio-section svo-about" aria-labelledby="svoAboutTitle">
     <div class="container svo-about-layout">
-      <div class="svo-about-label"><span class="svo-kicker">ABOUT / SEMEISTVO TECH</span><img src="images/logo.svg"
-          width="200" height="170" loading="lazy" alt="Logo monogram SEMEISTVO TECH">
-        <p>HARDWARE × SOFTWARE × DIGITAL</p>
+      <div class="svo-about-label">
+        <img src="images/logo.svg" width="200" height="170" loading="lazy" alt="Logo monogram SEMEISTVO TECH">
       </div>
       <div class="svo-about-copy">
-        <h2 id="svoAboutTitle">Bukan sekadar jual komponen. <span class="text-gradient">Kami bantu mencari
-            solusi.</span></h2>
-        <p>SEMEISTVO TECH adalah konsep studio teknologi yang menggabungkan kebutuhan perangkat dengan solusi digital.
-          Setiap rakitan, setup, maupun website dimulai dari tujuan penggunanya, bukan sekadar spesifikasi atau tren.
+        <h2 id="svoAboutTitle">Tentang SEMEISTVO TECH</h2>
+        <p>SEMEISTVO TECH (Semeistvo Tech) merupakan penyedia layanan teknologi yang berfokus pada perakitan komputer
+          custom, konsultasi hardware, pengembangan server game, dan solusi digital.
         </p>
+        <p>Kami menyediakan layanan rakit PC untuk kebutuhan gaming, live streaming, editing, dan produktivitas, serta
+          pembuatan server GTA 5 Roleplay (FiveM) dan pengembangan website untuk kebutuhan personal maupun bisnis.
+        </p>
+        <p>SEMEISTVO TECH hadir untuk membantu pelanggan menemukan solusi teknologi yang sesuai dengan kebutuhan mereka.</p>
+        <p><strong>Technology. Performance. Innovation.</strong></p>
         <div class="svo-about-principles">
           <div><strong>Diskusi lebih dulu</strong><small>Kebutuhan dan anggaran dipahami sebelum menyusun
               rekomendasi.</small></div>
@@ -868,7 +884,8 @@
           href="#preset">Rekomendasi PC</a><a href="#rakit-pc">PC Builder</a>
       </nav>
       <nav class="svo-footer-links" aria-label="Bantuan dan informasi">
-        <h4>Informasi</h4><a href="#software-paket">Layanan Tambahan</a><a href="#pembayaran">Pembayaran</a><a
+        <h4>Informasi</h4><a href="#tentang">Tentang Kami</a><a href="#software-paket">Layanan Tambahan</a><a
+          href="#pembayaran">Pembayaran</a><a
           href="#kontak">Konsultasi</a><a href="https://wa.me/6288291967659" target="_blank"
           rel="noopener noreferrer">WhatsApp</a>
       </nav>

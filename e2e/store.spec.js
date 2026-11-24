@@ -18,6 +18,15 @@ for (const width of widths) {
     expect(cartTarget.height).toBeGreaterThanOrEqual(44);
     const appWidth = await page.evaluate(() => ({ body: document.body.scrollWidth, viewport: innerWidth }));
     expect(appWidth.body).toBeLessThanOrEqual(appWidth.viewport + 3);
+    const reset = page.getByRole('button', { name: 'Reset Rakitan' });
+    const resetContentsFit = await reset.evaluate(button => {
+      const range = document.createRange();
+      range.selectNodeContents(button);
+      const contents = range.getBoundingClientRect();
+      const bounds = button.getBoundingClientRect();
+      return contents.left >= bounds.left && contents.right <= bounds.right;
+    });
+    expect(resetContentsFit).toBe(true);
     // Remote photo hosts may block hotlinks. Product text/cart must remain usable.
     await expect(page.locator('.svo-product-name').first()).toBeVisible();
     const nav = page.locator('#svoPrimaryNav');

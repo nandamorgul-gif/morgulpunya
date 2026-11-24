@@ -136,6 +136,40 @@ section[id] {scroll-margin-top:90px}
 .svo-offer-tags span {font-size:.63rem;padding:5px 9px;border:1px solid #554364;background:#2b2039;border-radius:99px}
 .svo-offer-link {margin-top:7px;color:#dfbdf9;font-size:.84rem;gap:.35em}
 .svo-service-note {font-size:.74rem;margin-top:18px}
+
+.svo-service-price {
+  padding: 12px 15px;
+  border: 1px solid var(--svo-line);
+  border-radius: 12px;
+  background: var(--svo-surface-raised);
+}
+
+.svo-service-price-amount {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 4px 12px;
+  margin: 0;
+  color: var(--svo-txt);
+  font-size: .85rem;
+  line-height: 1.4;
+}
+
+.svo-service-price-amount strong {
+  color: var(--svo-accent-lilac);
+  font-family: Outfit, Inter, system-ui, sans-serif;
+  font-size: 1.4rem;
+  line-height: 1.2;
+}
+
+.svo-service-price-note {
+  margin: 5px 0 0;
+  color: var(--svo-txt-soft);
+  font-size: .8rem;
+  line-height: 1.55;
+}
+
 /* Four practical steps, no floating ornaments. */
 .svo-process {background:#0e0c15}
 .svo-process-steps {gap:14px}
@@ -210,7 +244,8 @@ section[id] {scroll-margin-top:90px}
 #rakit-pc .component-price small {font-size:.68rem}
 #rakit-pc .select-part-btn {min-height:37px;padding:7px 12px;border-radius:9px;font-size:.74rem;white-space:normal}
 #rakit-pc .summary-panel {padding:clamp(18px,2.6vw,28px);background:#1a1523;border:1px solid #58426b;border-top:3px solid #a984e0;border-radius:16px;margin-top:10px}
-#rakit-pc .summary-header {padding-bottom:13px}
+#rakit-pc .summary-header {flex-wrap:wrap;gap:10px 16px;padding-bottom:13px}
+#rakit-pc .summary-reset {flex:none;gap:6px;padding:8px 13px;font-size:.8rem;white-space:nowrap}
 #rakit-pc .summary-part-item {gap:9px}
 #rakit-pc .summary-part-item .part-name {min-width:0;overflow-wrap:anywhere}
 #rakit-pc .summary-actions {gap:9px}

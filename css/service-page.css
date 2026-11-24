@@ -83,6 +83,11 @@
   max-width: 50ch;
 }
 
+.service-hero-copy > .svo-service-price {
+  max-width: 50ch;
+  margin-top: 22px;
+}
+
 .service-actions {
   display: flex;
   flex-wrap: wrap;
