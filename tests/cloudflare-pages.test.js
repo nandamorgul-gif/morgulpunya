@@ -29,9 +29,11 @@ test('Pages public build includes all website assets and excludes server/databas
   const homepage = 'https://semeistvotech.pages.dev/';
   const html = read('dist/index.html');
   assert.ok(html.includes('<link rel="canonical" href="' + homepage + '">'));
+  const sitemap = read('dist/sitemap.xml');
+  assert.ok(sitemap.startsWith('<?xml '));
+  const urls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(match => match[1]);
+  assert.deepEqual(urls, [homepage]);
   const servicePaths = ['jasa-server-fivem/', 'jasa-rakit-pc/', 'jasa-pembuatan-website/'];
-  const urls = [...read('dist/sitemap.xml').matchAll(/<loc>([^<]+)<\/loc>/g)].map(match => match[1]);
-  assert.deepEqual(urls, [homepage, ...servicePaths.map(service => homepage + service)]);
   for (const service of servicePaths) {
     const page = read('dist/' + service + 'index.html');
     assert.ok(page.includes('<link rel="canonical" href="' + homepage + service + '">'), service);
