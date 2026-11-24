@@ -145,15 +145,20 @@ section[id] {scroll-margin-top:90px}
 }
 
 .svo-service-price-amount {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: baseline;
-  gap: 4px 12px;
+  gap: 12px;
   margin: 0;
   color: var(--svo-txt);
   font-size: .85rem;
   line-height: 1.4;
+}
+
+.svo-service-price-amount + .svo-service-price-amount {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--svo-line);
 }
 
 .svo-service-price-amount strong {
