@@ -302,6 +302,216 @@ const INITIAL_MARKET_REFERENCES = {
     29500000,
     "https://ecommerce.enterkomputer.com/",
     "Inno3D X3; SKU 194014"
+  ],
+  "cpu-r5-9600x": [
+    "AMD Ryzen 5 9600X",
+    3400000,
+    "https://viraindo.net/proc.html",
+    "Tray"
+  ],
+  "cpu-r7-9850x3d": [
+    "AMD Ryzen 7 9850X3D (2026)",
+    8700000,
+    "https://viraindo.net/proc.html",
+    "Tray"
+  ],
+  "cpu-r9-9950x3d": [
+    "AMD Ryzen 9 9950X3D",
+    12300000,
+    "https://viraindo.net/proc.html",
+    "Tray; standard 9950X3D"
+  ],
+  "cpu-ultra5-250kplus": [
+    "Intel Core Ultra 5 250K Plus (2026)",
+    5178000,
+    "https://impcindonesia.com/product/intel-core-ultra-5-processor-250k-plus-desktop-processor-18-6p12e-cores-1851/",
+    "iMPC listed processor"
+  ],
+  "cpu-ultra7-270kplus": [
+    "Intel Core Ultra 7 270K Plus (2026)",
+    5849000,
+    "https://ecommerce.enterkomputer.com/product/intel-core-ultra-7-270k-plus-32ghz-up-to-55ghz-cache-36mb-tray-socket-lga-1851-arrow-lake-series-new-unit-1-years-warranty-202766",
+    "Tray"
+  ],
+  "cpu-ultra9-285k": [
+    "Intel Core Ultra 9 285K",
+    8500000,
+    "https://viraindo.net/proc.html",
+    "Tray"
+  ],
+  "gpu-rtx5090": [
+    "NVIDIA GeForce RTX 5090 32GB",
+    58500000,
+    "https://viraindo.net/vga.html",
+    "Palit GameRock 32GB"
+  ],
+  "mb-asus-b850": [
+    "ASUS TUF GAMING B850-PLUS WIFI",
+    4400000,
+    "https://viraindo.net/motherboard.html",
+    "TUF B850-PLUS WIFI ATX"
+  ],
+  "mb-msi-b850": [
+    "MSI B850 GAMING PLUS WIFI",
+    3400000,
+    "https://viraindo.net/motherboard.html",
+    "B850 GAMING PLUS WIFI"
+  ],
+  "mb-asrock-b850i": [
+    "ASRock B850I Lightning WiFi",
+    3690000,
+    "https://viraindo.net/motherboard.html",
+    "B850I Lightning WIFI"
+  ],
+  "mb-msi-b860": [
+    "MSI MAG B860 TOMAHAWK WIFI",
+    4400000,
+    "https://viraindo.net/motherboard.html",
+    "MAG B860 TOMAHAWK WIFI"
+  ],
+  "mb-gigabyte-z890": [
+    "GIGABYTE Z890 AORUS ELITE WIFI7 ICE",
+    5400000,
+    "https://viraindo.net/motherboard.html",
+    "Z890 Aorus Elite WIFI7 ICE"
+  ],
+  "ram-16-ddr5": [
+    "Kingston FURY Beast 16GB (2×8GB) DDR5-5600",
+    6600000,
+    "https://viraindo.net/memory.html",
+    "KF556C36BBEK2-16; 2x8GB"
+  ],
+  "ram-32-ddr5": [
+    "G.Skill Flare X5 32GB (2×16GB) DDR5-6000",
+    5850000,
+    "https://viraindo.net/memory.html",
+    "F5-6000J3636F16GX2-FX5; 2x16GB"
+  ],
+  "ram-32-white": [
+    "TEAMGROUP T-Force Delta RGB 32GB DDR5-6000 White",
+    7800000,
+    "https://viraindo.net/memory.html",
+    "FF4D532G6000HC38JDC01; 2x16GB White"
+  ],
+  "ram-64-ddr5": [
+    "Corsair Vengeance 64GB (2×32GB) DDR5-6000",
+    19900000,
+    "https://viraindo.net/memory.html",
+    "CMK64GX5M2D6000Z40; 2x32GB"
+  ],
+  "ssd-wd-sn850x-1t": [
+    "WD_BLACK SN850X 1TB NVMe PCIe 4.0",
+    4000000,
+    "https://viraindo.net/storage.html",
+    "SN850X 1TB"
+  ],
+  "ssd-samsung-990pro-2t": [
+    "Samsung 990 PRO 2TB NVMe PCIe 4.0",
+    10900000,
+    "https://viraindo.net/storage.html",
+    "MZ-V9P2T0BW; no heatsink"
+  ],
+  "ssd-crucial-t705-2t": [
+    "Crucial T705 2TB NVMe PCIe 5.0",
+    5650000,
+    "https://viraindo.net/storage.html",
+    "CT2000T705SSD3"
+  ],
+  "ssd-kingston-kc3000-2t": [
+    "Kingston KC3000 2TB NVMe PCIe 4.0",
+    3300000,
+    "https://viraindo.net/storage.html",
+    "SKC3000D/2048G"
+  ],
+  "psu-msi-650": [
+    "MSI MAG A650BN 650W 80+ Bronze",
+    800000,
+    "https://viraindo.net/psu.html",
+    "MAG A650BN 650W Bronze"
+  ],
+  "psu-corsair-850": [
+    "Corsair RM850e 850W 80+ Gold",
+    2170000,
+    "https://viraindo.net/psu.html",
+    "RM850e ATX 3.1 Black"
+  ],
+  "psu-cm-sfx850": [
+    "Cooler Master V SFX Gold 850W White",
+    2130000,
+    "https://viraindo.net/psu.html",
+    "V SFX Gold 850W ATX 3.1 White"
+  ],
+  "psu-seasonic-1000": [
+    "Seasonic FOCUS GX-1000 1000W Gold",
+    3150000,
+    "https://viraindo.net/psu.html",
+    "FOCUS GX-1000 ATX 3.1"
+  ],
+  "case-ch160-white": [
+    "DeepCool CH160 WH Mini-ITX White",
+    695000,
+    "https://www.enterkomputer.com/detail/189454/Deepcool-CH160-WHITE-Ultra-Portable-Mini-ITX-Case",
+    "CH160 White; SKU 189454"
+  ],
+  "case-air903": [
+    "Montech AIR 903 MAX Black",
+    999000,
+    "https://nanokomputer.com/products/montech-air-903-max?variant=51470286946626",
+    "Black; listed sold out"
+  ],
+  "case-o11": [
+    "Lian Li O11D EVO RGB White",
+    3050000,
+    "https://viraindo.net/casing.html",
+    "O11 Dynamic EVO RGB White"
+  ],
+  "case-nr200p": [
+    "Cooler Master NR200P White Mini-ITX",
+    1153000,
+    "https://www.enterkomputer.com/detail/168124/Cooler-Master-MasterBox-NR200P-White",
+    "Original NR200P White; SKU 168124"
+  ],
+  "cooler-ak400": [
+    "DeepCool AK400 Air Cooler",
+    350000,
+    "https://viraindo.net/cooler.html",
+    "AK400 standard"
+  ],
+  "cooler-ak620": [
+    "DeepCool AK620 Dual Tower Air Cooler",
+    860000,
+    "https://viraindo.net/cooler.html",
+    "AK620 standard"
+  ],
+  "cooler-arctic-240": [
+    "ARCTIC Liquid Freezer III 240 AIO",
+    965000,
+    "https://viraindo.net/cooler.html",
+    "Liquid Freezer III 240 non RGB"
+  ],
+  "cooler-nzxt-360": [
+    "NZXT Kraken Elite 360 RGB AIO",
+    4680000,
+    "https://viraindo.net/cooler.html",
+    "Kraken Elite 360 RGB"
+  ],
+  "acc-arctic-p12": [
+    "ARCTIC P12 PWM PST Fan 120mm",
+    135000,
+    "https://rtcbali.com/product/fan-casing-arctic-p12-pwm-pst-120mm/",
+    "ACFAN00120A; single fan"
+  ],
+  "acc-sleeves": [
+    "Custom Sleeved Cable Extension Set",
+    287000,
+    "https://www.blibli.com/p/ezdiy-fab-16awg-psu-extension-cable-kit-6-cables-white-putih-kabel-sleeved-pc-original-garansi-resmi/ps--FOC-70056-01382",
+    "Comparable reference: EZDIY-FAB 16AWG 6 cable kit"
+  ],
+  "acc-bracket": [
+    "GPU Support Bracket Adjustable",
+    29999,
+    "https://shopee.co.id/list/Graphic%20Card/Bracket",
+    "Comparable reference: adjustable metal anti-sag holder listing"
   ]
 };
 const INITIAL_MARKET_DATE = '2026-11-24';
@@ -361,7 +571,8 @@ export async function onRequest(context) {
           initialCount++;
           return { ...row, price: initial[1], price_live: false,
             price_source: 'store_reference', price_reference_date: INITIAL_MARKET_DATE,
-            price_reference_url: initial[2], price_reference_model: initial[3] };
+            price_reference_url: initial[2], price_reference_model: initial[3],
+            price_reference_kind: initial[3].startsWith('Comparable reference:') ? 'comparable' : 'listed' };
         }
         return { ...row, price_live: false, price_source: 'reference' };
       });
