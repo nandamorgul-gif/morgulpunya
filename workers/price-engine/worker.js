@@ -10,6 +10,32 @@ function fresh(date, now) {
   const n = Date.parse(date);
   return Number.isFinite(n) && n <= now && now - n <= MAX_AGE;
 }
+
+ // Match GPU family + exact model/suffix + VRAM, not the board partner's name.
+function gpuIdentity(name) {
+  const s = String(name || '').normalize('NFKC').toLowerCase();
+  const models = [...s.matchAll(/\b(rx|rtx)\s*-?\s*(\d{4})(?:\s*(xtx|xt|ti)(?:\s*(super))?|\s*(super))?\b/g)]
+    .map(m => m[1]+m[2]+(m[3]||'')+(m[4]||m[5]||''));
+  const capacities = [...s.matchAll(/\b(\d+)\s*(?:gb|g)\b/g)].map(m => Number(m[1]));
+  const unique = [...new Set(models)], memory = [...new Set(capacities)];
+  return unique.length === 1 && memory.length === 1 ? {model:unique[0], vram:memory[0]} : null;
+}
+function productMatches(product, name) {
+  if (product.category !== 'gpu') return normalize(product.name) === normalize(name);
+  const s = String(name || '').normalize('NFKC').toLowerCase();
+  // Reject bundles, whole computers, used cards and replacement parts.
+  if (/\b(?:pc|komputer|computer|desktop|laptop|notebook|bundle|bundling|paket|rakitan|ryzen|core\s+ultra|intel\s+core|ssd|nvme|motherboard|psu|bekas|second|used|refurbished|refurb|rusak|defect|repair|sparepart|heatsink|waterblock|kardus|box\s+only|fan\s+only|kipas|backplate|bracket)\b/.test(s)) return false;
+  const a = gpuIdentity(product.name), b = gpuIdentity(s);
+  return !!a && !!b && a.model === b.model && a.vram === b.vram;
+}
+function searchTerm(product) {
+  if (product.category === 'gpu') {
+    const gpu = gpuIdentity(product.name);
+    if (gpu) return gpu.model.replace(/^(rtx|rx)(\d{4})(.*)$/, '$1 $2 $3').trim() + ' ' + gpu.vram + 'GB';
+  }
+  return product.name.replace(/\(2026\)/g, '').trim();
+}
+
 async function get(path, env) {
   const r = await fetch('https://dprice.id/api/v1/' + path, {
     headers: { Authorization: 'Bearer ' + env.DPRICE_API_KEY.trim(), Accept:'application/json' },
@@ -40,20 +66,31 @@ async function sync(env, now) {
   if (!products.length) return;
   // Rotate through current catalogue without maintaining a separate cursor.
   const product = products[Math.floor(now / 300000) % products.length];
-  const query = product.name.replace(/\(2026\)/g, '').trim();
+  const query = searchTerm(product);
   const result = await get('products?query=' + encodeURIComponent(query), env);
-  const matches = (Array.isArray(result.data) ? result.data : []).filter(p =>
-    /^\d+$/.test(String(p.id)) && normalize(p.name) === normalize(query)).slice(0,2);
+  const found = Array.isArray(result.data) ? result.data : [];
+  const matched = [...new Map(found.filter(p =>
+    /^\d+$/.test(String(p.id)) && productMatches(product, p.name))
+    .map(p => [String(p.id), p])).values()];
+  // Explore different matched listings on successive catalogue rotations.
+  const offset = matched.length ? (Math.floor(Math.floor(now / 300000) / products.length) * 2) % matched.length : 0;
+  const matches = [...matched.slice(offset), ...matched.slice(0,offset)].slice(0,2);
+  console.log('PRICE_MATCH', product.id, 'found', found.length, 'matched', matched.length, 'checked', matches.length);
   const candidates = [];
   for (const match of matches) {
-    const offer = resolveOffer(await get('products/' + match.id + '/offers', env), now);
-    // Prevent abrupt moves against the original catalogue estimate.
-    if (offer && Math.abs(offer.price / product.price - 1) <= 0.2) {
+    const body = await get('products/' + match.id + '/offers', env);
+    const offer = resolveOffer(body, now);
+    if (!offer) {
+      const state = body?.meta?.price_resolution?.state;
+      console.log('PRICE_REJECTED', product.id, match.id, state === 'unavailable' ? 'DPRICE_UNAVAILABLE' : 'OFFER_INVALID_OR_STALE');
+    } else if (Math.abs(offer.price / product.price - 1) > 0.2) {
+      console.log('PRICE_REJECTED', product.id, match.id, 'OUTSIDE_REFERENCE_RANGE');
+    } else {
       candidates.push({...offer, product_id:String(match.id)});
     }
   }
   if (!candidates.length) {
-    console.log('NO_ELIGIBLE_PRICE', product.id, 'exact matches', matches.length);
+    console.log('NO_ELIGIBLE_PRICE', product.id, 'matches', matched.length);
     return; // Never replace catalogue prices with null or old offers.
   }
   candidates.sort((a,b)=>a.price-b.price);
@@ -67,10 +104,10 @@ async function sync(env, now) {
 export default {
   async fetch() {
     // Public health only. No unauthenticated sync endpoint or secrets.
-    return Response.json({service:'SEMEISTVO TECH Price Engine',version:'2.0.1',status:'online'});
+    return Response.json({service:'SEMEISTVO TECH Price Engine',version:'2.1.0',status:'online'});
   },
   async scheduled(controller, env) {
-    console.log('PRICE_SYNC_START', '2.0.1');
+    console.log('PRICE_SYNC_START', '2.1.0');
     try {
       await sync(env, controller.scheduledTime || Date.now());
     } catch (err) {
