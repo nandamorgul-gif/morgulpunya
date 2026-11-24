@@ -1296,9 +1296,22 @@
       function create(){
         if(!opened()||player||!window.YT?.Player)return;
         const token=version;
-        player=new window.YT.Player('svoMusicVideoSlot',{
-          width:'200',height:'200',videoId,
-          playerVars:{playsinline:1,autoplay:0,controls:1,rel:0,loop:1,playlist:videoId,origin:location.origin},
+        // Official embed supplied by the site owner, adapted to one looping video.
+        const slot=document.getElementById('svoMusicVideoSlot');
+        if(!slot)return;
+        const frame=document.createElement('iframe');
+        frame.id='svoMusicVideoSlot';
+        frame.className='svo-single-video';
+        frame.width='200';frame.height='200';
+        frame.title='I Miss You Every Brand New Day (From "Spider-Man: Brand New Day" Movie) (Official Music Video)';
+        frame.setAttribute('allow','accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
+        frame.setAttribute('referrerpolicy','strict-origin-when-cross-origin');
+        frame.setAttribute('allowfullscreen','');
+        frame.style.border='0';
+        const params=new URLSearchParams({enablejsapi:'1',playsinline:'1',autoplay:'0',controls:'1',rel:'0',loop:'1',playlist:videoId,origin:location.origin});
+        frame.src='https://www.youtube.com/embed/'+videoId+'?'+params.toString();
+        slot.replaceWith(frame);
+        player=new window.YT.Player(frame,{
           events:{
             onReady:e=>{
               if(token!==version||!opened())return;
