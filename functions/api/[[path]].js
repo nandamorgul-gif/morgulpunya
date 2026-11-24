@@ -240,7 +240,7 @@ async function marketReferences(env) {
         const stamp = Date.parse(timestamp);
         if (!['dprice','serpapi'].includes(source) || typeof p.sku !== 'string' ||
             row.product_query !== source + ':' + p.sku ||
-            (source === 'serpapi' && (!Number.isSafeInteger(p.merchant_count) || (p.merchant_count < 2 && !(p.merchant_count === 1 && p.method === 'google_search' && p.confidence === 'single_source')))) ||
+            (source === 'serpapi' && (!Number.isSafeInteger(p.merchant_count) || (p.merchant_count < 2 && !(p.merchant_count === 1 && ['google_search','google_shopping'].includes(p.method) && p.confidence === 'single_source')))) ||
             !Number.isSafeInteger(p.price) || p.price <= 0 || p.price > 1000000000 ||
             !Number.isFinite(stamp) || stamp > now || now - stamp > 7 * 86400000) continue;
         const entries = prices.get(p.sku) || [];
@@ -288,7 +288,7 @@ export async function onRequest(context) {
             stock_live: entry.stock !== undefined, price_source: 'supplier',
             price_live: true, price_updated_at: feed.updated_at };
         }
-        const eligible = (market.get(row.id) || []).filter(p => row.category !== 'software' && p.name === row.name && row.price > 0 && Math.abs(p.price / row.price - 1) <= 0.2);
+        const eligible = (market.get(row.id) || []).filter(p => row.category !== 'software' && p.name === row.name && row.price > 0);
         const estimate = eligible.find(p => p.source === 'dprice') || eligible.find(p => p.source === 'serpapi');
         if (estimate) {
           marketCount++;
