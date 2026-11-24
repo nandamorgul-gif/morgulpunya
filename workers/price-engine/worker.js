@@ -161,7 +161,7 @@ function ruleMatches(rule,name){const s=words(name);return rule[0].split(";").ev
 function nonGpuMatches(product, name) {
   const s = words(name);
   // Refuse bundle/used/parts-only listings in every physical category.
-  if (/\b(?:bekas|second|used|refurbished|refurb|rusak|defect|repair|sparepart|kardus|bundling|bundle|rakitan|paket pc|pc rakitan|pc gaming|fullset|box only|unit rusak|replacement)\b/.test(s)) return false;
+  if (/\b(?:bekas|second|used|refurbished|refurb|rusak|defect|repair|sparepart|kardus|bundling|bundle|rakitan|paket pc|pc rakitan|pc gaming|fullset|box only|full set|unit rusak|replacement)\b/.test(s)) return false;
   if (product.category === 'cpu' && /\b(?:motherboard|ssd|nvme|ram|rtx|rx|mainboard|mobo)\b/.test(s)) return false;
   if (product.category !== 'cpu' && /\b(?:ryzen|core ultra|intel core)\b/.test(s)) return false;
   const rule = SKU_RULES[product.id];
@@ -180,7 +180,7 @@ function productMatches(product, name) {
   if (product.category !== 'gpu') return nonGpuMatches(product, name);
   const s = String(name || '').normalize('NFKC').toLowerCase();
   // Reject bundles, whole computers, used cards and replacement parts.
-  if (/\b(?:pc|komputer|computer|desktop|laptop|notebook|bundle|bundling|paket|rakitan|ryzen|core\s+ultra|intel\s+core|ssd|nvme|motherboard|psu|bekas|second|used|refurbished|refurb|rusak|defect|repair|sparepart|heatsink|waterblock|kardus|box\s+only|fan\s+only|kipas|backplate|bracket)\b/.test(s)) return false;
+  if (/\b(?:pc|komputer|computer|desktop|laptop|gaming strike|gaming build|gaming set|notebook|bundle|bundling|paket|rakitan|ryzen|core\s+ultra|intel\s+core|ssd|nvme|motherboard|psu|bekas|second|used|refurbished|refurb|rusak|defect|repair|sparepart|heatsink|waterblock|kardus|box\s+only|fan\s+only|kipas|backplate|bracket)\b/.test(s)) return false;
   const a = gpuIdentity(product.name), b = gpuIdentity(s);
   return !!a && !!b && a.model === b.model && a.vram === b.vram;
 }
@@ -230,16 +230,16 @@ function shoppingEstimate(items, product) {
     if (!productMatches(product, item?.title)) continue;
     const price = shoppingPrice(item);
     const merchant = words(item?.source);
-    if (!merchant || !price || Math.abs(price / product.price - 1) > 0.2 ||
+    if (!merchant || !price ||
         /\b(?:cicilan|angsuran|deposit|uang muka|dp|preorder|pre order|sewa|rental|bekas|used|refurbished|second)\b/.test(words(item.title))) continue;
     if (!merchants.has(merchant) || price < merchants.get(merchant)) merchants.set(merchant,price);
   }
   const values = [...merchants.values()].sort((a,b)=>a-b);
   // Require at least two distinct named sources with mutually consistent prices.
-  if (values.length < 2 || values[values.length-1] / values[0] > 1.2) return null;
+  if (!values.length) return null;
   const mid = Math.floor(values.length/2);
   const price = values.length % 2 ? values[mid] : Math.round((values[mid-1]+values[mid])/2);
-  return {price, merchant_count:values.length};
+  return {price, merchant_count:values.length, confidence:values.length === 1 ? 'single_source' : 'multiple_sources'};
 }
 
 // Only known direct product detail pages; exclude search/category/aggregate pages.
@@ -250,6 +250,7 @@ function directShop(link) {
     if (u.protocol !== 'https:' || u.username || u.password) return null;
     const host = u.hostname.toLowerCase().replace(/^www\./,'');
     if (host === 'enterkomputer.com' && /^\/detail\/\d+\/[^/]+\/?$/i.test(u.pathname)) return host;
+    if (host === 'ecommerce.enterkomputer.com' && /^\/product\/[a-z0-9-]+-\d+\/?$/i.test(u.pathname)) return 'enterkomputer.com';
     return null;
   } catch (_) { return null; }
 }
@@ -270,6 +271,10 @@ function organicPrice(item) {
     const [normal, discount, final] = m.slice(1).map(v=>Number(v.replace(/\./g,'')));
     if (priceOK(final) && discount > 0 && normal - discount === final) amounts.push(final);
   }
+  if (!amounts.length) {
+    const explicit = [...s.matchAll(/\bRp\.?\s*(\d{1,3}(?:\.\d{3})+)(?![\d.,])/gi)].map(m=>Number(m[1].replace(/\./g,'')));
+    if (explicit.length === 1 && priceOK(explicit[0]) && !/\b(?:hemat|diskon|mulai|hingga|sampai|cicilan|angsuran|deposit|ongkir)\b/i.test(s)) amounts.push(explicit[0]);
+  }
   const unique = [...new Set(amounts)];
   return unique.length === 1 ? unique[0] : null;
 }
@@ -282,12 +287,13 @@ function organicEstimate(items, product) {
     const s = words(item.title + ' ' + (item.snippet || ''));
     if (/\b(?:cicilan|angsuran|deposit|uang muka|dp|preorder|pre order|sewa|rental|bekas|used|refurbished|second|stok habis|out of stock|sold out)\b/.test(s)) continue;
     const price = organicPrice(item);
-    if (!price || Math.abs(price/product.price-1)>0.2) continue;
+    if (!price) continue;
     candidates.push({price,merchant,link:item.link,variant:/\btray\b/.test(s)?'tray':/\bbox\b/.test(s)?'box':'unspecified'});
   }
   // At most one clear single-store reference; never mix different packaging variants.
   const unique = [...new Map(candidates.map(c=>[c.link,c])).values()];
-  if (unique.length !== 1) return null;
+  if (!unique.length) return null;
+  // Pick the first relevant ranked direct listing, not a mix of Box and Tray prices.
   const chosen = unique[0];
   return {price:chosen.price,merchant_count:1,method:'google_search',confidence:'single_source',variant:chosen.variant,reference_url:chosen.link};
 }
@@ -296,7 +302,7 @@ function decodeURIComponentSafe(s) { try {return decodeURIComponent(s);} catch (
 async function reserveSerp(env, product, now) {
   const limit = Number(env.SERPAPI_MONTHLY_LIMIT || 200);
   if (!Number.isSafeInteger(limit) || limit < 1 || limit > 100000) return {reason:'SERP_LIMIT_INVALID'};
-  const key = 'serp-attempt-v31:' + product.id;
+  const key = 'serp-attempt-v32:' + product.id;
   const previous = await env.DB.prepare('SELECT updated_at, response_json FROM market_price_snapshots WHERE product_query = ?').bind(key).first();
   if (previous && now - Date.parse(previous.updated_at) < SERP_INTERVAL) return {reason:'SERP_COOLDOWN'};
   let prior = {}; try { prior = JSON.parse(previous?.response_json || '{}'); } catch (_) {}
@@ -332,7 +338,7 @@ async function serpFallback(env, product, now) {
   } catch (_) { return {reason:'SERP_REQUEST_FAILED'}; }
   if (body?.error || body?.search_metadata?.status !== 'Success') return {reason:'SERP_SEARCH_FAILED'};
   const shopping = shoppingEstimate(body.shopping_results,product);
-  const estimate = shopping ? {...shopping,method:'google_shopping',confidence:'multiple_sources'} : engine==='google' ? organicEstimate(body.organic_results,product) : null;
+  const estimate = shopping ? {...shopping,method:'google_shopping',confidence:shopping.confidence} : engine==='google' ? organicEstimate(body.organic_results,product) : null;
   console.log('SERP_RESULT', product.id, engine, 'shopping', (body.shopping_results||[]).length, 'organic', (body.organic_results||[]).length, 'accepted', !!estimate);
   if (!estimate) return {reason:engine==='google'?'SERP_GOOGLE_NO_VALID_PRICE':'SERP_NO_CORROBORATED_PRICE'};
   const snapshot = {source:'serpapi',sku:product.id,name:product.name,...estimate,
@@ -378,9 +384,6 @@ async function sync(env, now) {
       const reason = state === 'unavailable' ? 'DPRICE_UNAVAILABLE' : 'OFFER_INVALID_OR_STALE';
       rejections.push(reason);
       console.log('PRICE_REJECTED', product.id, match.id, reason);
-    } else if (Math.abs(offer.price / product.price - 1) > 0.2) {
-      rejections.push('OUTSIDE_REFERENCE_RANGE');
-      console.log('PRICE_REJECTED', product.id, match.id, 'OUTSIDE_REFERENCE_RANGE');
     } else {
       candidates.push({...offer, product_id:String(match.id)});
     }
@@ -409,10 +412,10 @@ async function sync(env, now) {
 export default {
   async fetch(request, env) {
     // Public health only. No unauthenticated sync endpoint or secrets.
-    return Response.json({service:'SEMEISTVO TECH Price Engine',version:'3.1.0',status:'online',dprice_configured:!!env.DPRICE_API_KEY,serpapi_configured:!!env.SERPAPI_KEY});
+    return Response.json({service:'SEMEISTVO TECH Price Engine',version:'3.2.0',status:'online',dprice_configured:!!env.DPRICE_API_KEY,serpapi_configured:!!env.SERPAPI_KEY});
   },
   async scheduled(controller, env) {
-    console.log('PRICE_SYNC_START', '3.1.0');
+    console.log('PRICE_SYNC_START', '3.2.0');
     try {
       await sync(env, controller.scheduledTime || Date.now());
     } catch (err) {
