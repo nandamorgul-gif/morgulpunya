@@ -91,6 +91,40 @@
   <link rel="stylesheet" href="css/studio.css">
   <link rel="stylesheet" href="css/services-expansion.css">
   <link rel="stylesheet" href="css/polish.css?v=20261124-preset-luxury-2">
+  <style id="svoSupportStyles">
+    .svo-support{position:fixed;right:calc(30px + env(safe-area-inset-right,0px));bottom:calc(28px + env(safe-area-inset-bottom,0px));z-index:1500;font:inherit;color:#f4eefb}
+    .svo-support *{box-sizing:border-box}
+    .svo-support-trigger{display:flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:0 18px;border:1px solid #a084c8;border-radius:16px;background:linear-gradient(135deg,#422765,#24182f);color:#fff;font-weight:700;font-size:.86rem;cursor:pointer;list-style:none;box-shadow:0 10px 35px #0007;transition:background .2s,transform .2s}
+    .svo-support-trigger::-webkit-details-marker{display:none}
+    .svo-support-trigger:hover{background:#4b3270;transform:translateY(-2px)}
+    .svo-support-panel{position:absolute;right:0;bottom:calc(100% + 12px);width:min(350px,calc(100vw - 28px - env(safe-area-inset-right,0px)));max-height:calc(100vh - 110px);max-height:calc(100dvh - 110px - env(safe-area-inset-bottom,0px));overflow:auto;border:1px solid #685180;border-radius:20px;background:#15111d;box-shadow:0 18px 60px #0009;color:#f4eefb}
+    .svo-support-head{display:flex;align-items:center;gap:10px;padding:15px;background:linear-gradient(125deg,#342047,#1d152a);border-bottom:1px solid #513c67}
+    .svo-support-head img{flex:none;object-fit:contain}
+    .svo-support-head div{flex:1;min-width:0}
+    .svo-support-head h2{font-size:1rem;line-height:1.25;margin:0;color:#fff;letter-spacing:.035em}
+    .svo-support-head p{font-size:.75rem;color:#c7b7d8;margin:3px 0 0}
+    .svo-support-close{display:grid;place-items:center;width:38px;height:38px;border:1px solid #6a557e;border-radius:10px;background:#271d34;color:#fff;font-size:1.4rem;cursor:pointer}
+    .svo-support-body{display:grid;gap:10px;padding:15px}
+    .svo-support-greeting{border:1px solid #44334f;background:#21192c;border-radius:12px;padding:12px;font-size:.85rem;line-height:1.55}
+    .svo-support-body label{font-size:.75rem;font-weight:600;color:#d4c4e5;margin-bottom:-5px}
+    .svo-support-body select,.svo-support-body textarea{font:inherit;font-size:.83rem;width:100%;padding:10px;border:1px solid #645477;border-radius:10px;background:#1e1728;color:#fff;min-height:42px}
+    .svo-support-body textarea{resize:vertical;max-height:120px}
+    .svo-support-channel{display:flex;align-items:center;gap:11px;border:1px solid transparent;border-radius:12px;padding:11px 13px;color:#fff!important;text-decoration:none!important;transition:filter .2s}
+    .svo-support-channel:hover{filter:brightness(1.15)}
+    .svo-support-channel svg{flex:none}
+    .svo-support-channel span:nth-child(2){flex:1;display:grid;gap:2px}
+    .svo-support-channel strong{font-size:.87rem;color:#fff}
+    .svo-support-channel small{font-size:.72rem;color:#fff;opacity:.9}
+    .svo-support-wa{background:#176341;border-color:#31805e}
+    .svo-support-tg{background:#17618b;border-color:#377da3}
+    .svo-support-note{margin:0;font-size:.7rem;line-height:1.5;color:#bdb0cc}
+    .svo-support-foot{border-top:1px solid #3f304c;text-align:center;padding:11px;font-size:.65rem;letter-spacing:.05em;color:#b9a7cc}
+    .svo-support :focus-visible{outline:2px solid #e2c7ff;outline-offset:3px}
+    .svo-support ~ .svo-scroll-controls{--svo-scroll-bottom:calc(96px + env(safe-area-inset-bottom,0px))}
+    .svo-support[open] ~ .svo-scroll-controls{visibility:hidden}
+    @media(max-width:760px){.svo-support{right:calc(11px + env(safe-area-inset-right,0px));bottom:calc(14px + env(safe-area-inset-bottom,0px))}.svo-support-trigger{width:52px;padding:0;border-radius:16px}.svo-support-trigger span{display:none}.svo-support-panel{max-height:calc(100dvh - 90px - env(safe-area-inset-bottom,0px))}.svo-support ~ .svo-scroll-controls{--svo-scroll-bottom:calc(78px + env(safe-area-inset-bottom,0px))}}
+    @media(prefers-reduced-motion:reduce){.svo-support *{transition:none!important}}
+  </style>
 </head>
 
 <body>
@@ -1010,15 +1044,45 @@
     </div>
   </div>
 
-  <!-- Floating WhatsApp Quick Chat Button -->
-  <a href="https://wa.me/6288291967659?text=Halo%20SEMEISTVO%20TECH%2C%20saya%20ingin%20konsultasi%20jasa%20rakit%20PC%20atau%20pembuatan%20website"
-    target="_blank" class="floating-whatsapp" title="Konsultasi Layanan via WhatsApp">
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="#fff">
-      <path
-        d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-0.999 3.648 3.742-.981z" />
-    </svg>
-    <span>Konsultasi</span>
-  </a>
+  <!-- Semeistvo Tech customer support: direct WhatsApp / Telegram handoff -->
+  <details class="svo-support" id="svoSupport">
+    <summary class="svo-support-trigger" aria-label="Buka atau tutup bantuan pelanggan">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 14v-2a9 9 0 0 1 18 0v2M3 14a2 2 0 0 1 2-2h2v6H5a2 2 0 0 1-2-2zm18 0a2 2 0 0 0-2-2h-2v6h2a2 2 0 0 0 2-2zm-4 4c0 2-2 3-5 3"/></svg>
+      <span>Customer Support</span>
+    </summary>
+    <section class="svo-support-panel" aria-labelledby="svoSupportTitle">
+      <header class="svo-support-head">
+        <img src="images/logo.svg" alt="" width="42" height="42">
+        <div><h2 id="svoSupportTitle">SEMEISTVO TECH</h2><p>Customer Support</p></div>
+        <button type="button" class="svo-support-close" aria-label="Tutup bantuan pelanggan">×</button>
+      </header>
+      <div class="svo-support-body">
+        <div class="svo-support-greeting">Halo! 👋 Selamat datang di Semeistvo Tech. Ada yang bisa kami bantu?</div>
+        <label for="svoSupportTopic">Pilih layanan</label>
+        <select id="svoSupportTopic">
+          <option value="konsultasi layanan">Konsultasi umum</option>
+          <option value="rakit PC custom">Rakit PC custom</option>
+          <option value="jasa rakit PC">Jasa rakit PC</option>
+          <option value="instalasi software">Instalasi software</option>
+          <option value="server GTA V Roleplay (FiveM)">GTA V Roleplay / FiveM</option>
+          <option value="pembuatan website">Pembuatan website</option>
+          <option value="produk, harga, atau keranjang belanja">Produk &amp; keranjang belanja</option>
+        </select>
+        <label for="svoSupportMessage">Pesan tambahan (opsional)</label>
+        <textarea id="svoSupportMessage" rows="2" maxlength="500" placeholder="Tuliskan kebutuhan Anda..."></textarea>
+        <a class="svo-support-channel svo-support-wa" id="svoSupportWa" href="https://wa.me/6288291967659?text=Halo%20SEMEISTVO%20TECH%2C%20saya%20ingin%20bertanya%20mengenai%20konsultasi%20layanan." target="_blank" rel="noopener noreferrer">
+          <svg width="23" height="23" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-0.999 3.648 3.742-.981z"/></svg>
+          <span><strong>WhatsApp</strong><small>+62 882-9196-7659</small></span><span aria-hidden="true">↗</span>
+        </a>
+        <a class="svo-support-channel svo-support-tg" id="svoSupportTg" href="https://t.me/nandamorgul?text=Halo%20SEMEISTVO%20TECH%2C%20saya%20ingin%20bertanya%20mengenai%20konsultasi%20layanan." target="_blank" rel="noopener noreferrer">
+          <svg width="23" height="23" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.12.02-1.96 1.25-5.54 3.69-.52.36-1 .53-1.42.52-.47-.01-1.37-.26-2.05-.48-.83-.27-1.49-.42-1.43-.88.03-.24.37-.49 1.02-.74 3.99-1.74 6.66-2.89 8.01-3.46 3.81-1.6 4.6-1.88 5.12-1.89.11 0 .37.03.54.17.14.12.18.28.2.45-.02.07-.02.24-.04.42z"/></svg>
+          <span><strong>Telegram</strong><small>@nandamorgul</small></span><span aria-hidden="true">↗</span>
+        </a>
+        <p class="svo-support-note">Pesan dibuka di aplikasi pilihan Anda. Tekan kirim di aplikasi untuk memulai percakapan. Admin membalas saat tersedia.</p>
+      </div>
+      <div class="svo-support-foot">SEMEISTVO TECH · Customer Support</div>
+    </section>
+  </details>
 
   <!-- Minimal music badge. Browsers may block autoplay with sound. -->
   <aside id="svoMusicPlayer" class="svo-music-player is-collapsed" aria-label="Musik SEMEISTVO TECH">
@@ -1098,6 +1162,32 @@
   <script src="js/scroll-controls.js" defer></script>
   <script>
     if (window.feather) feather.replace();
+  </script>
+  <script>
+    (() => {
+      const support = document.getElementById('svoSupport');
+      if (!support) return;
+      const trigger = support.querySelector('summary');
+      const topic = document.getElementById('svoSupportTopic');
+      const message = document.getElementById('svoSupportMessage');
+      const wa = document.getElementById('svoSupportWa');
+      const tg = document.getElementById('svoSupportTg');
+      function syncLinks() {
+        const extra = message.value.trim();
+        const draft = 'Halo SEMEISTVO TECH, saya ingin bertanya mengenai ' + topic.value + '.' + (extra ? '\n\n' + extra : '');
+        const encoded = encodeURIComponent(draft);
+        wa.href = 'https://wa.me/6288291967659?text=' + encoded;
+        tg.href = 'https://t.me/nandamorgul?text=' + encoded;
+      }
+      topic.addEventListener('change', syncLinks);
+      message.addEventListener('input', syncLinks);
+      support.querySelector('.svo-support-close').addEventListener('click', () => { support.open = false; trigger.focus(); });
+      document.addEventListener('keydown', event => {
+        if (event.key === 'Escape' && support.open) { support.open = false; trigger.focus(); }
+      });
+      document.addEventListener('click', event => { if (support.open && !support.contains(event.target)) support.open = false; });
+      syncLinks();
+    })();
   </script>
 </body>
 
