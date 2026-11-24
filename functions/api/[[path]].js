@@ -222,6 +222,31 @@ async function supplierPrices(env) {
   }
 }
 
+
+/** DPrice snapshots are reference-market estimates, never confirmed inventory.
+ * Missing table, unavailable offers and expired observations fall back to D1. */
+async function dpriceReferences(env) {
+  const prices = new Map();
+  try {
+    const result = await env.DB.prepare(
+      "SELECT product_query, response_json FROM market_price_snapshots WHERE product_query LIKE 'dprice:%'"
+    ).all();
+    const now = Date.now();
+    for (const row of result.results || []) {
+      try {
+        const p = JSON.parse(row.response_json);
+        const stamp = Date.parse(p.observed_at);
+        if (p.source !== 'dprice' || typeof p.sku !== 'string' ||
+            row.product_query !== 'dprice:' + p.sku ||
+            !Number.isSafeInteger(p.price) || p.price <= 0 || p.price > 1000000000 ||
+            !Number.isFinite(stamp) || stamp > now || now - stamp > 7 * 86400000) continue;
+        prices.set(p.sku, p);
+      } catch (_) { /* Ignore malformed snapshots individually. */ }
+    }
+  } catch (_) { /* Existing installations may not have the snapshot table yet. */ }
+  return prices;
+}
+
 export async function onRequest(context) {
   const { request, env } = context;
   try {
@@ -247,19 +272,31 @@ export async function onRequest(context) {
         'SELECT id, category, name, brand, description, image, price, stock, active, updated_at FROM products WHERE active = 1 ORDER BY category, name'
       ).all();
       const feed = await supplierPrices(env);
-      let refreshed = 0;
+      const market = await dpriceReferences(env);
+      let refreshed = 0, marketCount = 0;
+      let latestMarket = null;
       const products = (data.results || []).map(row => {
         const entry = feed.prices.get(row.id);
-        if (!entry) return { ...row, price_live: false };
-        refreshed++;
-        return { ...row, price: entry.price, stock: entry.stock ?? row.stock,
-          stock_live: entry.stock !== undefined,
-          price_live: true, price_updated_at: feed.updated_at };
+        if (entry) {
+          refreshed++;
+          return { ...row, price: entry.price, stock: entry.stock ?? row.stock,
+            stock_live: entry.stock !== undefined, price_source: 'supplier',
+            price_live: true, price_updated_at: feed.updated_at };
+        }
+        const estimate = market.get(row.id);
+        if (estimate && estimate.name === row.name && row.price > 0 &&
+            Math.abs(estimate.price / row.price - 1) <= 0.2) {
+          marketCount++;
+          if (!latestMarket || estimate.observed_at > latestMarket) latestMarket = estimate.observed_at;
+          return { ...row, price: estimate.price, price_live: false,
+            price_source: 'dprice', price_updated_at: estimate.observed_at };
+        }
+        return { ...row, price_live: false, price_source: 'reference' };
       });
       return json({
         products,
         pricing: { status: feed.status, updated_at: feed.updated_at,
-          live_products: refreshed, total_products: products.length,
+          live_products: refreshed, market_products: marketCount, market_updated_at: latestMarket, total_products: products.length,
           refresh_seconds: 120 },
         shipping_flat_idr: 0, checkout_enabled: false
       });
