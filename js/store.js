@@ -140,7 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <p class="svo-product-description">${escapeHTML(p.description)}</p>
           ${picture.credit ? `<a class="svo-photo-credit" href="${escapeHTML(picture.credit)}" target="_blank" rel="noopener noreferrer">Sumber foto referensi ↗</a>` : ''}
           <span class="svo-stock-status">${serverCatalogAvailable ? (p.stock > 0 ? 'Stok tercatat: ' + p.stock : 'Stok belum tersedia') : 'Tanyakan ketersediaan'}</span>
-          <p class="svo-product-price"><span class="svo-price-caption">${p.price_live ? 'Harga pemasok terverifikasi' : 'Harga referensi / estimasi'}</span><br>${formatPrice(p.price)}</p>
+          <p class="svo-product-price"><span class="svo-price-caption">${p.price_live ? 'Harga pemasok terverifikasi' : p.price_source === 'dprice' ? 'Estimasi pasar DPrice (maks. 7 hari)' : 'Harga referensi / estimasi'}</span><br>${formatPrice(p.price)}</p>
           <button class="svo-store-btn" type="button" data-svo-add="${escapeHTML(p.id)}">${serverCatalogAvailable && p.stock < 1 ? '+ Tanya Stok via Keranjang' : '+ Tambah ke Keranjang'}</button>
         </div>
       </article>`;
@@ -406,11 +406,15 @@ document.addEventListener('DOMContentLoaded', () => {
       const statusEl = document.getElementById('svoPriceStatus');
       const live = Number(pricing.live_products) || 0;
       if (statusEl) {
-        statusEl.textContent = live ?
-          'Harga pemasok tersinkron ' + live + '/' + valid.length + ' produk' +
-            (updated ? ' • terakhir ' + updated : '') +
-            '. Produk lain masih menggunakan harga referensi.' :
-          'Harga masih estimasi referensi: belum ada feed pemasok real-time yang terhubung.';
+        const market = Number(pricing.market_products) || 0;
+        const marketDate = pricing.market_updated_at ?
+          new Date(pricing.market_updated_at).toLocaleString('id-ID', {timeZone:'Asia/Jakarta'}) + ' WIB' : '';
+        const info = [];
+        if (live) info.push('Harga pemasok: ' + live + '/' + valid.length + ' produk' + (updated ? ' • terakhir ' + updated : ''));
+        if (market) info.push('Estimasi pasar DPrice: ' + market + '/' + valid.length + ' produk' + (marketDate ? ' • pengamatan terbaru ' + marketDate : ''));
+        statusEl.textContent = info.length ? info.join(' | ') +
+          '. Produk lain memakai estimasi referensi.' :
+          'Harga masih estimasi referensi; belum ada harga pemasok atau DPrice yang memenuhi validasi.';
         statusEl.dataset.live = live ? 'true' : 'false';
       }
       document.dispatchEvent(new CustomEvent('svo:catalog-updated', {
@@ -418,7 +422,7 @@ document.addEventListener('DOMContentLoaded', () => {
           updated_at: pricing.updated_at, live_products: live }
       }));
       const note = document.querySelector('.svo-store-note');
-      if (note) note.textContent = 'Harga dan stok mengikuti data pemasok jika tersedia, selain itu merupakan estimasi. Checkout masih permintaan konsultasi melalui WhatsApp.';
+      if (note) note.textContent = 'Harga pemasok diprioritaskan; estimasi pasar DPrice hanya memakai data yang lolos validasi. Harga lainnya merupakan estimasi. Stok dan harga akhir dikonfirmasi via WhatsApp.';
       if (!lastQuoteLookup) {
         lastQuoteLookup = true;
         const prev = document.getElementById('svoPreviousOrder');
