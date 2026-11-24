@@ -1306,7 +1306,7 @@
       play.addEventListener('click',()=>{pref.paused=false;pref.muted=false;audio.muted=false;save();start();});
       pause.addEventListener('click',()=>{pref.paused=true;audio.pause();save();controls();});
       mute.addEventListener('click',()=>{audio.muted=!audio.muted;pref.muted=audio.muted;save();controls();});
-      volume.addEventListener('input',()=>{pref.volume=Number(volume.value);audio.volume=pref.volume;save();controls();});
+      volume.addEventListener('input',()=>{pref.volume=Number(volume.value);audio.volume=pref.volume/100;save();controls();});
       audio.addEventListener('play',controls);
       audio.addEventListener('pause',()=>{status.textContent='Musik dijeda';controls();});
       audio.addEventListener('volumechange',controls);
