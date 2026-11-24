@@ -183,15 +183,26 @@ document.addEventListener('DOMContentLoaded', () => {
     const values = guide?.gpuFps?.[preset.components.gpu];
     if (!values || values.length !== guide.games.length) return '';
     return `<section class="svo-fps-guide" aria-label="Referensi performa game">
-      <div class="svo-fps-heading"><strong>Performa Game</strong><span>${guide.resolution}</span></div>
+      <div class="svo-fps-heading"><div><span class="svo-panel-kicker">GAMING PERFORMANCE</span><h4>Performa Game</h4></div><span class="svo-resolution">1440p · QHD</span></div>
       <div class="svo-fps-rows">${guide.games.map((game, i) => `<div class="svo-fps-row">
-        <div><strong>${game.name}</strong><small>${game.setting}</small></div>
-        <span class="svo-fps-value" title="Rata-rata FPS referensi">${Math.round(values[i])} <small>FPS</small></span>
+        <div class="svo-fps-meta"><strong>${game.name}</strong><small>${game.setting}</small></div>
+        <div class="svo-fps-value" title="Rata-rata FPS referensi"><strong>${Math.round(values[i])}</strong><small>FPS</small></div>
       </div>`).join('')}</div>
-      <p class="svo-fps-note">Rata-rata benchmark GPU, bukan hasil tes rakitan ini. FPS aktual dipengaruhi CPU, RAM, suhu, driver, versi game, pengaturan dan streaming.</p>
-      <div class="svo-fps-sources">Sumber: ComputerBase 2026 · <a href="${guide.sources[0]}" target="_blank" rel="noopener noreferrer">Tes 1</a> · <a href="${guide.sources[1]}" target="_blank" rel="noopener noreferrer">Tes 2</a></div>
+      <details class="svo-fps-details"${expandedPresetDetails.has(preset.id) ? ' open' : ''} data-fps-preset="${preset.id}"><summary>Metode &amp; sumber benchmark</summary>
+        <p>2560 × 1440. Rata-rata benchmark GPU, bukan hasil tes rakitan ini. FPS aktual dipengaruhi CPU, RAM, suhu, driver, versi game, pengaturan dan streaming.</p>
+        <div class="svo-fps-sources">ComputerBase 2026 · <a href="${guide.sources[0]}" target="_blank" rel="noopener noreferrer">Tes 1</a> · <a href="${guide.sources[1]}" target="_blank" rel="noopener noreferrer">Tes 2</a></div>
+      </details>
     </section>`;
   }
+
+  const expandedPresetDetails = new Set();
+  // Preserve open benchmark notes when live catalogue prices refresh.
+  presetsContainerEl?.addEventListener('toggle', event => {
+    const details = event.target;
+    if (!details.matches?.('details[data-fps-preset]')) return;
+    if (details.open) expandedPresetDetails.add(details.dataset.fpsPreset);
+    else expandedPresetDetails.delete(details.dataset.fpsPreset);
+  }, true);
 
   // 4. Render Preset Cards (Home & Presets Section)
   function renderPresets() {
@@ -212,14 +223,22 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
 
         ${renderPresetFps(preset)}
-        <div class="svo-preset-costs"><div><span>Komponen</span><strong>${formatIDR(preset.totalPrice)}</strong></div><div><span>Jasa rakit</span><strong>${formatIDR(PC_DATA.serviceFees.assembly)}</strong></div><div><span>Instalasi software (opsional)</span><strong>${formatIDR(PC_DATA.serviceFees.software)}</strong></div><div class="svo-preset-total"><span>Total + rakit &amp; instalasi</span><strong>${formatIDR(preset.totalPrice + PC_DATA.serviceFees.assembly + PC_DATA.serviceFees.software)}</strong></div></div>
+        <section class="svo-preset-costs" aria-label="Rincian estimasi biaya">
+          <div class="svo-cost-heading"><span class="svo-panel-kicker">ESTIMATED COST</span><h4>Rincian Harga</h4></div>
+          <dl class="svo-cost-list">
+            <div class="svo-cost-row"><dt>Komponen</dt><dd>${formatIDR(preset.totalPrice)}</dd></div>
+            <div class="svo-cost-row"><dt>Jasa rakit PC</dt><dd>${formatIDR(PC_DATA.serviceFees.assembly)}</dd></div>
+            <div class="svo-cost-row"><dt>Instalasi software <small>Opsional</small></dt><dd>${formatIDR(PC_DATA.serviceFees.software)}</dd></div>
+          </dl>
+          <div class="svo-preset-total"><span>Total + rakit &amp; instalasi</span><strong>${formatIDR(preset.totalPrice + PC_DATA.serviceFees.assembly + PC_DATA.serviceFees.software)}</strong></div>
+        </section>
         <div class="preset-footer">
           <div class="preset-price">
             <span>Total + jasa rakit</span>
             <strong>${formatIDR(preset.totalPrice + PC_DATA.serviceFees.assembly)}</strong>
           </div>
           <button class="btn btn-primary load-preset-btn" data-preset="${preset.id}">
-            Gunakan Racikan Ini
+            Pilih Rakitan Ini
           </button>
         </div>
       </div>
