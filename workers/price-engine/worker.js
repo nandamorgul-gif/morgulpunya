@@ -241,12 +241,66 @@ function shoppingEstimate(items, product) {
   const price = values.length % 2 ? values[mid] : Math.round((values[mid-1]+values[mid])/2);
   return {price, merchant_count:values.length};
 }
+
+// Only known direct product detail pages; exclude search/category/aggregate pages.
+// Organic snippets can be stale, so label these as retrieved estimates, not live quotes.
+function directShop(link) {
+  try {
+    const u = new URL(link);
+    if (u.protocol !== 'https:' || u.username || u.password) return null;
+    const host = u.hostname.toLowerCase().replace(/^www\./,'');
+    if (host === 'enterkomputer.com' && /^\/detail\/\d+\/[^/]+\/?$/i.test(u.pathname)) return host;
+    return null;
+  } catch (_) { return null; }
+}
+function organicPrice(item) {
+  const amounts = [];
+  for (const section of ['top','bottom']) {
+    const d = item?.rich_snippet?.[section]?.detected_extensions;
+    if (!d || d.price_from != null || d.price_to != null ||
+        !/^(?:IDR|Rp\.?)$/i.test(String(d.currency || '').trim())) continue;
+    const p = typeof d.price === 'number' ? d.price : /^\d+$/.test(String(d.price)) ? Number(d.price) : NaN;
+    if (priceOK(p)) amounts.push(p);
+  }
+  // Explicit Indonesian normal/discount/final price pattern from a direct detail page.
+  // Do not interpret arbitrary currency mentions, price ranges, or category snippets.
+  const s = String(item?.snippet || '');
+  const m = s.match(/\bHarga\s+Normal\s*(?:Rp\.?\s*)?(\d{1,3}(?:\.\d{3})+)\s+Hemat\s*(?:Rp\.?\s*)?(\d{1,3}(?:\.\d{3})+)\s*Rp\.?\s*(\d{1,3}(?:\.\d{3})+)(?![\d.,])/i);
+  if (m) {
+    const [normal, discount, final] = m.slice(1).map(v=>Number(v.replace(/\./g,'')));
+    if (priceOK(final) && discount > 0 && normal - discount === final) amounts.push(final);
+  }
+  const unique = [...new Set(amounts)];
+  return unique.length === 1 ? unique[0] : null;
+}
+function organicEstimate(items, product) {
+  const candidates = [];
+  for (const item of Array.isArray(items) ? items : []) {
+    const merchant = directShop(item?.link);
+    if (!merchant || !productMatches(product,item?.title) ||
+        /(?:\.\.\.|…)$/.test(String(item.title || '')) && !productMatches(product, decodeURIComponentSafe(item.link))) continue;
+    const s = words(item.title + ' ' + (item.snippet || ''));
+    if (/\b(?:cicilan|angsuran|deposit|uang muka|dp|preorder|pre order|sewa|rental|bekas|used|refurbished|second|stok habis|out of stock|sold out)\b/.test(s)) continue;
+    const price = organicPrice(item);
+    if (!price || Math.abs(price/product.price-1)>0.2) continue;
+    candidates.push({price,merchant,link:item.link,variant:/\btray\b/.test(s)?'tray':/\bbox\b/.test(s)?'box':'unspecified'});
+  }
+  // At most one clear single-store reference; never mix different packaging variants.
+  const unique = [...new Map(candidates.map(c=>[c.link,c])).values()];
+  if (unique.length !== 1) return null;
+  const chosen = unique[0];
+  return {price:chosen.price,merchant_count:1,method:'google_search',confidence:'single_source',variant:chosen.variant,reference_url:chosen.link};
+}
+function decodeURIComponentSafe(s) { try {return decodeURIComponent(s);} catch (_) {return '';}}
+
 async function reserveSerp(env, product, now) {
   const limit = Number(env.SERPAPI_MONTHLY_LIMIT || 200);
-  if (!Number.isSafeInteger(limit) || limit < 1 || limit > 100000) return 'SERP_LIMIT_INVALID';
-  const key = 'serp-attempt:' + product.id;
-  const previous = await env.DB.prepare('SELECT updated_at FROM market_price_snapshots WHERE product_query = ?').bind(key).first();
-  if (previous && now - Date.parse(previous.updated_at) < SERP_INTERVAL) return 'SERP_COOLDOWN';
+  if (!Number.isSafeInteger(limit) || limit < 1 || limit > 100000) return {reason:'SERP_LIMIT_INVALID'};
+  const key = 'serp-attempt-v31:' + product.id;
+  const previous = await env.DB.prepare('SELECT updated_at, response_json FROM market_price_snapshots WHERE product_query = ?').bind(key).first();
+  if (previous && now - Date.parse(previous.updated_at) < SERP_INTERVAL) return {reason:'SERP_COOLDOWN'};
+  let prior = {}; try { prior = JSON.parse(previous?.response_json || '{}'); } catch (_) {}
+  const engine = prior.engine === 'google' ? 'google_shopping' : 'google';
   // Atomic reservation per UTC calendar month. Counts attempts, including failures.
   const month = 'serp-quota:' + new Date(now).toISOString().slice(0,7);
   const stamp = new Date(now).toISOString();
@@ -255,18 +309,19 @@ async function reserveSerp(env, product, now) {
     "ON CONFLICT(product_query) DO UPDATE SET response_json=CAST(CAST(response_json AS INTEGER)+1 AS TEXT),updated_at=excluded.updated_at " +
     "WHERE CAST(response_json AS INTEGER) < ?"
   ).bind(month,stamp,limit).run();
-  if (!claim.meta?.changes) return 'SERP_MONTHLY_LIMIT';
+  if (!claim.meta?.changes) return {reason:'SERP_MONTHLY_LIMIT'};
   await env.DB.prepare(
-    "INSERT INTO market_price_snapshots (product_query,response_json,updated_at) VALUES (?, '{}', ?) " +
-    "ON CONFLICT(product_query) DO UPDATE SET updated_at=excluded.updated_at"
-  ).bind(key,stamp).run();
-  return null;
+    "INSERT INTO market_price_snapshots (product_query,response_json,updated_at) VALUES (?, ?, ?) " +
+    "ON CONFLICT(product_query) DO UPDATE SET updated_at=excluded.updated_at,response_json=excluded.response_json"
+  ).bind(key,JSON.stringify({engine}),stamp).run();
+  return {engine};
 }
 async function serpFallback(env, product, now) {
   if (!env.SERPAPI_KEY) return {reason:'SERP_NOT_CONFIGURED'};
   const blocked = await reserveSerp(env,product,now);
-  if (blocked) return {reason:blocked};
-  const params = new URLSearchParams({engine:'google_shopping',q:searchTerm(product),gl:'id',hl:'id',api_key:env.SERPAPI_KEY.trim(),no_cache:'true'});
+  if (blocked.reason) return {reason:blocked.reason};
+  const engine = blocked.engine;
+  const params = new URLSearchParams({engine,q:searchTerm(product)+(engine==='google'?' harga Indonesia':''),location:'Jakarta, Indonesia',google_domain:'google.co.id',gl:'id',hl:'id',api_key:env.SERPAPI_KEY.trim(),no_cache:'true'});
   let body;
   try {
     const response = await fetch('https://serpapi.com/search.json?' + params, {
@@ -276,10 +331,12 @@ async function serpFallback(env, product, now) {
     body = await response.json();
   } catch (_) { return {reason:'SERP_REQUEST_FAILED'}; }
   if (body?.error || body?.search_metadata?.status !== 'Success') return {reason:'SERP_SEARCH_FAILED'};
-  const estimate = shoppingEstimate(body.shopping_results,product);
-  if (!estimate) return {reason:'SERP_NO_CORROBORATED_PRICE'};
+  const shopping = shoppingEstimate(body.shopping_results,product);
+  const estimate = shopping ? {...shopping,method:'google_shopping',confidence:'multiple_sources'} : engine==='google' ? organicEstimate(body.organic_results,product) : null;
+  console.log('SERP_RESULT', product.id, engine, 'shopping', (body.shopping_results||[]).length, 'organic', (body.organic_results||[]).length, 'accepted', !!estimate);
+  if (!estimate) return {reason:engine==='google'?'SERP_GOOGLE_NO_VALID_PRICE':'SERP_NO_CORROBORATED_PRICE'};
   const snapshot = {source:'serpapi',sku:product.id,name:product.name,...estimate,
-    retrieved_at:new Date().toISOString(),platform:'Google Shopping'};
+    retrieved_at:new Date().toISOString(),platform:estimate.method==='google_search'?'Google Search':'Google Shopping'};
   await env.DB.prepare(
     'INSERT INTO market_price_snapshots (product_query,response_json,updated_at) VALUES (?,?,?) ' +
     'ON CONFLICT(product_query) DO UPDATE SET response_json=excluded.response_json,updated_at=excluded.updated_at'
@@ -352,10 +409,10 @@ async function sync(env, now) {
 export default {
   async fetch(request, env) {
     // Public health only. No unauthenticated sync endpoint or secrets.
-    return Response.json({service:'SEMEISTVO TECH Price Engine',version:'3.0.0',status:'online',dprice_configured:!!env.DPRICE_API_KEY,serpapi_configured:!!env.SERPAPI_KEY});
+    return Response.json({service:'SEMEISTVO TECH Price Engine',version:'3.1.0',status:'online',dprice_configured:!!env.DPRICE_API_KEY,serpapi_configured:!!env.SERPAPI_KEY});
   },
   async scheduled(controller, env) {
-    console.log('PRICE_SYNC_START', '3.0.0');
+    console.log('PRICE_SYNC_START', '3.1.0');
     try {
       await sync(env, controller.scheduledTime || Date.now());
     } catch (err) {
