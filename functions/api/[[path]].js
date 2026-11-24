@@ -240,7 +240,7 @@ async function marketReferences(env) {
         const stamp = Date.parse(timestamp);
         if (!['dprice','serpapi'].includes(source) || typeof p.sku !== 'string' ||
             row.product_query !== source + ':' + p.sku ||
-            (source === 'serpapi' && (!Number.isSafeInteger(p.merchant_count) || p.merchant_count < 2)) ||
+            (source === 'serpapi' && (!Number.isSafeInteger(p.merchant_count) || (p.merchant_count < 2 && !(p.merchant_count === 1 && p.method === 'google_search' && p.confidence === 'single_source')))) ||
             !Number.isSafeInteger(p.price) || p.price <= 0 || p.price > 1000000000 ||
             !Number.isFinite(stamp) || stamp > now || now - stamp > 7 * 86400000) continue;
         const entries = prices.get(p.sku) || [];
@@ -297,7 +297,10 @@ export async function onRequest(context) {
           return { ...row, price: estimate.price, price_live: false,
             price_source: estimate.source, price_updated_at: estimate.timestamp,
             price_timestamp_type: estimate.source === 'dprice' ? 'observed' : 'retrieved',
-            price_merchant_count: estimate.merchant_count || null };
+            price_merchant_count: estimate.merchant_count || null,
+            price_method: estimate.method || (estimate.source === 'serpapi' ? 'google_shopping' : 'dprice'),
+            price_confidence: estimate.confidence || null,
+            price_variant: estimate.variant || null };
         }
         return { ...row, price_live: false, price_source: 'reference' };
       });
