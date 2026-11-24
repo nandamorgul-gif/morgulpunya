@@ -175,6 +175,24 @@
       #home.svo-studio-hero .hero-content h1 {text-shadow:none}
     }
   </style>
+  <style id="svoPlaylistStyles">
+    #svoMusicPlayer.svo-playlist{z-index:1400;max-height:calc(100vh - 92px);max-height:calc(100dvh - 92px - env(safe-area-inset-bottom,0px));overflow-y:auto}
+    #svoMusicPlayer.svo-playlist.is-collapsed{overflow:visible}
+    #svoMusicPlayer.svo-playlist:not(.is-collapsed){width:min(360px,calc(100vw - 30px))}
+    .svo-playlist .svo-music-content:not([hidden]){display:grid;gap:9px}
+    .svo-playlist .svo-music-content>label{font-size:.75rem;color:#d5c2ed;font-weight:600}
+    .svo-playlist select{width:100%;min-height:36px;font:inherit;font-size:.76rem;border:1px solid #695281;border-radius:8px;background:#21182e;color:#f5edff;padding:6px 8px}
+    .svo-playlist-video{width:100%;height:200px;min-width:200px;min-height:200px;background:#0d0a12;border-radius:8px}
+    .svo-playlist-video iframe{display:block;width:100%;height:200px;border:0}
+    .svo-playlist-controls{display:flex;flex-wrap:wrap;gap:5px;justify-content:center}
+    .svo-playlist-controls .svo-music-control{min-width:35px;font-size:.75rem}
+    .svo-playlist-controls [aria-pressed="true"]{background:#7650a3;border-color:#d1afff}
+    .svo-playlist-volume{display:flex;align-items:center;gap:10px}
+    .svo-playlist-volume input{flex:1;min-width:0;accent-color:#b18ae3}
+    .svo-playlist-external{color:#c8aaf3;font-size:.77rem;text-decoration:underline;text-underline-offset:3px}
+    .svo-playlist .svo-music-note{margin:0}
+    @media(max-width:760px){#svoMusicPlayer.svo-playlist:not(.is-collapsed){width:min(330px,calc(100vw - 22px))}}
+  </style>
 </head>
 
 <body class="svo-luxury-background">
@@ -1178,30 +1196,34 @@
     </section>
   </details>
 
-  <!-- Minimal music badge. Browsers may block autoplay with sound. -->
-  <aside id="svoMusicPlayer" class="svo-music-player is-collapsed" aria-label="Musik SEMEISTVO TECH">
+  <!-- SVO Music Player: visible, user-initiated official YouTube embed -->
+  <aside id="svoMusicPlayer" class="svo-music-player svo-playlist is-collapsed" aria-label="Musik SEMEISTVO TECH">
     <div class="svo-music-head">
-      <button type="button" id="svoMusicCollapse" class="svo-music-disc" aria-expanded="false"
-        aria-controls="svoMusicContent" aria-label="Buka kontrol musik"
-        title="Tampilkan atau sembunyikan kontrol musik">♫</button>
+      <button type="button" id="svoMusicCollapse" class="svo-music-disc" aria-expanded="false" aria-controls="svoMusicContent" aria-label="Buka pemutar musik" title="Buka atau tutup pemutar musik">♫</button>
       <div class="svo-music-info">
-        <strong class="svo-music-name">I Miss You Every Brand New Day</strong>
-        <span id="svoMusicStatus" class="svo-music-status" role="status">Menyiapkan musik...</span>
+        <strong class="svo-music-name">SVO MUSIC PLAYER</strong>
+        <span id="svoMusicStatus" class="svo-music-status" role="status">YouTube Playlist Edition</span>
       </div>
-      <button type="button" id="svoMusicPlay" class="svo-music-control" aria-label="Putar musik"
-        title="Putar musik">▶</button>
-      <button type="button" id="svoMusicPause" class="svo-music-control" aria-label="Jeda musik" title="Jeda musik"
-        disabled>Ⅱ</button>
-      <a class="svo-music-link" href="https://www.youtube.com/watch?v=8_y6w1V9PXs" target="_blank"
-        rel="noopener noreferrer" title="Buka lagu di YouTube" aria-label="Buka musik di YouTube">↗</a>
+      <button type="button" class="svo-music-control" id="svoPlaylistClose" aria-label="Tutup pemutar musik" title="Tutup pemutar musik">×</button>
     </div>
     <div id="svoMusicContent" class="svo-music-content" hidden>
-      <button type="button" id="svoMusicMute" class="svo-music-unmute" aria-pressed="false">Aktifkan suara</button>
-      <p class="svo-music-note">Autoplay dengan suara mungkin dibatasi browser. Gunakan tombol di atas untuk
-        mengaktifkan suara.</p>
-    </div>
-    <div class="svo-music-embed" aria-hidden="true">
-      <div id="svoMusicVideoSlot"></div>
+      <label for="svoPlaylistTrack">Pilih lagu</label>
+      <select id="svoPlaylistTrack">
+        <option value="0">Lagu pilihan terbaru</option>
+        <option value="1">I Miss You Every Brand New Day</option>
+      </select>
+      <div id="svoMusicVideoSlot" class="svo-playlist-video"></div>
+      <div class="svo-playlist-controls" aria-label="Kontrol playlist">
+        <button type="button" id="svoPlaylistPrev" class="svo-music-control" aria-label="Lagu sebelumnya" title="Lagu sebelumnya" disabled>⏮</button>
+        <button type="button" id="svoPlaylistPlay" class="svo-music-control" aria-label="Putar" title="Putar" disabled>▶</button>
+        <button type="button" id="svoPlaylistPause" class="svo-music-control" aria-label="Jeda" title="Jeda" disabled>Ⅱ</button>
+        <button type="button" id="svoPlaylistNext" class="svo-music-control" aria-label="Lagu berikutnya" title="Lagu berikutnya" disabled>⏭</button>
+        <button type="button" id="svoPlaylistShuffle" class="svo-music-control" aria-pressed="false" title="Acak playlist" disabled>Acak</button>
+        <button type="button" id="svoPlaylistLoop" class="svo-music-control" aria-pressed="true" title="Ulang playlist" disabled>Ulang</button>
+      </div>
+      <label class="svo-playlist-volume" for="svoPlaylistVolume">Volume <input id="svoPlaylistVolume" type="range" min="0" max="100" value="30" disabled></label>
+      <a class="svo-playlist-external" href="https://www.youtube.com/watch?v=KQFnVqsWqF4&amp;list=RDMMVSj2221lMe0" target="_blank" rel="noopener noreferrer">Buka YouTube Mix lengkap ↗</a>
+      <p class="svo-music-note">Putar melalui YouTube. Musik berhenti saat panel ditutup agar video tidak berjalan tersembunyi. Ketersediaan pemutaran mengikuti YouTube.</p>
     </div>
   </aside>
 
@@ -1250,7 +1272,85 @@
   <script src="js/product-photos.js"></script>
   <script src="js/app.js?v=20261124-preset-luxury-2"></script>
   <script src="js/store.js?v=20261124-preset-luxury-2"></script>
-  <script src="js/music.js"></script>
+  <script>
+    (() => {
+      const root=document.getElementById('svoMusicPlayer');
+      const toggle=document.getElementById('svoMusicCollapse');
+      const content=document.getElementById('svoMusicContent');
+      const status=document.getElementById('svoMusicStatus');
+      const select=document.getElementById('svoPlaylistTrack');
+      const support=document.getElementById('svoSupport');
+      const $=id=>document.getElementById('svoPlaylist'+id);
+      const tracks=['KQFnVqsWqF4','8_y6w1V9PXs'];
+      const controls=['Prev','Play','Pause','Next','Shuffle','Loop','Volume'].map($);
+      let player=null, ready=false, loading=false, shuffled=false, loop=true, generation=0;
+      const expanded=()=>!root.classList.contains('is-collapsed');
+      function enable(value){controls.forEach(el=>el.disabled=!value);}
+      function resetSlot(){const old=document.getElementById('svoMusicVideoSlot');if(old)old.remove();const slot=document.createElement('div');slot.id='svoMusicVideoSlot';slot.className='svo-playlist-video';select.after(slot);}
+      function close(){
+        generation++;ready=false;
+        if(player){try{player.destroy();}catch(_){}player=null;}
+        resetSlot();enable(false);root.classList.add('is-collapsed');root.classList.remove('is-playing');
+        content.hidden=true;toggle.setAttribute('aria-expanded','false');toggle.setAttribute('aria-label','Buka pemutar musik');status.textContent='YouTube Playlist Edition';
+      }
+      function create(){
+        if(!expanded()||player||!window.YT?.Player)return;
+        const token=generation;
+        const idx=Number(select.value)||0;
+        player=new window.YT.Player('svoMusicVideoSlot',{
+          width:'100%',height:'200',videoId:tracks[idx],
+          playerVars:{playsinline:1,autoplay:0,controls:1,rel:0,origin:window.location.origin},
+          events:{
+            onReady:e=>{
+              if(token!==generation||!expanded())return;
+              ready=true;enable(true);
+              e.target.cuePlaylist({list:tracks.slice(),index:idx});
+              e.target.setVolume(Number($('Volume').value));e.target.setLoop(loop);e.target.setShuffle(shuffled);
+              status.textContent='Siap diputar — tekan Play';
+            },
+            onStateChange:e=>{
+              if(token!==generation||!expanded())return;
+              const playing=e.data===window.YT.PlayerState.PLAYING;
+              root.classList.toggle('is-playing',playing);
+              if(playing){const id=e.target.getVideoData().video_id;const i=tracks.indexOf(id);if(i>=0)select.value=String(i);status.textContent='Sedang diputar';}
+              else if(e.data===window.YT.PlayerState.PAUSED)status.textContent='Musik dijeda';
+              else if(e.data===window.YT.PlayerState.ENDED)status.textContent='Lagu selesai';
+            },
+            onError:()=>{if(token===generation)status.textContent='Video tidak tersedia di embed — buka YouTube.';},
+            onAutoplayBlocked:()=>{if(token===generation)status.textContent='Tekan Play pada video untuk memulai.';}
+          }
+        });
+      }
+      function api(){
+        if(window.YT?.Player){create();return;}
+        if(loading)return;
+        loading=true;
+        const prior=window.onYouTubeIframeAPIReady;
+        window.onYouTubeIframeAPIReady=()=>{loading=false;if(typeof prior==='function')prior();create();};
+        const s=document.createElement('script');s.src='https://www.youtube.com/iframe_api';s.async=true;
+        s.onerror=()=>{loading=false;if(expanded())status.textContent='YouTube gagal dimuat — gunakan tautan YouTube.';s.remove();};
+        document.head.appendChild(s);
+      }
+      function open(){
+        if(support?.open)support.open=false;
+        root.classList.remove('is-collapsed');content.hidden=false;toggle.setAttribute('aria-expanded','true');toggle.setAttribute('aria-label','Tutup pemutar musik');
+        status.textContent='Memuat YouTube...';api();
+      }
+      toggle.addEventListener('click',()=>expanded()?close():open());
+      $('Close').addEventListener('click',()=>{close();toggle.focus();});
+      support?.addEventListener('toggle',()=>{if(support.open&&expanded())close();});
+      document.addEventListener('keydown',e=>{if(e.key==='Escape'&&expanded()){close();toggle.focus();}});
+      $('Play').addEventListener('click',()=>{if(ready)player.playVideo();});
+      $('Pause').addEventListener('click',()=>{if(ready)player.pauseVideo();});
+      $('Prev').addEventListener('click',()=>{if(ready)player.previousVideo();});
+      $('Next').addEventListener('click',()=>{if(ready)player.nextVideo();});
+      $('Shuffle').addEventListener('click',()=>{shuffled=!shuffled;$('Shuffle').setAttribute('aria-pressed',String(shuffled));if(ready)player.setShuffle(shuffled);});
+      $('Loop').addEventListener('click',()=>{loop=!loop;$('Loop').setAttribute('aria-pressed',String(loop));if(ready)player.setLoop(loop);});
+      $('Volume').addEventListener('input',()=>{if(ready)player.setVolume(Number($('Volume').value));});
+      select.addEventListener('change',()=>{if(!ready)return;const playlist=player.getPlaylist()||tracks;const index=playlist.indexOf(tracks[Number(select.value)]);if(index>=0)player.playVideoAt(index);});
+      enable(false);
+    })();
+  </script>
   <script src="js/ui-polish.js"></script>
   <script src="js/icons-fix.js"></script>
   <script src="js/scroll-controls.js" defer></script>
