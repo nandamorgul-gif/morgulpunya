@@ -7,7 +7,7 @@
 const PC_DATA = {
   "catalogEdition": "2026",
   "catalogUpdatedAt": "2026-11-23",
-  "pricingNote": "Harga hanya simulasi komponen. Biaya jasa rakit, instalasi/OS, ongkos kirim, lisensi dan garansi tambahan belum termasuk; stok dan harga akhir dikonfirmasi admin.",
+  "pricingNote": "Estimasi komponen belum termasuk jasa rakit Rp400.000, instalasi software opsional Rp150.000, lisensi, pengiriman dan layanan tambahan. Harga dan stok dikonfirmasi melalui konsultasi.",
   "categories": [
     {
       "id": "cpu",
@@ -877,32 +877,32 @@ const PC_DATA = {
         "brand": "SEMEISTVO Services",
         "price": 150000,
         "watts": 0,
-        "description": "Instalasi driver, update OS dan pemeriksaan sistem. Lisensi OS belum termasuk.",
+        "description": "Instalasi driver, update OS dan pemeriksaan sistem. Lisensi OS belum termasuk. Tarif instalasi dasar; lisensi dan pekerjaan lanjutan terpisah.",
         "image": "images/products/software.svg",
         "imageType": "illustration",
-        "isEstimate": true
+        "isEstimate": false
       },
       {
         "id": "soft-gamer",
         "name": "Paket Game & Streaming Setup",
         "brand": "SEMEISTVO Services",
-        "price": 250000,
+        "price": 150000,
         "watts": 0,
-        "description": "Konfigurasi OBS, aplikasi game resmi dan software diagnostik.",
+        "description": "Konfigurasi OBS, aplikasi game resmi dan software diagnostik. Tarif instalasi dasar; lisensi dan pekerjaan lanjutan terpisah.",
         "image": "images/products/software.svg",
         "imageType": "illustration",
-        "isEstimate": true
+        "isEstimate": false
       },
       {
         "id": "soft-creator",
         "name": "Paket Creator & Developer Setup",
         "brand": "SEMEISTVO Services",
-        "price": 325000,
+        "price": 150000,
         "watts": 0,
-        "description": "Konfigurasi aplikasi resmi dan tools produktivitas; lisensi komersial terpisah.",
+        "description": "Konfigurasi aplikasi resmi dan tools produktivitas; lisensi komersial terpisah. Tarif instalasi dasar; lisensi dan pekerjaan lanjutan terpisah.",
         "image": "images/products/software.svg",
         "imageType": "illustration",
-        "isEstimate": true
+        "isEstimate": false
       }
     ]
   },
@@ -926,7 +926,7 @@ const PC_DATA = {
       "totalPrice": 34054000,
       "estimatedWatts": 315,
       "recommendedPsu": "650W (periksa headroom)",
-      "serviceNote": "Paket simulasi bahan diskusi, bukan stok unit siap kirim. Biaya jasa perakitan, instalasi, lisensi dan pengiriman diperkirakan setelah konsultasi.",
+      "serviceNote": "Harga komponen adalah estimasi. Jasa rakit Rp400.000 dan instalasi software opsional Rp150.000; lisensi serta pengiriman terpisah.",
       "imageCaption": "Foto ilustrasi referensi. Warna dan komponen rakitan akhir dapat berbeda."
     },
     {
@@ -948,7 +948,7 @@ const PC_DATA = {
       "totalPrice": 57379000,
       "estimatedWatts": 492,
       "recommendedPsu": "850W (periksa headroom)",
-      "serviceNote": "Paket simulasi bahan diskusi, bukan stok unit siap kirim. Biaya jasa perakitan, instalasi, lisensi dan pengiriman diperkirakan setelah konsultasi.",
+      "serviceNote": "Harga komponen adalah estimasi. Jasa rakit Rp400.000 dan instalasi software opsional Rp150.000; lisensi serta pengiriman terpisah.",
       "imageCaption": "Foto ilustrasi referensi. Warna dan komponen rakitan akhir dapat berbeda."
     },
     {
@@ -970,7 +970,7 @@ const PC_DATA = {
       "totalPrice": 82630000,
       "estimatedWatts": 614,
       "recommendedPsu": "1000W (periksa headroom)",
-      "serviceNote": "Paket simulasi bahan diskusi, bukan stok unit siap kirim. Biaya jasa perakitan, instalasi, lisensi dan pengiriman diperkirakan setelah konsultasi.",
+      "serviceNote": "Harga komponen adalah estimasi. Jasa rakit Rp400.000 dan instalasi software opsional Rp150.000; lisensi serta pengiriman terpisah.",
       "imageCaption": "Foto ilustrasi referensi. Warna dan komponen rakitan akhir dapat berbeda."
     },
     {
@@ -992,7 +992,7 @@ const PC_DATA = {
       "totalPrice": 47128000,
       "estimatedWatts": 447,
       "recommendedPsu": "850W (periksa headroom)",
-      "serviceNote": "Paket simulasi bahan diskusi, bukan stok unit siap kirim. Biaya jasa perakitan, instalasi, lisensi dan pengiriman diperkirakan setelah konsultasi.",
+      "serviceNote": "Harga komponen adalah estimasi. Jasa rakit Rp400.000 dan instalasi software opsional Rp150.000; lisensi serta pengiriman terpisah.",
       "imageCaption": "Foto ilustrasi referensi. Warna dan komponen rakitan akhir dapat berbeda."
     },
     {
@@ -1014,11 +1014,71 @@ const PC_DATA = {
       "totalPrice": 45329000,
       "estimatedWatts": 306,
       "recommendedPsu": "850W SFX (cek konektor dan dimensi kartu grafis)",
-      "serviceNote": "Paket simulasi bahan diskusi, bukan stok unit siap kirim. Biaya jasa perakitan, instalasi, lisensi dan pengiriman diperkirakan setelah konsultasi.",
+      "serviceNote": "Harga komponen adalah estimasi. Jasa rakit Rp400.000 dan instalasi software opsional Rp150.000; lisensi serta pengiriman terpisah.",
       "imageCaption": "Foto referensi casing DeepCool CH160 WH (bukan foto PC rakitan akhir).",
       "imageCreditUrl": "https://www.cclonline.com/r-ch160-whngi0-g-1-deepcool-ch160-wh-itx-case-white-449642/"
     }
-  ]
+  ],
+  "serviceFees": {
+    "assembly": 400000,
+    "software": 150000
+  },
+  "fpsGuide": {
+    "resolution": "1440p (2560 × 1440)",
+    "sourceName": "ComputerBase · benchmark GPU 2026",
+    "sources": [
+      "https://www.computerbase.de/artikel/grafikkarten/nvidia-geforce-amd-radeon-benchmark-test-2026.97097/seite-4",
+      "https://www.computerbase.de/artikel/grafikkarten/nvidia-geforce-amd-radeon-benchmark-test-2026.97097/seite-5"
+    ],
+    "games": [
+      {
+        "name": "Battlefield 6",
+        "setting": "Native",
+        "source": 0
+      },
+      {
+        "name": "Borderlands 4",
+        "setting": "DLSS Quality",
+        "source": 0
+      },
+      {
+        "name": "Cyberpunk 2077",
+        "setting": "DLSS Quality · RT off",
+        "source": 1
+      },
+      {
+        "name": "Death Stranding 2",
+        "setting": "DLSS Quality · RT off",
+        "source": 1
+      }
+    ],
+    "gpuFps": {
+      "gpu-rtx5060ti16": [
+        51.5,
+        50.3,
+        77,
+        70
+      ],
+      "gpu-rtx5070": [
+        72.4,
+        66.4,
+        108.5,
+        96.3
+      ],
+      "gpu-rtx5070ti": [
+        89.7,
+        79.5,
+        124.6,
+        114
+      ],
+      "gpu-rtx5080": [
+        100.2,
+        85.6,
+        143.1,
+        120.7
+      ]
+    }
+  }
 };
 if (typeof window !== 'undefined') window.PC_DATA = PC_DATA;
 if (typeof module !== 'undefined' && module.exports) module.exports = PC_DATA;
