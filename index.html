@@ -176,37 +176,19 @@
     }
   </style>
   <style id="svoPlaylistStyles">
-    #svoMusicPlayer.svo-playlist{z-index:1400;max-height:calc(100vh - 92px);max-height:calc(100dvh - 92px - env(safe-area-inset-bottom,0px));overflow-y:auto}
-    #svoMusicPlayer.svo-playlist.is-collapsed{overflow:visible}
-    #svoMusicPlayer.svo-playlist:not(.is-collapsed){width:min(292px,calc(100vw - 76px));min-width:218px}
-    #svoMusicPlayer.svo-playlist.is-mini{width:224px;min-width:218px;max-height:none;overflow:visible}
-    #svoMusicPlayer.svo-playlist.is-mini .svo-music-head{gap:5px;padding:6px}
-    #svoMusicPlayer.svo-playlist.is-mini .svo-music-disc{width:30px;height:30px;flex:0 0 30px;font-size:15px}
-    #svoMusicPlayer.svo-playlist.is-mini .svo-music-name{font-size:.65rem}
-    #svoMusicPlayer.svo-playlist.is-mini .svo-music-status{font-size:.60rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    #svoMusicPlayer.svo-playlist.is-mini .svo-music-control{min-width:27px;height:29px}
-    #svoMusicPlayer.svo-playlist.is-mini #svoPlaylistClose{display:none}
-    #svoMusicPlayer.svo-playlist.is-mini .svo-music-content{padding:0 6px 6px;border:0;gap:0}
-    #svoMusicPlayer.svo-playlist.is-mini .svo-playlist-extra{display:none!important}
-    #svoMusicPlayer.svo-playlist.is-mini .svo-playlist-video{border-radius:8px}
-    @media(max-width:760px){body:has(#svoMusicPlayer.is-mini) #svoSupport[open] .svo-support-panel{bottom:calc(100% + 200px);max-height:calc(100dvh - 290px - env(safe-area-inset-bottom,0px))}}
-    .svo-playlist .svo-music-content:not([hidden]){display:grid;gap:9px}
-    .svo-playlist .svo-music-content>label{font-size:.75rem;color:#d5c2ed;font-weight:600}
-    .svo-playlist select{width:100%;min-height:36px;font:inherit;font-size:.76rem;border:1px solid #695281;border-radius:8px;background:#21182e;color:#f5edff;padding:6px 8px}
-    .svo-playlist-video{width:100%;height:200px;min-width:200px;min-height:200px;background:#0d0a12;border-radius:8px}
-    .svo-playlist-video iframe{display:block;width:100%;height:200px;border:0}
-    .svo-playlist-controls{display:flex;flex-wrap:wrap;gap:5px;justify-content:center}
-    .svo-playlist-controls .svo-music-control{min-width:35px;font-size:.75rem}
-    .svo-playlist-controls [aria-pressed="true"]{background:#7650a3;border-color:#d1afff}
-    .svo-playlist-volume{display:flex;align-items:center;gap:10px}
-    .svo-playlist-volume input{flex:1;min-width:0;accent-color:#b18ae3}
-    .svo-playlist-external{color:#c8aaf3;font-size:.77rem;text-decoration:underline;text-underline-offset:3px}
-    .svo-playlist .svo-music-note{margin:0}
-    .svo-playlist .svo-playlist-sound{width:100%;min-height:30px;padding:5px 8px;font-size:.70rem}
-    .svo-playlist .svo-playlist-sound[hidden]{display:none!important}
-    #svoMusicPlayer.svo-playlist.is-mini .svo-playlist-sound:not([hidden]){margin-top:5px}
-    @media(max-width:760px){#svoMusicPlayer.svo-playlist:not(.is-collapsed):not(.is-mini){width:min(280px,calc(100vw - 76px));min-width:218px}}
-    @media(max-height:520px) and (max-width:760px){body:has(#svoMusicPlayer.is-mini) #svoSupport[open] .svo-support-panel{bottom:calc(100% + 12px);max-height:calc(100dvh - 90px)}}
+    #svoMusicPlayer.svo-single-track{z-index:1400}
+    #svoMusicPlayer.svo-single-track:not(.is-collapsed){width:214px;max-width:none;max-height:none;overflow:visible;border-radius:13px}
+    #svoMusicPlayer.svo-single-track:not(.is-collapsed) .svo-music-head{gap:5px;padding:5px}
+    #svoMusicPlayer.svo-single-track:not(.is-collapsed) .svo-music-disc{width:28px;height:28px;flex-basis:28px;font-size:15px}
+    #svoMusicPlayer.svo-single-track:not(.is-collapsed) .svo-music-control{min-width:30px;height:30px}
+    #svoMusicPlayer.svo-single-track .svo-music-name{font-size:.65rem}
+    #svoMusicPlayer.svo-single-track .svo-music-status{font-size:.59rem;overflow-wrap:anywhere;line-height:1.3}
+    #svoMusicPlayer.svo-single-track .svo-music-content:not([hidden]){display:grid;gap:5px;padding:0 6px 6px;border:0}
+    #svoMusicPlayer.svo-single-track .svo-single-video{width:200px;height:200px;background:#0d0a12}
+    #svoMusicPlayer.svo-single-track .svo-single-video iframe{width:200px;height:200px;border:0;display:block}
+    #svoMusicPlayer.svo-single-track .svo-music-unmute{font-size:.72rem;min-height:30px;padding:4px 6px;width:100%}
+    #svoMusicPlayer.svo-single-track [hidden]{display:none!important}
+    #svoMusicPlayer.svo-single-track .svo-music-fallback{color:#d5b9ff;font-size:.7rem}
   </style>
 </head>
 
@@ -1211,37 +1193,20 @@
     </section>
   </details>
 
-  <!-- SVO Music Player: visible official YouTube embed with policy-aware autoplay -->
-  <aside id="svoMusicPlayer" class="svo-music-player svo-playlist is-collapsed" aria-label="Musik SEMEISTVO TECH">
+  <!-- SVO Music Player: single-track compact official YouTube embed -->
+  <aside id="svoMusicPlayer" class="svo-music-player svo-single-track is-collapsed" aria-label="Musik SEMEISTVO TECH">
     <div class="svo-music-head">
-      <button type="button" id="svoMusicCollapse" class="svo-music-disc" aria-expanded="false" aria-controls="svoMusicContent" aria-label="Buka pemutar musik" title="Buka atau tutup pemutar musik">♫</button>
+      <button type="button" id="svoMusicCollapse" class="svo-music-disc" aria-expanded="false" aria-controls="svoMusicContent" aria-label="Buka pemutar musik" title="Buka pemutar musik">♫</button>
       <div class="svo-music-info">
-        <strong class="svo-music-name">SVO MUSIC PLAYER</strong>
-        <span id="svoMusicStatus" class="svo-music-status" role="status">YouTube Playlist Edition</span>
+        <strong class="svo-music-name">SVO MUSIC</strong>
+        <span id="svoMusicStatus" class="svo-music-status" role="status">I Miss You Every Brand New Day</span>
       </div>
-      <button type="button" class="svo-music-control" id="svoPlaylistClose" aria-label="Perkecil pemutar musik" title="Perkecil tanpa menghentikan musik">×</button>
-      <button type="button" class="svo-music-control" id="svoPlaylistStop" aria-label="Hentikan musik dan tutup" title="Hentikan musik dan tutup">■</button>
+      <button type="button" class="svo-music-control" id="svoMusicStop" aria-label="Hentikan dan sembunyikan musik" title="Hentikan dan sembunyikan musik">×</button>
     </div>
     <div id="svoMusicContent" class="svo-music-content" hidden>
-      <label class="svo-playlist-extra" for="svoPlaylistTrack">Pilih lagu</label>
-      <select id="svoPlaylistTrack" class="svo-playlist-extra">
-        <option value="0">Tormented Part II — Killing Me Inside RE:UNION</option>
-        <option value="1">I Miss You Every Brand New Day</option>
-        <option value="2">Museum Duka — for Revenge feat. YB &amp; Tepe</option>
-      </select>
-      <div id="svoMusicVideoSlot" class="svo-playlist-video"></div>
-      <button type="button" id="svoPlaylistSound" class="svo-music-unmute svo-playlist-sound" hidden disabled>Aktifkan suara</button>
-      <div class="svo-playlist-controls svo-playlist-extra" aria-label="Kontrol playlist">
-        <button type="button" id="svoPlaylistPrev" class="svo-music-control" aria-label="Lagu sebelumnya" title="Lagu sebelumnya" disabled>⏮</button>
-        <button type="button" id="svoPlaylistPlay" class="svo-music-control" aria-label="Putar" title="Putar" disabled>▶</button>
-        <button type="button" id="svoPlaylistPause" class="svo-music-control" aria-label="Jeda" title="Jeda" disabled>Ⅱ</button>
-        <button type="button" id="svoPlaylistNext" class="svo-music-control" aria-label="Lagu berikutnya" title="Lagu berikutnya" disabled>⏭</button>
-        <button type="button" id="svoPlaylistShuffle" class="svo-music-control" aria-pressed="false" title="Acak playlist" disabled>Acak</button>
-        <button type="button" id="svoPlaylistLoop" class="svo-music-control" aria-pressed="true" title="Ulang playlist" disabled>Ulang</button>
-      </div>
-      <label class="svo-playlist-volume svo-playlist-extra" for="svoPlaylistVolume">Volume <input id="svoPlaylistVolume" type="range" min="0" max="100" value="30" disabled></label>
-      <a class="svo-playlist-external svo-playlist-extra" href="https://www.youtube.com/watch?v=KQFnVqsWqF4&amp;list=RDMMVSj2221lMe0" target="_blank" rel="noopener noreferrer">Buka YouTube Mix lengkap ↗</a>
-      <p class="svo-music-note svo-playlist-extra">× memperkecil panel tanpa menghentikan lagu. ■ menghentikan musik dan menutup pemutar.</p>
+      <div id="svoMusicVideoSlot" class="svo-single-video"></div>
+      <button type="button" id="svoMusicSound" class="svo-music-unmute" hidden disabled>Aktifkan suara</button>
+      <a class="svo-music-fallback" href="https://youtu.be/8_y6w1V9PXs" target="_blank" rel="noopener noreferrer" hidden>Buka lagu di YouTube ↗</a>
     </div>
   </aside>
 
@@ -1296,117 +1261,92 @@
       const toggle=document.getElementById('svoMusicCollapse');
       const content=document.getElementById('svoMusicContent');
       const status=document.getElementById('svoMusicStatus');
-      const select=document.getElementById('svoPlaylistTrack');
+      const stop=document.getElementById('svoMusicStop');
+      const sound=document.getElementById('svoMusicSound');
+      const fallback=root.querySelector('.svo-music-fallback');
       const support=document.getElementById('svoSupport');
-      const $=id=>document.getElementById('svoPlaylist'+id);
-      const tracks=['KQFnVqsWqF4','8_y6w1V9PXs','9oItuvvo8H0'];
-      const controls=['Prev','Play','Pause','Next','Shuffle','Loop','Volume'].map($);
-      let player=null, ready=false, loading=false, shuffled=false, loop=true, generation=0;
-      let autoStart=false, mutedRetry=false;
-      const sound=$('Sound');
-      function showSound(show){sound.hidden=!show;sound.disabled=!ready;}
-      function updatePlayingStatus(){
-        const silent=player?.isMuted() || player?.getVolume()===0;
-        showSound(Boolean(silent));
-        status.textContent=silent?'Musik diputar tanpa suara':'Sedang diputar';
+      const videoId='8_y6w1V9PXs';
+      let player=null,ready=false,loading=false,attempted=false,retried=false,version=0,visibleObserver=null;
+      const opened=()=>!root.classList.contains('is-collapsed');
+      const setStatus=message=>{status.textContent=message;};
+      const showSound=show=>{sound.hidden=!show;sound.disabled=!ready;};
+      function visibleEnough(){
+        const el=document.getElementById('svoMusicVideoSlot');
+        if(!el||!opened()||document.hidden)return false;
+        const rect=el.getBoundingClientRect();
+        const w=Math.max(0,Math.min(rect.right,innerWidth)-Math.max(rect.left,0));
+        const h=Math.max(0,Math.min(rect.bottom,innerHeight)-Math.max(rect.top,0));
+        return rect.width>=200&&rect.height>=200&&w*h>rect.width*rect.height/2;
       }
-      const expanded=()=>!root.classList.contains('is-collapsed');
-      function enable(value){controls.forEach(el=>el.disabled=!value);}
-      function resetSlot(){const old=document.getElementById('svoMusicVideoSlot');if(old)old.remove();const slot=document.createElement('div');slot.id='svoMusicVideoSlot';slot.className='svo-playlist-video';select.after(slot);}
+      function start(){
+        if(!ready||attempted||!visibleEnough())return;
+        attempted=true;
+        player.playVideo();
+      }
       function close(){
-        generation++;ready=false;autoStart=false;mutedRetry=false;showSound(false);
+        version++;ready=false;attempted=false;retried=false;
+        visibleObserver?.disconnect();visibleObserver=null;
         if(player){try{player.destroy();}catch(_){}player=null;}
-        resetSlot();enable(false);root.classList.add('is-collapsed');root.classList.remove('is-playing','is-mini');
-        content.hidden=true;toggle.setAttribute('aria-expanded','false');toggle.setAttribute('aria-label','Buka pemutar musik');status.textContent='YouTube Playlist Edition';
+        document.getElementById('svoMusicVideoSlot')?.remove();
+        const slot=document.createElement('div');slot.id='svoMusicVideoSlot';slot.className='svo-single-video';content.prepend(slot);
+        root.classList.add('is-collapsed');root.classList.remove('is-playing');content.hidden=true;
+        toggle.setAttribute('aria-expanded','false');toggle.setAttribute('aria-label','Buka pemutar musik');
+        showSound(false);fallback.hidden=true;setStatus('I Miss You Every Brand New Day');
       }
       function create(){
-        if(!expanded()||player||!window.YT?.Player)return;
-        const token=generation;
-        const idx=Number(select.value)||0;
+        if(!opened()||player||!window.YT?.Player)return;
+        const token=version;
         player=new window.YT.Player('svoMusicVideoSlot',{
-          width:'100%',height:'200',videoId:tracks[idx],
-          playerVars:{playsinline:1,autoplay:0,controls:1,rel:0,origin:window.location.origin},
+          width:'200',height:'200',videoId,
+          playerVars:{playsinline:1,autoplay:0,controls:1,rel:0,loop:1,playlist:videoId,origin:location.origin},
           events:{
             onReady:e=>{
-              if(token!==generation||!expanded())return;
-              ready=true;enable(true);
-              e.target.setVolume(Number($('Volume').value));e.target.setLoop(loop);
-              if(autoStart){
-                status.textContent='Memulai musik otomatis...';
-                e.target.loadPlaylist({list:tracks.slice(),index:idx});
-              }else{
-                e.target.cuePlaylist({list:tracks.slice(),index:idx});
-                status.textContent='Siap diputar — tekan Play';
-              }
-              e.target.setShuffle(shuffled);
+              if(token!==version||!opened())return;
+              ready=true;e.target.setVolume(30);setStatus('Memulai musik...');
+              if(window.IntersectionObserver){visibleObserver=new IntersectionObserver(()=>start(),{threshold:[0,.51,1]});visibleObserver.observe(e.target.getIframe());}
+              start();
             },
             onStateChange:e=>{
-              if(token!==generation||!expanded())return;
+              if(token!==version||!opened())return;
               const playing=e.data===window.YT.PlayerState.PLAYING;
               root.classList.toggle('is-playing',playing);
-              if(playing){const id=e.target.getVideoData().video_id;const i=tracks.indexOf(id);if(i>=0)select.value=String(i);updatePlayingStatus();}
-              else if(e.data===window.YT.PlayerState.PAUSED)status.textContent='Musik dijeda';
-              else if(e.data===window.YT.PlayerState.ENDED)status.textContent='Lagu selesai';
+              if(playing){
+                if(document.hidden){e.target.pauseVideo();return;}
+                const muted=e.target.isMuted()||e.target.getVolume()===0;
+                showSound(muted);setStatus(muted?'Tanpa suara':'Sedang diputar');
+              }else if(e.data===window.YT.PlayerState.PAUSED)setStatus('Musik dijeda');
             },
-            onError:()=>{if(token===generation)status.textContent='Video tidak tersedia di embed — buka YouTube.';},
             onAutoplayBlocked:()=>{
-              if(token!==generation||!expanded()||!ready)return;
-              if(autoStart&&!mutedRetry){
-                mutedRetry=true;player.mute();showSound(true);
-                status.textContent='Autoplay bersuara diblokir';player.playVideo();
-              }else{showSound(true);status.textContent='Tekan Aktifkan suara untuk memulai';}
-            }
+              if(token!==version||!ready||!opened()||!visibleEnough())return;
+              showSound(true);
+              if(!retried){retried=true;player.mute();setStatus('Autoplay tanpa suara');player.playVideo();}
+              else setStatus('Tekan untuk memutar');
+            },
+            onError:()=>{if(token!==version)return;setStatus('Video tidak tersedia');fallback.hidden=false;}
           }
         });
       }
       function api(){
         if(window.YT?.Player){create();return;}
-        if(loading)return;
-        loading=true;
+        if(loading)return;loading=true;
         const prior=window.onYouTubeIframeAPIReady;
         window.onYouTubeIframeAPIReady=()=>{loading=false;if(typeof prior==='function')prior();create();};
-        const s=document.createElement('script');s.src='https://www.youtube.com/iframe_api';s.async=true;
-        s.onerror=()=>{loading=false;if(expanded())status.textContent='YouTube gagal dimuat — gunakan tautan YouTube.';s.remove();};
-        document.head.appendChild(s);
+        const script=document.createElement('script');script.src='https://www.youtube.com/iframe_api';script.async=true;
+        script.onerror=()=>{loading=false;script.remove();if(opened()){setStatus('YouTube gagal dimuat');fallback.hidden=false;}};
+        document.head.appendChild(script);
       }
-      function minimize(){
-        if(!expanded())return;
-        root.classList.add('is-mini');
-        toggle.setAttribute('aria-expanded','false');toggle.setAttribute('aria-label','Perbesar pemutar musik');
-      }
-      function restore(){
+      function open(){
         if(support?.open)support.open=false;
-        root.classList.remove('is-mini');
-        toggle.setAttribute('aria-expanded','true');toggle.setAttribute('aria-label','Perkecil pemutar musik');
+        root.classList.remove('is-collapsed');content.hidden=false;toggle.setAttribute('aria-expanded','true');toggle.setAttribute('aria-label','Hentikan dan sembunyikan musik');
+        setStatus('Memuat YouTube...');api();
       }
-      function open(startAutomatically=false){
-        if(support?.open)support.open=false;
-        autoStart=startAutomatically;mutedRetry=false;showSound(false);
-        root.classList.remove('is-mini');
-        root.classList.remove('is-collapsed');content.hidden=false;toggle.setAttribute('aria-expanded','true');toggle.setAttribute('aria-label','Perkecil pemutar musik');
-        status.textContent='Memuat YouTube...';api();
-      }
-      toggle.addEventListener('click',()=>{if(!expanded())open();else if(root.classList.contains('is-mini'))restore();else minimize();});
-      $('Close').addEventListener('click',()=>{minimize();toggle.focus();});
-      $('Stop').addEventListener('click',()=>{close();toggle.focus();});
-      support?.addEventListener('toggle',()=>{if(support.open&&expanded()){
-        if(window.matchMedia('(max-width:760px) and (max-height:520px)').matches){close();}
-        else minimize();
-      }});
-      document.addEventListener('keydown',e=>{if(e.key==='Escape'&&expanded()&&!root.classList.contains('is-mini')&&!support?.open){minimize();toggle.focus();}});
-      sound.addEventListener('click',()=>{if(!ready)return;autoStart=false;player.unMute();if(player.getVolume()===0){player.setVolume(30);$('Volume').value='30';}showSound(false);player.playVideo();});
-      $('Play').addEventListener('click',()=>{if(ready){autoStart=false;player.playVideo();}});
-      $('Pause').addEventListener('click',()=>{if(ready){autoStart=false;player.pauseVideo();}});
-      $('Prev').addEventListener('click',()=>{if(ready)player.previousVideo();});
-      $('Next').addEventListener('click',()=>{if(ready)player.nextVideo();});
-      $('Shuffle').addEventListener('click',()=>{shuffled=!shuffled;$('Shuffle').setAttribute('aria-pressed',String(shuffled));if(ready)player.setShuffle(shuffled);});
-      $('Loop').addEventListener('click',()=>{loop=!loop;$('Loop').setAttribute('aria-pressed',String(loop));if(ready)player.setLoop(loop);});
-      $('Volume').addEventListener('input',()=>{if(ready)player.setVolume(Number($('Volume').value));});
-      select.addEventListener('change',()=>{if(!ready)return;const playlist=player.getPlaylist()||tracks;const index=playlist.indexOf(tracks[Number(select.value)]);if(index>=0)player.playVideoAt(index);});
-      enable(false);
-      // Start once on arrival, keeping the official video visible in Mini Mode.
-      // Very small/short viewports retain the launcher to avoid blocking page controls.
-      if(!window.matchMedia('(max-width:300px), (max-height:360px)').matches){open(true);minimize();}
+      toggle.addEventListener('click',()=>opened()?close():open());
+      stop.addEventListener('click',()=>{close();toggle.focus();});
+      sound.addEventListener('click',()=>{if(!ready||!visibleEnough())return;player.unMute();if(player.getVolume()===0)player.setVolume(30);showSound(false);player.playVideo();});
+      support?.addEventListener('toggle',()=>{if(support.open&&opened()&&innerWidth<=760)close();});
+      document.addEventListener('visibilitychange',()=>{if(document.hidden&&ready)player.pauseVideo();else start();});
+      window.addEventListener('resize',()=>{if(opened()&&(innerWidth<310||innerHeight<380))close();else start();});
+      if(!matchMedia('(max-width:309px), (max-height:379px)').matches)open();
     })();
   </script>
   <script src="js/ui-polish.js"></script>
