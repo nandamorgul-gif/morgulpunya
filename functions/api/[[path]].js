@@ -545,6 +545,10 @@ export async function onRequest(context) {
       let refreshed = 0, marketCount = 0, dpriceCount = 0, serpCount = 0, initialCount = 0;
       let latestMarket = null;
       const products = (data.results || []).map(row => {
+        // Owner-set fixed installation fee, independent of supplier or market snapshots.
+        if (row.category === 'software' && ['soft-drivers','soft-gamer','soft-creator'].includes(row.id)) {
+          return { ...row, price: 150000, price_source: 'service_fee', price_live: false };
+        }
         const entry = feed.prices.get(row.id);
         if (entry) {
           refreshed++;
