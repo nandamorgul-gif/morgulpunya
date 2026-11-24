@@ -1,6 +1,6 @@
 // SEMEISTVO TECH — standalone Cloudflare Worker. Deploy to semeistvo-price-engine.
 // Bind DB (same D1 as Pages), DPRICE_API_KEY (Secret). Cron: */5 * * * *.
-// One SKU and at most 3 API requests per slot (864/day maximum).
+// One SKU, at most 3 DPrice requests per slot; optional budget-limited SerpApi fallback.
 const MAX_AGE = 7 * 86400000;
 const CATEGORIES = ['cpu','gpu','motherboard','ram','storage','psu','case','cooler','accessories'];
 const normalize = s => String(s || '').normalize('NFKC').toLowerCase()
@@ -215,8 +215,80 @@ function resolveOffer(body, now) {
   return { price:offer.price, observed_at:new Date(offer.observed_at).toISOString(),
     platform: String(offer.platform || ''), listing_id:String(offer.listing_id) };
 }
+
+// Optional Google Shopping fallback. Never expose the key or raw upstream JSON.
+const SERP_INTERVAL = 7 * 86400000;
+function shoppingPrice(item) {
+  const raw = String(item?.price || '').trim();
+  if (!/^(?:Rp\.?|IDR)\s*[\d.,]+$/i.test(raw) || item?.installment ||
+      item?.second_hand_condition || !priceOK(item?.extracted_price)) return null;
+  return item.extracted_price;
+}
+function shoppingEstimate(items, product) {
+  const merchants = new Map();
+  for (const item of Array.isArray(items) ? items : []) {
+    if (!productMatches(product, item?.title)) continue;
+    const price = shoppingPrice(item);
+    const merchant = words(item?.source);
+    if (!merchant || !price || Math.abs(price / product.price - 1) > 0.2 ||
+        /\b(?:cicilan|angsuran|deposit|uang muka|dp|preorder|pre order|sewa|rental|bekas|used|refurbished|second)\b/.test(words(item.title))) continue;
+    if (!merchants.has(merchant) || price < merchants.get(merchant)) merchants.set(merchant,price);
+  }
+  const values = [...merchants.values()].sort((a,b)=>a-b);
+  // Require at least two distinct named sources with mutually consistent prices.
+  if (values.length < 2 || values[values.length-1] / values[0] > 1.2) return null;
+  const mid = Math.floor(values.length/2);
+  const price = values.length % 2 ? values[mid] : Math.round((values[mid-1]+values[mid])/2);
+  return {price, merchant_count:values.length};
+}
+async function reserveSerp(env, product, now) {
+  const limit = Number(env.SERPAPI_MONTHLY_LIMIT || 200);
+  if (!Number.isSafeInteger(limit) || limit < 1 || limit > 100000) return 'SERP_LIMIT_INVALID';
+  const key = 'serp-attempt:' + product.id;
+  const previous = await env.DB.prepare('SELECT updated_at FROM market_price_snapshots WHERE product_query = ?').bind(key).first();
+  if (previous && now - Date.parse(previous.updated_at) < SERP_INTERVAL) return 'SERP_COOLDOWN';
+  // Atomic reservation per UTC calendar month. Counts attempts, including failures.
+  const month = 'serp-quota:' + new Date(now).toISOString().slice(0,7);
+  const stamp = new Date(now).toISOString();
+  const claim = await env.DB.prepare(
+    "INSERT INTO market_price_snapshots (product_query,response_json,updated_at) VALUES (?, '1', ?) " +
+    "ON CONFLICT(product_query) DO UPDATE SET response_json=CAST(CAST(response_json AS INTEGER)+1 AS TEXT),updated_at=excluded.updated_at " +
+    "WHERE CAST(response_json AS INTEGER) < ?"
+  ).bind(month,stamp,limit).run();
+  if (!claim.meta?.changes) return 'SERP_MONTHLY_LIMIT';
+  await env.DB.prepare(
+    "INSERT INTO market_price_snapshots (product_query,response_json,updated_at) VALUES (?, '{}', ?) " +
+    "ON CONFLICT(product_query) DO UPDATE SET updated_at=excluded.updated_at"
+  ).bind(key,stamp).run();
+  return null;
+}
+async function serpFallback(env, product, now) {
+  if (!env.SERPAPI_KEY) return {reason:'SERP_NOT_CONFIGURED'};
+  const blocked = await reserveSerp(env,product,now);
+  if (blocked) return {reason:blocked};
+  const params = new URLSearchParams({engine:'google_shopping',q:searchTerm(product),gl:'id',hl:'id',api_key:env.SERPAPI_KEY.trim(),no_cache:'true'});
+  let body;
+  try {
+    const response = await fetch('https://serpapi.com/search.json?' + params, {
+      redirect:'manual', headers:{Accept:'application/json'},signal:AbortSignal.timeout(20000)
+    });
+    if (!response.ok) return {reason:'SERP_HTTP_' + response.status};
+    body = await response.json();
+  } catch (_) { return {reason:'SERP_REQUEST_FAILED'}; }
+  if (body?.error || body?.search_metadata?.status !== 'Success') return {reason:'SERP_SEARCH_FAILED'};
+  const estimate = shoppingEstimate(body.shopping_results,product);
+  if (!estimate) return {reason:'SERP_NO_CORROBORATED_PRICE'};
+  const snapshot = {source:'serpapi',sku:product.id,name:product.name,...estimate,
+    retrieved_at:new Date().toISOString(),platform:'Google Shopping'};
+  await env.DB.prepare(
+    'INSERT INTO market_price_snapshots (product_query,response_json,updated_at) VALUES (?,?,?) ' +
+    'ON CONFLICT(product_query) DO UPDATE SET response_json=excluded.response_json,updated_at=excluded.updated_at'
+  ).bind('serpapi:' + product.id,JSON.stringify(snapshot),new Date(now).toISOString()).run();
+  return {snapshot};
+}
+
 async function sync(env, now) {
-  if (!env.DB || !env.DPRICE_API_KEY) throw Error('Missing DB or DPRICE_API_KEY');
+  if (!env.DB || (!env.DPRICE_API_KEY && !env.SERPAPI_KEY)) throw Error('Missing DB or price API key');
   const rows = await env.DB.prepare('SELECT id, name, category, price FROM products WHERE active = 1 ORDER BY id').all();
   const products = (rows.results || []).filter(p => CATEGORIES.includes(p.category) && priceOK(p.price));
   if (!products.length) return;
@@ -224,7 +296,12 @@ async function sync(env, now) {
   const product = products[Math.floor(now / 300000) % products.length];
   const query = searchTerm(product);
   console.log('PRICE_CHECK_SKU', product.id, product.category);
-  const result = await get('products?query=' + encodeURIComponent(query), env);
+  const rejections = [];
+  let result = {};
+  if (env.DPRICE_API_KEY) {
+    try { result = await get('products?query=' + encodeURIComponent(query), env); }
+    catch (_) { rejections.push('DPRICE_SEARCH_FAILED'); }
+  } else rejections.push('DPRICE_NOT_CONFIGURED');
   const found = Array.isArray(result.data) ? result.data : [];
   const matched = [...new Map(found.filter(p =>
     /^\d+$/.test(String(p.id)) && productMatches(product, p.name))
@@ -233,9 +310,11 @@ async function sync(env, now) {
   const offset = matched.length ? (Math.floor(Math.floor(now / 300000) / products.length) * 2) % matched.length : 0;
   const matches = [...matched.slice(offset), ...matched.slice(0,offset)].slice(0,2);
   console.log('PRICE_MATCH', product.id, 'found', found.length, 'matched', matched.length, 'checked', matches.length);
-  const candidates = [], rejections = [];
+  const candidates = [];
   for (const match of matches) {
-    const body = await get('products/' + match.id + '/offers', env);
+    let body;
+    try { body = await get('products/' + match.id + '/offers', env); }
+    catch (_) { rejections.push('DPRICE_OFFER_FAILED'); continue; }
     const offer = resolveOffer(body, now);
     if (!offer) {
       const state = body?.meta?.price_resolution?.state;
@@ -250,6 +329,13 @@ async function sync(env, now) {
     }
   }
   if (!candidates.length) {
+    const fallback = await serpFallback(env,product,now);
+    if (fallback.snapshot) {
+      await recordCheck(env,product,now,'saved',{source:'serpapi',price:fallback.snapshot.price,merchant_count:fallback.snapshot.merchant_count,rejections});
+      console.log('MARKET_PRICE_SAVED',product.id,fallback.snapshot.price,'serpapi');
+      return;
+    }
+    rejections.push(fallback.reason);
     await recordCheck(env, product, now, matched.length ? 'no_eligible_offer' : 'no_match', {found:found.length, matched:matched.length, checked:matches.length, rejections});
     console.log('NO_ELIGIBLE_PRICE', product.id, 'matches', matched.length);
     return; // Never replace catalogue prices with null or old offers.
@@ -264,12 +350,12 @@ async function sync(env, now) {
   console.log('MARKET_PRICE_SAVED', product.id, snapshot.price, snapshot.observed_at);
 }
 export default {
-  async fetch() {
+  async fetch(request, env) {
     // Public health only. No unauthenticated sync endpoint or secrets.
-    return Response.json({service:'SEMEISTVO TECH Price Engine',version:'2.2.0',status:'online'});
+    return Response.json({service:'SEMEISTVO TECH Price Engine',version:'3.0.0',status:'online',dprice_configured:!!env.DPRICE_API_KEY,serpapi_configured:!!env.SERPAPI_KEY});
   },
   async scheduled(controller, env) {
-    console.log('PRICE_SYNC_START', '2.2.0');
+    console.log('PRICE_SYNC_START', '3.0.0');
     try {
       await sync(env, controller.scheduledTime || Date.now());
     } catch (err) {
