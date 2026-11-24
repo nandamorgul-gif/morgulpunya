@@ -15,7 +15,7 @@ test('Pages public build includes all website assets and excludes server/databas
   });
   assert.equal(built.status, 0, built.stderr || built.stdout);
   for (const entry of ['index.html','site.webmanifest','robots.txt','sitemap.xml','images/favicon.svg','images/gta-roleplay-night.jpg',
-    'images/catalog/photos/cpu-r5-9600x.webp','js/store.js','css/polish.css','_redirects','_headers','_routes.json','404.html']) {
+    'images/catalog/photos/cpu-r5-9600x.webp','images/svo-background.m4a','js/store.js','css/polish.css','_redirects','_headers','_routes.json','404.html']) {
     assert.ok(fs.existsSync(path.join(root, 'dist', entry)), 'missing public asset ' + entry);
   }
   assert.ok(!fs.existsSync(path.join(root, 'dist/admin.html')), 'admin page must not deploy');
@@ -32,8 +32,8 @@ test('Pages public build includes all website assets and excludes server/databas
   const sitemap = read('dist/sitemap.xml');
   assert.ok(sitemap.startsWith('<?xml '));
   const urls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(match => match[1]);
-  assert.deepEqual(urls, [homepage]);
   const servicePaths = ['jasa-server-fivem/', 'jasa-rakit-pc/', 'jasa-pembuatan-website/'];
+  assert.deepEqual([...urls].sort(), [homepage, ...servicePaths.map(service => homepage + service)].sort());
   for (const service of servicePaths) {
     const page = read('dist/' + service + 'index.html');
     assert.ok(page.includes('<link rel="canonical" href="' + homepage + service + '">'), service);
