@@ -252,6 +252,60 @@ async function marketReferences(env) {
   return prices;
 }
 
+// Dated single-store references, not live prices or confirmed stock.
+// Automated D1 market snapshots and supplier prices always take priority.
+const INITIAL_MARKET_REFERENCES = {
+  "cpu-r7-9700x": [
+    "AMD Ryzen 7 9700X",
+    4509000,
+    "https://ecommerce.enterkomputer.com/category/desktop-cpus",
+    "Tray; SKU 191622"
+  ],
+  "gpu-rx9060xt16": [
+    "AMD Radeon RX 9060 XT 16GB",
+    9900000,
+    "https://ecommerce.enterkomputer.com/category/graphics-cards-gpu",
+    "ASRock Challenger OC; SKU 195965"
+  ],
+  "gpu-rx9070": [
+    "AMD Radeon RX 9070 16GB",
+    14800000,
+    "https://ecommerce.enterkomputer.com/category/graphics-cards-gpu",
+    "Sapphire NITRO+ OC; SKU 194838"
+  ],
+  "gpu-rx9070xt": [
+    "AMD Radeon RX 9070 XT 16GB",
+    18500000,
+    "https://ecommerce.enterkomputer.com/category/graphics-cards-gpu",
+    "Sapphire NITRO+ OC; SKU 194015"
+  ],
+  "gpu-rtx5060ti16": [
+    "NVIDIA GeForce RTX 5060 Ti 16GB",
+    15255000,
+    "https://ecommerce.enterkomputer.com/product/msi-geforce-rtx-5060-ti-16gb-gddr7-ventus-2x-oc-plus-195146",
+    "MSI Ventus 2X OC Plus; SKU 195146"
+  ],
+  "gpu-rtx5070": [
+    "NVIDIA GeForce RTX 5070 12GB",
+    16100000,
+    "https://ecommerce.enterkomputer.com/category/graphics-cards-gpu",
+    "GALAX 1-Click OC; SKU 194846"
+  ],
+  "gpu-rtx5070ti": [
+    "NVIDIA GeForce RTX 5070 Ti 16GB",
+    23500000,
+    "https://ecommerce.enterkomputer.com/product/inno3d-geforce-rtx-5070-ti-16gb-gddr7-x3-enormous-cooler-with-triple-fan-garansi-3-thn-194518",
+    "Inno3D X3; SKU 194518"
+  ],
+  "gpu-rtx5080": [
+    "NVIDIA GeForce RTX 5080 16GB",
+    29500000,
+    "https://ecommerce.enterkomputer.com/",
+    "Inno3D X3; SKU 194014"
+  ]
+};
+const INITIAL_MARKET_DATE = '2026-11-24';
+
 export async function onRequest(context) {
   const { request, env } = context;
   try {
@@ -278,7 +332,7 @@ export async function onRequest(context) {
       ).all();
       const feed = await supplierPrices(env);
       const market = await marketReferences(env);
-      let refreshed = 0, marketCount = 0, dpriceCount = 0, serpCount = 0;
+      let refreshed = 0, marketCount = 0, dpriceCount = 0, serpCount = 0, initialCount = 0;
       let latestMarket = null;
       const products = (data.results || []).map(row => {
         const entry = feed.prices.get(row.id);
@@ -302,12 +356,19 @@ export async function onRequest(context) {
             price_confidence: estimate.confidence || null,
             price_variant: estimate.variant || null };
         }
+        const initial = INITIAL_MARKET_REFERENCES[row.id];
+        if (row.category !== 'software' && initial && row.name === initial[0]) {
+          initialCount++;
+          return { ...row, price: initial[1], price_live: false,
+            price_source: 'store_reference', price_reference_date: INITIAL_MARKET_DATE,
+            price_reference_url: initial[2], price_reference_model: initial[3] };
+        }
         return { ...row, price_live: false, price_source: 'reference' };
       });
       return json({
         products,
         pricing: { status: feed.status, updated_at: feed.updated_at,
-          live_products: refreshed, market_products: marketCount, dprice_products: dpriceCount, serpapi_products: serpCount, market_updated_at: latestMarket, total_products: products.length,
+          live_products: refreshed, market_products: marketCount, dprice_products: dpriceCount, serpapi_products: serpCount, store_reference_products: initialCount, market_updated_at: latestMarket, total_products: products.length,
           refresh_seconds: 120 },
         shipping_flat_idr: 0, checkout_enabled: false
       });
