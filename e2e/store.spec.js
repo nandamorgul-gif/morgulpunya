@@ -8,7 +8,8 @@ for (const width of widths) {
     const page = await context.newPage();
     await page.goto('/', { waitUntil: 'domcontentloaded' });
     await expect(page.locator('.svo-product')).toHaveCount(46);
-    await expect(page.locator('#svoMusicPlayer')).toHaveClass(/is-collapsed/);
+    await expect(page.locator('#svoMusicContent')).toBeHidden();
+    await expect(page.locator('#svoMusicCollapse')).toHaveAttribute('aria-expanded', 'false');
     const cart = page.getByRole('button', { name: 'Buka keranjang PC Builder dan katalog' });
     await expect(cart.locator('svg.feather-shopping-cart')).toBeVisible();
     await expect(cart).toHaveText('');
@@ -72,10 +73,22 @@ test('quick categories filter 2026 catalogue and card images recover', async ({ 
 test('logo, hidden music, admin and no private file leak', async ({ page, request }) => {
   await page.goto('/', { waitUntil: 'domcontentloaded' });
   await expect(page.locator('.svo-brand')).toBeVisible();
-  await expect(page.locator('#svoMusicPlayer')).toHaveClass(/is-collapsed/);
+  await expect(page.locator('#svoMusicContent')).toBeHidden();
+    await expect(page.locator('#svoMusicCollapse')).toHaveAttribute('aria-expanded', 'false');
   await page.locator('#svoMusicCollapse').click();
   await expect(page.locator('#svoMusicContent')).toBeVisible();
   await expect(page.locator('#svoMusicMute')).toBeVisible();
+  await expect(page.locator('#svoMusicVolume')).toBeVisible();
+  await expect(page.locator('#svoMusicVolume')).toHaveValue('30');
+  await page.locator('#svoMusicVolume').fill('65');
+  await expect(page.locator('#svoMusicAudio')).toHaveJSProperty('volume', 0.65);
+  await expect(page.locator('#svoMusicVolumeValue')).toHaveText('65%');
+  const audio = await request.get('/images/svo-background.m4a', { headers: { Range: 'bytes=0-31' } });
+  expect(audio.ok()).toBe(true);
+  expect((await audio.body()).toString('ascii', 4, 8)).toBe('ftyp');
+  await page.locator('#svoMusicClose').click();
+  await expect(page.locator('#svoMusicContent')).toBeHidden();
+  await expect(page.locator('#svoMusicCollapse')).toHaveAttribute('aria-expanded', 'false');
   const hidden = await request.get('/.env');
   expect(hidden.status()).toBe(404);
   await expect(page.locator('.svo-admin-entry, .svo-admin-nav')).toHaveCount(0);

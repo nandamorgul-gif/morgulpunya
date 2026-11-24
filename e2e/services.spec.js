@@ -9,8 +9,10 @@ test('services-first landing keeps the existing music and PC Builder', async ({ 
   await expect(page.locator('#svoRoleplayTitle')).toContainText('GTA 5 Roleplay');
   await expect(page.locator('#svoPaymentTitle')).toContainText('Metode Pembayaran');
   await expect(page.locator('#rakit-pc')).toBeAttached();
-  await expect(page.locator('#svoMusicPlayer')).toHaveClass(/is-collapsed/);
-  await expect(page.locator('a[href="https://www.youtube.com/watch?v=8_y6w1V9PXs"]')).toHaveCount(1);
+  await expect(page.locator('#svoMusicContent')).toBeHidden();
+  await expect(page.locator('#svoMusicCollapse')).toHaveAttribute('aria-expanded', 'false');
+  await expect(page.locator('#svoMusicAudio')).toHaveAttribute('src', '/images/svo-background.m4a');
+  await expect(page.locator('#svoMusicAudio')).toHaveJSProperty('loop', true);
   await expect(page.locator('.svo-product')).toHaveCount(46);
 });
 
@@ -132,5 +134,6 @@ test('five PC build presets use descriptive names', async ({ page }) => {
     'PC Kerja dan Gaming',
     'PC Mini-ITX Putih'
   ]);
-  await expect(page.locator('#svoMusicPlayer')).toHaveClass(/is-collapsed/);
+  await expect(page.locator('#svoMusicContent')).toBeHidden();
+  await expect(page.locator('#svoMusicCollapse')).toHaveAttribute('aria-expanded', 'false');
 });

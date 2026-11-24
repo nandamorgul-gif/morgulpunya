@@ -45,7 +45,8 @@ for (const width of viewports) {
     expect(layout.fillsGrid).toBe(true);
     if (width <= 1024) expect(layout.touchTargets).toBe(true);
     await expect(page.locator('#pembayaran .svo-payment-method')).toHaveCount(5);
-    await expect(page.locator('#svoMusicPlayer')).toHaveClass(/is-collapsed/);
+    await expect(page.locator('#svoMusicContent')).toBeHidden();
+    await expect(page.locator('#svoMusicCollapse')).toHaveAttribute('aria-expanded', 'false');
     const dimensions = await page.evaluate(() => ({
       scrollWidth: document.documentElement.scrollWidth,
       clientWidth: document.documentElement.clientWidth,
@@ -94,16 +95,29 @@ test('floating arrows let mobile visitors reach both ends of every public page',
     expect(target.height).toBeGreaterThanOrEqual(44);
     expect(target.width).toBeGreaterThanOrEqual(44);
     if (path === '/') {
-      const whatsApp = await page.locator('.floating-whatsapp').boundingBox();
-      expect(target.y + target.height).toBeLessThan(whatsApp.y);
+      const support = page.locator('#svoSupport > summary');
+      await expect(support).toBeVisible();
+      const supportBounds = await support.boundingBox();
+      expect(target.y + target.height).toBeLessThan(supportBounds.y);
       const musicToggle = page.locator('#svoMusicCollapse');
       await musicToggle.click();
+      const panel = page.locator('#svoMusicContent');
+      await expect(panel).toBeVisible();
       await expect.poll(async () => {
-        const player = await page.locator('#svoMusicPlayer').boundingBox();
+        const music = await panel.boundingBox();
         const arrows = await controls.boundingBox();
-        return arrows.y + arrows.height < player.y;
+        if (!music || !arrows) return false;
+        return music.x + music.width <= arrows.x || arrows.x + arrows.width <= music.x ||
+          music.y + music.height <= arrows.y || arrows.y + arrows.height <= music.y;
       }).toBe(true);
-      await musicToggle.click();
+      await support.click();
+      await expect(panel).toBeHidden();
+      await expect(page.locator('#svoSupport')).toHaveJSProperty('open', true);
+      await expect(page.locator('#svoSupportWa')).toHaveAttribute('href', /^https:\/\/wa\.me\/6288291967659\?/);
+      await expect(page.locator('#svoSupportTg')).toHaveAttribute('href', /^https:\/\/t\.me\/nandamorgul\?/);
+      await expect(page.locator('#svoSupportTopic input[type=radio]')).toHaveCount(7);
+      await support.click();
+      await expect(page.locator('#svoSupport')).toHaveJSProperty('open', false);
     }
     await down.click();
     await expect.poll(() => page.evaluate(() => {
@@ -135,7 +149,8 @@ test('basic brand and functional controls remain after the visual pass', async (
   await expect(page.locator('.svo-brand img.svo-logo-horizontal')).toHaveCount(1);
   await expect(page.locator('a.svo-skip-link')).toHaveAttribute('href','#layanan');
   await expect(page.locator('#svoShopCartButton')).toHaveCount(1);
-  await expect(page.locator('#svoMusicPlayer')).toHaveClass(/is-collapsed/);
+  await expect(page.locator('#svoMusicContent')).toBeHidden();
+    await expect(page.locator('#svoMusicCollapse')).toHaveAttribute('aria-expanded', 'false');
   await page.locator('.load-preset-btn[data-preset="compact-white-itx"]').click();
   await expect(page.locator('#svoShopCartCount')).toHaveText('8');
   await page.locator('#svoBuilderViewCart').click();

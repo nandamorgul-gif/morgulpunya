@@ -48,7 +48,8 @@ test('category tiles show hardware photos and filter the catalogue', async ({ pa
 
 test('original music and bank logo fallback stay unchanged after media fixes', async ({ page }) => {
   await page.goto('/', { waitUntil: 'domcontentloaded' });
-  await expect(page.locator('#svoMusicPlayer')).toHaveClass(/is-collapsed/);
+  await expect(page.locator('#svoMusicContent')).toBeHidden();
+  await expect(page.locator('#svoMusicCollapse')).toHaveAttribute('aria-expanded', 'false');
   await expect(page.locator('.svo-payment-method')).toHaveCount(5);
   await expect(page.locator('.svo-payment-logo-fallback')).toHaveCount(5);
   await expect(page.locator('#svoShopCartButton')).toBeVisible();
