@@ -1,0 +1,49 @@
+name: Verify SEMEISTVO TECH Cloudflare Pages and D1
+
+on:
+  push:
+    branches:
+      - feature/semeistvo-cloudflare-pages-d1
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: svo-cloudflare-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  cloudflare:
+    name: Static allowlist, D1 API tests, and Pages Functions build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install dependencies
+        run: npm install --no-fund --no-audit
+      - name: Verify existing catalogue and new Cloudflare API
+        run: npm test
+      - name: Build allowed public Pages directory
+        run: npm run build:pages
+      - name: Compile Cloudflare Pages Functions
+        run: npx wrangler pages functions build --outdir=./.cloudflare-compiled
+      - name: Install Chromium for responsive smoke tests
+        run: npx playwright install --with-deps chromium
+      - name: Verify images, shopping cart, mobile navigation, and removed admin
+        run: npm run test:e2e
+      - name: Deny private file publishing
+        run: |
+          set -euo pipefail
+          for item in server runtime-data functions migrations db .env package.json node_modules scripts .git; do
+            if test -e "dist/$item"; then echo "ERROR: private file published: $item"; exit 1; fi
+          done
+          grep -q '"/api/\*"' dist/_routes.json
+          test -s dist/index.html
+          test -s dist/images/favicon.svg
+          echo 'Public assets only; secret and server files not deployed.'

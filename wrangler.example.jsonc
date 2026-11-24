@@ -1,0 +1,15 @@
+{
+  // Template only. Copy to wrangler.jsonc AFTER the real D1 database exists.
+  // Prefer configuring D1 binding DB in Cloudflare Pages dashboard for Git integration.
+  "name": "semeistvotech",
+  "compatibility_date": "2026-11-23",
+  "pages_build_output_dir": "./dist",
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "semeistvotech-db",
+      "database_id": "REPLACE_WITH_THE_REAL_CLOUDFLARE_D1_UUID",
+      "migrations_dir": "migrations"
+    }
+  ]
+}

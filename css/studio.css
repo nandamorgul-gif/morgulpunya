@@ -75,10 +75,8 @@ body{background:radial-gradient(ellipse 52% 18% at 79% 0,rgba(92,57,159,.19),tra
 .svo-addon a{font-size:.82rem;color:#D3B9F4;font-weight:800}
 .svo-about{background:#0B0A10;border-top:1px solid #332341}
 .svo-about-layout{display:grid;grid-template-columns:minmax(0,.6fr) minmax(0,1.4fr);gap:clamp(2rem,5vw,6rem);align-items:center}
-.svo-about-label{display:flex;flex-direction:column;align-items:center;gap:12px;min-height:310px;padding:32px 20px;border:1px solid #49365C;border-radius:20px;background:radial-gradient(circle,#261A36,#120F19)}
-.svo-about-label>span{align-self:flex-start}
+.svo-about-label{display:flex;align-items:center;justify-content:center;min-height:310px;padding:32px 20px;border:1px solid #49365C;border-radius:20px;background:radial-gradient(circle,#261A36,#120F19)}
 .svo-about-label img{height:170px;width:200px;max-width:100%;object-fit:contain}
-.svo-about-label p{font-size:.67rem;color:#B9A0DC;letter-spacing:.19em;font-weight:800;margin:0;text-align:center}
 .svo-about-copy h2{font-size:clamp(1.9rem,3.4vw,3rem);letter-spacing:-.052em;line-height:1.15;margin:0 0 1.25rem}
 .svo-about-copy>p{color:#BAB0C4;font-size:.96rem;line-height:1.83;margin:0 0 1.5rem}
 .svo-about-principles{display:grid;gap:10px}

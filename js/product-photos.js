@@ -1,6 +1,6 @@
 /**
  * SEMEISTVO TECH · Product-specific reference photography for 2026 catalogue.
- * External image links are from manufacturers/retailers as references ONLY.
+ * Local hardware photos are sourced from manufacturer and retailer listings.
  * Review image rights and replace with approved/licensed media before production.
  * Every reference is to a matching product family or identified card variant.
  * Never imply the exact retail SKU/variant is guaranteed by a photo.
@@ -56,7 +56,7 @@ const SVO_PHOTOS = {
   },
   "mb-msi-b850": {
     "url": "https://computerlounge.co.nz/cdn/shop/files/98f2043d41fefa86f138a29ec1ceaa519ce57e02_B850_GAMING_PLUS_WIFI_1.jpg?v=1736903315&width=1200",
-    "credit": "https://computerlounge.co.nz/products/msi-b850-gaming-plus-wifi-motherboard"
+    "credit": "https://jp.msi.com/Motherboard/B850-GAMING-PLUS-WIFI/Gallery"
   },
   "case-ch160-white": {
     "url": "https://ddtech.mx/assets/uploads/4df978baf67b052fbb95517a3c2fa1d6.png",
@@ -64,7 +64,7 @@ const SVO_PHOTOS = {
   },
   "cooler-nzxt-360": {
     "url": "https://nzxt.com/cdn/shop/files/Cooling_KrakenElite_RGB_BK_360_Carousel_Hero_PG_EN.png?v=1758538277&width=1000",
-    "credit": "https://nzxt.com/products/kraken-360-elite-rgb-1"
+    "credit": "https://www.bestbuy.com/product/nzxt-kraken-elite-rgb-360mm-2024-radiator-1x-single-frame-rgb-core-fan-liquid-cooler-with-2-72-60fps-display-black/J3GWJHQ74C/sku/11065138"
   },
   "psu-corsair-850": {
     "url": "https://img.ep-cdn.com/i/500/500/gx/gxqljmdauwhknyetcrpo/corsair-napajanje-rm850e-850w-atx-3-1-pcie-5-1-80-gold-modularno-crna-cene.jpg",
@@ -76,7 +76,7 @@ const SVO_PHOTOS = {
   },
   "ssd-wd-sn850x-1t": {
     "url": "https://pisces.bbystatic.com/image2/BestBuy_US/images/products/943cc337-3c8c-464e-a395-3cdde46519e6.jpg",
-    "credit": "https://www.bestbuy.com/site/reviews/wd-black-sn850x-1tb-internal-ssd-pcie-gen-4-x4-nvme/6512131?page=3"
+    "credit": "https://www.sandisk.com/en-ca/products/ssd/internal-ssd/wd-black-sn850x-nvme-ssd"
   },
   "cpu-r7-9700x": {
     "url": "https://i.ebayimg.com/images/g/10kAAeSwIOloDZSt/s-l1600.jpg",
@@ -84,7 +84,7 @@ const SVO_PHOTOS = {
   },
   "cpu-ultra9-285k": {
     "url": "https://bestcomputers.mn/storage/products/19e741712d84b32.png",
-    "credit": "https://bestcomputers.mn/products/26129"
+    "credit": "https://www.newegg.com/intel-core-ultra-9-285k-arrow-lake-lga-1851-desktop-cpu-processor/p/N82E16819118505"
   },
   "gpu-rtx5070": {
     "url": "https://media.ldlc.com/r1600/ld/products/00/06/21/66/LD0006216616.jpg",
@@ -108,15 +108,15 @@ const SVO_PHOTOS = {
   },
   "ram-32-ddr5": {
     "url": "https://redgaming.it/245036-large_default/ram-gskill-flare-x5-ddr5-6000-2x16-32gb-nero-expo-cl30.jpg",
-    "credit": "https://redgaming.it/ddr5/26070-ram-gskill-flare-x5-ddr5-6000-2x16-32gb-nero-expo-cl30-4713294236814.html"
+    "credit": "https://www.gskill.com/product/165/396/1673491242/F5-6000J3038F16GX2-FX5"
   },
   "ram-32-white": {
     "url": "https://media.memoryexpress.com/Images/Products/Large/MX00129873-0.jpg",
-    "credit": "https://www.memoryexpress.com/Products/MX00129873"
+    "credit": "https://www.teamgroupinc.com/en/product-detail/memory/T-FORCE/delta-rgb-ddr5-white/delta-rgb-ddr5-white-FF4D532G6000HC38ADC01/"
   },
   "ram-64-ddr5": {
     "url": "https://i.ebayimg.com/images/g/8zUAAeSwb6donlzT/s-l1200.jpg",
-    "credit": "https://www.ebay.com/itm/226921032505"
+    "credit": "https://www.corsair.com/us/en/p/memory/cmk64gx5m2b6000c30/vengeance-64gb-2x32gb-ddr5-dram-6000mts-c30-memory-kit-black-cmk64gx5m2b6000c30"
   },
   "ssd-samsung-990pro-2t": {
     "url": "https://img.pzrmcdn.com/mnresize/1180/1182/asset/TYB6KSLBHXNMH2CB68/images/samsung990promzv9p2t0bw2tb74506900mbsm2ssdsabitdisk-1.jpg",
@@ -124,11 +124,11 @@ const SVO_PHOTOS = {
   },
   "ssd-crucial-t705-2t": {
     "url": "https://content.crucial.com/content/dam/crucial/ssd-products/t705/photography/isolated/crucial-ssd-t705-topview.psd.transform/small-png/image.png",
-    "credit": "https://www.crucial.com/ssd/t705/ct2000t705ssd3"
+    "credit": "https://aaawave.com/products/crucial-t705-2tb-pcie-gen5-nvme-ssd-ct2000t705ssd3"
   },
   "ssd-kingston-kc3000-2t": {
     "url": "https://computerlounge.co.nz/cdn/shop/files/6d878d0bc5c0bb37be1695c0caabc605738fb98d_44992_1.jpg?v=1721007509&width=1200",
-    "credit": "https://computerlounge.co.nz/products/kingston-kc3000-2tb-m-2-nvme-ssd"
+    "credit": "https://www.kingston.com/en/memory/search?partid=SKC3000D%2F2048G"
   },
   "psu-msi-650": {
     "url": "https://notebookspec.com/storage/pc-psu/713-1.png",
@@ -140,11 +140,11 @@ const SVO_PHOTOS = {
   },
   "psu-seasonic-1000": {
     "url": "https://www.dateks.lv/images/pic/1200/1200/753/1861.jpg",
-    "credit": "https://www.dateks.lv/en/cenas/psu-barosanas-bloki/1150293-seasonic-focus-gx-2024-1000w-80plus-gold-atx-3-1-pcie-5-1"
+    "credit": "https://seasonic.com/focus-gx-atx-3/"
   },
   "case-air903": {
     "url": "https://pc-builder.io/images/case/1692876521_51208.jpg",
-    "credit": "https://www.montechpc.com/air-903-max"
+    "credit": "https://www.jarcomputers.com/"
   },
   "case-o11": {
     "url": "https://level-up.gg/cdn/shop/files/3c2230a521a8b75ea9d56100813e53a2.jpg?v=1746013564&width=1214",
@@ -152,11 +152,11 @@ const SVO_PHOTOS = {
   },
   "case-nr200p": {
     "url": "https://www.memoryc.com/images/products/bb/image_8372609.jpg",
-    "credit": "https://www.memoryc.com/36907-cooler-master-masterbox-nr200p-desktop-white-computer-case.html"
+    "credit": "https://www.evetech.co.za/cooler-master-masterbox-nr200p-mini-itx-case-white/best-deal/17286"
   },
   "cooler-ak400": {
     "url": "https://cdn.shoppub.io/cdn-cgi/image/w%3D1000%2Ch%3D1000%2Cq%3D80%2Cf%3Dauto/oficinadosbits/media/uploads/produtos/foto/xxxupcvp/file.png",
-    "credit": "https://www.oficinadosbits.com.br/produto/cooler-deepcool-ak400-amd-intel-preto-r-ak400-bknnmn-g-1/"
+    "credit": "https://www.deepcool.com/products/Cooling/cpuaircoolers/AK400-Performance-CPU-Cooler-1700-AM5/2021/15222.shtml"
   },
   "cooler-ak620": {
     "url": "https://cdn.multitronic.fi/images/prod/7/B/R-AK620-BKNNMT-G-1.webp",
@@ -195,6 +195,33 @@ const SVO_PHOTOS = {
   }
 };
 
+/* Alternate references transferred selectively from the earlier main-branch
+ * photo update. Only model-matched images are eligible, never generic photos. */
+const SVO_PHOTO_BACKUPS = {
+  "cpu-r7-9700x": {
+    url: "https://img.overclockers.co.uk/images/PRO-AMD-02676/a8d93e23fe04aad9922477829187340b.jpg?auto=compress%2Cformat&fill=solid&fill-color=fff&fit=fill&h=2258&q=70&w=2258",
+    credit: "https://www.overclockers.co.uk/"
+  },
+  "psu-msi-650": {
+    url: "https://media.cdnws.com/_i/45353/m840-46043/3156/43/materiels-informatique-alimentation-msi-mag-a650bn-80plus-bronze-infinytech-reunion-04.jpeg",
+    credit: "https://www.infinytech-reunion.com/"
+  },
+  "case-air903": {
+    url: "https://p.jarcomputers.com/1000x1000/cc/CASEPMONTECHAIR903MAXBK_1000x1000.jpg",
+    credit: "https://www.jarcomputers.com/"
+  },
+  "case-o11": {
+    url: "https://mytechnics.com.ua/image/cache/catalog/products/parced/2024/06/100378519/100378519_1-1000x1000.jpg",
+    credit: "https://mytechnics.com.ua/"
+  }
+};
+for (const [sku, alternate] of Object.entries(SVO_PHOTO_BACKUPS)) {
+  if (SVO_PHOTOS[sku]) SVO_PHOTOS[sku].alternate = alternate;
+}
+for (const [sku, photo] of Object.entries(SVO_PHOTOS)) {
+  if (!photo.kind) photo.local = 'images/catalog/photos/' + sku + '.webp';
+}
+
 function applySvoReferencePhotos(catalogue) {
   if (!catalogue?.components) return catalogue;
   for (const [category, products] of Object.entries(catalogue.components)) {
@@ -204,7 +231,7 @@ function applySvoReferencePhotos(catalogue) {
       product.categoryArtwork = 'images/products/' + category + '.svg';
       product.fallbackImage = modelArtwork;
       if (ref) {
-        product.image = ref.url;
+        product.image = ref.local || ref.url;
         product.imageCreditUrl = ref.credit;
         product.imageType = ref.kind === 'service-photo' ? 'service-photo' : 'reference-photo';
       } else {
@@ -221,21 +248,32 @@ if (typeof window !== 'undefined') {
 }
 if (typeof module !== 'undefined' && module.exports) module.exports = applySvoReferencePhotos;
 
-/* Do not pretend a product has a real photo when the external source fails.
-   Keep the text, price, selections and cart working; simply hide unavailable imagery.
-   The optional per-SKU SVG illustrations remain in the repository as historical
-   artwork, but are never substituted for missing product photography. */
+/* Fall back to labeled illustrations when a reference photo cannot load. */
 if (typeof document !== 'undefined') {
   const isPaymentLogo = image => !!image.closest('.svo-payment-logo-frame');
   const hideUnavailableMedia = image => {
     if (isPaymentLogo(image) || image.dataset.svoMediaHidden === 'true') return;
+    const fallback = image.getAttribute('data-svo-fallback');
+    const finalFallback = image.getAttribute('data-svo-final-fallback');
+    const stage = image.dataset.svoFallbackStage || '';
+    const current = image.getAttribute('src') || '';
+    const useModel = stage === '' && fallback && fallback !== current;
+    const next = useModel ? fallback : stage !== 'category' ? finalFallback : null;
+    if (next && next !== current && /^images\/(?:catalog|products)\/[a-z0-9-]+\.svg$/.test(next)) {
+      image.dataset.svoFallbackStage = useModel ? 'model' : 'category';
+      image.setAttribute('src', next);
+      const badge = image.parentElement?.querySelector('.svo-illustration-chip, .svo-featured-image span, .svo-preset-caption');
+      if (badge) badge.textContent = 'Ilustrasi komponen';
+      const productCredit = image.closest('.svo-product,.svo-featured-card')?.querySelector('.svo-photo-credit');
+      if (productCredit) productCredit.hidden = true;
+      if (image.alt) image.alt = 'Ilustrasi untuk ' + image.alt;
+      return;
+    }
+
     image.dataset.svoMediaHidden = 'true';
     image.hidden = true;
     image.classList.add('svo-image-unavailable');
     image.removeAttribute('srcset');
-    image.removeAttribute('data-svo-fallback');
-    image.removeAttribute('data-svo-final-fallback');
-
     const media = image.closest(
       '.svo-product-media, .svo-featured-image, .svo-offer-media, ' +
       '.svo-studio-hero-media, .svo-roleplay-media, .svo-digital-media'
@@ -249,14 +287,8 @@ if (typeof document !== 'undefined') {
       '.component-card, .svo-cart-item, .svo-category-tile'
     );
     if (card) card.classList.add('svo-card-without-photo');
-    // A source link should not imply the customer is seeing a photo that failed.
     const credit = card?.querySelector('.svo-photo-credit');
     if (credit) credit.hidden = true;
-
-    if (card?.classList.contains('preset-card')) {
-      const caption = card.querySelector('.svo-preset-caption');
-      if (caption) caption.hidden = true;
-    }
     if (media?.classList.contains('svo-studio-hero-media')) {
       document.getElementById('home')?.classList.add('svo-hero-without-photo');
     }
@@ -267,7 +299,6 @@ if (typeof document !== 'undefined') {
       media.closest('.svo-roleplay-layout')?.classList.add('svo-layout-without-photo');
     }
   };
-
   // Error events from <img> elements don't bubble, so capture them on document.
   document.addEventListener('error', event => {
     const image = event.target;

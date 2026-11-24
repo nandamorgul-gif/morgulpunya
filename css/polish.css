@@ -45,10 +45,15 @@ section[id] {scroll-margin-top:90px}
 .nav-links .nav-link.active::after {background:var(--svo-accent-lilac);height:2px;bottom:-3px}
 .header-actions {display:flex;align-items:center;gap:9px;flex-shrink:0}
 .svo-header-cart {
-  min-height:40px;padding:7px 12px;border:1px solid #6c527e;background:#261b33;
-  border-radius:12px;color:#f4eafb;font-size:.77rem;font-weight:750;white-space:nowrap;
+  flex:none;width:44px;height:44px;min-width:44px;min-height:44px;padding:0;
+  border:1px solid #6c527e;border-radius:12px;background:#261b33;color:#f4eafb;
 }
+.svo-header-cart svg {width:22px;height:22px}
 .svo-header-cart:hover {border-color:#bd91ee;background:#342447}
+.svo-header-cart-status {
+  position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+  overflow:hidden;clip-path:inset(50%);white-space:nowrap;
+}
 .header .btn-simulasi-nav {font-size:.76rem;padding:9px 12px;border-radius:11px;min-height:41px}
 .mobile-toggle {color:#e9d5ff}
 /* Unified buttons, labels, hierarchy. */
@@ -121,14 +126,55 @@ section[id] {scroll-margin-top:90px}
 .svo-offer:hover {transform:translateY(-2px);border-color:#9571c1;box-shadow:0 10px 30px rgba(0,0,0,.16)}
 .svo-offer-media {aspect-ratio:16/9;max-height:265px;overflow:hidden;background:#251d32}
 .svo-offer-media img {width:100%;height:100%;object-fit:cover}
+.svo-offer-body h3 a {color:inherit;text-decoration:underline;text-decoration-color:#9e78cf;text-underline-offset:.18em}
+.svo-offer-body h3 a:hover {color:var(--svo-accent-lilac)}
 .svo-offer:first-child .svo-offer-media {aspect-ratio:2.6/1}
 .svo-offer-body {padding:clamp(17px,1.9vw,23px);gap:10px}
 .svo-offer-body h3 {font-size:clamp(1.05rem,1.5vw,1.24rem);line-height:1.3;margin:0}
 .svo-offer-body>p {font-size:.84rem;line-height:1.75;color:#bbb0c8;margin:0}
 .svo-offer-tags {gap:6px}
 .svo-offer-tags span {font-size:.63rem;padding:5px 9px;border:1px solid #554364;background:#2b2039;border-radius:99px}
-.svo-offer-link {margin-top:7px;color:#dfbdf9;font-size:.84rem}
+.svo-offer-link {margin-top:7px;color:#dfbdf9;font-size:.84rem;gap:.35em}
 .svo-service-note {font-size:.74rem;margin-top:18px}
+
+.svo-service-price {
+  padding: 12px 15px;
+  border: 1px solid var(--svo-line);
+  border-radius: 12px;
+  background: var(--svo-surface-raised);
+}
+
+.svo-service-price-amount {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 12px;
+  margin: 0;
+  color: var(--svo-txt);
+  font-size: .85rem;
+  line-height: 1.4;
+}
+
+.svo-service-price-amount + .svo-service-price-amount {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--svo-line);
+}
+
+.svo-service-price-amount strong {
+  color: var(--svo-accent-lilac);
+  font-family: Outfit, Inter, system-ui, sans-serif;
+  font-size: 1.4rem;
+  line-height: 1.2;
+}
+
+.svo-service-price-note {
+  margin: 5px 0 0;
+  color: var(--svo-txt-soft);
+  font-size: .8rem;
+  line-height: 1.55;
+}
+
 /* Four practical steps, no floating ornaments. */
 .svo-process {background:#0e0c15}
 .svo-process-steps {gap:14px}
@@ -203,7 +249,8 @@ section[id] {scroll-margin-top:90px}
 #rakit-pc .component-price small {font-size:.68rem}
 #rakit-pc .select-part-btn {min-height:37px;padding:7px 12px;border-radius:9px;font-size:.74rem;white-space:normal}
 #rakit-pc .summary-panel {padding:clamp(18px,2.6vw,28px);background:#1a1523;border:1px solid #58426b;border-top:3px solid #a984e0;border-radius:16px;margin-top:10px}
-#rakit-pc .summary-header {padding-bottom:13px}
+#rakit-pc .summary-header {flex-wrap:wrap;gap:10px 16px;padding-bottom:13px}
+#rakit-pc .summary-reset {flex:none;gap:6px;padding:8px 13px;font-size:.8rem;white-space:nowrap}
 #rakit-pc .summary-part-item {gap:9px}
 #rakit-pc .summary-part-item .part-name {min-width:0;overflow-wrap:anywhere}
 #rakit-pc .summary-actions {gap:9px}
@@ -221,7 +268,7 @@ section[id] {scroll-margin-top:90px}
 .svo-category-section {padding-block:50px;background:#0e0c16}
 .svo-category-tiles {gap:12px}
 .svo-category-tile {background:#201929;border:1px solid #4a3b59;border-radius:13px;padding:10px 10px 16px}
-.svo-category-tile img {aspect-ratio:4/3;object-fit:contain;background:#251e31;height:105px;padding:8px}
+.svo-category-tile img {aspect-ratio:4/3;object-fit:contain;background:#f7f4fb;height:105px;padding:8px}
 .svo-category-tile span {font-size:.84rem}
 .svo-featured-section {padding-block:60px;background:#110e19}
 .svo-featured-grid {gap:13px}
@@ -292,23 +339,50 @@ section[id] {scroll-margin-top:90px}
 .svo-cart-panel {background:#18121f}
 .svo-music-player {box-shadow:0 10px 30px rgba(0,0,0,.3)}
 .floating-whatsapp {font-size:.8rem;padding:12px 16px;box-shadow:0 9px 28px rgba(18,105,60,.2)}
+.svo-scroll-controls {
+  --svo-scroll-bottom:calc(22px + env(safe-area-inset-bottom));
+  position:fixed;z-index:950;
+  right:calc(30px + env(safe-area-inset-right));
+  bottom:max(var(--svo-scroll-bottom),var(--svo-scroll-player-clearance,0px));
+  display:grid;gap:7px;
+}
+.floating-whatsapp ~ .svo-scroll-controls {--svo-scroll-bottom:calc(92px + env(safe-area-inset-bottom))}
+.svo-scroll-controls button {
+  display:grid;place-items:center;width:44px;height:44px;padding:0;cursor:pointer;
+  border:1px solid #8165a7;border-radius:11px;color:#f4eaff;background:rgba(38,26,51,.86);
+  box-shadow:0 3px 12px rgba(0,0,0,.24);
+  transition:background-color .18s ease,border-color .18s ease;
+}
+.svo-scroll-controls button:hover,.svo-scroll-controls button:focus-visible {background:#3a2850;border-color:#bc9be4}
+.svo-scroll-controls svg {width:22px;height:22px}
+.svo-scroll-controls [data-svo-scroll="top"] svg {transform:rotate(180deg)}
 /* Responsive reductions, applied after previous layouts. */
 @media(max-width:1260px) {
   .header .btn-simulasi-nav {display:none}
   .header .nav-links {gap:clamp(6px,1.1vw,14px)}
   .svo-services-grid {grid-template-columns:repeat(3,minmax(0,1fr))}
-  .svo-services-grid .svo-offer:first-child {grid-column:span 2}
-  .svo-services-grid .svo-offer:last-child {grid-column:span 2}
+  .svo-services-grid .svo-offer-web {grid-column:span 2}
+  .svo-offer-web .svo-offer-media {aspect-ratio:2.6/1}
   .svo-store-grid {grid-template-columns:repeat(3,minmax(0,1fr))}
 }
 @media(max-width:1024px) {
   .container {width:calc(100% - 44px)}
-  .header .nav-links {gap:0;align-items:stretch}
-  .header .nav-links .nav-link {padding:13px 12px;font-size:.91rem}
+  .header .nav-links {
+    gap:0;align-items:stretch;padding-block:8px;background:#100c18;
+    max-height:calc(100dvh - 76px - env(safe-area-inset-bottom));
+    overscroll-behavior-y:contain;
+  }
+  .header .nav-links .nav-link {
+    flex-shrink:0;min-height:48px;padding:12px 14px;font-size:.95rem;
+    transition:color .2s ease,background-color .2s ease;
+  }
+  .header .nav-links .nav-link[aria-current] {background:#241a30;border-radius:8px}
+  .header .nav-links .nav-link:focus-visible {outline-offset:-2px}
   .header .mobile-toggle {display:grid!important}
   .svo-services-grid {grid-template-columns:repeat(2,minmax(0,1fr))}
-  .svo-services-grid .svo-offer:first-child {grid-column:span 2}
-  .svo-services-grid .svo-offer:last-child {grid-column:span 2}
+  .svo-services-grid .svo-offer-web {grid-column:auto}
+  .svo-offer-web .svo-offer-media {aspect-ratio:16/9}
+  .svo-offer-link {min-height:44px;margin-top:0}
   .svo-studio-heading {align-items:start}
   .svo-preset-section .presets-grid {grid-template-columns:repeat(2,minmax(0,1fr))}
   .svo-preset-section .preset-card,.svo-preset-section .preset-card:nth-last-child(-n+2) {grid-column:auto}
@@ -319,6 +393,8 @@ section[id] {scroll-margin-top:90px}
   .svo-footer-main {gap:28px}
 }
 @media(max-width:760px) {
+  .svo-scroll-controls {--svo-scroll-bottom:calc(16px + env(safe-area-inset-bottom));right:calc(12px + env(safe-area-inset-right))}
+  .floating-whatsapp ~ .svo-scroll-controls {--svo-scroll-bottom:calc(76px + env(safe-area-inset-bottom))}
   .svo-studio-section,.section-padding {padding-block:56px}
   .svo-studio-hero {padding-top:121px;padding-bottom:56px}
   .svo-studio-hero .svo-hero-grid {gap:25px}
@@ -326,7 +402,8 @@ section[id] {scroll-margin-top:90px}
   .svo-studio-hero .svo-hero-desc {font-size:.93rem!important}
   .svo-studio-heading {gap:12px;margin-bottom:24px}
   .svo-services-grid {grid-template-columns:1fr;gap:13px}
-  .svo-services-grid .svo-offer:first-child,.svo-services-grid .svo-offer:last-child {grid-column:auto}
+  .svo-services-grid .svo-offer {max-width:none}
+  .svo-services-grid .svo-offer:first-child {grid-column:auto}
   .svo-offer:first-child .svo-offer-media {aspect-ratio:16/9}
   .svo-offer-media {max-height:230px}
   .svo-offer-body {padding:17px}
@@ -343,14 +420,15 @@ section[id] {scroll-margin-top:90px}
   .svo-footer-main>div:first-child {grid-column:1/-1}
   .svo-footer-bottom {margin-top:29px;flex-direction:column;gap:5px}
 }
+@media(max-height:480px) {
+  .svo-scroll-controls {grid-auto-flow:column}
+}
 @media(max-width:560px) {
   .container {width:calc(100% - 32px)}
   .header,.header.scrolled {padding:7px 0}
   .header .nav-container {min-height:45px;gap:8px}
   .svo-brand .svo-logo-mark {height:36px;width:37px}
   .svo-brand .svo-logo-mobile {font-size:clamp(.73rem,3.4vw,.95rem);letter-spacing:0}
-  .svo-header-cart {min-height:37px;padding:7px 9px;font-size:.73rem}
-  .svo-header-count {min-width:20px;height:20px;font-size:.68rem}
   .svo-studio-hero .hero-content h1 {font-size:clamp(2.3rem,10vw,3.18rem);letter-spacing:-.052em}
   .svo-studio-hero .hero-cta .btn {width:100%;font-size:.88rem}
   .svo-hero-service-strip {gap:5px}
@@ -426,29 +504,171 @@ img.svo-image-unavailable,
 .svo-hero-without-photo .svo-hero-grid {grid-template-columns:minmax(0,1fr);max-width:880px}
 .svo-layout-without-photo {grid-template-columns:minmax(0,1fr);max-width:880px}
 .svo-studio-hero-media.svo-media-unavailable + * {margin-top:0}
-/* These are navigation tiles, not product photography. */
 .svo-category-tiles {align-items:stretch}
 .svo-category-tile {
-  min-height:132px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;
-  text-align:left;gap:14px;padding:21px 18px;border:1px solid #544162;border-radius:14px;
+  min-height:132px;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;
+  text-align:left;gap:10px;padding:10px 10px 15px;border:1px solid #544162;border-radius:14px;
   background:linear-gradient(145deg,#251b33,#17121f);
 }
-.svo-category-tile .svo-category-number {
-  display:inline-flex;align-items:center;justify-content:center;
-  width:38px;height:38px;border-radius:10px;background:#3b294e;
-  color:#d8baf5;font-size:.75rem;font-weight:900;letter-spacing:.05em;
-  border:1px solid #6b5186;
-}
-.svo-category-tile span:not(.svo-category-number) {font-size:.94rem;text-align:left;line-height:1.3}
+.svo-category-tile span {font-size:.94rem;text-align:left;line-height:1.3}
 .svo-category-tile small {font-size:.73rem;line-height:1.5;color:#bcb0c9}
 .svo-category-tile:hover {border-color:#a87cda;background:linear-gradient(145deg,#332441,#1f152a)}
 @media(max-width:1024px) {
   #rakit-pc .component-card.svo-card-without-photo {grid-template-columns:minmax(0,1fr) minmax(145px,auto)}
 }
 @media(max-width:560px) {
-  .svo-category-tile {min-height:112px;padding:15px 12px;gap:9px}
-  .svo-category-tile .svo-category-number {height:31px;width:31px;border-radius:8px}
-  .svo-category-tile span:not(.svo-category-number) {font-size:.8rem}
+  .svo-category-tile {padding:8px 8px 12px}
+  .svo-category-tile span {font-size:.8rem}
   .svo-category-tile small {font-size:.65rem}
   #rakit-pc .component-card.svo-card-without-photo {grid-template-columns:minmax(0,1fr)}
+}
+
+/* SVO 2026 photo & navigation transfer: functional local SVG icon layer. */
+.icon-svg { display:inline-block;width:1.12em;height:1.12em;vertical-align:-.18em;flex-shrink:0;overflow:visible; }
+.nav-link .icon-svg {margin-right:.25rem;}
+.svo-addon-icon {display:flex;align-items:center;justify-content:center;}
+.svo-addon-icon .icon-svg {display:block;width:28px;height:28px;color:#dec4ff;stroke:currentColor;stroke-width:2;}
+.svo-menu-lines {display:flex;flex-direction:column;align-items:center;justify-content:center;width:23px;height:22px;gap:5px;color:currentColor;}
+.svo-menu-lines span {width:22px;height:2px;border-radius:8px;background:currentColor;display:block;transition:transform .2s ease,opacity .2s ease;}
+.mobile-toggle[aria-expanded="true"] .svo-menu-lines span:nth-child(1) {transform:translateY(7px) rotate(45deg);}
+.mobile-toggle[aria-expanded="true"] .svo-menu-lines span:nth-child(2) {opacity:0;}
+.mobile-toggle[aria-expanded="true"] .svo-menu-lines span:nth-child(3) {transform:translateY(-7px) rotate(-45deg);}
+.mobile-toggle {position:relative;align-items:center;justify-content:center;z-index:1100;}
+.mobile-toggle:focus-visible,.svo-addon a:focus-visible {outline:2px solid #c9a6ff;outline-offset:3px;}
+@media(max-width:1024px){
+  .header .mobile-toggle {display:flex!important;min-width:44px;min-height:44px;}
+  .header .svo-menu-lines {flex-shrink:0;}
+}
+@media(max-width:560px){
+  .header .mobile-toggle {padding:8px;}
+}
+@media(prefers-reduced-motion:reduce) {.svo-menu-lines span{transition:none;}}
+
+/* SVO 2026: image-stable storefront and transparent price feed status. */
+.svo-pricing-status {
+  border:1px solid rgba(170,137,214,.35);background:rgba(32,22,48,.55);
+  color:#d5c5e9;border-radius:12px;padding:12px 15px;font-size:.82rem;
+  line-height:1.55;margin:0 0 15px;
+}
+.svo-pricing-status[data-live="true"] {color:#e4d8ff;border-color:rgba(177,150,246,.55)}
+.svo-product-media {
+  background-color:#f6f3fa;
+  background-size:contain;
+  background-position:center;
+  background-repeat:no-repeat;
+}
+.svo-product-image {object-fit:contain}
+.svo-featured-image {background-size:contain;background-position:center;background-repeat:no-repeat;background-color:#f7f4fb}
+.svo-roleplay-media > img {aspect-ratio:1672/941}
+.svo-offer-roleplay .svo-offer-media img {object-position:center 58%;filter:none}
+@media(max-width:560px){
+  .svo-pricing-status{font-size:.76rem;padding:10px 12px}
+}
+
+/* SVO Dark Luxury — preset performance and service pricing */
+#preset .presets-grid{align-items:stretch}
+#preset .preset-card{display:flex;flex-direction:column;min-width:0;height:100%;box-sizing:border-box;overflow:hidden}
+#preset .preset-tagline{flex:0 0 auto;min-height:4.2em}
+#preset .svo-fps-guide,#preset .svo-preset-costs{display:block;min-width:0;margin:0 7px 15px;padding:clamp(12px,1.2vw,18px);border:1px solid #40334e;border-radius:14px;background:linear-gradient(145deg,#231b2e,#191420);box-sizing:border-box}
+#preset .svo-fps-heading{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-bottom:13px}
+#preset .svo-panel-kicker{display:block;font-size:.59rem;font-weight:600;letter-spacing:.11em;line-height:1.5;color:#b29bc8;margin-bottom:5px}
+#preset .svo-fps-heading h4,#preset .svo-cost-heading h4{margin:0;color:#f0e6fa;font-size:.96rem;line-height:1.3;font-weight:650}
+#preset .svo-resolution{display:block;flex-shrink:0;border:1px solid #655076;border-radius:7px;padding:5px 7px;font-size:.68rem;line-height:1.3;color:#dac5ee;white-space:nowrap;background:#2e223e}
+#preset .svo-fps-rows{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;align-items:stretch}
+#preset .svo-fps-row{display:flex;flex-direction:column;justify-content:space-between;gap:9px;min-width:0;padding:10px;border:1px solid #3d314b;border-radius:10px;background:#18131f}
+#preset .svo-fps-meta{min-width:0}
+#preset .svo-fps-meta strong{display:block;margin:0;color:#ebe1f4;font-size:.76rem;line-height:1.35;overflow-wrap:anywhere}
+#preset .svo-fps-meta small{display:block;margin-top:4px;font-size:.63rem;line-height:1.35;color:#b5a9c4;overflow-wrap:anywhere}
+#preset .svo-fps-value{display:flex;gap:5px;align-items:baseline;justify-content:flex-start;font-variant-numeric:tabular-nums}
+#preset .svo-fps-value strong{font-size:1.4rem;line-height:1.1;color:#d9bcff;font-weight:750}
+#preset .svo-fps-value small{font-size:.61rem;line-height:1;color:#b5a3c8;letter-spacing:.08em}
+#preset .svo-fps-details{margin-top:12px;padding-top:10px;border-top:1px solid #3d314b;color:#bfb1d0;font-size:.68rem;line-height:1.55}
+#preset .svo-fps-details summary{cursor:pointer;font-weight:500;color:#c8b4e5}
+#preset .svo-fps-details summary:focus-visible{outline:2px solid #c5a3ed;outline-offset:3px}
+#preset .svo-fps-details p{margin:8px 0;color:#bfb1d0;font-size:inherit}
+#preset .svo-fps-sources{font-size:.66rem;color:#bfb1d0}
+#preset .svo-fps-sources a{color:#dec7ff;text-decoration:underline;text-underline-offset:2px}
+#preset .svo-preset-costs{margin-top:auto}
+#preset .svo-cost-heading{margin-bottom:10px}
+#preset .svo-cost-list{margin:0;padding:0}
+#preset .svo-cost-row{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:start;gap:8px;border-top:1px solid #3d314b;padding:9px 0;font-size:.74rem;line-height:1.4}
+#preset .svo-cost-row dt,#preset .svo-cost-row dd{margin:0;min-width:0}
+#preset .svo-cost-row dt{color:#cbbfd7;overflow-wrap:anywhere}
+#preset .svo-cost-row dt small{display:block;font-size:.62rem;color:#a99ab9;margin-top:2px}
+#preset .svo-cost-row dd{color:#f1e9fa;font-weight:650;text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+#preset .svo-preset-total{display:flex;flex-direction:column;gap:5px;align-items:flex-start;border:1px solid #554167;border-radius:10px;padding:11px;margin-top:7px;background:#2b2038}
+#preset .svo-preset-total span{font-size:.71rem;color:#d2bfdc;line-height:1.4}
+#preset .svo-preset-total strong{font-size:clamp(1.06rem,1.35vw,1.35rem);font-variant-numeric:tabular-nums;line-height:1.2;color:#ecd9ff;overflow-wrap:anywhere}
+#preset .preset-footer{display:flex;flex-direction:column;align-items:stretch;gap:11px;margin-top:0;padding-top:12px}
+#preset .preset-footer .preset-price{display:flex;flex-direction:column;gap:5px}
+#preset .preset-footer .preset-price>span{font-size:.73rem;line-height:1.3;color:#c3b4d3}
+#preset .preset-footer .preset-price>strong{font-variant-numeric:tabular-nums}
+#preset .preset-footer .load-preset-btn{width:100%;min-height:42px;white-space:normal;line-height:1.35}
+@media(min-width:1025px){#preset .preset-card:nth-last-child(-n+2){grid-column:span 3}#preset .svo-fps-row{min-height:100px}}
+@media(max-width:640px){#preset .preset-tagline{min-height:0}#preset .svo-fps-guide,#preset .svo-preset-costs{margin-inline:0}#preset .svo-fps-row{padding:10px}#preset .svo-fps-value strong{font-size:1.35rem}}
+@media(max-width:340px){#preset .svo-fps-rows{grid-template-columns:1fr}#preset .svo-cost-row{grid-template-columns:1fr;gap:3px}#preset .svo-cost-row dd{text-align:left}}
+
+
+/* SVO Dark Luxury — atmospheric background */
+/* Native CSS layers; no network image, animation, fixed overlay or new stacking context. */
+html { background-color:#0a0810; }
+body.svo-luxury-background {
+  --svo-ambient-grid:rgba(190,158,235,.035);
+  background-color:#0c0912;
+  background-image:
+    radial-gradient(ellipse 80% 62% at 10% 12%,rgba(132,76,191,.18),transparent 72%),
+    radial-gradient(ellipse 65% 70% at 92% 55%,rgba(76,58,151,.18),transparent 74%),
+    linear-gradient(135deg,#0a0810,#140d20 52%,#0a0811);
+  background-size:100% 100%,100% 100%,100% 100%;
+  background-attachment:fixed;
+}
+/* Apply atmosphere only to broad page sections. Keep cards, inputs, dialogs and cart opaque. */
+body.svo-luxury-background > :is(.svo-studio-section,.svo-preset-section,#rakit-pc,.svo-category-section,.svo-featured-section,.svo-store-section),
+body.svo-luxury-background.service-page main > :is(.service-section,.service-contact) {
+  background-color:transparent;
+  background-image:
+    linear-gradient(90deg,transparent,rgba(13,10,20,.28) 38%,rgba(13,10,20,.28) 62%,transparent),
+    linear-gradient(90deg,var(--svo-ambient-grid) 1px,transparent 1px),
+    linear-gradient(var(--svo-ambient-grid) 1px,transparent 1px),
+    radial-gradient(ellipse at 90% 22%,rgba(105,57,153,.08),transparent 65%);
+  background-size:100% 100%,64px 64px,64px 64px,100% 100%;
+  border-top-color:rgba(186,150,230,.10);
+}
+body.svo-luxury-background > :is(.svo-process,.svo-digital,#rakit-pc,.svo-store-section,.svo-payments),
+body.svo-luxury-background.service-page main > :is(.service-faq,.service-demo) {
+  background-color:rgba(7,5,12,.25);
+}
+body.svo-luxury-background > .svo-studio-hero,
+body.svo-luxury-background.service-page main > .service-hero {
+  background-color:transparent;
+  background-image:
+    radial-gradient(ellipse 60% 85% at 86% 24%,rgba(124,68,188,.19),transparent 78%),
+    radial-gradient(ellipse 58% 75% at 4% 65%,rgba(94,49,146,.13),transparent 78%),
+    linear-gradient(90deg,var(--svo-ambient-grid) 1px,transparent 1px),
+    linear-gradient(var(--svo-ambient-grid) 1px,transparent 1px),
+    linear-gradient(180deg,rgba(10,7,16,.14),rgba(10,7,16,.48));
+  background-size:100% 100%,100% 100%,64px 64px,64px 64px,100% 100%;
+}
+body.svo-luxury-background > .svo-footer,
+body.svo-luxury-background > .service-footer {
+  background:linear-gradient(140deg,rgba(28,17,41,.90),rgba(8,6,14,.97));
+  border-top-color:rgba(186,150,230,.20);
+}
+/* Avoid costly fixed-background repainting on mobile and touch devices. */
+@media(max-width:768px),(hover:none) {
+  body.svo-luxury-background {
+    background-attachment:scroll;
+    background-size:100% 900px,100% 1200px,100% 100%;
+    background-repeat:repeat-y,repeat-y,no-repeat;
+    --svo-ambient-grid:rgba(190,158,235,.025);
+  }
+  body.svo-luxury-background > :is(.svo-studio-section,.svo-preset-section,#rakit-pc,.svo-category-section,.svo-featured-section,.svo-store-section),
+  body.svo-luxury-background.service-page main > :is(.service-section,.service-contact) {
+    background-size:100% 100%,48px 48px,48px 48px,100% 100%;
+  }
+}
+@media(forced-colors:active) {
+  body.svo-luxury-background,
+  body.svo-luxury-background > section,
+  body.svo-luxury-background.service-page main > section {background-image:none}
 }

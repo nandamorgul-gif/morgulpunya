@@ -295,7 +295,12 @@ for (const dir of ['css', 'js', 'images']) {
   app.use('/' + dir, express.static(path.join(publicRoot, dir), staticOptions));
 }
 app.get('/site.webmanifest', (req, res) => res.type('application/manifest+json').sendFile(path.join(publicRoot, 'site.webmanifest')));
+app.get('/robots.txt', (req, res) => res.sendFile(path.join(publicRoot, 'robots.txt')));
+app.get('/sitemap.xml', (req, res) => res.sendFile(path.join(publicRoot, 'sitemap.xml')));
 app.get('/', (req, res) => res.sendFile(path.join(publicRoot, 'index.html')));
+for (const service of ['jasa-server-fivem', 'jasa-rakit-pc', 'jasa-pembuatan-website']) {
+  app.get('/' + service + '/', (req, res) => res.sendFile(path.join(publicRoot, service, 'index.html')));
+}
 app.get('/index.html', (req, res) => res.sendFile(path.join(publicRoot, 'index.html')));
 app.get('/admin', (req, res) => res.sendFile(path.join(publicRoot, 'admin.html')));
 app.get('/admin.html', (req, res) => res.sendFile(path.join(publicRoot, 'admin.html')));

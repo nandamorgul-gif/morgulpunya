@@ -2,16 +2,60 @@ const { test, expect } = require('@playwright/test');
 
 test('services-first landing keeps the existing music and PC Builder', async ({ page }) => {
   await page.goto('/', { waitUntil: 'domcontentloaded' });
-  await expect(page.locator('h1')).toContainText('Teknologi yang kamu butuhkan');
+  await expect(page.locator('h1')).toContainText('Jasa Rakit PC Custom');
   await expect(page.locator('#svoServicesTitle')).toBeVisible();
   await expect(page.locator('.svo-offer')).toHaveCount(7);
-  await expect(page.locator('#svoDigitalTitle')).toContainText('website');
+  await expect(page.locator('#svoDigitalTitle')).toContainText('Pembuatan Website');
   await expect(page.locator('#svoRoleplayTitle')).toContainText('GTA 5 Roleplay');
   await expect(page.locator('#svoPaymentTitle')).toContainText('Metode Pembayaran');
   await expect(page.locator('#rakit-pc')).toBeAttached();
-  await expect(page.locator('#svoMusicPlayer')).toHaveClass(/is-collapsed/);
-  await expect(page.locator('a[href="https://www.youtube.com/watch?v=8_y6w1V9PXs"]')).toHaveCount(1);
+  await expect(page.locator('#svoMusicContent')).toBeHidden();
+  await expect(page.locator('#svoMusicCollapse')).toHaveAttribute('aria-expanded', 'false');
+  await expect(page.locator('#svoMusicAudio')).toHaveAttribute('src', '/images/svo-background.m4a');
+  await expect(page.locator('#svoMusicAudio')).toHaveJSProperty('loop', true);
   await expect(page.locator('.svo-product')).toHaveCount(46);
+});
+
+test('mobile GTA 5 RP navigation opens the FiveM service page and its quote link', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await page.getByRole('button', { name: 'Buka menu navigasi' }).click();
+  await page.locator('#svoPrimaryNav').getByRole('link', { name: 'GTA 5 RP' }).click();
+  await expect(page).toHaveURL(/\/jasa-server-fivem\/$/);
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Jasa Pembuatan Server GTA 5 Roleplay');
+  const artwork = page.locator('.service-hero-media img');
+  await artwork.evaluate(image => image.decode());
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
+
+  await page.locator('#demo summary').filter({ hasText: 'Bengkel mekanik' }).click();
+  await expect(page.getByText('Perbaikan selesai dan transaksi tercatat.')).toBeVisible();
+  await page.locator('#faq summary').filter({ hasText: 'Apakah hosting VPS sudah termasuk?' }).click();
+  await expect(page.getByText('VPS, domain, dan resource premium dihitung terpisah.', { exact: false })).toBeVisible();
+
+  const quote = new URL(await page.getByRole('link', { name: 'Minta Penawaran via WhatsApp' }).first().getAttribute('href'));
+  expect(quote.origin + quote.pathname).toBe('https://wa.me/6288291967659');
+  expect(quote.searchParams.get('text')).toContain('server GTA 5 Roleplay (FiveM)');
+});
+
+test('PC and website service links open their pages with separate quote messages', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await page.locator('#layanan').getByRole('link', { name: 'Rakit PC Custom' }).click();
+  await expect(page).toHaveURL(/\/jasa-rakit-pc\/$/);
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Jasa Rakit PC Custom');
+  const pcQuote = new URL(await page.getByRole('link', { name: 'Minta Penawaran via WhatsApp' }).first().getAttribute('href'));
+  expect(pcQuote.searchParams.get('text')).toContain('jasa rakit PC custom');
+  await page.locator('.service-hero').getByRole('link', { name: 'Coba PC Builder' }).click();
+  await expect(page).toHaveURL(/\/#rakit-pc$/);
+
+  await page.getByRole('button', { name: 'Buka menu navigasi' }).click();
+  await page.locator('#svoPrimaryNav').getByRole('link', { name: 'Website', exact: true }).click();
+  await expect(page).toHaveURL(/\/jasa-pembuatan-website\/$/);
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Jasa Pembuatan Website Custom');
+  const webQuote = new URL(await page.getByRole('link', { name: 'Minta Penawaran via WhatsApp' }).first().getAttribute('href'));
+  expect(webQuote.searchParams.get('text')).toContain('jasa pembuatan website custom');
+  await page.getByRole('link', { name: 'Buka Halaman FiveM' }).click();
+  await expect(page).toHaveURL(/\/jasa-server-fivem\/$/);
 });
 
 test('web development CTA creates a service-specific WhatsApp brief, not a paid order', async ({ page }) => {
@@ -81,9 +125,15 @@ test('payment preferences list all requested services without exposing fake bank
   await expect(page.locator('#digital .svo-web-exclusion')).toContainText('hosting');
 });
 
-test('five PC build presets include compatible Compact White Mini-ITX with estimated prices', async ({ page }) => {
+test('five PC build presets use descriptive names', async ({ page }) => {
   await page.goto('/', { waitUntil: 'domcontentloaded' });
-  await expect(page.locator('.preset-card')).toHaveCount(5);
-  await expect(page.locator('#preset')).toContainText('SVO COMPACT WHITE');
-  await expect(page.locator('#svoMusicPlayer')).toHaveClass(/is-collapsed/);
+  await expect(page.locator('#preset .preset-title')).toHaveText([
+    'PC Gaming 1080p',
+    'PC Streaming 1440p',
+    'PC Editing 4K',
+    'PC Kerja dan Gaming',
+    'PC Mini-ITX Putih'
+  ]);
+  await expect(page.locator('#svoMusicContent')).toBeHidden();
+  await expect(page.locator('#svoMusicCollapse')).toHaveAttribute('aria-expanded', 'false');
 });
