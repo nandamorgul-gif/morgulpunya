@@ -565,20 +565,45 @@ img.svo-image-unavailable,
   .svo-pricing-status{font-size:.76rem;padding:10px 12px}
 }
 
-/* Preset benchmark guide and service price breakdown */
-.svo-fps-guide,.svo-preset-costs{margin:0 7px 15px;padding:13px;border:1px solid #46374f;border-radius:11px;background:#201829;min-width:0}
-.svo-fps-heading{display:flex;align-items:baseline;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-bottom:10px;color:#eee1fa;font-size:.84rem}
-.svo-fps-heading span,.svo-fps-row small,.svo-fps-note,.svo-fps-sources{color:#c0b3ce;font-size:.7rem;line-height:1.5}
-.svo-fps-row{display:flex;align-items:center;justify-content:space-between;gap:10px;border-top:1px solid #46374f;padding:8px 0}
-.svo-fps-row>div{min-width:0}
-.svo-fps-row>div strong{display:block;color:#e9def4;font-size:.77rem;overflow-wrap:anywhere}
-.svo-fps-row>div small{display:block}
-.svo-fps-value{white-space:nowrap;color:#dbbaff;font-size:1.05rem;font-weight:800;font-variant-numeric:tabular-nums}
-.svo-fps-value small{font-weight:500}
-.svo-fps-note{margin:6px 0}
-.svo-fps-sources a{color:#dac0ff;text-decoration:underline}
-.svo-preset-costs>div{display:flex;justify-content:space-between;gap:10px;padding:5px 0;font-size:.76rem;line-height:1.45;color:#cfc2dc}
-.svo-preset-costs strong{white-space:nowrap;color:#f2e8fc;font-variant-numeric:tabular-nums}
-.svo-preset-costs .svo-preset-total{border-top:1px solid #5e4774;margin-top:6px;padding-top:9px;font-weight:700}
-.svo-preset-costs .svo-preset-total strong{color:#dbbaff}
-@media(max-width:480px){.svo-fps-guide,.svo-preset-costs{margin-inline:0;padding:11px}.svo-preset-costs>div{flex-wrap:wrap;gap:3px 10px}}
+/* SVO Dark Luxury — preset performance and service pricing */
+#preset .presets-grid{align-items:stretch}
+#preset .preset-card{display:flex;flex-direction:column;min-width:0;height:100%;box-sizing:border-box;overflow:hidden}
+#preset .preset-tagline{flex:0 0 auto;min-height:4.2em}
+#preset .svo-fps-guide,#preset .svo-preset-costs{display:block;min-width:0;margin:0 7px 15px;padding:clamp(12px,1.2vw,18px);border:1px solid #40334e;border-radius:14px;background:linear-gradient(145deg,#231b2e,#191420);box-sizing:border-box}
+#preset .svo-fps-heading{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-bottom:13px}
+#preset .svo-panel-kicker{display:block;font-size:.59rem;font-weight:600;letter-spacing:.11em;line-height:1.5;color:#b29bc8;margin-bottom:5px}
+#preset .svo-fps-heading h4,#preset .svo-cost-heading h4{margin:0;color:#f0e6fa;font-size:.96rem;line-height:1.3;font-weight:650}
+#preset .svo-resolution{display:block;flex-shrink:0;border:1px solid #655076;border-radius:7px;padding:5px 7px;font-size:.68rem;line-height:1.3;color:#dac5ee;white-space:nowrap;background:#2e223e}
+#preset .svo-fps-rows{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;align-items:stretch}
+#preset .svo-fps-row{display:flex;flex-direction:column;justify-content:space-between;gap:9px;min-width:0;padding:10px;border:1px solid #3d314b;border-radius:10px;background:#18131f}
+#preset .svo-fps-meta{min-width:0}
+#preset .svo-fps-meta strong{display:block;margin:0;color:#ebe1f4;font-size:.76rem;line-height:1.35;overflow-wrap:anywhere}
+#preset .svo-fps-meta small{display:block;margin-top:4px;font-size:.63rem;line-height:1.35;color:#b5a9c4;overflow-wrap:anywhere}
+#preset .svo-fps-value{display:flex;gap:5px;align-items:baseline;justify-content:flex-start;font-variant-numeric:tabular-nums}
+#preset .svo-fps-value strong{font-size:1.4rem;line-height:1.1;color:#d9bcff;font-weight:750}
+#preset .svo-fps-value small{font-size:.61rem;line-height:1;color:#b5a3c8;letter-spacing:.08em}
+#preset .svo-fps-details{margin-top:12px;padding-top:10px;border-top:1px solid #3d314b;color:#bfb1d0;font-size:.68rem;line-height:1.55}
+#preset .svo-fps-details summary{cursor:pointer;font-weight:500;color:#c8b4e5}
+#preset .svo-fps-details summary:focus-visible{outline:2px solid #c5a3ed;outline-offset:3px}
+#preset .svo-fps-details p{margin:8px 0;color:#bfb1d0;font-size:inherit}
+#preset .svo-fps-sources{font-size:.66rem;color:#bfb1d0}
+#preset .svo-fps-sources a{color:#dec7ff;text-decoration:underline;text-underline-offset:2px}
+#preset .svo-preset-costs{margin-top:auto}
+#preset .svo-cost-heading{margin-bottom:10px}
+#preset .svo-cost-list{margin:0;padding:0}
+#preset .svo-cost-row{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:start;gap:8px;border-top:1px solid #3d314b;padding:9px 0;font-size:.74rem;line-height:1.4}
+#preset .svo-cost-row dt,#preset .svo-cost-row dd{margin:0;min-width:0}
+#preset .svo-cost-row dt{color:#cbbfd7;overflow-wrap:anywhere}
+#preset .svo-cost-row dt small{display:block;font-size:.62rem;color:#a99ab9;margin-top:2px}
+#preset .svo-cost-row dd{color:#f1e9fa;font-weight:650;text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+#preset .svo-preset-total{display:flex;flex-direction:column;gap:5px;align-items:flex-start;border:1px solid #554167;border-radius:10px;padding:11px;margin-top:7px;background:#2b2038}
+#preset .svo-preset-total span{font-size:.71rem;color:#d2bfdc;line-height:1.4}
+#preset .svo-preset-total strong{font-size:clamp(1.06rem,1.35vw,1.35rem);font-variant-numeric:tabular-nums;line-height:1.2;color:#ecd9ff;overflow-wrap:anywhere}
+#preset .preset-footer{display:flex;flex-direction:column;align-items:stretch;gap:11px;margin-top:0;padding-top:12px}
+#preset .preset-footer .preset-price{display:flex;flex-direction:column;gap:5px}
+#preset .preset-footer .preset-price>span{font-size:.73rem;line-height:1.3;color:#c3b4d3}
+#preset .preset-footer .preset-price>strong{font-variant-numeric:tabular-nums}
+#preset .preset-footer .load-preset-btn{width:100%;min-height:42px;white-space:normal;line-height:1.35}
+@media(min-width:1025px){#preset .preset-card:nth-last-child(-n+2){grid-column:span 3}#preset .svo-fps-row{min-height:100px}}
+@media(max-width:640px){#preset .preset-tagline{min-height:0}#preset .svo-fps-guide,#preset .svo-preset-costs{margin-inline:0}#preset .svo-fps-row{padding:10px}#preset .svo-fps-value strong{font-size:1.35rem}}
+@media(max-width:340px){#preset .svo-fps-rows{grid-template-columns:1fr}#preset .svo-cost-row{grid-template-columns:1fr;gap:3px}#preset .svo-cost-row dd{text-align:left}}
